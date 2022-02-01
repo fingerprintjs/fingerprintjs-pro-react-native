@@ -1,13 +1,8 @@
+#import <React/RCTBridgeModule.h>
 
-#import "RNFingerprintjsPro.h"
+@interface RCT_EXTERN_MODULE(RNFingerprintjsPro, NSObject)
 
-@implementation RNFingerprintjsPro
-
-- (dispatch_queue_t)methodQueue
-{
-    return dispatch_get_main_queue();
-}
-RCT_EXPORT_MODULE()
+RCT_EXTERN_METHOD(init:(NSString *)apiToken region:(NSString *)region endpoint:(NSString *)endpointUrl)
+RCT_EXTERN_METHOD(getVisitorId:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject);
 
 @end
-  
