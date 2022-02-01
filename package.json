@@ -1,18 +1,35 @@
-
 {
   "name": "react-native-fingerprintjs-pro",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
+  "main": "index.ts",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native"
+    "fraud",
+    "fraud detection",
+    "fraud prevention",
+    "browser",
+    "identification",
+    "fingerprint",
+    "fingerprinting",
+    "browser fingerprint",
+    "device fingerprint",
+    "privacy"
   ],
-  "author": "",
-  "license": "",
+  "author": "FingerprintJS, Inc (https://fingerprintjs.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "typescript": "^4.5.4"
+  },
   "peerDependencies": {
-    "react-native": "^0.41.2"
+    "react-native": "*",
+    "react": "*"
   }
 }
