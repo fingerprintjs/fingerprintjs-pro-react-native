@@ -4,11 +4,11 @@ import {NativeModules} from 'react-native';
 const { RNFingerprintjsPro } = NativeModules;
 
 class FingerprintjsPro extends React.Component {
-  static init(apiKey: string) {
+  static init(apiKey: string, region?: 'eu' | 'us', endpointUrl?: string) {
     try {
-      RNFingerprintjsPro.init(apiKey)
+      RNFingerprintjsPro.init(apiKey, region, endpointUrl)
     } catch (e) {
-      console.error(e)
+      console.error("RNFingerprintjsPro init error: ", e)
     }
   }
 
@@ -16,7 +16,7 @@ class FingerprintjsPro extends React.Component {
     try {
       return RNFingerprintjsPro.getVisitorId()
     } catch (e) {
-      console.error(e)
+      console.error("RNFingerprintjsPro getVisitorId error: ", e)
     }
   }
 }

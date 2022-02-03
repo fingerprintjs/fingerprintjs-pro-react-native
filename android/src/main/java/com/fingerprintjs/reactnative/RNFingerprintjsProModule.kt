@@ -15,9 +15,14 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun init(apiKey: String) {
+  fun init(apiToken: String, regionKey: String?, endpointUrl: String?) {
     val factory = FPJSProFactory(reactApplicationContext)
-    val configuration = Configuration(apiToken = apiKey, region = Configuration.Region.EU)
+    val region = when(regionKey) {
+      "eu" -> Configuration.Region.EU
+      "us" -> Configuration.Region.US
+      else -> Configuration.Region.US
+    }
+    val configuration = Configuration(apiToken, region = region, endpointUrl = endpointUrl ?: region.endpointUrl)
     fpjsClient = factory.createInstance(configuration)
   }
 
@@ -26,10 +31,10 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     try {
       fpjsClient?.getVisitorId(
         listener = { visitorId -> promise.resolve(visitorId) },
-        errorListener = { error -> promise.reject("", error) }
+        errorListener = { error -> promise.reject("Error: ", error) }
       )
     } catch (e: Exception) {
-      promise.reject("Error:", e)
+      promise.reject("Error: ", e)
     }
   }
 }
