@@ -22,15 +22,15 @@ import RNFpjsPro from 'fingerprintjs-pro-react-native';
 ...
 
 useEffect(() => {
-	async function getVisitorId() {
-		try {
-			RNFpjsPro.init('YOUR_BROWSER_API_TOKEN', 'YOUR_REGION');
-			const visitorIdRaw = await RNFpjsPro.getVisitorId();
-		} catch (e) {
-			console.error('RN App error: ', e);
-		}
-	}
-	getVisitorId();
+  async function getVisitorId() {
+    try {
+      RNFpjsPro.init('YOUR_BROWSER_API_TOKEN', 'YOUR_REGION');
+      const visitorIdRaw = await RNFpjsPro.getVisitorId();
+    } catch (e) {
+      console.error('RN App error: ', e);
+    }
+  }
+  getVisitorId();
 }, []);
 ```
 
