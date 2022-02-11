@@ -5501,7 +5501,7 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-fingerprintjs-pro@..:
+fingerprintjs-pro-react-native@..:
   version "1.0.0"
 
 react-native@0.66.4:
