@@ -398,7 +398,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNFingerprintjsPro (from `../node_modules/react-native-fingerprintjs-pro`)
+  - RNFingerprintjsPro (from `../node_modules/fingerprintjs-pro-react-native`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -479,7 +479,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   RNFingerprintjsPro:
-    :path: "../node_modules/react-native-fingerprintjs-pro"
+    :path: "../node_modules/fingerprintjs-pro-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 

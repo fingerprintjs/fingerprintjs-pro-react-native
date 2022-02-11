@@ -1,5 +1,5 @@
 {
-  "name": "react-native-fingerprintjs-pro",
+  "name": "fingerprintjs-pro-react-native",
   "version": "1.0.0",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
   "main": "index.ts",

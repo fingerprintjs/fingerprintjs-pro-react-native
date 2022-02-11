@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "17.0.2",
     "react-native": "0.66.4",
-    "react-native-fingerprintjs-pro": ".."
+    "fingerprintjs-pro-react-native": ".."
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
