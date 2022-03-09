@@ -15,7 +15,8 @@ class RNFingerprintjsPro: NSObject {
         super.init()
     }
 
-    @objc public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: URL? = nil) {
+    @objc(init:region:endpoint:)
+    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: URL? = nil) {
         fpjsClient = FingerprintJSProFactory
             .getInstance(
                 token: apiToken,
