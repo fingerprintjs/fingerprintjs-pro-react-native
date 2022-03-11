@@ -1,12 +1,18 @@
 {
-  "name": "fingerprintjs-pro-react-native",
-  "version": "1.0.0",
+  "name": "@fpjs-incubator/fingerprintjs-pro-react-native",
+  "version": "0.0.1",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "android",
+    "ios",
+    "RNFingerprintjsPro.podspec",
+    "index.ts"
+  ],
   "keywords": [
     "fraud",
     "fraud detection",

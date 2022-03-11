@@ -863,6 +863,9 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fpjs-incubator/fingerprintjs-pro-react-native@file:..":
+  version "0.0.1"
+
 "@hapi/hoek@^9.0.0":
   version "9.2.1"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.2.1.tgz#9551142a1980503752536b5050fd99f4a7f13b17"
@@ -5500,9 +5503,6 @@ react-native-codegen@^0.0.7:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
-
-fingerprintjs-pro-react-native@..:
-  version "1.0.0"
 
 react-native@0.66.4:
   version "0.66.4"
