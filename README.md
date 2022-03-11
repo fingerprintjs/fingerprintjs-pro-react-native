@@ -1,9 +1,9 @@
-# @fingerprintjs/fingerprintjs-pro-react-native
-
 <p align="center">
   <a href="https://fingerprintjs.com">
     <img src="res/logo.svg?raw=true" alt="FingerprintJS" width="312px" />
   </a>
+</p>
+<p align="center">
   <a href="https://www.npmjs.com/package/@fingerprintjs/fingerprintjs-pro-react">
     <img src="https://img.shields.io/npm/v/@fingerprintjs/fingerprintjs-pro-react.svg?style=flat"/>
   </a>
@@ -12,6 +12,19 @@
   </a>
 </p>
 
+# FingerprintJS PRO React Native
+
+### Official React Native module for 100% accurate device identification, created for the FingerprintJS Pro Server API.
+
+This module can be used in a React Native application to call the native FingerprintJS Pro libraries and identify devices.
+
+FingerprintJS Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
+
+Retrieve an accurate, sticky an stable [FingerprintJS Pro](https://fingerprintjs.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprintjs.com/docs). 
+
+Native libraries used under the hood:
+- [FingerprintJS Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
+- [FingerprintJS Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
 
 ## Quick start
 
