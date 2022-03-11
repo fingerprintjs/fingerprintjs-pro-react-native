@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Fpjs from 'fingerprintjs-pro-react-native';
+import Fpjs from '@fpjs-incubator/fingerprintjs-pro-react-native';
 
 const App = () => {
   const [visitorId, setVisitorId] = useState();
