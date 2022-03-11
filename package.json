@@ -1,5 +1,5 @@
 {
-  "name": "@fpjs-incubator/fingerprintjs-pro-react-native",
+  "name": "@fingerprintjs/fingerprintjs-pro-react-native",
   "version": "0.0.1",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
   "main": "index.ts",

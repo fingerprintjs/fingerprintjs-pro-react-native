@@ -5,11 +5,11 @@ Official React Native client for FingerprintJS PRO. Best identification solution
 
 ## Getting started
 
-`npm install @fpjs-incubator/fingerprintjs-pro-react-native --save`
+`npm install @fingerprintjs/fingerprintjs-pro-react-native --save`
 
 or
 
-`yarn add @fpjs-incubator/fingerprintjs-pro-react-native`
+`yarn add @fingerprintjs/fingerprintjs-pro-react-native`
 
 iOS:
 
@@ -18,7 +18,7 @@ iOS:
 
 ## Usage
 ```javascript
-import RNFpjsPro from '@fpjs-incubator/fingerprintjs-pro-react-native';
+import RNFpjsPro from '@fingerprintjs/fingerprintjs-pro-react-native';
 ...
 
 useEffect(() => {
