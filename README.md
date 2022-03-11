@@ -1,12 +1,8 @@
-
-# fingerprintjs-pro-react-native
-Official React Native client for FingerprintJS PRO. Best identification solution for React Native.
-
 # @fingerprintjs/fingerprintjs-pro-react-native
 
 <p align="center">
   <a href="https://fingerprintjs.com">
-    <img src="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/res/logo.svg?raw=true" alt="FingerprintJS" width="312px" />
+    <img src="res/logo.svg?raw=true" alt="FingerprintJS" width="312px" />
   </a>
   <a href="https://www.npmjs.com/package/@fingerprintjs/fingerprintjs-pro-react">
     <img src="https://img.shields.io/npm/v/@fingerprintjs/fingerprintjs-pro-react.svg?style=flat"/>
