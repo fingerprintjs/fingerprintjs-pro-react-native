@@ -20,7 +20,7 @@ This module can be used in a React Native application to call the native Fingerp
 
 FingerprintJS Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
 
-Retrieve an accurate, sticky an stable [FingerprintJS Pro](https://fingerprintjs.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprintjs.com/docs). 
+Retrieve an accurate, sticky and stable [FingerprintJS Pro](https://fingerprintjs.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprintjs.com/docs). 
 
 Native libraries used under the hood:
 - [FingerprintJS Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
