@@ -44,6 +44,7 @@ Make sure you have updated iOS dependencies:
 
 ## Usage
 ```javascript
+import React, { useEffect } from 'react';
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro-react-native';
 
 ... 
@@ -51,7 +52,7 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs-pro-react-native';
 useEffect(() => {
   async function getVisitorId() {
     try {
-      FingerprintJS.init('YOUR_BROWSER_API_TOKEN', 'YOUR_REGION'); // Region may be 'us' or 'eu'
+      FingerprintJS.init('PUBLIC_API_KEY', 'REGION'); // Region may be 'us', 'eu', or 'ap'
       const visitorId = await FingerprintJS.getVisitorId();
     } catch (e) {
       console.error('Error: ', e);
