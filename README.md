@@ -66,6 +66,10 @@ useEffect(() => {
 - [Server-to-Server API](https://dev.fingerprintjs.com/docs/server-api)
 - [FingerprintJS Pro documentation](https://dev.fingerprintjs.com/docs)
 
+## Limitations
+- FingerprintJS Pro [request filtering](https://dev.fingerprintjs.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
+- Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
+
 ## License
 This library is MIT licensed.
 
