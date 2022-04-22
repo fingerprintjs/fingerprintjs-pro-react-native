@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "lib": ["dom", "es5", "es6", "scripthost"],
-    "target": "es5",
-    "rootDir": ".",
-    "outDir": "build",
+    "lib": ["ESNext"],
+    "target": "ES2018",
+    "outDir": "./build",
     "sourceMap": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["src"]
 }
