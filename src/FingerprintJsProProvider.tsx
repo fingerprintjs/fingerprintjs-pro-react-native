@@ -10,7 +10,7 @@ import { FingerprintJsProAgent } from "./FingerprintJsProAgent";
 import { FingerprintJsProContext } from "./FingerprintJsProContext";
 import { Region } from "./types";
 
-interface FingerprintJsProProviderOptions {
+export interface FingerprintJsProProviderOptions {
   apiKey: string;
   region?: Region;
   endpointUrl?: string;
@@ -22,7 +22,6 @@ export function FingerprintJsProProvider({
   region,
   endpointUrl,
 }: PropsWithChildren<FingerprintJsProProviderOptions>) {
-  console.log('FingerprintJsProProvider', apiKey)
   const [client, setClient] = useState<FingerprintJsProAgent>(
     () => new FingerprintJsProAgent(apiKey, region, endpointUrl)
   );
@@ -40,7 +39,6 @@ export function FingerprintJsProProvider({
     if (firstRender) {
       firstRender.current = false;
     } else {
-      console.log('useEffect', apiKey)
       setClient(new FingerprintJsProAgent(apiKey, region, endpointUrl));
     }
   }, [apiKey, region, endpointUrl]);
