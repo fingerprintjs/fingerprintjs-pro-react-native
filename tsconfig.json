@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
@@ -10,7 +9,6 @@
     "jsx": "react",
     "lib": ["ESNext"],
     "target": "ES2018",
-    "outDir": "./build",
     "sourceMap": true,
     "skipLibCheck": true
   },
