@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf ./build && rollup -c rollup.config.js",
     "test": "jest",
-    "test:dts": "tsc --noEmit --isolatedModules build/fpjs-pro-react-native.d.ts"
+    "test:dts": "tsc -p check.tsconfig.json"
   },
   "files": [
     "android",
