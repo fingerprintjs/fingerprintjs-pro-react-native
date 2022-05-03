@@ -16,7 +16,12 @@ In `TestProject` folder you can find demo application. React Native provides not
 
 #### Android
 1. Run emulator in Android Studio or connect your device.
-2. Run `yarn android` from TestProject` folder.
+2. Run `yarn android` from `TestProject` folder.
+3. You should see working app in emulator.
+
+### iOS
+1. Run `pod install` in `TestProject/ios` folder.
+2. Run `yarn ios` from `TestProject` folder. 
 3. You should see working app in emulator.
 
 #### Troubleshooting
