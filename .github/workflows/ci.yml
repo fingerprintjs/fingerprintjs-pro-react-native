@@ -25,5 +25,7 @@ jobs:
         run: yarn build
       - name: Check the distributive TypeScript declarations
         run: yarn test:dts
+      - name: Run linter
+        run: yarn lint
       - name: Run tests
         run: yarn test

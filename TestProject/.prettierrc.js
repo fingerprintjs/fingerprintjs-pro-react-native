@@ -3,8 +3,9 @@ module.exports = {
   tabWidth: 2,
   useTabs: false,
   bracketSpacing: true,
-  jsxBracketSameLine: false,
+  semi: false,
   singleQuote: true,
-  trailingComma: 'all',
+  trailingComma: 'es5',
+  jsxSingleQuote: true,
   arrowParens: 'always',
-};
+}

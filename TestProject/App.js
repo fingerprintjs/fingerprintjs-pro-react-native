@@ -1,20 +1,20 @@
-import React from 'react';
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import React from 'react'
+import { SafeAreaView, StatusBar, useColorScheme } from 'react-native'
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
-import { Visitor } from './src/Visitor';
+import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { Visitor } from './src/Visitor'
 
-const apiKey = 'insert_api_key_here';
+const apiKey = 'insert_api_key_here'
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === 'dark'
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1,
     justifyContent: 'center',
-  };
+  }
 
   return (
     <FingerprintJsProProvider apiKey={apiKey}>
@@ -23,7 +23,7 @@ const App = () => {
         <Visitor />
       </SafeAreaView>
     </FingerprintJsProProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

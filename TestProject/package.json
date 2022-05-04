@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "cd .. && yarn lint"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs-pro-react-native": "file:..",
@@ -17,7 +17,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/runtime": "^7.17.0",
-    "@react-native-community/eslint-config": "^3.0.1",
     "babel-jest": "^27.4.6",
     "eslint": "^7",
     "jest": "^27.4.7",

@@ -1,13 +1,13 @@
 export interface QueryResult<TData, TError = Error> {
-  data?: TData;
-  isLoading?: boolean;
-  error?: TError;
+  data?: TData
+  isLoading?: boolean
+  error?: TError
 }
 
-export type Region = "eu" | "us" | "ap";
+export type Region = 'eu' | 'us' | 'ap'
 
 export interface VisitorData {
-  visitorId: string;
+  visitorId: string
 }
 
 export interface VisitorQueryResult extends QueryResult<VisitorData> {
