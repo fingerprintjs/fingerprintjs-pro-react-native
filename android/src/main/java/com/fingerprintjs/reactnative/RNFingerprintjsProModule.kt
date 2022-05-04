@@ -20,6 +20,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     val region = when(regionKey) {
       "eu" -> Configuration.Region.EU
       "us" -> Configuration.Region.US
+      "ap" -> Configuration.Region.AP
       else -> Configuration.Region.US
     }
     val configuration = Configuration(apiToken, region = region, endpointUrl = endpointUrl ?: region.endpointUrl)
