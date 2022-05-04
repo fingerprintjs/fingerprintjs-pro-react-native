@@ -130,8 +130,8 @@ import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-na
 useEffect(() => {
   async function getVisitorId() {
     try {
-      FingerprintJsProAgent.init('PUBLIC_API_KEY', 'REGION'); // Region may be 'us', 'eu', or 'ap'
-      const visitorId = await FingerprintJS.getVisitorId();
+      const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION'); // Region may be 'us', 'eu', or 'ap'
+      const visitorId = await FingerprintJSClient.getVisitorId();
     } catch (e) {
       console.error('Error: ', e);
     }

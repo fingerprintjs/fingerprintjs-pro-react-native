@@ -5,6 +5,22 @@ import {
 } from "./FingerprintJsProContext";
 import { QueryResult, VisitorQueryContext, VisitorData } from "./types";
 
+/**
+ * ```jsx
+ * const {
+ *   // Request state
+ *   isLoading,
+ *   // Error info
+ *   error,
+ *   // Visitor info
+ *   data,
+ *   // A method to be called to initiate request
+ *   getData,
+ * } = useVisitorData();
+ * ```
+ *
+ * Use the `useVisitorData` hook in your components to perform identification requests with the FingerprintJS API.
+ */
 export function useVisitorData(): VisitorQueryContext {
   const { getVisitorData } = useContext<FingerprintJsProContextInterface>(
     FingerprintJsProContext

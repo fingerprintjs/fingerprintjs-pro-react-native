@@ -16,6 +16,21 @@ export interface FingerprintJsProProviderOptions {
   endpointUrl?: string;
 }
 
+/**
+ * ```jsx
+ * <FingerprintJsProProvider
+ *     apiKey: 'your-fpjs-public-api-key'
+ * >
+ *   <MyApp />
+ * </FingerprintJsProProvider>
+ * ```
+ *
+ * Provides the FingerprintJsProContext to its child components.
+ *
+ * @param apiKey your public API key that authenticates the agent with the API
+ * @param region which region to use
+ * @param endpointUrl server API URL, should be only used with Subdomain integration
+ */
 export function FingerprintJsProProvider({
   children,
   apiKey,
