@@ -11,7 +11,7 @@ In `TestProject` folder you can find demo application. React Native provides not
 
 1. Run `yarn install` in the project root.
 2. Go to the `TestProject` folder and run yarn install here.
-3. Set up `apiKey` in `App.js`. (TODO: use environment variable).
+3. Set environment variable `PUBLIC_API_KEY`, you can just use `.env` [approach](https://www.npmjs.com/package/dotenv).
 4. Run `yarn start`. From this moment it will keep your terminal.
 
 #### Android

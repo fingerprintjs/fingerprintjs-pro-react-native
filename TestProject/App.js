@@ -4,8 +4,7 @@ import { SafeAreaView, StatusBar, useColorScheme } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { Visitor } from './src/Visitor'
-
-const apiKey = 'insert_api_key_here'
+import { PUBLIC_API_KEY } from '@env'
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark'
@@ -17,7 +16,7 @@ const App = () => {
   }
 
   return (
-    <FingerprintJsProProvider apiKey={apiKey}>
+    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY}>
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <Visitor />
