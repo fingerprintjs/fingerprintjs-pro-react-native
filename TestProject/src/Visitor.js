@@ -14,6 +14,10 @@ export const Visitor = () => {
     getData()
   }
 
+  const onLoadDataWithTag = () => {
+    getData({ testTag: 'ReactNative' })
+  }
+
   let info = 'Loading...'
   if (!isLoading) {
     if (error) {
@@ -27,6 +31,7 @@ export const Visitor = () => {
     <>
       <Text style={styles.text}>{info}</Text>
       <Button style={styles.button} title='Load data' onPress={onLoadData} />
+      <Button style={styles.button} title='Load data with tag' onPress={onLoadDataWithTag} />
     </>
   )
 }

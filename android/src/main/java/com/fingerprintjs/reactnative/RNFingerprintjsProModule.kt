@@ -27,9 +27,10 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorId(promise: Promise) {
+  fun getVisitorId(tags: Map<String, String>, promise: Promise) {
     try {
       fpjsClient?.getVisitorId(
+        tags = tags,
         listener = { visitorId -> promise.resolve(visitorId) },
         errorListener = { error -> promise.reject("Error: ", error) }
       )

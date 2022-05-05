@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native'
-import { Region } from './types'
+import { Region, Tags } from './types'
 
 type VisitorId = string
 
@@ -23,9 +23,9 @@ export class FingerprintJsProAgent {
    * Returns visitor identifier based on the request options
    * [https://dev.fingerprintjs.com/docs/native-android-integration#get-the-visitor-identifier]
    */
-  public getVisitorId(): Promise<VisitorId> {
+  public getVisitorId(tags?: Tags): Promise<VisitorId> {
     try {
-      return NativeModules.RNFingerprintjsPro.getVisitorId()
+      return NativeModules.RNFingerprintjsPro.getVisitorId(tags)
     } catch (e) {
       console.error('RNFingerprintjsPro getVisitorId error: ', e)
       throw new Error('RNFingerprintjsPro getVisitorId error: ' + e)

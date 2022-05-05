@@ -25,9 +25,9 @@ class RNFingerprintjsPro: NSObject {
             )
     }
 
-    @objc(getVisitorId:rejecter:)
-    public func getVisitorId(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        fpjsClient?.getVisitorId { result in
+    @objc(getVisitorId:tags:rejecter:)
+    public func getVisitorId(_ tags: [String: Any]?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+        fpjsClient?.getVisitorId(tags: tags) { result in
             switch result {
             case let .failure(error):
                 reject("Error: ", error.localizedDescription, error)

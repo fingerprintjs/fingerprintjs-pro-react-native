@@ -10,10 +10,12 @@ export interface VisitorData {
   visitorId: string
 }
 
+export type Tags = Record<string, string | number>
+
 export interface VisitorQueryResult extends QueryResult<VisitorData> {
   data?: VisitorData
 }
 
 export interface VisitorQueryContext extends VisitorQueryResult {
-  getData: () => Promise<VisitorData | void>
+  getData: (tags?: Tags) => Promise<VisitorData | void>
 }
