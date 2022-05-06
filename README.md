@@ -51,9 +51,9 @@ Make sure you have updated iOS dependencies:
 ## Usage
 
 ### FingerprintJS public API key
-In order to identify visitors you'll need a FingerprintJS Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
+To identify visitors, you need a FingerprintJS Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
-- Go to [FingerprintJS Dashboard](https://dashboard.fingerprintjs.com/)
+- Go to [the FingerprintJS Pro dashboard](https://dashboard.fingerprintjs.com/)
 - Open the API keys page from the sidebar
 - Find your Public API key
 
