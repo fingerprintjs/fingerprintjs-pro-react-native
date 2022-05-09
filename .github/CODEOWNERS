@@ -1,0 +1,9 @@
+/src/ @ilfa
+*.ts @ilfa
+*.tsx @ilfa
+*.js @ilfa
+*.jsx @ilfa
+*.json @ilfa
+
+ios/ @Alexey-Verkhovsky
+android/ @Alexey-Verkhovsky

@@ -338,7 +338,7 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - RNFingerprintjsPro (1.0.0):
+  - RNFingerprintjsPro (0.0.1):
     - FingerprintJSPro (~> 1.1.0)
     - React-Core
   - Yoga (1.14.0)
@@ -398,7 +398,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNFingerprintjsPro (from `../node_modules/@fingerprintjs/fingerprintjs-pro-react-native`)
+  - "RNFingerprintjsPro (from `../node_modules/@fingerprintjs/fingerprintjs-pro-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -527,10 +527,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNFingerprintjsPro: 922a49088b7f2c54c91b46155a181760c1960bd4
+  RNFingerprintjsPro: d3bf265fed535f98f896639251e7b686b126cdb8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 77b9958b7f12d8b400c8a715225201c7370cb8a2
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
