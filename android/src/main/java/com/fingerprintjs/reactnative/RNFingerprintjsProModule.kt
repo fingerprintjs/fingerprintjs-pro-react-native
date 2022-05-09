@@ -27,7 +27,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorId(tags: Map<String, String>, promise: Promise) {
+  fun getVisitorId(tags: Map<String, Any>, promise: Promise) {
     try {
       fpjsClient?.getVisitorId(
         tags = tags,
