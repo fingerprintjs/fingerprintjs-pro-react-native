@@ -16,13 +16,21 @@ class RNFingerprintjsPro: NSObject {
     }
 
     @objc(init:region:endpoint:)
-    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: URL? = nil) {
-        fpjsClient = FingerprintJSProFactory
-            .getInstance(
-                token: apiToken,
-                endpoint: endpoint,
-                region: region
-            )
+    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil) {
+        if (endpoint != nil) {
+            fpjsClient = FingerprintJSProFactory
+                .getInstance(
+                    token: apiToken,
+                    endpoint: URL(string: endpoint ?? ""),
+                    region: region
+                )
+        } else {
+            fpjsClient = FingerprintJSProFactory
+                .getInstance(
+                    token: apiToken,
+                    region: region
+                )
+        }
     }
 
     @objc(getVisitorId:resolve:rejecter:)
