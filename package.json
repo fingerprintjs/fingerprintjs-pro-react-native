@@ -15,7 +15,7 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "index.ts"
+    "build"
   ],
   "keywords": [
     "fraud",
