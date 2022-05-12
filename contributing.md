@@ -33,4 +33,4 @@ In `TestProject` folder you can find demo application. React Native provides not
 React native instruments don't support `npm`/`yarn` links for packages, because of this each library update needs not only building this library but reinstalling module for demo app. Current repository have 2 ways to make development more comfortable.
 
 1. Change `"main"` section in library's `package.json` to `"./src/index.ts"`. With this fix you don't need to build library for getting updates in `TestApp`, but don't forget to revert this change.
-2. Run `sync.sh` script, it will sync `src` and `build` folder between library and library copy in TestApp `node_modules` folder.
+2. Run `sync.sh` script, it will sync `src`, `build`, `ios` and `android` folder between library and library copy in TestApp `node_modules` folder.
