@@ -1,6 +1,6 @@
 {
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
   "main": "./build/fpjs-pro-react-native.cjs.js",
   "module": "./build/fpjs-pro-react-native.esm.js",
@@ -9,13 +9,16 @@
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
-    "test:dts": "tsc -p check.tsconfig.json"
+    "test:dts": "tsc -p check.tsconfig.json",
+    "release:major": "changelog -M && git add CHANGELOG.md && yarn version --major --no-git-tag-version",
+    "release:minor": "changelog -m && git add CHANGELOG.md && yarn version --minor --no-git-tag-version",
+    "release:patch": "changelog -p && git add CHANGELOG.md && yarn version --patch --no-git-tag-version"
   },
   "files": [
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "index.ts"
+    "build"
   ],
   "keywords": [
     "fraud",
@@ -46,6 +49,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-react-native": "^4.0.0",
+    "generate-changelog": "^1.8.0",
     "jest": "^27.4.1",
     "prettier": "^2.6.2",
     "react": "17.0.2",

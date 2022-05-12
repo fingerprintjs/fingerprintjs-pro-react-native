@@ -1,0 +1,42 @@
+name: release
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  npm-publish:
+    name: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: nodemodules-${{ hashFiles('yarn.lock') }}
+          restore-keys: nodemodules-
+      - name: Install Node packages
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Check the distributive TypeScript declarations
+        run: yarn test:dts
+      - name: Run linter
+        run: yarn lint
+      - name: Run tests
+        run: yarn test
+      - name: Publish if version has been updated
+        uses: pascalgn/npm-publish-action@99edcbddc04403efe904d1ad125c867d4dcabdcd
+        with:
+          tag_name: "v%s"
+          tag_message: "v%s"
+          commit_pattern: "^v?(\\d+\\.\\d+\\.\\d+(?:-(?:alpha|beta)\\.\\d+)?)$"
+          publish_command: "yarn"
+          publish_args: "--non-interactive --access=public --new-version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
