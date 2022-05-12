@@ -9,8 +9,8 @@
 *  add changelog generation and release commands (77967653)
 *  add publish action (e8332a73)
 *  fix npm package files section (63fb5641)
-*  change ios codeowner (77f8f3d5)
-*  add ios and android folder to sync script (8f2ab4c1)
+*  change iOS codeowner (77f8f3d5)
+*  add iOS and Android folder to sync script (8f2ab4c1)
 *  update build environment (d73ad61b)
 *  add linter, run prettier (bcf9bbcf)
 *  change author in podspec to FingerprintJS Inc (ec63bfcd)
@@ -34,7 +34,7 @@
 ##### Documentation Changes
 
 *  add jsdoc to code, fix readme example (4a9e9490)
-*  add ios contributing instruction (03c7da7b)
+*  add iOS contributing instruction (03c7da7b)
 *  add contributing.md (1afb9460)
 *  add new badges, fix existing (2e89589b)
 *  improve usage snippet (1f3b411e)
