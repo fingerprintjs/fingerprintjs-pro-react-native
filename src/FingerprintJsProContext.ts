@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+import { Tags } from './types'
 
 const stub = (): never => {
   throw new Error('You forgot to wrap your component in <FingerprintJsProProvider>.')
@@ -11,7 +12,7 @@ const initialContext = {
 
 export interface FingerprintJsProContextInterface {
   visitorId: string
-  getVisitorData: () => Promise<string>
+  getVisitorData: (tags?: Tags) => Promise<string>
 }
 
 export const FingerprintJsProContext = createContext<FingerprintJsProContextInterface>(initialContext)

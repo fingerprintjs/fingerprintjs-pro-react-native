@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FingerprintJsProAgent } from './FingerprintJsProAgent'
 import { FingerprintJsProContext } from './FingerprintJsProContext'
-import { Region } from './types'
+import { Region, Tags } from './types'
 
 export interface FingerprintJsProProviderOptions {
   apiKey: string
@@ -35,11 +35,14 @@ export function FingerprintJsProProvider({
   )
   const [visitorId, updateVisitorId] = useState('')
 
-  const getVisitorData = useCallback(async () => {
-    const result = await client.getVisitorId()
-    updateVisitorId(result)
-    return result
-  }, [client])
+  const getVisitorData = useCallback(
+    async (tags?: Tags) => {
+      const result = await client.getVisitorId(tags)
+      updateVisitorId(result)
+      return result
+    },
+    [client]
+  )
 
   const firstRender = useRef(true)
 

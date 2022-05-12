@@ -2,13 +2,13 @@ package com.fingerprintjs.reactnative
 
 import com.facebook.react.bridge.*
 import com.fingerprintjs.android.fpjs_pro.Configuration
-import com.fingerprintjs.android.fpjs_pro.FPJSProClient
-import com.fingerprintjs.android.fpjs_pro.FPJSProFactory
+import com.fingerprintjs.android.fpjs_pro.FingerprintJS
+import com.fingerprintjs.android.fpjs_pro.FingerprintJSFactory
 import java.lang.Exception
 
 
 class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
-  private var fpjsClient: FPJSProClient? = null
+  private var fpjsClient: FingerprintJS? = null
 
   override fun getName(): String {
     return "RNFingerprintjsPro"
@@ -16,7 +16,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun init(apiToken: String, regionKey: String?, endpointUrl: String?) {
-    val factory = FPJSProFactory(reactApplicationContext)
+    val factory = FingerprintJSFactory(reactApplicationContext)
     val region = when(regionKey) {
       "eu" -> Configuration.Region.EU
       "us" -> Configuration.Region.US
@@ -27,11 +27,12 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorId(promise: Promise) {
+  fun getVisitorId(tags: ReadableMap?, promise: Promise) {
     try {
       fpjsClient?.getVisitorId(
-        listener = { visitorId -> promise.resolve(visitorId) },
-        errorListener = { error -> promise.reject("Error: ", error) }
+        tags = tags?.toHashMap() ?: emptyMap(),
+        listener = { result -> promise.resolve(result.visitorId) },
+        errorListener = { error -> promise.reject("Error: ", error.description) }
       )
     } catch (e: Exception) {
       promise.reject("Error: ", e)
