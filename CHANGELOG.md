@@ -1,3 +1,9 @@
+#### 1.0.2 (2022-05-13)
+
+##### Documentation Changes
+
+*  second attempt to fix logo for npmjs.com (4daf6fb3)
+
 #### 1.0.1 (2022-05-13)
 
 ##### Documentation Changes

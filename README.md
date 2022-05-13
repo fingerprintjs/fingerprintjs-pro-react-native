@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://fingerprintjs.com">
-    <img src="res/logo.svg?raw=true" alt="FingerprintJS" width="312px" />
+    <img src="https://raw.githubusercontent.com/fingerprintjs/fingerprintjs-pro-react-native/HEAD/res/logo.svg" alt="FingerprintJS" width="312px" />
   </a>
 </p>
 <p align="center">

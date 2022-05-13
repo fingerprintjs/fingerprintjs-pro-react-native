@@ -1,6 +1,6 @@
 {
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
   "main": "./build/fpjs-pro-react-native.cjs.js",
   "module": "./build/fpjs-pro-react-native.esm.js",
@@ -18,8 +18,7 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "build",
-    "res/logo.svg"
+    "build"
   ],
   "keywords": [
     "fraud",
