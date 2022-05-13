@@ -18,8 +18,7 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "build",
-    "res/logo.svg"
+    "build"
   ],
   "keywords": [
     "fraud",
