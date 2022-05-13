@@ -1,3 +1,9 @@
+#### 1.0.1 (2022-05-13)
+
+##### Documentation Changes
+
+*  fix fingerprint logo for npmjs.com (c59e820a)
+
 ## 1.0.0 (2022-05-12)
 
 ##### Breaking changes

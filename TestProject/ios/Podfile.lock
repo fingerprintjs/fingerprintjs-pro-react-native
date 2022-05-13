@@ -338,7 +338,7 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - RNFingerprintjsPro (1.0.0):
+  - RNFingerprintjsPro (1.0.1):
     - FingerprintJSPro (~> 1.1.0)
     - React-Core
   - Yoga (1.14.0)
@@ -527,7 +527,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNFingerprintjsPro: 6dd1492b62d0c953ad42d7295f11c4f52209735d
+  RNFingerprintjsPro: 0e741cf58acc1128dd5b10b391960ddd41d76e59
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
