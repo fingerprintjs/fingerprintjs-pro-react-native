@@ -20,7 +20,7 @@
 
 # FingerprintJS PRO React Native
 
-### Official React Native module for 100% accurate device identification, created for the FingerprintJS Pro Server API.
+### Official React Native module for 100% accurate device identification, created for the FingerprintJS Pro.
 
 This module can be used in a React Native application to call the native FingerprintJS Pro libraries and identify devices.
 
