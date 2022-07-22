@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.description  = "Official React Native client for FingerprintJS PRO. Best identification solution for React Native."
   s.homepage     = "https://github.com/fingerprintjs"
   s.license = { :type => "MIT", :file => "LICENSE" }
-  s.author = { "FingerprintJS, Inc" => "support@fingerprintjs.com" }
+  s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
   s.platform     = :ios, "10.0"
 

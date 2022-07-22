@@ -30,7 +30,7 @@ This module can be used in a React Native application to call the native Fingerp
 
 FingerprintJS Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
 
-Retrieve an accurate, sticky and stable [FingerprintJS Pro](https://fingerprintjs.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprintjs.com/docs). 
+Retrieve an accurate, sticky and stable [FingerprintJS Pro](https://fingerprint.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprint.com/docs). 
 
 Native libraries used under the hood:
 - [FingerprintJS Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
@@ -57,7 +57,7 @@ Make sure you have updated iOS dependencies:
 ### FingerprintJS public API key
 To identify visitors, you need a FingerprintJS Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
-- Go to [the FingerprintJS Pro dashboard](https://dashboard.fingerprintjs.com/)
+- Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/)
 - Open the API keys page from the sidebar
 - Find your Public API key
 
@@ -145,11 +145,11 @@ useEffect(() => {
 ```
 
 ## Additional Resources
-- [Server-to-Server API](https://dev.fingerprintjs.com/docs/server-api)
-- [FingerprintJS Pro documentation](https://dev.fingerprintjs.com/docs)
+- [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
+- [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
 
 ## Limitations
-- FingerprintJS Pro [request filtering](https://dev.fingerprintjs.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
+- Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
 - Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
 
 ## License
