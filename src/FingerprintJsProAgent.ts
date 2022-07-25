@@ -21,7 +21,7 @@ export class FingerprintJsProAgent {
 
   /**
    * Returns visitor identifier based on the request options
-   * [https://dev.fingerprintjs.com/docs/native-android-integration#get-the-visitor-identifier]
+   * [https://dev.fingerprint.com/docs/native-android-integration#get-the-visitor-identifier]
    */
   public getVisitorId(tags?: Tags): Promise<VisitorId> {
     try {
