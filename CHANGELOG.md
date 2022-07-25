@@ -1,3 +1,18 @@
+#### 1.0.3 (2022-07-25)
+
+##### Chores
+
+*  add production environment for publish task (94309b78)
+
+##### Documentation Changes
+
+*  replace fingerptintjs.com domain in links to fingerprint.com (bd14519d)
+*  update logo (0f06f85e)
+
+##### Bug Fixes
+
+*  readme (71b47abe)
+
 #### 1.0.2 (2022-05-13)
 
 ##### Documentation Changes
