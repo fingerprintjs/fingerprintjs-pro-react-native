@@ -1,3 +1,9 @@
+#### 1.0.4 (2022-08-05)
+
+##### Bug Fixes
+
+*  add types field to package.json (42ccce56)
+
 #### 1.0.3 (2022-07-25)
 
 ##### Chores
