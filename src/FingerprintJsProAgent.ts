@@ -23,9 +23,9 @@ export class FingerprintJsProAgent {
    * Returns visitor identifier based on the request options
    * [https://dev.fingerprint.com/docs/native-android-integration#get-the-visitor-identifier]
    */
-  public getVisitorId(tags?: Tags): Promise<VisitorId> {
+  public getVisitorId(tags?: Tags, linkedId?: String): Promise<VisitorId> {
     try {
-      return NativeModules.RNFingerprintjsPro.getVisitorId(tags)
+      return NativeModules.RNFingerprintjsPro.getVisitorId(tags, linkedId)
     } catch (e) {
       console.error('RNFingerprintjsPro getVisitorId error: ', e)
       throw new Error('RNFingerprintjsPro getVisitorId error: ' + e)

@@ -17,5 +17,5 @@ export interface VisitorQueryResult extends QueryResult<VisitorData> {
 }
 
 export interface VisitorQueryContext extends VisitorQueryResult {
-  getData: (tags?: Tags) => Promise<VisitorData | void>
+  getData: (tags?: Tags, linkedId?: String) => Promise<VisitorData | void>
 }

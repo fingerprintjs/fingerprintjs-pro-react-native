@@ -12,7 +12,7 @@ const initialContext = {
 
 export interface FingerprintJsProContextInterface {
   visitorId: string
-  getVisitorData: (tags?: Tags) => Promise<string>
+  getVisitorData: (tags?: Tags, linkedId?: String) => Promise<string>
 }
 
 export const FingerprintJsProContext = createContext<FingerprintJsProContextInterface>(initialContext)

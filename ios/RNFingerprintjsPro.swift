@@ -22,9 +22,9 @@ class RNFingerprintjsPro: NSObject {
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 
-    @objc(getVisitorId:resolve:rejecter:)
-    public func getVisitorId(tags: [String: Any]?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let metadata = RNFingerprintjsPro.prepareMetadata(nil, tags: tags)
+    @objc(getVisitorId:linkedId:resolve:rejecter:)
+    public func getVisitorId(tags: [String: Any]?, linkedId: String?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+        let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
         fpjsClient?.getVisitorId(metadata) { result in
             switch result {
             case let .failure(error):

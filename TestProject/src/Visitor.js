@@ -15,7 +15,16 @@ export const Visitor = () => {
   }
 
   const onLoadDataWithTag = () => {
-    getData({ testTag: 'ReactNative' })
+    const tags = {
+      a: 'a',
+      b: 0,
+      c: {
+        foo: true,
+        bar: [1, 2, 3],
+      },
+      d: false,
+    }
+    getData(tags, 'React native')
   }
 
   let info = 'Loading...'
@@ -31,7 +40,7 @@ export const Visitor = () => {
     <>
       <Text style={styles.text}>{info}</Text>
       <Button style={styles.button} title='Load data' onPress={onLoadData} />
-      <Button style={styles.button} title='Load data with tag' onPress={onLoadDataWithTag} />
+      <Button style={styles.button} title='Load with tag and linkedId' onPress={onLoadDataWithTag} />
     </>
   )
 }
