@@ -15,10 +15,10 @@ class RNFingerprintjsPro: NSObject {
         super.init()
     }
 
-    @objc(init:region:endpoint:)
-    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil) {
+    @objc(init:region:endpoint:extendedResponseFormat:)
+    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil, _ extendedResponseFormat: Bool = false) {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
-        let configuration = Configuration(apiKey: apiToken, region: region)
+        let configuration = Configuration(apiKey: apiToken, region: region, extendedResponseFormat: extendedResponseFormat)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 

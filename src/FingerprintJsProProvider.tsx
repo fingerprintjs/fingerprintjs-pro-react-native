@@ -7,6 +7,7 @@ export interface FingerprintJsProProviderOptions {
   apiKey: string
   region?: Region
   endpointUrl?: string
+  extendedResponseFormat?: boolean
 }
 
 /**
@@ -23,15 +24,17 @@ export interface FingerprintJsProProviderOptions {
  * @param apiKey your public API key that authenticates the agent with the API
  * @param region which region to use
  * @param endpointUrl server API URL, should be only used with Subdomain integration
+ * @param extendedResponseFormat set this flag to get response in extended format
  */
 export function FingerprintJsProProvider({
   children,
   apiKey,
   region,
   endpointUrl,
+  extendedResponseFormat,
 }: PropsWithChildren<FingerprintJsProProviderOptions>) {
   const [client, setClient] = useState<FingerprintJsProAgent>(
-    () => new FingerprintJsProAgent(apiKey, region, endpointUrl)
+    () => new FingerprintJsProAgent(apiKey, region, endpointUrl, extendedResponseFormat)
   )
   const [visitorId, updateVisitorId] = useState('')
 
@@ -50,9 +53,9 @@ export function FingerprintJsProProvider({
     if (firstRender) {
       firstRender.current = false
     } else {
-      setClient(new FingerprintJsProAgent(apiKey, region, endpointUrl))
+      setClient(new FingerprintJsProAgent(apiKey, region, endpointUrl, extendedResponseFormat))
     }
-  }, [apiKey, region, endpointUrl])
+  }, [apiKey, region, endpointUrl, extendedResponseFormat])
 
   const contextValue = useMemo(() => {
     return {
