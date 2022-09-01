@@ -17,14 +17,14 @@ class RNFingerprintjsPro: NSObject {
 
     @objc(init:region:endpoint:)
     public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil) {
-        let region = parseRegion(region, endpoint: endpoint)
+        let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
         let configuration = Configuration(apiKey: apiToken, region: region)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 
     @objc(getVisitorId:resolve:rejecter:)
     public func getVisitorId(tags: [String: Any]?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let metadata = prepareMetadata(nil, tags: tags)
+        let metadata = RNFingerprintjsPro.prepareMetadata(nil, tags: tags)
         fpjsClient?.getVisitorId(metadata) { result in
             switch result {
             case let .failure(error):
@@ -37,7 +37,7 @@ class RNFingerprintjsPro: NSObject {
         }
     }
     
-    private func parseRegion(_ passedRegion: String?, endpoint: String?) -> Region {
+    private static func parseRegion(_ passedRegion: String?, endpoint: String?) -> Region {
         var region: Region
         switch passedRegion {
         case "eu":
@@ -55,7 +55,7 @@ class RNFingerprintjsPro: NSObject {
         return region
     }
     
-    private func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata? {
+    private static func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata? {
         guard
             let tags = tags,
             let jsonTags = JSONTypeConvertor.convertObjectToJSONTypeConvertible(tags)
