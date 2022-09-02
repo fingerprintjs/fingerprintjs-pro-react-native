@@ -32,7 +32,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     try {
       fpjsClient?.getVisitorId(
         tags = tags?.toHashMap() ?: emptyMap(),
-        linkedId,
+        linkedId = linkedId :? "",
         listener = { result -> promise.resolve(result.visitorId) },
         errorListener = { error -> promise.reject("Error: ", error.description) }
       )
