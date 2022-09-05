@@ -10,7 +10,8 @@ export interface VisitorData {
   visitorId: string
 }
 
-export type Tags = Record<string, string | number>
+export type Tags = { [K in string]: Tag | Tag[] }
+type Tag = string | number | boolean | Tags
 
 export interface VisitorQueryResult extends QueryResult<VisitorData> {
   data?: VisitorData
