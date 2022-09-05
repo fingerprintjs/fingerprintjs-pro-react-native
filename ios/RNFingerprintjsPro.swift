@@ -36,7 +36,26 @@ class RNFingerprintjsPro: NSObject {
             }
         }
     }
-    
+
+    @objc(getVisitorData:linkedId:resolve:rejecter:)
+        public func getVisitorData(tags: [String: Any]?, linkedId: String?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+            let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
+            fpjsClient?.getVisitorIdResponse(metadata) { result in
+                switch result {
+                case let .failure(error):
+                    reject("Error: ", error.localizedDescription, error)
+                case let .success(visitorDataResponse):
+                    let tuple = [
+                        visitorDataResponse.requestId,
+                        visitorDataResponse.confidence,
+                        visitorDataResponse.asJSON()
+                    ] as [Any]
+                    resolve(tuple)
+                }
+            }
+        }
+
+
     private static func parseRegion(_ passedRegion: String?, endpoint: String?) -> Region {
         var region: Region
         switch passedRegion {

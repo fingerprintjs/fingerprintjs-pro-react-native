@@ -39,4 +39,17 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
         promise.reject("Error: ", e)
     }
   }
+
+  @ReactMethod
+  fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    try {
+      fpjsClient?.getVisitorId(tags?.toHashMap() ?: emptyMap(),
+        linkedId ?: "",
+        { result -> promise.resolve(listOf(result.requestId, result.confidenceScore.score, result.asJson)) },
+        { error -> promise.reject("Error: ", error.description)
+        })
+    } catch (e: Exception) {
+      promise.reject("Error: ", e)
+    }
+  }
 }

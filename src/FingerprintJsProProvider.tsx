@@ -40,8 +40,8 @@ export function FingerprintJsProProvider({
 
   const getVisitorData = useCallback(
     async (tags?: Tags, linkedId?: String) => {
-      const result = await client.getVisitorId(tags, linkedId)
-      updateVisitorId(result)
+      const result = await client.getVisitorData(tags, linkedId)
+      updateVisitorId(result.visitorId)
       return result
     },
     [client]

@@ -32,4 +32,13 @@ export class FingerprintJsProAgent {
       throw new Error('RNFingerprintjsPro getVisitorId error: ' + e)
     }
   }
+
+  public getVisitorData(tags?: Tags, linkedId?: String): Promise<any> {
+    try {
+      return NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
+    } catch (e) {
+      console.error('RNFingerprintjsPro getVisitorData error: ', e)
+      throw new Error('RNFingerprintjsPro getVisitorData error: ' + e)
+    }
+  }
 }
