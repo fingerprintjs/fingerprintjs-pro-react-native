@@ -5,11 +5,11 @@
 //  Created by Denis Evgrafov on 01.02.2022.
 //  Copyright © 2022 Facebook. All rights reserved.
 //
-import FingerprintJSPro
+import FingerprintPro
 
 @objc(RNFingerprintjsPro)
 class RNFingerprintjsPro: NSObject {
-    private var fpjsClient: FingerprintJSProClient?
+    private var fpjsClient: FingerprintClientProviding?
 
     override init() {
         super.init()
@@ -17,25 +17,15 @@ class RNFingerprintjsPro: NSObject {
 
     @objc(init:region:endpoint:)
     public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil) {
-        if let endpoint = endpoint, let endpointURL = URL(string: endpoint) {
-            fpjsClient = FingerprintJSProFactory
-                .getInstance(
-                    token: apiToken,
-                    endpoint: endpointURL,
-                    region: region
-                )
-        } else {
-            fpjsClient = FingerprintJSProFactory
-                .getInstance(
-                    token: apiToken,
-                    region: region
-                )
-        }
+        let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
+        let configuration = Configuration(apiKey: apiToken, region: region)
+        fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 
     @objc(getVisitorId:resolve:rejecter:)
     public func getVisitorId(tags: [String: Any]?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        fpjsClient?.getVisitorId(tags: tags) { result in
+        let metadata = RNFingerprintjsPro.prepareMetadata(nil, tags: tags)
+        fpjsClient?.getVisitorId(metadata) { result in
             switch result {
             case let .failure(error):
                 reject("Error: ", error.localizedDescription, error)
@@ -45,5 +35,42 @@ class RNFingerprintjsPro: NSObject {
                 resolve(visitorId)
             }
         }
+    }
+    
+    private static func parseRegion(_ passedRegion: String?, endpoint: String?) -> Region {
+        var region: Region
+        switch passedRegion {
+        case "eu":
+            region = .eu
+        case "ap":
+            region = .ap
+        default:
+            region = .global
+        }
+
+        if let endpointString = endpoint {
+            region = .custom(domain: endpointString)
+        }
+
+        return region
+    }
+    
+    private static func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata? {
+        guard
+            let tags = tags,
+            let jsonTags = JSONTypeConvertor.convertObjectToJSONTypeConvertible(tags)
+        else {
+            return nil
+        }
+        
+        var metadata = Metadata(linkedId: linkedId)
+        if let dict = jsonTags as? [String: JSONTypeConvertible] {
+            dict.forEach { key, jsonType in
+                metadata.setTag(jsonType, forKey: key)
+            }
+        } else {
+            metadata.setTag(jsonTags, forKey: "tag")
+        }
+        return metadata
     }
 }
