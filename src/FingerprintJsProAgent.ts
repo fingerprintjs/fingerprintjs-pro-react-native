@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native'
-import { Region, Tags } from './types'
+import { Region, Tags, VisitorData } from './types'
 
 type VisitorId = string
 
@@ -33,9 +33,24 @@ export class FingerprintJsProAgent {
     }
   }
 
-  public getVisitorData(tags?: Tags, linkedId?: String): Promise<any> {
+  /**
+   * Returns visitor identification data based on the request options
+   * Provide `extendedResponseFormat` option in constructor to get response in [extended format]{@link https://dev.fingerprint.com/docs/native-android-integration#response-format}
+   * [https://dev.fingerprint.com/docs/native-android-integration#get-the-visitor-identifier]
+   */
+  public async getVisitorData(tags?: Tags, linkedId?: String): Promise<VisitorData> {
     try {
-      return NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
+      const [requestId, confidenceScore, visitorDataJsonString] = await NativeModules.RNFingerprintjsPro.getVisitorData(
+        tags,
+        linkedId
+      )
+      return {
+        ...JSON.parse(visitorDataJsonString),
+        requestId,
+        confidence: {
+          score: confidenceScore,
+        },
+      }
     } catch (e) {
       console.error('RNFingerprintjsPro getVisitorData error: ', e)
       throw new Error('RNFingerprintjsPro getVisitorData error: ' + e)

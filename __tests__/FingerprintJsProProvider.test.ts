@@ -13,7 +13,7 @@ NativeModules.RNFingerprintjsPro = {
 }
 
 describe(`FingerprintJsProProvider`, () => {
-  it('should pass options to agent', () => {
+  it('should pass options to agent with regular result', () => {
     const options = getDefaultLoadOptions()
     options.region = 'us'
     options.endpointUrl = 'https://bla.bla.bla'
@@ -26,7 +26,27 @@ describe(`FingerprintJsProProvider`, () => {
     expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
-      options.endpointUrl
+      options.endpointUrl,
+      false
+    )
+  })
+
+  it('should pass options to agent with extended result', () => {
+    const options = getDefaultLoadOptions()
+    options.region = 'us'
+    options.endpointUrl = 'https://bla.bla.bla'
+    options.extendedResponseFormat = true
+
+    const wrapper = createWrapper(options)
+    renderHook(() => useContext(FingerprintJsProContext), {
+      wrapper,
+    })
+
+    expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
+      options.apiKey,
+      options.region,
+      options.endpointUrl,
+      options.extendedResponseFormat
     )
   })
 })

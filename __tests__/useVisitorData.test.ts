@@ -4,11 +4,13 @@ import { useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
 const init = jest.fn()
+const getVisitorId = jest.fn()
 const getVisitorData = jest.fn()
 
 NativeModules.RNFingerprintjsPro = {
   init: init,
-  getVisitorId: getVisitorData,
+  getVisitorId: getVisitorId,
+  getVisitorData: getVisitorData,
 }
 
 describe('useVisitorData', () => {
@@ -33,7 +35,15 @@ describe('useVisitorData', () => {
 
   it('should correct return data', async () => {
     const mockedVisitorId = 'some visitor id'
-    getVisitorData.mockReturnValueOnce(Promise.resolve(mockedVisitorId))
+    const mockedRequestId = 'some request id'
+    const confidenceScore = 0.99
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+
+    getVisitorData.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, confidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
     const wrapper = createWrapper()
     const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
@@ -41,7 +51,13 @@ describe('useVisitorData', () => {
     })
     expect(result.current.data).toBeUndefined()
     await waitForNextUpdate()
-    expect(result.current.data).toStrictEqual({ visitorId: mockedVisitorId })
+    expect(result.current.data).toStrictEqual({
+      visitorId: mockedVisitorId,
+      requestId: mockedRequestId,
+      confidence: {
+        score: confidenceScore,
+      },
+    })
     expect(result.current.error).toBeFalsy()
   })
 
