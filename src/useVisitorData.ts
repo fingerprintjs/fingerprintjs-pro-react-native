@@ -23,11 +23,11 @@ export function useVisitorData(): VisitorQueryContext {
   const [state, setState] = useState<QueryResult<VisitorData>>({})
 
   const getData = useCallback<VisitorQueryContext['getData']>(
-    async (tags) => {
+    async (tags, linkedId) => {
       let result = ''
       try {
         setState((state) => ({ ...state, isLoading: true }))
-        result = await getVisitorData(tags)
+        result = await getVisitorData(tags, linkedId)
         setState((state) => ({
           ...state,
           data: { visitorId: result },

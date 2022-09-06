@@ -36,8 +36,8 @@ export function FingerprintJsProProvider({
   const [visitorId, updateVisitorId] = useState('')
 
   const getVisitorData = useCallback(
-    async (tags?: Tags) => {
-      const result = await client.getVisitorId(tags)
+    async (tags?: Tags, linkedId?: String) => {
+      const result = await client.getVisitorId(tags, linkedId)
       updateVisitorId(result)
       return result
     },
