@@ -13,6 +13,10 @@ NativeModules.RNFingerprintjsPro = {
   getVisitorData: getVisitorData,
 }
 
+const mockedVisitorId = 'some visitor id'
+const mockedRequestId = 'some request id'
+const mockedConfidenceScore = 0.99
+
 describe('useVisitorData', () => {
   it('should provide FingerprintJsProContext', () => {
     const wrapper = createWrapper()
@@ -34,15 +38,12 @@ describe('useVisitorData', () => {
   })
 
   it('should correct return data', async () => {
-    const mockedVisitorId = 'some visitor id'
-    const mockedRequestId = 'some request id'
-    const confidenceScore = 0.99
     const mockedJsonAnswer = {
       visitorId: mockedVisitorId,
     }
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, confidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
     )
     const wrapper = createWrapper()
     const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
@@ -55,7 +56,7 @@ describe('useVisitorData', () => {
       visitorId: mockedVisitorId,
       requestId: mockedRequestId,
       confidence: {
-        score: confidenceScore,
+        score: mockedConfidenceScore,
       },
     })
     expect(result.current.error).toBeFalsy()
@@ -77,5 +78,36 @@ describe('useVisitorData', () => {
     expect(result.current.error).toBeInstanceOf(Error)
     expect(result.current.error?.name).toBe('FingerprintJsProAgentError')
     expect(result.current.error?.message).toContain(error.message)
+  })
+
+  it('should pass linkedId and tags to `getData` function', async () => {
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+
+    const mockedTags = {
+      stringTag: 'foo',
+      numberTag: 0,
+      ObjectTag: {
+        foo: true,
+        bar: [1, 2, 3],
+      },
+      boolTag: false,
+    }
+
+    const mockedLinkedId = 'test_id'
+
+    getVisitorData.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    const wrapper = createWrapper()
+    const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
+    act(() => {
+      result.current.getData(mockedTags, mockedLinkedId)
+    })
+    await waitForNextUpdate()
+
+    expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
   })
 })
