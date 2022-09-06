@@ -129,19 +129,85 @@ export default App;
 import React, { useEffect } from 'react';
 import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-native';
 
-... 
+// ... 
 
-useEffect(() => {
-  async function getVisitorId() {
+useEffect(async () => {
+  async function getVisitorInfo() {
     try {
       const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION'); // Region may be 'us', 'eu', or 'ap'
-      const visitorId = await FingerprintJSClient.getVisitorId();
+      const visitorId = await FingerprintJSClient.getVisitorId(); // Use this method if you need only visitorId
+      const visitorData = await FingerprintJSClient.getVisitorData(); // Use this method if you need additional information about visitor
+      // use visitor data in your code
     } catch (e) {
       console.error('Error: ', e);
     }
   }
-  getVisitorId();
+  getVisitorInfo();
 }, []);
+```
+
+### `extendedResponseFormat`
+
+Two types of responses are supported: "default" and "extended". You don't need to pass any parameters to get the "default" response.
+"Extended" is an extended result format that includes geolocation, incognito mode and other information.
+It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses [here](https://dev.fingerprint.com/docs/js-agent#extendedResult).
+
+#### Providing `extendedResponseFormat` with hooks approach
+
+```javascript
+  return (
+    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
+      <App />
+    </FingerprintJsProProvider>
+  )
+```
+
+#### Providing `extendedResponseFormat` with API Client approach
+
+```javascript
+const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION', null, true); // Region may be 'us', 'eu', or 'ap'
+// =====================================================================================^^^^^
+```
+
+### `LinkedId` and `tags`
+
+`linkedId` is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API
+More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#linkedid)
+
+`tag` is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API.
+More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#tag)
+
+#### Providing `linkedId` and `tags` with hooks approach
+
+```javascript
+const { getData } = useVisitorData();
+const tags = {
+  tag1: 'string tag',
+  tag2: 42,
+  tag3: true,
+  tag4: [0, 1, 1, 2, 5],
+  tag5: { foo: 'bar' }
+};
+const linkedId = 'custom id';
+
+const visitorData = await getData(tags, linkedId);
+```
+
+#### Providing `linkedId` and `tags` with API Client approach
+
+```javascript
+const { getData } = useVisitorData();
+const tags = {
+  tag1: 'string tag',
+  tag2: 42,
+  tag3: true,
+  tag4: [0, 1, 1, 2, 5],
+  tag5: { foo: 'bar' }
+};
+const linkedId = 'custom id';
+
+const visitorId = await FingerprintJSClient.getVisitorId(tags, linkedId); // Use this method if you need only visitorId
+const visitorData = await FingerprintJSClient.getVisitorData(tags, linkedId); // Use this method if you need additional information about visitor
 ```
 
 ## Additional Resources
