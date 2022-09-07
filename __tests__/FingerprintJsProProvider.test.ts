@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { createWrapper, getDefaultLoadOptions } from './helpers'
 import { FingerprintJsProContext } from '../src/FingerprintJsProContext'
 import { NativeModules } from 'react-native'
+import * as packageInfo from '../package.json'
 
 const init = jest.fn()
 const getVisitorData = jest.fn()
@@ -11,6 +12,8 @@ NativeModules.RNFingerprintjsPro = {
   init: init,
   getVisitorId: getVisitorData,
 }
+
+const pluginVersion = packageInfo.version
 
 describe(`FingerprintJsProProvider`, () => {
   it('should pass options to agent with regular result', () => {
@@ -27,7 +30,8 @@ describe(`FingerprintJsProProvider`, () => {
       options.apiKey,
       options.region,
       options.endpointUrl,
-      false
+      false,
+      pluginVersion
     )
   })
 
@@ -46,7 +50,8 @@ describe(`FingerprintJsProProvider`, () => {
       options.apiKey,
       options.region,
       options.endpointUrl,
-      options.extendedResponseFormat
+      options.extendedResponseFormat,
+      pluginVersion
     )
   })
 })

@@ -15,10 +15,11 @@ class RNFingerprintjsPro: NSObject {
         super.init()
     }
 
-    @objc(init:region:endpoint:extendedResponseFormat:)
-    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil, _ extendedResponseFormat: Bool = false) {
+    @objc(init:region:endpoint:extendedResponseFormat:pluginVersion:)
+    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil, _ extendedResponseFormat: Bool = false, _ pluginVersion: String) {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
-        let configuration = Configuration(apiKey: apiToken, region: region, extendedResponseFormat: extendedResponseFormat)
+        let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
+        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 
