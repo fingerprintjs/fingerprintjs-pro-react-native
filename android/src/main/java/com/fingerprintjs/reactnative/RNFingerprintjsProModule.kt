@@ -15,7 +15,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun init(apiToken: String, regionKey: String?, endpointUrl: String?, extendedResponseFormat: Boolean) {
+  fun init(apiToken: String, regionKey: String?, endpointUrl: String?, extendedResponseFormat: Boolean, pluginVersion: String) {
     val factory = FingerprintJSFactory(reactApplicationContext)
     val region = when(regionKey) {
       "eu" -> Configuration.Region.EU
@@ -23,7 +23,14 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       "ap" -> Configuration.Region.AP
       else -> Configuration.Region.US
     }
-    val configuration = Configuration(apiToken, region = region, endpointUrl = endpointUrl ?: region.endpointUrl, extendedResponseFormat)
+    val integrationInfo = listOf(Pair("fingerprint-pro-react-native", pluginVersion))
+    val configuration = Configuration(
+      apiToken,
+      region,
+      endpointUrl = endpointUrl ?: region.endpointUrl,
+      extendedResponseFormat,
+      integrationInfo
+    )
     fpjsClient = factory.createInstance(configuration)
   }
 

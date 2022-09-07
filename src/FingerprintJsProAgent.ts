@@ -1,5 +1,6 @@
 import { NativeModules } from 'react-native'
 import { Region, Tags, VisitorData } from './types'
+import * as packageInfo from '../package.json'
 
 type VisitorId = string
 
@@ -14,7 +15,7 @@ export class FingerprintJsProAgent {
    */
   constructor(apiKey: string, region?: Region, endpointUrl?: string, extendedResponseFormat = false) {
     try {
-      NativeModules.RNFingerprintjsPro.init(apiKey, region, endpointUrl, extendedResponseFormat)
+      NativeModules.RNFingerprintjsPro.init(apiKey, region, endpointUrl, extendedResponseFormat, packageInfo.version)
     } catch (e) {
       console.error('RNFingerprintjsPro init error: ', e)
     }

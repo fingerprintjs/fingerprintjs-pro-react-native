@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "jsx": "react",
     "lib": ["ESNext"],
     "target": "ES2018",
