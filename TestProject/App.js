@@ -16,7 +16,7 @@ const App = () => {
   }
 
   return (
-    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY}>
+    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <Visitor />
