@@ -150,7 +150,7 @@ useEffect(async () => {
 
 Two types of responses are supported: "default" and "extended". You don't need to pass any parameters to get the "default" response.
 "Extended" is an extended result format that includes geolocation, incognito mode and other information.
-It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses [here](https://dev.fingerprint.com/docs/js-agent#extendedResult).
+It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/docs/js-agent#extendedResult).
 
 #### Providing `extendedResponseFormat` with hooks approach
 
@@ -172,10 +172,10 @@ const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION'
 ### `LinkedId` and `tags`
 
 `linkedId` is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#linkedid)
+More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#linkedid).
 
 `tag` is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API.
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#tag)
+More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#tag).
 
 #### Providing `linkedId` and `tags` with hooks approach
 
