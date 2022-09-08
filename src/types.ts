@@ -1,13 +1,37 @@
 export interface QueryResult<TData, TError = Error> {
+  /**
+   * Visitor identification data
+   */
   data?: TData
+  /**
+   * Request state after calling `getData()`
+   */
   isLoading?: boolean
+  /**
+   * Error message in case of failed `getData()` call
+   */
   error?: TError
 }
 
+/**
+ * The {@link https://dev.fingerprint.com/docs/regions | region} of your application.
+ * The parameter is fully optional because JS agent detects the regions automatically using the provided API key.
+ * Nevertheless, we recommend always specifying the parameter. Otherwise the default region us.
+ * @group Types and interfaces
+ */
 export type Region = 'eu' | 'us' | 'ap'
 
+/**
+ * Visitor identification data
+ *
+ * @group Types and interfaces
+ */
 export type VisitorData = ShortVisitorData | ExtendedVisitorData
 
+/**
+ * Main identification information about the visitor
+ * @group Types and interfaces
+ */
 export interface ShortVisitorData {
   /**
    * The visitor identifier
@@ -23,7 +47,12 @@ export interface ShortVisitorData {
   confidence: Confidence
 }
 
-interface Confidence {
+/**
+ * Represents the probability of accurate identification.
+ *
+ * @group Types and interfaces
+ */
+export interface Confidence {
   /**
    * A number between 0 and 1 that tells how much the agent is sure about the visitor identifier.
    * The higher the number, the higher the chance of the visitor identifier to be true.
@@ -35,6 +64,11 @@ interface Confidence {
   comment?: string
 }
 
+/**
+ * All known identification information about the visitor
+ *
+ * @group Types and interfaces
+ */
 export interface ExtendedVisitorData extends ShortVisitorData {
   /**
    * If true, this visitor was found and visited before.
@@ -81,7 +115,12 @@ export interface ExtendedVisitorData extends ShortVisitorData {
   lastSeenAt: SeenAt
 }
 
-interface IpLocation {
+/**
+ * {@link https://dev.fingerprint.com/docs/geolocation | IP address location}. Can be empty for anonymous proxies.
+ *
+ * @group Types and interfaces
+ */
+export interface IpLocation {
   /**
    * IP address location detection radius. Smaller values (<50mi) are business/residential,
    * medium values (50 < x < 500) are cellular towers (usually),
@@ -146,7 +185,11 @@ interface IpLocation {
   }
 }
 
-interface SeenAt {
+/**
+ *
+ * @group Types and interfaces
+ */
+export interface SeenAt {
   /**
    * The date and time within your subscription. The string format is ISO-8601.
    * @example
@@ -163,13 +206,35 @@ interface SeenAt {
   global: string | null
 }
 
+/**
+ * Tags are returned in the webhook response so make sure the map you are passing to the library represents a valid JSON.
+ *
+ * @group Types and interfaces
+ */
 export type Tags = { [K in string]: Tag | Tag[] }
-type Tag = string | number | boolean | Tags
+
+/**
+ * Tags are returned in the webhook response so make sure the map you are passing to the library represents a valid JSON.
+ *
+ * @group Types and interfaces
+ */
+export type Tag = string | number | boolean | Tags
 
 export interface VisitorQueryResult extends QueryResult<VisitorData> {
+  /**
+   * Visitor identification dataaaa
+   */
   data?: VisitorData
 }
 
+/**
+ * @group Hooks approach
+ */
 export interface VisitorQueryContext extends VisitorQueryResult {
-  getData: (tags?: Tags, linkedId?: String) => Promise<VisitorData | null>
+  /**
+   * Retrieve the visitor identifier using your public API key.
+   * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
+   * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   */
+  getData: (tags?: Tags, linkedId?: string) => Promise<VisitorData | null>
 }
