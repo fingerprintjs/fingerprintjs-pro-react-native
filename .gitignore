@@ -43,3 +43,4 @@ buck-out/
 \.buckd/
 *.keystore
 *.map
+docs
