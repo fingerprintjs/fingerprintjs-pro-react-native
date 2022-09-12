@@ -3,14 +3,34 @@ import { FingerprintJsProAgent } from './FingerprintJsProAgent'
 import { FingerprintJsProContext } from './FingerprintJsProContext'
 import { Region, Tags } from './types'
 
+/**
+ * Configuration options for the {@link FingerprintJsProProvider}
+ *
+ * @group Hooks approach
+ */
 export interface FingerprintJsProProviderOptions {
+  /**
+   * Your public API key that authenticates the agent with the API
+   */
   apiKey: string
+  /**
+   * Which region to use
+   */
   region?: Region
+  /**
+   * Server API URL, should be only used with Subdomain integration
+   */
   endpointUrl?: string
+  /**
+   * Set this flag to get response in extended format
+   */
   extendedResponseFormat?: boolean
 }
 
 /**
+ * Provides the FingerprintJsProContext to its child components.
+ *
+ * @example
  * ```jsx
  * <FingerprintJsProProvider
  *     apiKey: 'your-fpjs-public-api-key'
@@ -18,13 +38,7 @@ export interface FingerprintJsProProviderOptions {
  *   <MyApp />
  * </FingerprintJsProProvider>
  * ```
- *
- * Provides the FingerprintJsProContext to its child components.
- *
- * @param apiKey your public API key that authenticates the agent with the API
- * @param region which region to use
- * @param endpointUrl server API URL, should be only used with Subdomain integration
- * @param extendedResponseFormat set this flag to get response in extended format
+ * @group Hooks approach
  */
 export function FingerprintJsProProvider({
   children,
@@ -39,7 +53,7 @@ export function FingerprintJsProProvider({
   const [visitorId, updateVisitorId] = useState('')
 
   const getVisitorData = useCallback(
-    async (tags?: Tags, linkedId?: String) => {
+    async (tags?: Tags, linkedId?: string) => {
       const result = await client.getVisitorData(tags, linkedId)
       updateVisitorId(result.visitorId)
       return result

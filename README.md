@@ -210,6 +210,9 @@ const visitorId = await FingerprintJSClient.getVisitorId(tags, linkedId); // Use
 const visitorData = await FingerprintJSClient.getVisitorData(tags, linkedId); // Use this method if you need additional information about visitor
 ```
 
+## API Reference
+You can find API reference [here](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
+
 ## Additional Resources
 - [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
 - [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
