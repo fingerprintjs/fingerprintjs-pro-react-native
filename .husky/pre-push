@@ -1,0 +1,15 @@
+#!/bin/bash
+. "$(dirname "$0")/_/husky.sh"
+
+containsref() { if [[ $2 =~ $1 ]]; then echo 1; else echo 0; fi }
+
+push_command=$(ps -ocommand= -p $PPID | cut -d' ' -f 4)
+protected_branch='main'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+is_push_to_main_origin=$(containsref 'git@github.com:/?fingerprintjs/' "$push_command")
+
+# Block pushes only to protected branch in main repository
+if [ $is_push_to_main_origin = 1 ] && [ "$protected_branch" = "$current_branch" ]; then
+  echo "You are on the $protected_branch branch, push blocked."
+  exit 1 # push will not execute
+fi
