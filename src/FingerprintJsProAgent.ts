@@ -1,5 +1,6 @@
 import { NativeModules } from 'react-native'
-import { Region, Tags, VisitorData } from './types'
+import { UnknownError, unwrapError } from './errors'
+import type { Region, Tags, VisitorData } from './types'
 import * as packageInfo from '../package.json'
 
 type VisitorId = string
@@ -34,9 +35,12 @@ export class FingerprintJsProAgent {
   public getVisitorId(tags?: Tags, linkedId?: string): Promise<VisitorId> {
     try {
       return NativeModules.RNFingerprintjsPro.getVisitorId(tags, linkedId)
-    } catch (e) {
-      console.error('RNFingerprintjsPro getVisitorId error: ', e)
-      throw new Error('RNFingerprintjsPro getVisitorId error: ' + e)
+    } catch (error) {
+      if (error instanceof Error) {
+        throw unwrapError(error)
+      } else {
+        throw new UnknownError(String(error))
+      }
     }
   }
 
@@ -61,9 +65,12 @@ export class FingerprintJsProAgent {
           score: confidenceScore,
         },
       }
-    } catch (e) {
-      console.error('RNFingerprintjsPro getVisitorData error: ', e)
-      throw new Error('RNFingerprintjsPro getVisitorData error: ' + e)
+    } catch (error) {
+      if (error instanceof Error) {
+        throw unwrapError(error)
+      } else {
+        throw new UnknownError(String(error))
+      }
     }
   }
 }
