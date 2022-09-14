@@ -367,6 +367,6 @@ export function unwrapError(error: Error): IdentificationError {
     case 'InvalidResponseType':
       return new InvalidResponseTypeError(errorMessage)
     default:
-      return new UnknownError(errorMessage)
+      return new UnknownError(error.message)
   }
 }
