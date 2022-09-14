@@ -44,24 +44,7 @@ class RNFingerprintjsPro: NSObject {
             fpjsClient?.getVisitorIdResponse(metadata) { result in
                 switch result {
                 case let .failure(error):
-                    var description = "UnknownError:" + ":" + error.localizedDescription
-                    switch error {
-                        case .invalidURL:
-                            description = "InvalidURL" + ":" + error.localizedDescription
-                        case .invalidURLParams:
-                            description = "InvalidURLParams" + ":" + error.localizedDescription
-                        case let .apiError(apiError):
-                            let errorName = apiError.error?.code?.rawValue ?? "apiError"
-                            description = errorName.firstUppercased + ":" + (apiError.error?.message ?? error.localizedDescription)
-                        case let .networkError(networkError):
-                            description = "NetworkError:" + networkError.localizedDescription
-                        case let .jsonParsingError(jsonParsingError):
-                            description = "JsonParsingError:" + jsonParsingError.localizedDescription
-                        case .invalidResponseType:
-                            description = "InvalidResponseType" + ":" + error.localizedDescription
-                        case .unknownError:
-                            description = "UnknownError" + ":" + error.localizedDescription
-                    }
+                    let description = error.reactDescription
                     reject("Error: ", description, error)
                 case let .success(visitorDataResponse):
                     let tuple = [
@@ -111,8 +94,4 @@ class RNFingerprintjsPro: NSObject {
         }
         return metadata
     }
-}
-
-extension StringProtocol {
-    var firstUppercased: String { prefix(1).uppercased() + dropFirst() }
 }
