@@ -10,7 +10,7 @@ PODS:
     - React-Core (= 0.66.4)
     - React-jsi (= 0.66.4)
     - ReactCommon/turbomodule/core (= 0.66.4)
-  - FingerprintPro (2.1.1)
+  - FingerprintPro (2.1.2)
   - Flipper (0.99.0):
     - Flipper-Folly (~> 2.6)
     - Flipper-RSocket (~> 1.4)
@@ -339,7 +339,7 @@ PODS:
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
   - RNFingerprintjsPro (1.0.4):
-    - FingerprintPro (~> 2.1.0)
+    - FingerprintPro (~> 2.1.2)
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -489,7 +489,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
-  FingerprintPro: 50f12a751c7719414d0c1c6d8e48eba9d58a5548
+  FingerprintPro: 6192d95bf88e0688b98d63c51d9a964ab611e6fb
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 57ffbe81ef95306cc9e69c4aa3aeeeeb58a6a28c
@@ -527,10 +527,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  RNFingerprintjsPro: b5448f8aea3a332cf25a3bb81d3ff1fe78e928c1
+  RNFingerprintjsPro: 317426b3f0479c4737960f7aa90b0f8a02ac07f9
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 2bf04c942b3c1ff26bdd85e7767df176d2137aac
+PODFILE CHECKSUM: a207c529aa33864fdcd5a8148319937020c010fb
 
 COCOAPODS: 1.11.3
