@@ -76,7 +76,7 @@ describe('useVisitorData', () => {
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.data).toBeUndefined()
     expect(result.current.error).toBeInstanceOf(Error)
-    expect(result.current.error?.name).toBe('FingerprintJsProAgentError')
+    expect(result.current.error?.name).toBe('UnknownError')
     expect(result.current.error?.message).toContain(error.message)
   })
 

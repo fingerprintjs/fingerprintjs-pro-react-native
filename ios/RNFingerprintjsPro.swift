@@ -44,7 +44,8 @@ class RNFingerprintjsPro: NSObject {
             fpjsClient?.getVisitorIdResponse(metadata) { result in
                 switch result {
                 case let .failure(error):
-                    reject("Error: ", error.localizedDescription, error)
+                    let description = error.reactDescription
+                    reject("Error: ", description, error)
                 case let .success(visitorDataResponse):
                     let tuple = [
                         visitorDataResponse.requestId,
@@ -74,7 +75,7 @@ class RNFingerprintjsPro: NSObject {
 
         return region
     }
-    
+
     private static func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata? {
         guard
             let tags = tags,
@@ -82,7 +83,7 @@ class RNFingerprintjsPro: NSObject {
         else {
             return nil
         }
-        
+
         var metadata = Metadata(linkedId: linkedId)
         if let dict = jsonTags as? [String: JSONTypeConvertible] {
             dict.forEach { key, jsonType in
