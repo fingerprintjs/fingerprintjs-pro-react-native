@@ -47,10 +47,45 @@ or
 
 `yarn add @fingerprintjs/fingerprintjs-pro-react-native`
 
-Make sure you have updated iOS dependencies:
+#### 2. Configure native dependencies
+
+**iOS**
 
 `cd ios && pod install`
 
+**Android**
+
+Add a declaration of the Fingerprint Android repository to your app main `build.gradle` file to the `allprojects` section: 
+
+```groovy
+maven {
+  url("https://maven.fpregistry.io/releases")
+}
+```
+
+The file location is `{rootDir}/android/build.gradle.`
+After the changes the `build.gradle` file should look as following:
+
+```groovy
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+        maven {
+            url("https://maven.fpregistry.io/releases")
+        }
+        google()
+    }
+}
+```
 
 ## Usage
 
