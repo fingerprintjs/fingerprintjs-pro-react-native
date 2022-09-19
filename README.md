@@ -63,7 +63,7 @@ maven {
 }
 ```
 
-The file location is `{rootDir}/android/build.gradle.`
+The file location is `{rootDir}/android/build.gradle`.
 After the changes the `build.gradle` file should look as following:
 
 ```groovy
