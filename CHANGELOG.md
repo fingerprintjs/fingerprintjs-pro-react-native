@@ -1,3 +1,10 @@
+## [2.0.0-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.0.0-test.1...v2.0.0-test.2) (2022-09-19)
+
+
+### Bug Fixes
+
+* trigger ci release 3 ([7d950fd](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/7d950fdfa59cef20e0324cfc426e37c5c8609c26))
+
 ## [2.0.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v1.0.4...v2.0.0-test.1) (2022-09-19)
 
 
