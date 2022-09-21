@@ -30,7 +30,7 @@ class RNFingerprintjsPro: NSObject {
             switch result {
             case let .failure(error):
                 let description = error.reactDescription
-                reject("Error: ", error.description, error)
+                reject("Error: ", description, error)
             case let .success(visitorId):
                 // Prevent fraud cases in your apps with a unique
                 // sticky and reliable ID provided by FingerprintJS Pro.
