@@ -29,7 +29,8 @@ class RNFingerprintjsPro: NSObject {
         fpjsClient?.getVisitorId(metadata) { result in
             switch result {
             case let .failure(error):
-                reject("Error: ", error.localizedDescription, error)
+                let description = error.reactDescription
+                reject("Error: ", error.description, error)
             case let .success(visitorId):
                 // Prevent fraud cases in your apps with a unique
                 // sticky and reliable ID provided by FingerprintJS Pro.
