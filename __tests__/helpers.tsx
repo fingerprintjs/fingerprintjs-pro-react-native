@@ -1,12 +1,12 @@
 import React, { PropsWithChildren } from 'react'
 import { FingerprintJsProProvider } from '../src'
-import { FingerprintJsProProviderOptions } from '../src/FingerprintJsProProvider'
+import { FingerprintJsProAgentParams } from '../src/types'
 
-export const getDefaultLoadOptions = (): FingerprintJsProProviderOptions => ({
+export const getDefaultLoadOptions = (): FingerprintJsProAgentParams => ({
   apiKey: 'test_api_key',
 })
 
 export const createWrapper =
-  (loadOptions: FingerprintJsProProviderOptions = getDefaultLoadOptions()) =>
+  (loadOptions: FingerprintJsProAgentParams = getDefaultLoadOptions()) =>
   ({ children }: PropsWithChildren<{}>): JSX.Element =>
     <FingerprintJsProProvider {...loadOptions}>{children}</FingerprintJsProProvider>

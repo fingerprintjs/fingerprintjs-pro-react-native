@@ -1,31 +1,7 @@
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FingerprintJsProAgent } from './FingerprintJsProAgent'
 import { FingerprintJsProContext } from './FingerprintJsProContext'
-import { Region, Tags } from './types'
-
-/**
- * Configuration options for the {@link FingerprintJsProProvider}
- *
- * @group Hooks approach
- */
-export interface FingerprintJsProProviderOptions {
-  /**
-   * Your public API key that authenticates the agent with the API
-   */
-  apiKey: string
-  /**
-   * Which region to use
-   */
-  region?: Region
-  /**
-   * Server API URL, should be only used with Subdomain integration
-   */
-  endpointUrl?: string
-  /**
-   * Set this flag to get response in extended format
-   */
-  extendedResponseFormat?: boolean
-}
+import { FingerprintJsProAgentParams, Tags } from './types'
 
 /**
  * Provides the FingerprintJsProContext to its child components.
@@ -42,13 +18,10 @@ export interface FingerprintJsProProviderOptions {
  */
 export function FingerprintJsProProvider({
   children,
-  apiKey,
-  region,
-  endpointUrl,
-  extendedResponseFormat,
-}: PropsWithChildren<FingerprintJsProProviderOptions>) {
+  ...fingerprintJsProAgentParams
+}: PropsWithChildren<FingerprintJsProAgentParams>) {
   const [client, setClient] = useState<FingerprintJsProAgent>(
-    () => new FingerprintJsProAgent(apiKey, region, endpointUrl, extendedResponseFormat)
+    () => new FingerprintJsProAgent(fingerprintJsProAgentParams)
   )
   const [visitorId, updateVisitorId] = useState('')
 
@@ -67,9 +40,9 @@ export function FingerprintJsProProvider({
     if (firstRender) {
       firstRender.current = false
     } else {
-      setClient(new FingerprintJsProAgent(apiKey, region, endpointUrl, extendedResponseFormat))
+      setClient(new FingerprintJsProAgent(fingerprintJsProAgentParams))
     }
-  }, [apiKey, region, endpointUrl, extendedResponseFormat])
+  }, [fingerprintJsProAgentParams])
 
   const contextValue = useMemo(() => {
     return {

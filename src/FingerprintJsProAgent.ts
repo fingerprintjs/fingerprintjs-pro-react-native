@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native'
 import { UnknownError, unwrapError } from './errors'
-import type { Region, Tags, VisitorData } from './types'
+import type { FingerprintJsProAgentParams, Tags, VisitorData } from './types'
 import * as packageInfo from '../package.json'
 
 type VisitorId = string
@@ -13,12 +13,9 @@ export class FingerprintJsProAgent {
   /**
    * Initialises FingerprintJS Pro Agent with certain settings
    *
-   * @param apiKey your public API key that authenticates the agent with the API
-   * @param region which region to use
-   * @param endpointUrl server API URL, should be only used with Subdomain integration
-   * @param extendedResponseFormat set this flag to get response in extended format
+   * @param params
    */
-  constructor(apiKey: string, region?: Region, endpointUrl?: string, extendedResponseFormat = false) {
+  constructor({ apiKey, region, endpointUrl, extendedResponseFormat = false }: FingerprintJsProAgentParams) {
     try {
       NativeModules.RNFingerprintjsPro.init(apiKey, region, endpointUrl, extendedResponseFormat, packageInfo.version)
     } catch (e) {
