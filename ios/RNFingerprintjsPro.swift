@@ -77,15 +77,15 @@ class RNFingerprintjsPro: NSObject {
         return region
     }
 
-    private static func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata? {
+    private static func prepareMetadata(_ linkedId: String?, tags: Any?) -> Metadata {
+        var metadata = Metadata(linkedId: linkedId)
         guard
             let tags = tags,
             let jsonTags = JSONTypeConvertor.convertObjectToJSONTypeConvertible(tags)
         else {
-            return nil
+            return metadata
         }
 
-        var metadata = Metadata(linkedId: linkedId)
         if let dict = jsonTags as? [String: JSONTypeConvertible] {
             dict.forEach { key, jsonType in
                 metadata.setTag(jsonType, forKey: key)
@@ -93,6 +93,7 @@ class RNFingerprintjsPro: NSObject {
         } else {
             metadata.setTag(jsonTags, forKey: "tag")
         }
+
         return metadata
     }
 }
