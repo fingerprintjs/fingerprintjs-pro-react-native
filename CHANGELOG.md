@@ -1,3 +1,24 @@
+## [2.0.0-test.3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.0.0-test.2...v2.0.0-test.3) (2022-09-23)
+
+
+### Features
+
+* update iOS agent to 2.1.3 ([14a0e42](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/14a0e4232c4ca71bcb204d92aa9e51e64b2c12e7))
+* update react-native to 0.70.1 ([22b8d33](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/22b8d33ee42d4c3d851ba6a97085da1a3eb0cea8))
+
+
+### Bug Fixes
+
+* async code example ([415c422](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/415c422206e4f8a750f9ac8aa1447251e411c9af))
+* error description ([81f9337](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/81f93375334eed1a5d06d35a55788fac82c65d76))
+* generate iOS Metadata even if linkedId is nil ([858ac51](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/858ac5171bd95b7c88abfddd08528a244c9b38af))
+* getVisitorId error handling ([1d04c86](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/1d04c866d4c06a1d7e0db1d80896efa50491366a))
+
+
+### Documentation
+
+* **README:** add documentation badge ([62a3df1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/62a3df1a4e9f560dad4c666198ea7492b022ecff))
+
 ## [2.0.0-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.0.0-test.1...v2.0.0-test.2) (2022-09-19)
 
 
