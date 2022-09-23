@@ -18,7 +18,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">FingerprintJsProAgent</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/d0e5242/src/FingerprintJsProAgent.ts#L12">src/FingerprintJsProAgent.ts:12</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/2daf8fb/src/FingerprintJsProAgent.ts#L12">src/FingerprintJsProAgent.ts:12</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -38,7 +38,7 @@
 <section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_FingerprintJsProAgent">new <wbr/>Fingerprint<wbr/>Js<wbr/>Pro<wbr/>Agent<span class="tsd-signature-symbol">(</span>apiKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, region<span class="tsd-signature-symbol">?: </span><a href="../types/Region.html" class="tsd-signature-type" data-tsd-kind="Type alias">Region</a>, endpointUrl<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, extendedResponseFormat<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="FingerprintJsProAgent.html" class="tsd-signature-type" data-tsd-kind="Class">FingerprintJsProAgent</a><a href="#constructor.new_FingerprintJsProAgent" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_FingerprintJsProAgent">new <wbr/>Fingerprint<wbr/>Js<wbr/>Pro<wbr/>Agent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/FingerprintJsProAgentParams.html" class="tsd-signature-type" data-tsd-kind="Interface">FingerprintJsProAgentParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="FingerprintJsProAgent.html" class="tsd-signature-type" data-tsd-kind="Class">FingerprintJsProAgent</a><a href="#constructor.new_FingerprintJsProAgent" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Initialises FingerprintJS Pro Agent with certain settings</p>
 </div>
@@ -46,24 +46,10 @@
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>apiKey: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>your public API key that authenticates the agent with the API</p>
-</div></li>
-<li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> region: <a href="../types/Region.html" class="tsd-signature-type" data-tsd-kind="Type alias">Region</a></h5>
-<div class="tsd-comment tsd-typography"><p>which region to use</p>
-</div></li>
-<li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> endpointUrl: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>server API URL, should be only used with Subdomain integration</p>
-</div></li>
-<li>
-<h5>extendedResponseFormat: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
-<div class="tsd-comment tsd-typography"><p>set this flag to get response in extended format</p>
-</div></li></ul></div>
+<h5>params: <a href="../interfaces/FingerprintJsProAgentParams.html" class="tsd-signature-type" data-tsd-kind="Interface">FingerprintJsProAgentParams</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="FingerprintJsProAgent.html" class="tsd-signature-type" data-tsd-kind="Class">FingerprintJsProAgent</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/d0e5242/src/FingerprintJsProAgent.ts#L21">src/FingerprintJsProAgent.ts:21</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/2daf8fb/src/FingerprintJsProAgent.ts#L18">src/FingerprintJsProAgent.ts:18</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getVisitorData" class="tsd-anchor"></a>
@@ -87,7 +73,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/VisitorData.html" class="tsd-signature-type" data-tsd-kind="Type alias">VisitorData</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/d0e5242/src/FingerprintJsProAgent.ts#L55">src/FingerprintJsProAgent.ts:55</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/2daf8fb/src/FingerprintJsProAgent.ts#L52">src/FingerprintJsProAgent.ts:52</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getVisitorId" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Visitor<wbr/>Id</span><a href="#getVisitorId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -108,7 +94,7 @@
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/d0e5242/src/FingerprintJsProAgent.ts#L35">src/FingerprintJsProAgent.ts:35</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/2daf8fb/src/FingerprintJsProAgent.ts#L32">src/FingerprintJsProAgent.ts:32</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
