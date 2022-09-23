@@ -1,3 +1,27 @@
+/**
+ * Configuration options for the {@link FingerprintJsProProvider} and {@link FingerprintJsProAgent}
+ *
+ * @group Types and interfaces
+ */
+export interface FingerprintJsProAgentParams {
+  /**
+   * your public API key that authenticates the agent with the API
+   */
+  apiKey: string
+  /**
+   * which region to use
+   */
+  region?: Region
+  /**
+   * server API URL, should be only used with Subdomain integration
+   */
+  endpointUrl?: string
+  /**
+   * set this flag to get response in extended format
+   */
+  extendedResponseFormat?: boolean
+}
+
 export interface QueryResult<TData, TError = Error> {
   /**
    * Visitor identification data
