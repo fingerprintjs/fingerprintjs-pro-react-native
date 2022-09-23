@@ -1,3 +1,16 @@
+## [2.0.0-test.4](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.0.0-test.3...v2.0.0-test.4) (2022-09-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* In previous version `FingerprintJsProAgent` constructor had several position arguments.
+In new version it is one `params` argument of type `FingerprintJsProAgentParams`.
+Type `FingerprintJsProAgentParams` will be used instead of type `FingerprintJsProProviderOptions`.
+
+### Features
+
+* change `FingerprintJsProAgent` constructor interface ([1b8aab9](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/1b8aab9f89be378be67a15f4603068844f165a41))
+
 ## [2.0.0-test.3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.0.0-test.2...v2.0.0-test.3) (2022-09-23)
 
 
