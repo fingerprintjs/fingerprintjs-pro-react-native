@@ -172,7 +172,7 @@ import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-na
 useEffect(() => {
   async function getVisitorInfo() {
     try {
-      const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION'); // Region may be 'us', 'eu', or 'ap'
+      const FingerprintJSClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'REGION' }); // Region may be 'us', 'eu', or 'ap'
       const visitorId = await FingerprintJSClient.getVisitorId(); // Use this method if you need only visitorId
       const visitorData = await FingerprintJSClient.getVisitorData(); // Use this method if you need additional information about visitor
       // use visitor data in your code
@@ -203,8 +203,8 @@ It can be requested using the `extendedResponseFormat`: true parameter. See more
 #### Providing `extendedResponseFormat` with API Client approach
 
 ```javascript
-const FingerprintJSClient = new FingerprintJsProAgent('PUBLIC_API_KEY', 'REGION', null, true); // Region may be 'us', 'eu', or 'ap'
-// =====================================================================================^^^^^
+const FingerprintJSClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'REGION', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
+// =================================================================================================^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
 
 ### `LinkedId` and `tags`
