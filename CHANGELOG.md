@@ -1,3 +1,45 @@
+## [2.0.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v1.0.4...v2.0.0) (2022-09-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* In previous version `FingerprintJsProAgent` constructor had several position arguments.
+In new version it is one `params` argument of type `FingerprintJsProAgentParams`.
+Type `FingerprintJsProAgentParams` will be used instead of type `FingerprintJsProProviderOptions`.
+* `getData` method of the `useVisitorData` hook now returns answer of type `VisitorData` instead of simple `visitorId` string type.
+
+### Features
+
+* add `extendedResponseFormat` configuration flag ([2add6cc](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/2add6cc63a23410db0fab86c2097a30ec7dded63))
+* add `getVisitorData` method to the react-native agent ([16b4378](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/16b4378be2acbe97e592fb1fc1e3fed480977280))
+* better error reporting ([f011cb7](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/f011cb76f8d9f8d00ebb9577a8f3d2c03c01eb4e))
+* change `FingerprintJsProAgent` constructor interface ([1b8aab9](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/1b8aab9f89be378be67a15f4603068844f165a41))
+* send integration info ([f52e2cf](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/f52e2cfdb7b617e7d5b56c674024977d19839d71))
+* support `linkedId` param for identification requests ([e8557db](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/e8557db4c9d6ae1e9e341a8c40be0acba91d72c4))
+* update android agent to the latest version ([4051a7b](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/4051a7ba7dc5f91dc439c3c5dcc41b7f7cdab02c))
+* update iOS agent to 2.1.3 ([14a0e42](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/14a0e4232c4ca71bcb204d92aa9e51e64b2c12e7))
+* update iOS agent to the latest version ([a33d160](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a33d160ad410b1e9bf6f43039f72fa81b5d965e0))
+* update iOS agent to v2.1.1 ([f4541f2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/f4541f253b0333ee9bcd3e963799a7a78790d579))
+* update iOS native agent to 2.1.2 to return support of iOS 12 ([20c7342](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/20c73420eb882b4e0710f1de598498e9980239be))
+* update react-native to 0.70.1 ([22b8d33](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/22b8d33ee42d4c3d851ba6a97085da1a3eb0cea8))
+
+
+### Bug Fixes
+
+* async code example ([e0bd804](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/e0bd804190524995c4960a13663d3992ae83a3e3))
+* change substitution literal in .husky/commit_msg ([2267a30](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/2267a302a22e1d0426316f05b53993527652b5af))
+* error description ([c82c45b](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/c82c45bfd8f9f09d7b0d3902f0b41970199b9053))
+* expand Tags type ([08e6a73](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/08e6a73ec91c20f9a01560b9d6eb2856330da171))
+* generate iOS Metadata even if linkedId is nil ([858ac51](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/858ac5171bd95b7c88abfddd08528a244c9b38af))
+* getVisitorId error handling ([c2971cd](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/c2971cd1e55d92e0a200d09eb73370dc18b09e17))
+* pass correct `linkedId` type to the android library ([68fa2e4](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/68fa2e405f924738d255de58d43fe9fd36aab696))
+* tag functionality for new iOS library ([be590e6](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/be590e6a4e944f00327b3484fdc6348dd2743355))
+
+
+### Documentation
+
+* **README:** add documentation badge ([62a3df1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/62a3df1a4e9f560dad4c666198ea7492b022ecff))
+
 #### 1.0.4 (2022-08-05)
 
 ##### Bug Fixes
@@ -86,4 +128,3 @@
 ##### Tests
 
 *  add tests for provider and useVisitorData hook (fee4d8af)
-
