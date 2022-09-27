@@ -169,7 +169,7 @@ import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-na
 
 // ... 
 
-useEffect(async () => {
+useEffect(() => {
   async function getVisitorInfo() {
     try {
       const FingerprintJSClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'REGION' }); // Region may be 'us', 'eu', or 'ap'
