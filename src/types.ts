@@ -13,7 +13,7 @@ export interface FingerprintJsProAgentParams {
    */
   region?: Region
   /**
-   * server API URL, should be only used with Subdomain integration
+   * server API URL, should be only used with the Custom subdomain
    */
   endpointUrl?: string
   /**
