@@ -64,6 +64,9 @@ Add a declaration of the Fingerprint Android repository to your app main `build.
 maven {
   url("https://maven.fpregistry.io/releases")
 }
+maven {
+  url("https://www.jitpack.io")
+}
 ```
 
 The file location is `{rootDir}/android/build.gradle`.
@@ -84,6 +87,9 @@ allprojects {
         }
         maven {
             url("https://maven.fpregistry.io/releases")
+        }
+        maven {
+            url("https://www.jitpack.io")
         }
         google()
     }
