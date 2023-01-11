@@ -8,6 +8,7 @@ import { PUBLIC_API_KEY } from '@env'
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark'
+  const apiKey = PUBLIC_API_KEY
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -16,7 +17,7 @@ const App = () => {
   }
 
   return (
-    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
+    <FingerprintJsProProvider apiKey={apiKey} extendedResponseFormat={true}>
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <Visitor />
