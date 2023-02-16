@@ -5,5 +5,5 @@
 *.jsx @ilfa
 *.json @ilfa
 
-ios/ @petrpalata
+ios/ @mgutski
 android/ @Alexey-Verkhovsky
