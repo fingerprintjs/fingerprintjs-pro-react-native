@@ -1,3 +1,16 @@
+## [2.2.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.1.1...v2.2.0) (2023-02-17)
+
+
+### Features
+
+* update agents to add proxy integrations support ([51a6b45](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/51a6b45a876e25d0cec272a8b9437030ca677727))
+
+
+### Bug Fixes
+
+* update Android agent to 2.2.3 to fix Cloudflare support ([cbfd260](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/cbfd260dab73ea8820ca650dbd0134d11091727c))
+* update iOS agent to 2.1.8 to fix fingerprintjs/fingerprintjs-pro-ios[#27](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues/27) ([f7929b3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/f7929b3492edd9b2f77b137a193cfc80b3fa269f))
+
 ## [2.1.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.1.0...v2.1.1) (2023-01-11)
 
 
