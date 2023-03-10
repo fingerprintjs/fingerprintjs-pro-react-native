@@ -25,19 +25,19 @@
     </a>
 </p>
 
-# FingerprintJS PRO React Native
+# Fingerprint Pro React Native 
 
-### Official React Native module for 100% accurate device identification, created for FingerprintJS Pro.
+### Official React Native module for 100% accurate device identification, created for Fingerprint Pro.
 
-This module can be used in a React Native application to call the native FingerprintJS Pro libraries and identify devices.
+This module can be used in a React Native application to call the native Fingerprint Pro libraries and identify devices.
 
-FingerprintJS Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
+Fingerprint Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
 
-Retrieve an accurate, sticky and stable [FingerprintJS Pro](https://fingerprint.com/) visitor identifier in an Android or an iOS app. This library communicates with the FingerprintJS Pro API and requires an [api key](https://dev.fingerprint.com/docs). 
+Retrieve an accurate, sticky and stable [Fingerprint Pro](https://fingerprint.com/) visitor identifier in an Android or an iOS app. This library communicates with the Fingerprint Pro API and requires an [api key](https://dev.fingerprint.com/docs). 
 
 Native libraries used under the hood:
-- [FingerprintJS Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
-- [FingerprintJS Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
+- [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
+- [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
 
 ## Quick start
 
@@ -98,8 +98,8 @@ allprojects {
 
 ## Usage
 
-### FingerprintJS public API key
-To identify visitors, you need a FingerprintJS Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
+### Fingerprint Pro public API key
+To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
 - Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/)
 - Open the API keys page from the sidebar
@@ -119,7 +119,8 @@ import App from './App';
 AppRegistry.registerComponent(
   'AppName',
   <FingerprintJsProProvider
-      apiKey: 'your-fpjs-public-api-key'
+      apiKey={'your-fpjs-public-api-key'}
+      region={'eu'}
   >
     <App />
   </FingerprintJsProProvider>
@@ -178,9 +179,9 @@ import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-na
 useEffect(() => {
   async function getVisitorInfo() {
     try {
-      const FingerprintJSClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'REGION' }); // Region may be 'us', 'eu', or 'ap'
-      const visitorId = await FingerprintJSClient.getVisitorId(); // Use this method if you need only visitorId
-      const visitorData = await FingerprintJSClient.getVisitorData(); // Use this method if you need additional information about visitor
+      const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu' }); // Region may be 'us', 'eu', or 'ap'
+      const visitorId = await FingerprintClient.getVisitorId(); // Use this method if you need only visitorId
+      const visitorData = await FingerprintClient.getVisitorData(); // Use this method if you need additional information about visitor
       // use visitor data in your code
     } catch (e) {
       console.error('Error: ', e);
@@ -209,7 +210,7 @@ It can be requested using the `extendedResponseFormat`: true parameter. See more
 #### Providing `extendedResponseFormat` with API Client approach
 
 ```javascript
-const FingerprintJSClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'REGION', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
+const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
 // =================================================================================================^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
 
@@ -250,8 +251,8 @@ const tags = {
 };
 const linkedId = 'custom id';
 
-const visitorId = await FingerprintJSClient.getVisitorId(tags, linkedId); // Use this method if you need only visitorId
-const visitorData = await FingerprintJSClient.getVisitorData(tags, linkedId); // Use this method if you need additional information about visitor
+const visitorId = await FingerprintClient.getVisitorId(tags, linkedId); // Use this method if you need only visitorId
+const visitorData = await FingerprintClient.getVisitorData(tags, linkedId); // Use this method if you need additional information about visitor
 ```
 
 ## API Reference
