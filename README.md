@@ -132,6 +132,7 @@ Use the `useVisitorData` hook in your components to perform visitor identificati
 ```javascript
 // src/App.js
 import React, { useEffect } from 'react';
+import { Text } from 'react-native';
 import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native';
 
 function App() {
@@ -147,18 +148,18 @@ function App() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Text>Loading...</Text>;
   }
   if (error) {
-    return <div>An error occured: {error.message}</div>;
+    return <Text>An error occured: {error.message}</Text>;
   }
 
   if (data) {
     // perform some logic based on the visitor data
     return (
-      <div>
+      <Text>
         Visitor id is {data.visitorId}
-      </div>
+      </Text>
     );
   } else {
     return null;
