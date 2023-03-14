@@ -116,15 +116,16 @@ import { AppRegistry } from 'react-native';
 import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
 import App from './App';
 
-AppRegistry.registerComponent(
-  'AppName',
-  <FingerprintJsProProvider
-      apiKey={'your-fpjs-public-api-key'}
-      region={'eu'}
-  >
-    <App />
-  </FingerprintJsProProvider>
+const WrappedApp = () => (
+    <FingerprintJsProProvider
+        apiKey={'your-fpjs-public-api-key'}
+        region={'eu'}
+    >
+        <App />
+    </FingerprintJsProProvider>
 );
+
+AppRegistry.registerComponent('AppName', () => WrappedApp);
 ```
 
 Use the `useVisitorData` hook in your components to perform visitor identification and get the data.
