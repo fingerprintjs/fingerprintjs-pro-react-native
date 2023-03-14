@@ -1,3 +1,11 @@
+## [2.2.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.0...v2.2.1) (2023-03-14)
+
+
+### Documentation
+
+* code snippet fix for FingerprintJsProProvider ([4249f53](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/4249f53fe45b2ebb4eec82634c3bb12e1131f311))
+* readme fix code snippets ([6a11ef3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/6a11ef36242584fa51f905a55e1296f1aadd2c55))
+
 ## [2.2.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.1.1...v2.2.0) (2023-02-17)
 
 
