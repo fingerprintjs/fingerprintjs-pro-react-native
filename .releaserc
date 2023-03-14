@@ -18,7 +18,6 @@
           },
           {
             "type": "docs",
-            "scope": "README",
             "release": "patch"
           }
         ]
@@ -63,7 +62,6 @@
             {
               "type": "docs",
               "section": "Documentation",
-              "hidden": true
             },
             {
               "type": "style",
