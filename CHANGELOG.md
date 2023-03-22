@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.1...v2.2.2) (2023-03-22)
+
+
+### Bug Fixes
+
+* update Android agent to 2.3.0 ([de724a1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/de724a1b5914a483cf2ff6f42404ca3973fb9bf7))
+
 ## [2.2.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.0...v2.2.1) (2023-03-14)
 
 
