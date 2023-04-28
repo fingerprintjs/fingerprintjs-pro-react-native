@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.2...v2.3.0) (2023-04-28)
+
+
+### Features
+
+* bump android dependencies ([862b327](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/862b327f3385e9b6a7d111066dbc188e0a39fd28))
+
 ## [2.2.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.1...v2.2.2) (2023-03-22)
 
 
