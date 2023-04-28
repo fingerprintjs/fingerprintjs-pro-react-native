@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.8.0'
 
     repositories {
         google()
@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.2.1")
+        classpath("com.android.tools.build:gradle:7.4.2")
         classpath("de.undercouch:gradle-download-task:5.0.1")
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -17,12 +17,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -44,7 +44,6 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation "com.fingerprint.android:pro:2.3.0"
-    implementation "com.github.fingerprintjs:fingerprint-android:2.0.0"
+    implementation "com.fingerprint.android:pro:2.3.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
