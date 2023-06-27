@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.3.0...v2.3.1) (2023-06-27)
+
+
+### Bug Fixes
+
+* mark library as not required in MainQueue [#79](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues/79) ([e544d7e](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/e544d7e680f945ac46e085bfa88e0858cdb494f8))
+
 ## [2.3.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.2.2...v2.3.0) (2023-04-28)
 
 
