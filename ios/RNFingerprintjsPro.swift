@@ -15,6 +15,10 @@ class RNFingerprintjsPro: NSObject {
         super.init()
     }
 
+    @objc static func requiresMainQueueSetup() -> Bool {
+        return false
+    }
+
     @objc(init:region:endpoint:extendedResponseFormat:pluginVersion:)
     public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil, _ extendedResponseFormat: Bool = false, _ pluginVersion: String) {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
