@@ -1,3 +1,10 @@
+## [2.4.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.3.1...v2.4.0) (2023-06-29)
+
+
+### Features
+
+* bump iOS Agent to v2.2.0 to introduce new Smart Signals ([e47613b](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/e47613ba74e13dbbc34c30158755c25964188303))
+
 ## [2.3.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.3.0...v2.3.1) (2023-06-27)
 
 
