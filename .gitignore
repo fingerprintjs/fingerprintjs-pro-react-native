@@ -62,6 +62,7 @@ docs
 
 # Bundle artifact
 *.jsbundle
+coverage
 
 # Ruby / CocoaPods
 /ios/Pods/
