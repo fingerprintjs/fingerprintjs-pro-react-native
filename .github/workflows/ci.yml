@@ -7,25 +7,6 @@ on:
       - '**.md'
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: nodemodules-${{ hashFiles('yarn.lock') }}
-          restore-keys: nodemodules-
-      - name: Install Node packages
-        run: yarn install
-      - name: Build
-        run: yarn build
-      - name: Check the distributive TypeScript declarations
-        run: yarn test:dts
-      - name: Run linter
-        run: yarn lint
-      - name: Run tests
-        run: yarn test
+  build-and-check:
+    name: Build project and run CI checks
+    uses: fingerprintjs/dx-team-toolkit/.github/workflows/build-typescript-project.yml@v1

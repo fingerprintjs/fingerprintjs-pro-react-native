@@ -1,0 +1,12 @@
+name: Check coverage for PR
+
+on:
+  pull_request:
+
+jobs:
+  run-tests-check-coverage:
+    name: Run tests & check coverage
+    permissions:
+      checks: write
+      pull-requests: write
+    uses: fingerprintjs/dx-team-toolkit/.github/workflows/coverage-diff.yml@v1
