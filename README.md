@@ -39,8 +39,8 @@ Fingerprint Pro is a professional visitor identification service that processes 
 Retrieve an accurate, sticky and stable [Fingerprint Pro](https://fingerprint.com/) visitor identifier in an Android or an iOS app. This library communicates with the Fingerprint Pro API and requires an [api key](https://dev.fingerprint.com/docs). 
 
 Native libraries used under the hood:
-- [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
-- [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
+- [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios) - requires Android 5.0 (API level 21+) or higher
+- [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android) - requires iOS/tvOS 12, Swift 5.7 or higher
 
 ## Quick start
 
