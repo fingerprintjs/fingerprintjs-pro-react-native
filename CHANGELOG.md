@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.0...v2.5.1) (2023-09-07)
+
+
+### Documentation
+
+* **README:** add minumum OS versions requirement ([c734fc9](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/c734fc90523bd79d422d8e0f394270cf75711306))
+
 ## [2.5.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.4.0...v2.5.0) (2023-08-07)
 
 
