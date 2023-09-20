@@ -5,6 +5,6 @@
     "isolatedModules": true
   },
   "include": [
-    "build"
+    "dist"
   ]
 }
