@@ -1,3 +1,11 @@
+## [2.5.2-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.1...v2.5.2-test.1) (2023-09-20)
+
+
+### Bug Fixes
+
+* fix package publishing problems ([cb51a80](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/cb51a8037b281c29079d6aa61f3fdedd97ca6626))
+* use `dist` folder instead of `build` for build artifacts to unify dx with other projects ([be9b5ca](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/be9b5cad715b6b79a125f44b84d3cdc9639bf8f2))
+
 ## [2.5.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.0...v2.5.1) (2023-09-07)
 
 
