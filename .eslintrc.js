@@ -21,7 +21,7 @@ module.exports = {
     },
   },
   plugins: ['@typescript-eslint', 'prettier', 'react', 'react-native'],
-  ignorePatterns: ['build/*'],
+  ignorePatterns: ['dist/*'],
   rules: {
     semi: ['error', 'never'],
     'linebreak-style': ['error', 'unix'],

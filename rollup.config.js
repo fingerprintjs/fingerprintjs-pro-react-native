@@ -8,7 +8,7 @@ import { join } from 'path'
 const { dependencies = {} } = require('./package.json')
 
 const inputFile = 'src/index.ts'
-const outputDirectory = 'build'
+const outputDirectory = 'dist'
 const artifactName = 'fpjs-pro-react-native'
 
 const commonBanner = licensePlugin({

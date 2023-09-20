@@ -2,12 +2,12 @@
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
   "version": "2.5.1",
   "description": "Official React Native client for FingerprintJS PRO. Best identification solution for React Native.",
-  "main": "./build/fpjs-pro-react-native.cjs.js",
-  "module": "./build/fpjs-pro-react-native.esm.js",
-  "types": "./build/fpjs-pro-react-native.d.ts",
+  "main": "./dist/fpjs-pro-react-native.cjs.js",
+  "module": "./dist/fpjs-pro-react-native.esm.js",
+  "types": "./dist/fpjs-pro-react-native.d.ts",
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf ./build && rollup -c rollup.config.js",
+    "build": "rm -rf ./dist && rollup -c rollup.config.js",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
@@ -20,7 +20,7 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "build"
+    "dist"
   ],
   "keywords": [
     "fraud",
