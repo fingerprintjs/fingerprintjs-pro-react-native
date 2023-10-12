@@ -34,6 +34,20 @@
 identification. Fingerprint Pro React Native SDK is an easy way to integrate Fingerprint Pro into your React Native
 application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
+## Table of contents
+* [Requirements](#requirements)
+* [Dependencies](#dependencies)
+* [How to install](#how-to-install)
+* [Usage](#usage)
+  * [Hooks approach](#hooks-approach)
+  * [API Client approach](#api-client-approach)
+  * [`extendedResponseFormat`](#extendedresponseformat)
+  * [`LinkedId` and `tags`](#linkedid-and-tags)
+* [API Reference](#api-reference)
+* [Additional Resources](#additional-resources)
+* [Limitations](#limitations)
+* [License](#license)
+
 ## Requirements
 
 - React Native 0.69 or higher
