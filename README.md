@@ -35,7 +35,7 @@ identification. Fingerprint Pro React Native SDK is an easy way to integrate Fin
 application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
 ## Table of contents
-* [Requirements](#requirements)
+* [Requirements and limitations](#requirements-and-limitations)
 * [Dependencies](#dependencies)
 * [How to install](#how-to-install)
 * [Usage](#usage)
@@ -45,14 +45,18 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   * [`LinkedId` and `tags`](#linkedid-and-tags)
 * [API Reference](#api-reference)
 * [Additional Resources](#additional-resources)
-* [Limitations](#limitations)
+* [Support and feedback](#support-and-feedback)
 * [License](#license)
 
-## Requirements
+## Requirements and limitations
 
 - React Native 0.69 or higher
 - Android 5.0 (API level 21+) or higher
 - iOS/tvOS 12, Swift 5.7 or higher
+
+
+- Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
+- Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
 
 ## Dependencies
 - [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
@@ -284,15 +288,16 @@ const visitorData = await FingerprintClient.getVisitorData(tags, linkedId); // U
 ```
 
 ## API Reference
-You can find API reference [here](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
+See the full [generated API Reference](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
 
 ## Additional Resources
 - [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
 - [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
 
-## Limitations
-- Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
-- Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
+## Support and feedback
+To report problems, ask questions or provide feedback, please
+use [Issues](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues). If you need private support,
+please email us at `oss-support@fingerprint.com`.
 
 ## License
 This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
