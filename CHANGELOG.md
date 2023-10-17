@@ -1,3 +1,12 @@
+## [2.5.3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.2...v2.5.3) (2023-10-17)
+
+
+### Documentation
+
+* add `support and feedback` section, merge `limitations` with `requirements` ([46ba804](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/46ba8043472202d580cd97b84743a7de502ce3b9))
+* add requirements section, revisit README.md ([c298393](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/c298393026de445b627d4e7cbae874ce97661a65))
+* add table of contents ([c95748d](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/c95748d40bca37ad60bedea361d6f0a1dd920a7c))
+
 ## [2.5.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.1...v2.5.2) (2023-09-20)
 
 
