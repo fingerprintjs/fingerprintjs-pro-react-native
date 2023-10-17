@@ -132,8 +132,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
 - Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/).
-- Open the API keys page from the sidebar
-- Find your Public API key
+- Open **App Settings** > **API Keys** to find your Public API key.
 
 ### Hooks approach
 
@@ -249,10 +248,10 @@ const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', 
 ### `LinkedId` and `tags`
 
 `linkedId` is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#linkedid).
+For more information, see [Linked ID](https://dev.fingerprint.com/docs/js-agent#linkedid).
 
 `tag` is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API.
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#tag).
+For more information, see [Tag](https://dev.fingerprint.com/docs/js-agent#tag).
 
 #### Providing `linkedId` and `tags` with hooks approach
 
