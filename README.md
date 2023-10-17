@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://fingerprint.com">
     <picture>
-     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fingerprintjs/fingerprintjs-pro-react-native/HEAD/res/logo_light.svg" />
-     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/fingerprintjs/fingerprintjs-pro-react-native/HEAD/res/logo_dark.svg" />
-     <img src="https://raw.githubusercontent.com/fingerprintjs/fingerprintjs-pro-react-native/HEAD/res/logo_dark.svg" alt="Fingerprint logo" width="312px" />
+     <source media="(prefers-color-scheme: dark)" srcset="https://fingerprintjs.github.io/home/resources/logo_light.svg" />
+     <source media="(prefers-color-scheme: light)" srcset="https://fingerprintjs.github.io/home/resources/logo_dark.svg" />
+     <img src="https://fingerprintjs.github.io/home/resources/logo_dark.svg" alt="Fingerprint logo" width="312px" />
    </picture>
   </a>
 </p>
@@ -30,83 +30,109 @@
 
 # Fingerprint Pro React Native 
 
-### Official React Native module for 100% accurate device identification, created for Fingerprint Pro.
+[Fingerprint](https://fingerprint.com/) is a device intelligence platform offering 99.5% accurate visitor
+identification. Fingerprint Pro React Native SDK is an easy way to integrate Fingerprint Pro into your React Native
+application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
-This module can be used in a React Native application to call the native Fingerprint Pro libraries and identify devices.
+## Table of contents
+* [Requirements and limitations](#requirements-and-limitations)
+* [Dependencies](#dependencies)
+* [How to install](#how-to-install)
+* [Usage](#usage)
+  * [Hooks approach](#hooks-approach)
+  * [API Client approach](#api-client-approach)
+  * [`extendedResponseFormat`](#extendedresponseformat)
+  * [`LinkedId` and `tags`](#linkedid-and-tags)
+* [API Reference](#api-reference)
+* [Additional Resources](#additional-resources)
+* [Support and feedback](#support-and-feedback)
+* [License](#license)
 
-Fingerprint Pro is a professional visitor identification service that processes all information server-side and transmits it securely to your servers using server-to-server APIs.
+## Requirements and limitations
 
-Retrieve an accurate, sticky and stable [Fingerprint Pro](https://fingerprint.com/) visitor identifier in an Android or an iOS app. This library communicates with the Fingerprint Pro API and requires an [api key](https://dev.fingerprint.com/docs). 
-
-Native libraries used under the hood:
-- [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios) - requires Android 5.0 (API level 21+) or higher
-- [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android) - requires iOS/tvOS 12, Swift 5.7 or higher
-
-## Quick start
-
-#### 1. Add `@fingerprintjs/fingerprintjs-pro-react-native` to your application via npm or yarn:
+- React Native 0.69 or higher
+- Android 5.0 (API level 21+) or higher
+- iOS/tvOS 12, Swift 5.7 or higher
 
 
-`npm install @fingerprintjs/fingerprintjs-pro-react-native --save`
+- Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
+- Usage inside the [Expo environment](https://docs.expo.dev) is not supported right now.
 
-or
+## Dependencies
+- [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
+- [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
 
-`yarn add @fingerprintjs/fingerprintjs-pro-react-native`
+## How to install
 
-#### 2. Configure native dependencies
+### 1. Install the package using your favorite package manager:
 
-**iOS**
+* [NPM](https://npmjs.org):
+  ```shell
+  npm install @fingerprintjs/fingerprintjs-pro-react-native --save
+  ```
 
-`cd ios && pod install`
+* [Yarn](https://yarnpkg.com):
+  ```shell
+  yarn add @fingerprintjs/fingerprintjs-pro-react-native
+  ```
 
-**Android**
+* [PNPM](https://pnpm.js.org):
+  ```shell
+  pnpm add @fingerprintjs/fingerprintjs-pro-react-native
+  ```
 
-Add a declaration of the Fingerprint Android repository to your app main `build.gradle` file to the `allprojects` section: 
+### 2. Configure native dependencies
 
-```groovy
-maven {
-  url("https://maven.fpregistry.io/releases")
-}
-maven {
-  url("https://www.jitpack.io")
-}
-```
+* **iOS**
+  ```shell
+  cd ios && pod install
+  ```
 
-The file location is `{rootDir}/android/build.gradle`.
-After the changes the `build.gradle` file should look as following:
+* **Android**
 
-```groovy
-allprojects {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url("$rootDir/../node_modules/react-native/android")
-        }
-        maven {
-            // Android JSC is installed from npm
-            url("$rootDir/../node_modules/jsc-android/dist")
-        }
-        maven {
-            url("https://maven.fpregistry.io/releases")
-        }
-        maven {
-            url("https://www.jitpack.io")
-        }
-        google()
-    }
-}
-```
+  Add a declaration of the Fingerprint Android repository to your app main `build.gradle` file to the `allprojects` section:
+  ```groovy
+  maven {
+    url("https://maven.fpregistry.io/releases")
+  }
+  maven {
+    url("https://www.jitpack.io")
+  }
+  ```
+
+  The file location is `{rootDir}/android/build.gradle`.
+  After the changes the `build.gradle` file should look as following:
+
+  ```groovy
+  allprojects {
+   repositories {
+     mavenCentral()
+     mavenLocal()
+     maven {
+       // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+       url("$rootDir/../node_modules/react-native/android")
+     }
+     maven {
+       // Android JSC is installed from npm
+       url("$rootDir/../node_modules/jsc-android/dist")
+     }
+     maven {
+       url("https://maven.fpregistry.io/releases")
+     }
+     maven {
+       url("https://www.jitpack.io")
+     }
+     google()
+   }
+  }
+  ```
 
 ## Usage
 
-### Fingerprint Pro public API key
 To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
-- Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/)
-- Open the API keys page from the sidebar
-- Find your Public API key
+- Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/).
+- Open **App Settings** > **API Keys** to find your Public API key.
 
 ### Hooks approach
 
@@ -222,10 +248,10 @@ const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', 
 ### `LinkedId` and `tags`
 
 `linkedId` is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#linkedid).
+For more information, see [Linked ID](https://dev.fingerprint.com/docs/js-agent#linkedid).
 
 `tag` is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API.
-More information about approaches you can find in the [js agent documentation](https://dev.fingerprint.com/docs/js-agent#tag).
+For more information, see [Tag](https://dev.fingerprint.com/docs/js-agent#tag).
 
 #### Providing `linkedId` and `tags` with hooks approach
 
@@ -261,16 +287,17 @@ const visitorData = await FingerprintClient.getVisitorData(tags, linkedId); // U
 ```
 
 ## API Reference
-You can find API reference [here](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
+See the full [generated API Reference](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
 
 ## Additional Resources
 - [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
 - [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
 
-## Limitations
-- Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
-- Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
+## Support and feedback
+To report problems, ask questions or provide feedback, please
+use [Issues](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues). If you need private support,
+please email us at `oss-support@fingerprint.com`.
 
 ## License
-This library is MIT licensed.
+This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
 
