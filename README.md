@@ -56,7 +56,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 
 - Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
-- Using inside Expo [environment](https://docs.expo.dev) is not supported right now.
+- Usage inside the [Expo environment](https://docs.expo.dev) is not supported right now.
 
 ## Dependencies
 - [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
@@ -131,7 +131,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
 
-- Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/)
+- Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/).
 - Open the API keys page from the sidebar
 - Find your Public API key
 
