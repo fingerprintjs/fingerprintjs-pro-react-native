@@ -7,11 +7,11 @@ Pod::Spec.new do |s|
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
-  s.platform     = :ios, "12.0"
+  s.platform     = :ios, "13.0"
 
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
 #   s.requires_arc = true
 
   s.dependency "React-Core"
-  s.dependency "FingerprintPro", '~> 2.2.0'
+  s.dependency "FingerprintPro", '~> 2.3.1'
 end
