@@ -1,3 +1,15 @@
+## [2.6.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.3...v2.6.0) (2023-11-28)
+
+
+### Features
+
+* update iOS agent to 2.3.1 ([6b6f8cf](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/6b6f8cfedc24602f591e9af6041a7562d8ce61f1))
+
+
+### Documentation
+
+* update requirements section ([ae5e74f](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/ae5e74f0f8d4e7f68163536133aff69af1638257))
+
 ## [2.5.3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.5.2...v2.5.3) (2023-10-17)
 
 
