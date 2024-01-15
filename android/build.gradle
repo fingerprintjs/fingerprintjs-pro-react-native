@@ -20,6 +20,12 @@ android {
     compileSdkVersion 34
     buildToolsVersion "30.0.3"
 
+    namespace = "com.fingerprintjs.reactnative"
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 34
