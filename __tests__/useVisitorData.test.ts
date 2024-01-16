@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
 import { useVisitorData } from '../src'
 import { createWrapper } from './helpers'
@@ -28,13 +28,17 @@ describe('useVisitorData', () => {
 
   it('should correct update isLoading state', async () => {
     const wrapper = createWrapper()
-    const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
+
     act(() => {
       result.current.getData()
     })
+
     expect(result.current.isLoading).toBeTruthy()
-    await waitForNextUpdate()
-    expect(result.current.isLoading).toBeFalsy()
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBeFalsy()
+    })
   })
 
   it('should correct return data', async () => {
@@ -46,38 +50,40 @@ describe('useVisitorData', () => {
       Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
     )
     const wrapper = createWrapper()
-    const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
       result.current.getData()
     })
     expect(result.current.data).toBeUndefined()
-    await waitForNextUpdate()
-    expect(result.current.data).toStrictEqual({
-      visitorId: mockedVisitorId,
-      requestId: mockedRequestId,
-      confidence: {
-        score: mockedConfidenceScore,
-      },
+    await waitFor(() => {
+      expect(result.current.data).toStrictEqual({
+        visitorId: mockedVisitorId,
+        requestId: mockedRequestId,
+        confidence: {
+          score: mockedConfidenceScore,
+        },
+      })
+      expect(result.current.error).toBeFalsy()
     })
-    expect(result.current.error).toBeFalsy()
   })
 
   it('should fill error field in case of error', async () => {
     const error = new Error('Unknown error')
     getVisitorData.mockReturnValueOnce(Promise.reject(error))
     const wrapper = createWrapper()
-    const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
       result.current.getData()
     })
     expect(result.current.isLoading).toBeTruthy()
     expect(result.current.error).toBeFalsy()
-    await waitForNextUpdate()
-    expect(result.current.isLoading).toBeFalsy()
-    expect(result.current.data).toBeUndefined()
-    expect(result.current.error).toBeInstanceOf(Error)
-    expect(result.current.error?.name).toBe('UnknownError')
-    expect(result.current.error?.message).toContain(error.message)
+    await waitFor(() => {
+      expect(result.current.isLoading).toBeFalsy()
+      expect(result.current.data).toBeUndefined()
+      expect(result.current.error).toBeInstanceOf(Error)
+      expect(result.current.error?.name).toBe('UnknownError')
+      expect(result.current.error?.message).toContain(error.message)
+    })
   })
 
   it('should pass linkedId and tags to `getData` function', async () => {
@@ -102,12 +108,12 @@ describe('useVisitorData', () => {
     )
 
     const wrapper = createWrapper()
-    const { result, waitForNextUpdate } = renderHook(() => useVisitorData(), { wrapper })
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
       result.current.getData(mockedTags, mockedLinkedId)
     })
-    await waitForNextUpdate()
-
-    expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+    await waitFor(() => {
+      expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+    })
   })
 })

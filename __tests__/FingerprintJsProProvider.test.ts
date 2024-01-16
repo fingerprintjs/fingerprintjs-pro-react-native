@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { createWrapper, getDefaultLoadOptions } from './helpers'
 import { FingerprintJsProContext } from '../src/FingerprintJsProContext'
 import { NativeModules } from 'react-native'
