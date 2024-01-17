@@ -7,25 +7,28 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "cd .. && yarn lint"
+    "lint": "cd .. && yarn lint",
+    "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs-pro-react-native": "file:..",
-    "react": "18.1.0",
-    "react-native": "0.70.1",
+    "@fingerprintjs/fingerprintjs-pro-react-native": "../",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
     "react-native-dotenv": "^3.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.0",
-    "@babel/runtime": "^7.17.0",
-    "babel-jest": "^27.4.6",
-    "eslint": "^7.32.0",
+    "@babel/core": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@babel/preset-env": "^7.23.8",
+    "@react-native/metro-config": "0.73.3",
+    "babel-jest": "^29.6.3",
+    "eslint": "^8.19.0",
     "jest": "^27.4.7",
-    "metro-react-native-babel-preset": "^0.72.1",
-    "react-test-renderer": "18.1.0"
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react-test-renderer": "18.2.0"
   },
   "engines": {
-    "node": "^16"
+    "node": "^20"
   },
   "jest": {
     "preset": "react-native"
