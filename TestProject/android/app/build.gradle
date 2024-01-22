@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -82,7 +83,6 @@ project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
 ]
 
-apply from: "../../node_modules/react-native/react.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -159,6 +159,9 @@ android {
                 }
             }
         }
+        buildFeatures {
+            buildConfig = true
+        }
     }
 
     if (isNewArchitectureEnabled()) {
@@ -201,6 +204,8 @@ android {
             }
         }
     }
+
+    namespace = "com.testproject"
 
     splits {
         abi {
@@ -265,9 +270,7 @@ dependencies {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
 
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
-    }
+    debugImplementation("com.facebook.fresco:flipper-fresco-plugin:${FLIPPER_FRESCO_VERSION}")
 
     if (enableHermes) {
         //noinspection GradleDynamicVersion
