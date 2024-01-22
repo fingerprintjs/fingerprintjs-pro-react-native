@@ -1,3 +1,20 @@
+## [3.0.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.7.0-test.1...v3.0.0-test.1) (2024-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimum supported React Native version is 0.73
+* minimum supported React Native version is 0.73
+
+### Features
+
+* bump major version ([688955c](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/688955c4d252feaf957ec492c7c3da453abf123f))
+
+
+### Documentation
+
+* update requirements section ([8229a3c](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/8229a3c3dd5314eacba4fa5f0cd22add9ad760a8))
+
 ## [2.7.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.6.0...v2.7.0-test.1) (2024-01-17)
 
 
