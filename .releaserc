@@ -23,6 +23,12 @@
     "@semantic-release/changelog",
     "@semantic-release/npm",
     [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "yarn build"
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": [
