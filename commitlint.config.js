@@ -1,1 +1,1 @@
-module.exports = { extends: ['@commitlint/config-conventional'] }
+module.exports = { extends: ['@fingerprintjs/commit-lint-dx-team'] }
