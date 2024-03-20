@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.0.0...v3.0.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* publish package with correct version in integration info ([a561071](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a561071d46c3e4f011b7f6d1076d2fe26dc2883c))
+
 ## [3.0.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v2.6.0...v3.0.0) (2024-01-22)
 
 
