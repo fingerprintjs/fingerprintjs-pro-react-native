@@ -1,0 +1,12 @@
+name: Reset Prerelease Branch
+on:
+  workflow_dispatch:
+
+jobs:
+  reset-feature-branch:
+    uses: fingerprintjs/dx-team-toolkit/.github/workflows/reset-prerelease-branch.yml@v1
+    with:
+      branch_name: 'test'
+      appId: ${{ vars.APP_ID }}
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
