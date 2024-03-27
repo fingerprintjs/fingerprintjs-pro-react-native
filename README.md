@@ -129,7 +129,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 ## Usage
 
-To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprintjs.com/signup/)).
+To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprint.com/signup/)).
 
 - Go to [the Fingerprint Pro dashboard](https://dashboard.fingerprint.com/).
 - Open **App Settings** > **API Keys** to find your Public API key.
