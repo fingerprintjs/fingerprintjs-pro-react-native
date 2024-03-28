@@ -1,3 +1,10 @@
+## [3.0.2-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.0.1...v3.0.2-test.1) (2024-03-28)
+
+
+### Build System
+
+* **deps:** bump ip from 1.1.8 to 1.1.9 ([cb27362](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/cb27362394d3b29e87a863e9610eb98bc2dfa91a))
+
 ## [3.0.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.0.0...v3.0.1) (2024-03-20)
 
 
