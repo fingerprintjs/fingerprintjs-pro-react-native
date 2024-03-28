@@ -19,7 +19,7 @@ describe(`FingerprintJsProProvider`, () => {
   it('should pass options to agent with regular result', () => {
     const options = getDefaultLoadOptions()
     options.region = 'us'
-    options.endpointUrl = 'https://bla.bla.bla'
+    options.endpointUrl = 'https://example.com'
 
     const wrapper = createWrapper(options)
     renderHook(() => useContext(FingerprintJsProContext), {
@@ -38,7 +38,7 @@ describe(`FingerprintJsProProvider`, () => {
   it('should pass options to agent with extended result', () => {
     const options = getDefaultLoadOptions()
     options.region = 'us'
-    options.endpointUrl = 'https://bla.bla.bla'
+    options.endpointUrl = 'https://example.com'
     options.extendedResponseFormat = true
 
     const wrapper = createWrapper(options)

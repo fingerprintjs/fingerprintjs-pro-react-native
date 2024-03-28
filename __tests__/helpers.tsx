@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { FingerprintJsProProvider } from '../src'
-import { FingerprintJsProAgentParams } from '../src/types'
+import { FingerprintJsProProvider, FingerprintJsProAgentParams } from '../src'
 
 export const getDefaultLoadOptions = (): FingerprintJsProAgentParams => ({
   apiKey: 'test_api_key',

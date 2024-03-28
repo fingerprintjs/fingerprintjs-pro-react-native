@@ -3,9 +3,10 @@ import jsonPlugin from '@rollup/plugin-json'
 import external from 'rollup-plugin-peer-deps-external'
 import dtsPlugin from 'rollup-plugin-dts'
 import licensePlugin from 'rollup-plugin-license'
-import { join } from 'path'
+import pkg from './package.json' assert { type: 'json' }
+import { fileURLToPath } from 'node:url'
 
-const { dependencies = {} } = require('./package.json')
+const dependencies = pkg.devDependencies
 
 const inputFile = 'src/index.ts'
 const outputDirectory = 'dist'
@@ -14,7 +15,7 @@ const artifactName = 'fpjs-pro-react-native'
 const commonBanner = licensePlugin({
   banner: {
     content: {
-      file: join(__dirname, 'res', 'license_banner.txt'),
+      file: fileURLToPath(new URL('res/license_banner.txt', import.meta.url)),
     },
   },
 })
