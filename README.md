@@ -42,7 +42,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   * [Hooks approach](#hooks-approach)
   * [API Client approach](#api-client-approach)
   * [`extendedResponseFormat`](#extendedresponseformat)
-  * [`LinkedId` and `tags`](#linkedid-and-tags)
+  * [Linking and tagging information](#linking-and-tagging-information)
 * [API Reference](#api-reference)
 * [Additional Resources](#additional-resources)
 * [Support and feedback](#support-and-feedback)
@@ -245,45 +245,25 @@ const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', 
 // =================================================================================================^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
 
-### `LinkedId` and `tags`
+### Linking and tagging information
 
-`linkedId` is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API
-For more information, see [Linked ID](https://dev.fingerprint.com/docs/js-agent#linkedid).
-
-`tag` is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API.
-For more information, see [Tag](https://dev.fingerprint.com/docs/js-agent#tag).
-
-#### Providing `linkedId` and `tags` with hooks approach
+The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://dev.fingerprint.com/docs/tagging-information).
 
 ```javascript
-const { getData } = useVisitorData();
-const tags = {
-  tag1: 'string tag',
-  tag2: 42,
-  tag3: true,
-  tag4: [0, 1, 1, 2, 5],
-  tag5: { foo: 'bar' }
+const tag = {
+  userAction: 'login',
+  analyticsId: 'UA-5555-1111-1'
 };
-const linkedId = 'custom id';
+const linkedId = 'user_1234';
 
-const visitorData = await getData(tags, linkedId);
-```
-
-#### Providing `linkedId` and `tags` with API Client approach
-
-```javascript
+// Using hooks
 const { getData } = useVisitorData();
-const tags = {
-  tag1: 'string tag',
-  tag2: 42,
-  tag3: true,
-  tag4: [0, 1, 1, 2, 5],
-  tag5: { foo: 'bar' }
-};
-const linkedId = 'custom id';
+const visitorData = await getData(tag, linkedId);
 
-const visitorId = await FingerprintClient.getVisitorId(tags, linkedId); // Use this method if you need only visitorId
-const visitorData = await FingerprintClient.getVisitorData(tags, linkedId); // Use this method if you need additional information about visitor
+// Using the client
+const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY'});
+const visitorId = await FingerprintClient.getVisitorId(tag, linkedId);
+const visitor = await FingerprintClient.getVisitorData(tag, linkedId); 
 ```
 
 ## API Reference
