@@ -30,6 +30,28 @@ describe(`FingerprintJsProProvider`, () => {
       options.apiKey,
       options.region,
       options.endpointUrl,
+      [],
+      false,
+      pluginVersion
+    )
+  })
+
+  it('should pass fallbackEndpointUrls as array', () => {
+    const options = getDefaultLoadOptions()
+    options.region = 'us'
+    options.endpointUrl = 'https://example.com'
+    options.fallbackEndpointUrls = ['https://example2.com', 'https://example3.com']
+
+    const wrapper = createWrapper(options)
+    renderHook(() => useContext(FingerprintJsProContext), {
+      wrapper,
+    })
+
+    expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
+      options.apiKey,
+      options.region,
+      options.endpointUrl,
+      options.fallbackEndpointUrls,
       false,
       pluginVersion
     )
@@ -50,6 +72,7 @@ describe(`FingerprintJsProProvider`, () => {
       options.apiKey,
       options.region,
       options.endpointUrl,
+      [],
       options.extendedResponseFormat,
       pluginVersion
     )

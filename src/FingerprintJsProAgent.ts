@@ -15,9 +15,22 @@ export class FingerprintJsProAgent {
    *
    * @param params
    */
-  constructor({ apiKey, region, endpointUrl, extendedResponseFormat = false }: FingerprintJsProAgentParams) {
+  constructor({
+    apiKey,
+    region,
+    endpointUrl,
+    fallbackEndpointUrls = [],
+    extendedResponseFormat = false,
+  }: FingerprintJsProAgentParams) {
     try {
-      NativeModules.RNFingerprintjsPro.init(apiKey, region, endpointUrl, extendedResponseFormat, packageInfo.version)
+      NativeModules.RNFingerprintjsPro.init(
+        apiKey,
+        region,
+        endpointUrl,
+        fallbackEndpointUrls,
+        extendedResponseFormat,
+        packageInfo.version
+      )
     } catch (e) {
       console.error('RNFingerprintjsPro init error: ', e)
     }

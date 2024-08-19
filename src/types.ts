@@ -17,6 +17,10 @@ export interface FingerprintJsProAgentParams {
    */
   endpointUrl?: string
   /**
+   * provide array of endpoints to specify fallbacks
+   */
+  fallbackEndpointUrls?: string[]
+  /**
    * set this flag to get response in extended format
    */
   extendedResponseFormat?: boolean

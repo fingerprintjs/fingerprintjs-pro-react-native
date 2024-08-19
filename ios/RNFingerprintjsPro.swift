@@ -18,9 +18,9 @@ class RNFingerprintjsPro: NSObject {
     @objc
     static func requiresMainQueueSetup() -> Bool { false }
 
-    @objc(init:region:endpoint:extendedResponseFormat:pluginVersion:)
-    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String? = nil, _ extendedResponseFormat: Bool = false, _ pluginVersion: String) {
-        let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint)
+    @objc(init:region:endpoint:endpointFallbacks:extendedResponseFormat:pluginVersion:)
+    public required init(_ apiToken: String, _ region: String? = "us", _ endpoint: String?, _ fallbackEndpointUrls: [String], _ extendedResponseFormat: Bool = false, _ pluginVersion: String) {
+        let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint, fallbackEndpointUrls: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
         let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
@@ -62,7 +62,7 @@ class RNFingerprintjsPro: NSObject {
         }
 
 
-    private static func parseRegion(_ passedRegion: String?, endpoint: String?) -> Region {
+    private static func parseRegion(_ passedRegion: String?, endpoint: String?, fallbackEndpointUrls: [String]?) -> Region {
         var region: Region
         switch passedRegion {
         case "eu":
@@ -74,7 +74,7 @@ class RNFingerprintjsPro: NSObject {
         }
 
         if let endpointString = endpoint {
-            region = .custom(domain: endpointString)
+            region = .custom(domain: endpointString, fallback: fallbackEndpointUrls ?? [])
         }
 
         return region
