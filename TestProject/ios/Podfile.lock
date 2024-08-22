@@ -9,7 +9,7 @@ PODS:
     - React-Core (= 0.73.2)
     - React-jsi (= 0.73.2)
     - ReactCommon/turbomodule/core (= 0.73.2)
-  - FingerprintPro (2.3.2)
+  - FingerprintPro (2.6.0)
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.73.2):
@@ -1055,7 +1055,7 @@ PODS:
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
   - RNFingerprintjsPro (1.0.4):
-    - FingerprintPro (~> 2.3.1)
+    - FingerprintPro (~> 2.6.0)
     - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
@@ -1224,12 +1224,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
-  DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: fbc4957d9aa695250b55d879c1d86f79d7e69ab4
   FBReactNativeSpec: 86de768f89901ef6ed3207cd686362189d64ac88
-  FingerprintPro: c6444f5a00d1126446da664124529e754475f198
+  FingerprintPro: 3f06f491c77d871ab543b49fd25fddc52dc34f8c
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: b361c9ef5ef3cda53f66e195599b47e1f84ffa35
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
@@ -1273,9 +1273,9 @@ SPEC CHECKSUMS:
   React-runtimescheduler: df8945a656356ff10f58f65a70820478bfcf33ad
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
-  RNFingerprintjsPro: b92c7eeff80f567abea771a4a3aaa196799caf7c
+  RNFingerprintjsPro: 5a6f377649bc343770e4c28dd2ba9476a918b9fc
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
+  Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
 PODFILE CHECKSUM: ab81067ce8c7c4c73b9d3ab72ba8cc955f098393
 
