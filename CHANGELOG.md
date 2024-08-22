@@ -1,3 +1,17 @@
+## [3.1.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.0.2...v3.1.0) (2024-08-22)
+
+
+### Features
+
+* add `fallbackEndpointUrls` configuration param ([5ce1864](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/5ce1864bd3a22a8c3b741bcc6c05882c7d1e5a88))
+* update Android agent to v2.5.0 ([6dfcb88](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/6dfcb8883f10696e56e3245d1b42753740651db4))
+* update iOS agent to v2.6.0 ([dfe83b2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/dfe83b20c4f8e96243d17f4fda9446bc43b600cb))
+
+
+### Documentation
+
+* **README:** unify and simplify linkedId section ([67cb56e](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/67cb56ea9d1913b360dcca28858539efe524568e))
+
 ## [3.0.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.0.1...v3.0.2) (2024-03-28)
 
 
