@@ -226,7 +226,7 @@ useEffect(() => {
 
 Two types of responses are supported: "default" and "extended". You don't need to pass any parameters to get the "default" response.
 "Extended" is an extended result format that includes geolocation, incognito mode and other information.
-It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/docs/js-agent#extendedResult).
+It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/reference/get-function#extendedresult).
 
 #### Providing `extendedResponseFormat` with hooks approach
 
