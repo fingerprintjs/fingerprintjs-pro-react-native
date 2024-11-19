@@ -73,6 +73,10 @@ export interface ShortVisitorData {
    * A confidence score that tells how much the agent is sure about the visitor identifier
    */
   confidence: Confidence
+  /**
+   * See more details in the Sealed Client Results(https://dev.fingerprint.com/docs/sealed-client-results) guide. The field will miss if Sealed Client Results are disabled or unavailable for another reason.
+   */
+  sealedResult?: string
 }
 
 /**
