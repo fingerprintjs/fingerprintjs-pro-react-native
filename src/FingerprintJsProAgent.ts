@@ -64,17 +64,21 @@ export class FingerprintJsProAgent {
    */
   public async getVisitorData(tags?: Tags, linkedId?: string): Promise<VisitorData> {
     try {
-      const [requestId, confidenceScore, visitorDataJsonString] = await NativeModules.RNFingerprintjsPro.getVisitorData(
-        tags,
-        linkedId
-      )
-      return {
+      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] =
+        await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
+      const result = {
         ...JSON.parse(visitorDataJsonString),
         requestId,
         confidence: {
           score: confidenceScore,
         },
       }
+
+      if (sealedResult) {
+        result['sealedResult'] = sealedResult
+      }
+
+      return result
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
