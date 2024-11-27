@@ -54,7 +54,8 @@ class RNFingerprintjsPro: NSObject {
                     let tuple = [
                         visitorDataResponse.requestId,
                         visitorDataResponse.confidence,
-                        visitorDataResponse.asJSON()
+                        visitorDataResponse.asJSON(),
+                        visitorDataResponse.sealedResult,
                     ] as [Any]
                     resolve(tuple)
                 }
