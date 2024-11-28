@@ -51,9 +51,15 @@ const linkedId = 'React native'
 export const Visitor = () => {
   const { isLoading, data, getData, error } = useVisitorData()
   const [modalVisible, setModalVisible] = useState(false)
+  const [sealedResultModalVisible, setSealedResultModalVisible] = useState(false)
 
   const onLoadData = () => {
     getData()
+  }
+
+  const onLoadSealedResult = () => {
+    getData()
+    setSealedResultModalVisible(true)
   }
 
   const onLoadDataWithTag = () => {
@@ -75,6 +81,7 @@ export const Visitor = () => {
   }
 
   const extendedResult = JSON.stringify(data, null, '  ')
+  const sealedResultInfo = JSON.stringify(data?.sealedResult ?? '', null, '  ')
 
   return (
     <View style={styles.centeredView}>
@@ -83,7 +90,25 @@ export const Visitor = () => {
         <Button title='Load data' onPress={onLoadData} />
         <Button title='Load with tag and linkedId' onPress={onLoadDataWithTag} />
         <Button title='Load extendedResult' onPress={onLoadExtendedResult} />
+        <Button title='Load sealedResult' onPress={onLoadSealedResult} />
       </View>
+
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={sealedResultModalVisible}
+        onRequestClose={() => {
+          setSealedResultModalVisible(!setSealedResultModalVisible)
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.monoText}>{sealedResultInfo}</Text>
+            <Button title='Close' onPress={() => setSealedResultModalVisible(!sealedResultModalVisible)} />
+          </View>
+        </View>
+      </Modal>
+
       <Modal
         animationType='slide'
         transparent={true}
