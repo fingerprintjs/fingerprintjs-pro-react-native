@@ -72,7 +72,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     try {
       fpjsClient?.getVisitorId(tags?.toHashMap() ?: emptyMap(),
         linkedId ?: "",
-        { result -> promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult))) },
+        { result -> promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: ""))) },
         { error -> promise.reject("Error: ", getErrorDescription(error))
       })
     } catch (e: Exception) {
