@@ -1,6 +1,6 @@
 import { useCallback, useContext, useState } from 'react'
 import { FingerprintJsProContextInterface, FingerprintJsProContext } from './FingerprintJsProContext'
-import { QueryResult, VisitorQueryContext, VisitorData } from './types'
+import { QueryResult, VisitorQueryContext, VisitorData, Tags, RequestOptions } from './types'
 import { IdentificationError } from './errors'
 
 /**
@@ -27,11 +27,11 @@ export function useVisitorData(): VisitorQueryContext {
   const [state, setState] = useState<QueryResult<VisitorData, IdentificationError>>({})
 
   const getData = useCallback<VisitorQueryContext['getData']>(
-    async (tags, linkedId) => {
+    async (tags?: Tags, linkedId?: string, options?: RequestOptions) => {
       let result: VisitorData | null = null
       try {
         setState((state) => ({ ...state, isLoading: true }))
-        result = await getVisitorData(tags, linkedId)
+        result = await getVisitorData(tags, linkedId, options)
         setState((state) => ({
           ...state,
           data: result as VisitorData,

@@ -14,6 +14,7 @@ export type {
   Confidence,
   SeenAt,
   IpLocation,
+  RequestOptions,
 } from './types'
 
 export {
@@ -39,5 +40,6 @@ export {
   NetworkError,
   JsonParsingError,
   InvalidResponseTypeError,
+  ClientTimeoutError,
   UnknownError,
 } from './errors'

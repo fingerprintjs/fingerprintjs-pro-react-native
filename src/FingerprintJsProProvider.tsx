@@ -10,6 +10,7 @@ import { FingerprintJsProAgentParams, Tags } from './types'
  * ```jsx
  * <FingerprintJsProProvider
  *     apiKey: 'your-fpjs-public-api-key'
+ *     requestOptions: { timeout: 5000 }  // Optional: Set a custom timeout in milliseconds
  * >
  *   <MyApp />
  * </FingerprintJsProProvider>

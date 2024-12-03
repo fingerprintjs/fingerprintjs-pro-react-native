@@ -1,3 +1,9 @@
+export interface RequestOptions {
+  /**
+   * Custom timeout for the request in milliseconds
+   */
+  timeout?: number
+}
 /**
  * Configuration options for the {@link FingerprintJsProProvider} and {@link FingerprintJsProAgent}
  *
@@ -24,6 +30,10 @@ export interface FingerprintJsProAgentParams {
    * set this flag to get response in extended format
    */
   extendedResponseFormat?: boolean
+  /**
+   * Custom request options
+   */
+  requestOptions?: RequestOptions
 }
 
 export interface QueryResult<TData, TError = Error> {
@@ -44,7 +54,7 @@ export interface QueryResult<TData, TError = Error> {
 /**
  * The {@link https://dev.fingerprint.com/docs/regions | region} of your application.
  * The parameter is fully optional because JS agent detects the regions automatically using the provided API key.
- * Nevertheless, we recommend always specifying the parameter. Otherwise the default region us.
+ * Nevertheless, we recommend always specifying the parameter. Otherwise, the default region us.
  * @group Types and interfaces
  */
 export type Region = 'eu' | 'us' | 'ap'
