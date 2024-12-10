@@ -29,29 +29,30 @@ class RNFingerprintjsPro: NSObject {
     @objc(getVisitorId:linkedId:timeout:resolve:rejecter:)
         public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
             let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
-            let options = self.prepareOptions(timeout: timeout)
 
-            fpjsClient?.getVisitorId(metadata, options: options) { result in
-                switch result {
-                case let .failure(error):
+            let completionHandler: FingerprintPro.VisitorIdBlock = { visitorIdResult in
+                switch visitorIdResult {
+                case .success(let visitorId):
+                    resolve(visitorId)
+                case .failure(let error):
                     let description = error.reactDescription
                     reject("Error: ", description, error)
-                case let .success(visitorId):
-                    resolve(visitorId)
                 }
+            }
+
+            if let timeout = timeout?.doubleValue {
+                fpjsClient?.getVisitorId(metadata, timeout: timeout / 1000, completion: completionHandler)
+            } else {
+                fpjsClient?.getVisitorId(metadata, completion: completionHandler)
             }
         }
 
     @objc(getVisitorData:linkedId:timeout:resolve:rejecter:)
         public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
             let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
-            let options = self.prepareOptions(timeout: timeout)
 
-            fpjsClient?.getVisitorIdResponse(metadata, options: options) { result in
-                switch result {
-                case let .failure(error):
-                    let description = error.reactDescription
-                    reject("Error: ", description, error)
+            let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in
+                switch visitorIdResponseResult {
                 case let .success(visitorDataResponse):
                     let tuple = [
                         visitorDataResponse.requestId,
@@ -60,7 +61,16 @@ class RNFingerprintjsPro: NSObject {
                         visitorDataResponse.sealedResult,
                     ] as [Any]
                     resolve(tuple)
+                case .failure(let error):
+                    let description = error.reactDescription
+                    reject("Error: ", description, error)
                 }
+            }
+
+            if let timeout = timeout?.doubleValue {
+                fpjsClient?.getVisitorIdResponse(metadata, timeout: timeout / 1000, completion: completionHandler)
+            } else {
+                fpjsClient?.getVisitorIdResponse(metadata, completion: completionHandler)
             }
         }
 
@@ -101,13 +111,5 @@ class RNFingerprintjsPro: NSObject {
         }
 
         return metadata
-    }
-
-    private func prepareOptions(timeout: NSNumber?) -> FingerprintClientOptions {
-        var options = FingerprintClientOptions()
-        if let timeout = timeout {
-            options.timeout = TimeInterval(timeout.doubleValue)
-        }
-        return options
     }
 }
