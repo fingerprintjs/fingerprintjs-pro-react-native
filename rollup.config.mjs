@@ -3,7 +3,7 @@ import jsonPlugin from '@rollup/plugin-json'
 import external from 'rollup-plugin-peer-deps-external'
 import dtsPlugin from 'rollup-plugin-dts'
 import licensePlugin from 'rollup-plugin-license'
-import pkg from './package.json' assert { type: 'json' }
+import pkg from './package.json' with { type: 'json' }
 import { fileURLToPath } from 'node:url'
 
 const dependencies = pkg.devDependencies
@@ -27,6 +27,7 @@ const commonInput = {
 
 const commonOutput = {
   exports: 'named',
+  sourcemap: true,
 }
 
 export default [
