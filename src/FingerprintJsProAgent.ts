@@ -50,7 +50,11 @@ export class FingerprintJsProAgent {
   public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      return await NativeModules.RNFingerprintjsPro.getVisitorId(tags, linkedId, timeout)
+      if (timeout) {
+        return await NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout(tags, linkedId, timeout)
+      }
+
+      return await NativeModules.RNFingerprintjsPro.getVisitorId(tags, linkedId)
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
@@ -72,10 +76,15 @@ export class FingerprintJsProAgent {
   public async getVisitorData(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorData> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] =
-        await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId, timeout)
+      let visitorData: unknown[] | null
+      if (timeout) {
+        visitorData = await NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout(tags, linkedId, timeout)
+      } else {
+        visitorData = await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
+      }
+      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] = visitorData!
       const result = {
-        ...JSON.parse(visitorDataJsonString),
+        ...JSON.parse(visitorDataJsonString as string),
         requestId,
         confidence: {
           score: confidenceScore,
