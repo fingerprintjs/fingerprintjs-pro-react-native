@@ -56,7 +56,12 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorId(tags: ReadableMap?, linkedId: String?, @Nullable timeout: Double?, promise: Promise) {
+  fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    this.getVisitorId(tags, linkedId, null, promise)
+  }
+
+  @ReactMethod
+  fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
       if (timeout != null) {
         fpjsClient?.getVisitorId(
@@ -80,7 +85,12 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorData(tags: ReadableMap?, linkedId: String?, @Nullable timeout: Double?, promise: Promise) {
+  fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    this.getVisitorData(tags, linkedId, null, promise)
+  }
+
+  @ReactMethod
+  fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
       val callback = { result: FingerprintJS.GetResult ->
         promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: "")))
