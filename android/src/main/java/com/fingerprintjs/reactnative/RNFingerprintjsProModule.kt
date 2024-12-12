@@ -57,7 +57,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    this.getVisitorId(tags, linkedId, null, promise)
+    this.getVisitorIdWithTimeout(tags, linkedId, null, promise)
   }
 
   @ReactMethod
@@ -86,7 +86,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    this.getVisitorData(tags, linkedId, null, promise)
+    this.getVisitorDataWithTimeout(tags, linkedId, null, promise)
   }
 
   @ReactMethod
