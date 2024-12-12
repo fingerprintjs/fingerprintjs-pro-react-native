@@ -4,12 +4,9 @@ on:
   push:
 
 jobs:
-  test-build:
-    name: Build and Test React Native Library
+  android-build:
+    name: Android - Build and Test React Native Library
     runs-on: macos-latest
-    strategy:
-      matrix:
-        platform: [ios, android]
 
     steps:
       - name: Checkout code
@@ -25,30 +22,47 @@ jobs:
           cd TestProject
           yarn install
 
-      - name: Install Pods (iOS only)
-        if: matrix.platform == 'ios'
+      - name: Build Android
+        run: |
+          cd TestProject/android
+          ./gradlew assembleDebug
+
+      - name: Start Metro Bundler and Test App
+        run: |
+          cd TestProject
+          yarn start &
+          sleep 10 # Allow Metro Bundler to start
+          yarn test
+
+  ios-build:
+    name: iOS - Build and Test React Native Library
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          yarn build
+          cd TestProject
+          yarn install
+
+      - name: Install Pods
         run: |
           cd TestProject/ios
           pod install
 
       - name: Build iOS
-        if: matrix.platform == 'ios'
         env:
           CI: true
         run: |
           cd TestProject/ios
           xcodebuild -workspace TestProject.xcworkspace -scheme TestProject -sdk iphonesimulator -configuration Debug build
-
-      - name: Verify Gradle
-        if: matrix.platform == 'android'
-        run: |
-          gradle -v # Check the Gradle version available
-
-      - name: Build Android
-        if: matrix.platform == 'android'
-        run: |
-          cd TestProject/android
-          ./gradlew assembleDebug
 
       - name: Start Metro Bundler and Test App
         run: |
