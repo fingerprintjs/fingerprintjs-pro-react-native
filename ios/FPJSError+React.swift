@@ -27,7 +27,7 @@ extension FPJSError {
         case .invalidResponseType:
             return "InvalidResponseType: \(description)"
         case .clientTimeout:
-            return ("ClientTimeout", description)
+            return "ClientTimeout: \(description)"
         case .unknownError:
             fallthrough
         @unknown default:
@@ -41,7 +41,7 @@ extension APIError {
         let name = self.error?.code?.rawValue ?? defaultName
         return name.firstUppercased
     }
-    
+
     var message: String? {
         return self.error?.message
     }
