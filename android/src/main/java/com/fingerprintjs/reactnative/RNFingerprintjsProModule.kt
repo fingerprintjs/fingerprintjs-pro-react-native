@@ -3,6 +3,7 @@ package com.fingerprintjs.reactnative
 import com.facebook.react.bridge.*
 import com.fingerprintjs.android.fpjs_pro.Configuration
 import com.fingerprintjs.android.fpjs_pro.FingerprintJS
+import com.fingerprintjs.android.fpjs_pro.FingerprintJSProResponse
 import com.fingerprintjs.android.fpjs_pro.FingerprintJSFactory
 import com.fingerprintjs.android.fpjs_pro.Error
 import com.fingerprintjs.android.fpjs_pro.ApiKeyRequired
@@ -92,7 +93,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   @ReactMethod
   fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
-      val callback = { result: FingerprintJS.GetResult ->
+      val callback = { result: FingerprintJSProResponse ->
         promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: "")))
       }
 
