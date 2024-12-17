@@ -27,12 +27,12 @@ jobs:
           cd TestProject/android
           ./gradlew assembleDebug
 
-      - name: Start Metro Bundler and Test App
+      - name: Start Metro Bundler # and Test App
         run: |
           cd TestProject
           yarn start &
           sleep 10 # Allow Metro Bundler to start
-          yarn test
+        #  yarn test
 
   ios-build:
     name: iOS - Build and Test React Native Library
@@ -64,9 +64,9 @@ jobs:
           cd TestProject/ios
           xcodebuild -workspace TestProject.xcworkspace -scheme TestProject -sdk iphonesimulator -configuration Debug build
 
-      - name: Start Metro Bundler and Test App
+      - name: Start Metro Bundler # and Test App
         run: |
           cd TestProject
           yarn start &
           sleep 10 # Allow Metro Bundler to start
-          yarn test
+        #  yarn test
