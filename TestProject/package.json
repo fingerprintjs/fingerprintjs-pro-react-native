@@ -32,8 +32,5 @@
   },
   "engines": {
     "node": "^20 || ^22"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }
