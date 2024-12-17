@@ -1,16 +1,18 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
-import { useVisitorData } from '../src'
+import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
 const init = jest.fn()
 const getVisitorId = jest.fn()
 const getVisitorData = jest.fn()
+const getVisitorDataWithTimeout = jest.fn()
 
 NativeModules.RNFingerprintjsPro = {
   init: init,
   getVisitorId: getVisitorId,
   getVisitorData: getVisitorData,
+  getVisitorDataWithTimeout: getVisitorDataWithTimeout,
 }
 
 const mockedVisitorId = 'some visitor id'
@@ -114,6 +116,72 @@ describe('useVisitorData', () => {
     })
     await waitFor(() => {
       expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+    })
+  })
+
+  it('options object with empty timeout should call `getVisitorData` function', async () => {
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+
+    const mockedTags = {
+      stringTag: 'foo',
+      numberTag: 0,
+      ObjectTag: {
+        foo: true,
+        bar: [1, 2, 3],
+      },
+      boolTag: false,
+    }
+
+    const mockedLinkedId = 'test_id'
+
+    const options: RequestOptions = { timeout: undefined }
+
+    getVisitorData.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    const wrapper = createWrapper()
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
+    act(() => {
+      result.current.getData(mockedTags, mockedLinkedId, options)
+    })
+    await waitFor(() => {
+      expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+    })
+  })
+
+  it('non-empty timeout should call `getVisitorDataWithTimeout` function', async () => {
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+
+    const mockedTags = {
+      stringTag: 'foo',
+      numberTag: 0,
+      ObjectTag: {
+        foo: true,
+        bar: [1, 2, 3],
+      },
+      boolTag: false,
+    }
+
+    const mockedLinkedId = 'test_id'
+
+    const options: RequestOptions = { timeout: 15_000 }
+
+    getVisitorDataWithTimeout.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    const wrapper = createWrapper()
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
+    act(() => {
+      result.current.getData(mockedTags, mockedLinkedId, options)
+    })
+    await waitFor(() => {
+      expect(getVisitorDataWithTimeout).toBeCalledWith(mockedTags, mockedLinkedId, options.timeout)
     })
   })
 })
