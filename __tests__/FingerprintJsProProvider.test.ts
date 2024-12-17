@@ -140,6 +140,10 @@ describe(`FingerprintJsProProvider`, () => {
 
     fingerprintClient.getVisitorData()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(undefined, undefined, 5_000)
+    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      options.requestOptions.timeout
+    )
   })
 })
