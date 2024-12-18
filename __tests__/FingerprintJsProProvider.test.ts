@@ -110,6 +110,19 @@ describe(`FingerprintJsProProvider`, () => {
     )
   })
 
+  it('should pass timeout to `getVisitorIdWithTimeout` function when timeout is 0', () => {
+    const options = getDefaultLoadOptions()
+    options.requestOptions = { timeout: 0 }
+    const fingerprintClient = new FingerprintJsProAgent(options)
+    fingerprintClient.getVisitorId()
+
+    expect(NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      options.requestOptions.timeout
+    )
+  })
+
   it('should call `getVisitorData` function when there is no timeout', () => {
     const options = getDefaultLoadOptions()
     const fingerprintClient = new FingerprintJsProAgent(options)
@@ -129,6 +142,27 @@ describe(`FingerprintJsProProvider`, () => {
   it('should pass timeout to `getVisitorDataWithTimeout` function', () => {
     const options = getDefaultLoadOptions()
     options.requestOptions = { timeout: 18_000 }
+    const fingerprintClient = new FingerprintJsProAgent(options)
+
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+    getVisitorDataWithTimeout.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    fingerprintClient.getVisitorData()
+
+    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      options.requestOptions.timeout
+    )
+  })
+
+  it('should pass timeout to `getVisitorDataWithTimeout` function when timeout is 0', () => {
+    const options = getDefaultLoadOptions()
+    options.requestOptions = { timeout: 0 }
     const fingerprintClient = new FingerprintJsProAgent(options)
 
     const mockedJsonAnswer = {

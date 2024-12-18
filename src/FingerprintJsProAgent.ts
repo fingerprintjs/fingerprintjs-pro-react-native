@@ -50,7 +50,7 @@ export class FingerprintJsProAgent {
   public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      if (timeout) {
+      if (timeout != null) {
         return await NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout(tags, linkedId, timeout)
       }
 
@@ -77,7 +77,7 @@ export class FingerprintJsProAgent {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
       let visitorData: unknown[] | null
-      if (timeout) {
+      if (timeout != null) {
         visitorData = await NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout(tags, linkedId, timeout)
       } else {
         visitorData = await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
