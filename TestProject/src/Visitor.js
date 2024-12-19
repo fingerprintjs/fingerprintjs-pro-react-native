@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingTop: '75%',
-    paddingBottom: '75%',
+    paddingTop: '60%',
+    paddingBottom: '60%',
   },
   modalView: {
     margin: 10,
