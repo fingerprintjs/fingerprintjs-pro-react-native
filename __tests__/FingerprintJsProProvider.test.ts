@@ -123,6 +123,29 @@ describe(`FingerprintJsProProvider`, () => {
     )
   })
 
+  it('For `getVisitorId` function timeout from params should me more important that timeout from client configuration', () => {
+    const options = getDefaultLoadOptions()
+    const clientTimeout = 10
+    const getRequestTimeout = 200
+    options.requestOptions = { timeout: clientTimeout }
+    const fingerprintClient = new FingerprintJsProAgent(options)
+
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+    getVisitorIdWithTimeout.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    fingerprintClient.getVisitorId(undefined, undefined, { timeout: getRequestTimeout })
+
+    expect(NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      getRequestTimeout
+    )
+  })
+
   it('should call `getVisitorData` function when there is no timeout', () => {
     const options = getDefaultLoadOptions()
     const fingerprintClient = new FingerprintJsProAgent(options)
@@ -178,6 +201,29 @@ describe(`FingerprintJsProProvider`, () => {
       undefined,
       undefined,
       options.requestOptions.timeout
+    )
+  })
+
+  it('For `getVisitorData` function timeout from params should me more important that timeout from client configuration', () => {
+    const options = getDefaultLoadOptions()
+    const clientTimeout = 10
+    const getRequestTimeout = 200
+    options.requestOptions = { timeout: clientTimeout }
+    const fingerprintClient = new FingerprintJsProAgent(options)
+
+    const mockedJsonAnswer = {
+      visitorId: mockedVisitorId,
+    }
+    getVisitorDataWithTimeout.mockReturnValueOnce(
+      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    )
+
+    fingerprintClient.getVisitorData(undefined, undefined, { timeout: getRequestTimeout })
+
+    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
+      undefined,
+      undefined,
+      getRequestTimeout
     )
   })
 })
