@@ -123,7 +123,7 @@ describe(`FingerprintJsProProvider`, () => {
     )
   })
 
-  it('For `getVisitorId` function timeout from params should me more important that timeout from client configuration', () => {
+  it('For `getVisitorId` function timeout from params should be more important than the timeout from client configuration', () => {
     const options = getDefaultLoadOptions()
     const clientTimeout = 10
     const getRequestTimeout = 200
@@ -204,7 +204,7 @@ describe(`FingerprintJsProProvider`, () => {
     )
   })
 
-  it('For `getVisitorData` function timeout from params should me more important that timeout from client configuration', () => {
+  it('For `getVisitorData` function timeout from params should be more important than the timeout from client configuration', () => {
     const options = getDefaultLoadOptions()
     const clientTimeout = 10
     const getRequestTimeout = 200
