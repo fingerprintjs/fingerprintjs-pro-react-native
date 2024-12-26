@@ -28,7 +28,7 @@
     </a>
 </p>
 
-# Fingerprint Pro React Native 
+# Fingerprint Pro React Native
 
 [Fingerprint](https://fingerprint.com/) is a device intelligence platform offering 99.5% accurate visitor
 identification. Fingerprint Pro React Native SDK is an easy way to integrate Fingerprint Pro into your React Native
@@ -90,7 +90,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 * **Android**
 
-  Add a declaration of the Fingerprint Android repository to your app main `build.gradle` file to the `allprojects` section:
+  Declare Fingerprint Maven repository. Add the following repository declarations:
   ```groovy
   maven {
     url("https://maven.fpregistry.io/releases")
@@ -99,9 +99,14 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
     url("https://www.jitpack.io")
   }
   ```
+  #### Determining Where to Add the Repositories
 
-  The file location is `{rootDir}/android/build.gradle`.
-  After the changes the `build.gradle` file should look as following:
+  The location for these additions depends on your project's structure and the Gradle version you're using:
+  1. For Gradle versions before 7.0: You likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block.
+  2. For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)): You likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block.
+
+  #### Examples
+  1. Before Gradle 7.0: Update your `{rootDir}/android/build.gradle` file as shown below:
 
   ```groovy
   allprojects {
@@ -117,13 +122,30 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
        url("$rootDir/../node_modules/jsc-android/dist")
      }
      maven {
-       url("https://maven.fpregistry.io/releases")
+       url("https://maven.fpregistry.io/releases") // Add this
      }
      maven {
-       url("https://www.jitpack.io")
+       url("https://www.jitpack.io") // Add this
      }
      google()
    }
+  }
+  ```
+
+  2. After Gradle 7.0: Update your `{rootDir}/android/settings.gradle` file as follows:
+
+  ```groovy
+  dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+    google()
+    mavenCentral()
+    maven {
+      url("https://maven.fpregistry.io/releases") // Add this
+    }
+    maven {
+      url("https://www.jitpack.io")  // Add this
+    }
   }
   ```
 
