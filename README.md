@@ -35,18 +35,25 @@ identification. Fingerprint Pro React Native SDK is an easy way to integrate Fin
 application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
 ## Table of contents
-* [Requirements and limitations](#requirements-and-limitations)
-* [Dependencies](#dependencies)
-* [How to install](#how-to-install)
-* [Usage](#usage)
-  * [Hooks approach](#hooks-approach)
-  * [API Client approach](#api-client-approach)
-  * [`extendedResponseFormat`](#extendedresponseformat)
-  * [Linking and tagging information](#linking-and-tagging-information)
-* [API Reference](#api-reference)
-* [Additional Resources](#additional-resources)
-* [Support and feedback](#support-and-feedback)
-* [License](#license)
+- [Fingerprint Pro React Native](#fingerprint-pro-react-native)
+  - [Table of contents](#table-of-contents)
+  - [Requirements and limitations](#requirements-and-limitations)
+  - [Dependencies](#dependencies)
+  - [How to install](#how-to-install)
+    - [1. Install the package using your favorite package manager:](#1-install-the-package-using-your-favorite-package-manager)
+    - [2. Configure iOS dependencies](#2-configure-ios-dependencies)
+    - [3. Configure Android dependencies](#3-configure-android-dependencies)
+      - [Gradle versions before 7.0](#gradle-versions-before-70)
+      - [Gradle versions 7.0 and higher](#gradle-versions-70-and-higher)
+  - [Usage](#usage)
+    - [Hooks approach](#hooks-approach)
+    - [API Client approach](#api-client-approach)
+    - [`extendedResponseFormat`](#extendedresponseformat)
+    - [Linking and tagging information](#linking-and-tagging-information)
+  - [API Reference](#api-reference)
+  - [Additional Resources](#additional-resources)
+  - [Support and feedback](#support-and-feedback)
+  - [License](#license)
 
 ## Requirements and limitations
 
@@ -81,73 +88,73 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
 
-### 2. Configure native dependencies
+### 2. Configure iOS dependencies
 
-* **iOS**
+
   ```shell
   cd ios && pod install
   ```
 
-* **Android**
+### 3. Configure Android dependencies
 
-  Declare Fingerprint Maven repository. Add the following repository declarations:
-  ```groovy
-  maven {
-    url("https://maven.fpregistry.io/releases")
-  }
-  maven {
-    url("https://www.jitpack.io")
-  }
-  ```
-  #### Determining Where to Add the Repositories
+To declare the Fingerprint Maven repository, add the following declarations:
+```groovy
+maven {
+  url("https://maven.fpregistry.io/releases")
+}
+maven {
+  url("https://www.jitpack.io")
+}
+```
 
-  The location for these additions depends on your project's structure and the Gradle version you're using:
-  1. For Gradle versions before 7.0: You likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block.
-  2. For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)): You likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block.
+Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
 
-  #### Examples
-  1. Before Gradle 7.0: Update your `{rootDir}/android/build.gradle` file as shown below:
+#### Gradle versions before 7.0
+
+For Gradle versions before 7.0, you likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block:
 
   ```groovy
-  allprojects {
-   repositories {
-     mavenCentral()
-     mavenLocal()
-     maven {
-       // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-       url("$rootDir/../node_modules/react-native/android")
-     }
-     maven {
-       // Android JSC is installed from npm
-       url("$rootDir/../node_modules/jsc-android/dist")
-     }
-     maven {
-       url("https://maven.fpregistry.io/releases") // Add this
-     }
-     maven {
-       url("https://www.jitpack.io") // Add this
-     }
-     google()
-   }
-  }
-  ```
-
-  2. After Gradle 7.0: Update your `{rootDir}/android/settings.gradle` file as follows:
-
-  ```groovy
-  dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-    repositories {
-    google()
+allprojects {
+  repositories {
     mavenCentral()
+    mavenLocal()
+    maven {
+      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+      url("$rootDir/../node_modules/react-native/android")
+    }
+    maven {
+      // Android JSC is installed from npm
+      url("$rootDir/../node_modules/jsc-android/dist")
+    }
     maven {
       url("https://maven.fpregistry.io/releases") // Add this
     }
     maven {
-      url("https://www.jitpack.io")  // Add this
+      url("https://www.jitpack.io") // Add this
     }
+    google()
   }
-  ```
+}
+```
+
+#### Gradle versions 7.0 and higher
+
+For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)), you likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block: 
+
+```groovy
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+  repositories {
+  google()
+  mavenCentral()
+  maven {
+    url("https://maven.fpregistry.io/releases") // Add this
+  }
+  maven {
+    url("https://www.jitpack.io")  // Add this
+  }
+}
+```
 
 ## Usage
 
@@ -250,7 +257,7 @@ Two types of responses are supported: "default" and "extended". You don't need t
 "Extended" is an extended result format that includes geolocation, incognito mode and other information.
 It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/reference/get-function#extendedresult).
 
-#### Providing `extendedResponseFormat` with hooks approach
+Providing `extendedResponseFormat` using hooks:
 
 ```javascript
   return (
@@ -260,7 +267,7 @@ It can be requested using the `extendedResponseFormat`: true parameter. See more
   )
 ```
 
-#### Providing `extendedResponseFormat` with API Client approach
+Providing `extendedResponseFormat` using the API Client:
 
 ```javascript
 const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
