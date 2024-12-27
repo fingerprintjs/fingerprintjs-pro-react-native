@@ -49,8 +49,6 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
     - [Hooks approach](#hooks-approach)
     - [API Client approach](#api-client-approach)
     - [`extendedResponseFormat`](#extendedresponseformat)
-      - [Providing `extendedResponseFormat` with hooks approach](#providing-extendedresponseformat-with-hooks-approach)
-      - [Providing `extendedResponseFormat` with API Client approach](#providing-extendedresponseformat-with-api-client-approach)
     - [Linking and tagging information](#linking-and-tagging-information)
   - [API Reference](#api-reference)
   - [Additional Resources](#additional-resources)
@@ -259,7 +257,7 @@ Two types of responses are supported: "default" and "extended". You don't need t
 "Extended" is an extended result format that includes geolocation, incognito mode and other information.
 It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/reference/get-function#extendedresult).
 
-#### Providing `extendedResponseFormat` with hooks approach
+Providing `extendedResponseFormat` using hooks:
 
 ```javascript
   return (
@@ -269,7 +267,7 @@ It can be requested using the `extendedResponseFormat`: true parameter. See more
   )
 ```
 
-#### Providing `extendedResponseFormat` with API Client approach
+Providing `extendedResponseFormat` using the API Client:
 
 ```javascript
 const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
