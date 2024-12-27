@@ -102,9 +102,6 @@ To declare the Fingerprint Maven repository, add the following declarations:
 maven {
   url("https://maven.fpregistry.io/releases")
 }
-maven {
-  url("https://www.jitpack.io")
-}
 ```
 
 Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
@@ -115,25 +112,22 @@ For Gradle versions before 7.0, you likely have an `allprojects` block in `{root
 
   ```groovy
 allprojects {
-  repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-      url("$rootDir/../node_modules/react-native/android")
+    repositories {
+      mavenCentral()
+      mavenLocal()
+      maven {
+        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+        url("$rootDir/../node_modules/react-native/android")
+      }
+      maven {
+        // Android JSC is installed from npm
+        url("$rootDir/../node_modules/jsc-android/dist")
+      }
+      maven {
+        url("https://maven.fpregistry.io/releases") // Add this
+      }
+      google()
     }
-    maven {
-      // Android JSC is installed from npm
-      url("$rootDir/../node_modules/jsc-android/dist")
-    }
-    maven {
-      url("https://maven.fpregistry.io/releases") // Add this
-    }
-    maven {
-      url("https://www.jitpack.io") // Add this
-    }
-    google()
-  }
 }
 ```
 
@@ -149,9 +143,6 @@ dependencyResolutionManagement {
   mavenCentral()
   maven {
     url("https://maven.fpregistry.io/releases") // Add this
-  }
-  maven {
-    url("https://www.jitpack.io")  // Add this
   }
 }
 ```
