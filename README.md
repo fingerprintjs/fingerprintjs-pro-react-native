@@ -139,10 +139,11 @@ For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file appro
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
   repositories {
-  google()
-  mavenCentral()
-  maven {
-    url("https://maven.fpregistry.io/releases") // Add this
+    google()
+    mavenCentral()
+    maven {
+      url("https://maven.fpregistry.io/releases") // Add this
+    }
   }
 }
 ```
