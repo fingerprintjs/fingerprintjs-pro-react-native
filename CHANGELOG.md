@@ -1,3 +1,12 @@
+## [3.3.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.2.0...v3.3.0) (2025-01-09)
+
+
+### Features
+
+* add custom timeout feature ([02757ef](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/02757ef0beb1caaf887f9380b22ddd492d9efdfc))
+* add sealed result support ([37dbe7f](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/37dbe7f41fcce22ad05e9a52d15300f33ef29d29))
+* update iOS and Android SDKs to v2.7.0 ([eafa1d4](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/eafa1d4e573db6bcd99b5e5f8615f7b5062faca4))
+
 ## [3.2.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.1.0...v3.2.0) (2024-10-08)
 
 
