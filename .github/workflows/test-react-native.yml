@@ -1,0 +1,72 @@
+name: Test React Native Library
+
+on:
+  push:
+
+jobs:
+  android-build:
+    name: Android - Build and Test React Native Library
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          yarn build
+          cd TestProject
+          yarn install
+
+      - name: Build Android
+        run: |
+          cd TestProject/android
+          ./gradlew assembleDebug
+
+      - name: Start Metro Bundler # and Test App
+        run: |
+          cd TestProject
+          yarn start &
+          sleep 10 # Allow Metro Bundler to start
+        #  yarn test
+
+  ios-build:
+    name: iOS - Build and Test React Native Library
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          yarn build
+          cd TestProject
+          yarn install
+
+      - name: Install Pods
+        run: |
+          cd TestProject/ios
+          pod install
+
+      - name: Build iOS
+        env:
+          CI: true
+        run: |
+          cd TestProject/ios
+          xcodebuild -workspace TestProject.xcworkspace -scheme TestProject -sdk iphonesimulator -configuration Debug build
+
+      - name: Start Metro Bundler # and Test App
+        run: |
+          cd TestProject
+          yarn start &
+          sleep 10 # Allow Metro Bundler to start
+        #  yarn test

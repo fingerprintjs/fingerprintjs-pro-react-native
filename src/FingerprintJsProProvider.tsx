@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FingerprintJsProAgent } from './FingerprintJsProAgent'
 import { FingerprintJsProContext } from './FingerprintJsProContext'
-import { FingerprintJsProAgentParams, Tags } from './types'
+import { FingerprintJsProAgentParams, RequestOptions, Tags } from './types'
 
 /**
  * Provides the FingerprintJsProContext to its child components.
@@ -10,6 +10,7 @@ import { FingerprintJsProAgentParams, Tags } from './types'
  * ```jsx
  * <FingerprintJsProProvider
  *     apiKey: 'your-fpjs-public-api-key'
+ *     requestOptions: { timeout: 5000 }  // Optional: Set a custom timeout in milliseconds
  * >
  *   <MyApp />
  * </FingerprintJsProProvider>
@@ -26,8 +27,8 @@ export function FingerprintJsProProvider({
   const [visitorId, updateVisitorId] = useState('')
 
   const getVisitorData = useCallback(
-    async (tags?: Tags, linkedId?: string) => {
-      const result = await client.getVisitorData(tags, linkedId)
+    async (tags?: Tags, linkedId?: string, requestOptions?: RequestOptions) => {
+      const result = await client.getVisitorData(tags, linkedId, requestOptions)
       updateVisitorId(result.visitorId)
       return result
     },

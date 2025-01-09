@@ -3,6 +3,7 @@ package com.fingerprintjs.reactnative
 import com.facebook.react.bridge.*
 import com.fingerprintjs.android.fpjs_pro.Configuration
 import com.fingerprintjs.android.fpjs_pro.FingerprintJS
+import com.fingerprintjs.android.fpjs_pro.FingerprintJSProResponse
 import com.fingerprintjs.android.fpjs_pro.FingerprintJSFactory
 import com.fingerprintjs.android.fpjs_pro.Error
 import com.fingerprintjs.android.fpjs_pro.ApiKeyRequired
@@ -22,6 +23,7 @@ import com.fingerprintjs.android.fpjs_pro.UnsupportedVersion
 import com.fingerprintjs.android.fpjs_pro.InstallationMethodRestricted
 import com.fingerprintjs.android.fpjs_pro.ResponseCannotBeParsed
 import com.fingerprintjs.android.fpjs_pro.NetworkError
+import com.fingerprintjs.android.fpjs_pro.ClientTimeout
 import com.fingerprintjs.android.fpjs_pro.UnknownError
 import java.lang.Exception
 
@@ -56,25 +58,61 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    this.getVisitorIdWithTimeout(tags, linkedId, null, promise)
+  }
+
+  @ReactMethod
+  fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
-      fpjsClient?.getVisitorId(tags?.toHashMap() ?: emptyMap(),
-        linkedId ?: "",
-        { result -> promise.resolve(result.visitorId) },
-        { error -> promise.reject("Error: ", getErrorDescription(error))
-      })
+      if (timeout != null) {
+        fpjsClient?.getVisitorId(
+          timeout,
+          tags?.toHashMap() ?: emptyMap(),
+          linkedId ?: "",
+          { result -> promise.resolve(result.visitorId) },
+          { error -> promise.reject("Error: ", getErrorDescription(error)) }
+        )
+      } else {
+        fpjsClient?.getVisitorId(
+          tags?.toHashMap() ?: emptyMap(),
+          linkedId ?: "",
+          { result -> promise.resolve(result.visitorId) },
+          { error -> promise.reject("Error: ", getErrorDescription(error)) }
+        )
+      }
     } catch (e: Exception) {
-        promise.reject("Error: ", e)
+      promise.reject("Error: ", e)
     }
   }
 
   @ReactMethod
   fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    this.getVisitorDataWithTimeout(tags, linkedId, null, promise)
+  }
+
+  @ReactMethod
+  fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
-      fpjsClient?.getVisitorId(tags?.toHashMap() ?: emptyMap(),
-        linkedId ?: "",
-        { result -> promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson))) },
-        { error -> promise.reject("Error: ", getErrorDescription(error))
-      })
+      val callback = { result: FingerprintJSProResponse ->
+        promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: "")))
+      }
+
+      if (timeout != null) {
+        fpjsClient?.getVisitorId(
+          timeout,
+          tags?.toHashMap() ?: emptyMap(),
+          linkedId ?: "",
+          callback,
+          { error -> promise.reject("Error: ", getErrorDescription(error)) }
+        )
+      } else {
+        fpjsClient?.getVisitorId(
+          tags?.toHashMap() ?: emptyMap(),
+          linkedId ?: "",
+          callback,
+          { error -> promise.reject("Error: ", getErrorDescription(error)) }
+        )
+      }
     } catch (e: Exception) {
       promise.reject("Error: ", e)
     }
@@ -99,6 +137,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       is InstallationMethodRestricted -> "InstallationMethodRestricted"
       is ResponseCannotBeParsed -> "ResponseCannotBeParsed"
       is NetworkError -> "NetworkError"
+      is ClientTimeout -> "ClientTimeout"
       is UnknownError -> "UnknownError"
       else -> "UnknownError"
     }

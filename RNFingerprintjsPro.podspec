@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
 #   s.requires_arc = true
 
   s.dependency "React-Core"
-  s.dependency "FingerprintPro", '~> 2.6.0'
+  s.dependency "FingerprintPro", '>= 2.7.0', '< 3.0.0'
 end

@@ -275,6 +275,18 @@ export class InvalidResponseTypeError extends Error {
 }
 
 /**
+ * Client-side timeout error
+ *
+ * @group Errors
+ */
+export class ClientTimeoutError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ClientTimeoutError'
+  }
+}
+
+/**
  * Other error
  *
  * @group Errors
@@ -309,6 +321,7 @@ export type IdentificationError =
   | NetworkError
   | JsonParsingError
   | InvalidResponseTypeError
+  | ClientTimeoutError
   | UnknownError
 
 export function unwrapError(error: Error): IdentificationError {
@@ -360,6 +373,8 @@ export function unwrapError(error: Error): IdentificationError {
     case 'ResponseCannotBeParsed':
       return new ResponseCannotBeParsedError(errorMessage)
     // end of API Errors block
+    case 'ClientTimeout':
+      return new ClientTimeoutError(errorMessage)
     case 'NetworkError':
       return new NetworkError(errorMessage)
     case 'JsonParsingError':

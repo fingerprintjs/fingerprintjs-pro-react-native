@@ -1,3 +1,9 @@
+export interface RequestOptions {
+  /**
+   * Custom timeout for the request in milliseconds
+   */
+  timeout?: number
+}
 /**
  * Configuration options for the {@link FingerprintJsProProvider} and {@link FingerprintJsProAgent}
  *
@@ -24,6 +30,10 @@ export interface FingerprintJsProAgentParams {
    * set this flag to get response in extended format
    */
   extendedResponseFormat?: boolean
+  /**
+   * Custom request options
+   */
+  requestOptions?: RequestOptions
 }
 
 export interface QueryResult<TData, TError = Error> {
@@ -44,7 +54,7 @@ export interface QueryResult<TData, TError = Error> {
 /**
  * The {@link https://dev.fingerprint.com/docs/regions | region} of your application.
  * The parameter is fully optional because JS agent detects the regions automatically using the provided API key.
- * Nevertheless, we recommend always specifying the parameter. Otherwise the default region us.
+ * Nevertheless, we recommend always specifying the parameter. Otherwise, the default region us.
  * @group Types and interfaces
  */
 export type Region = 'eu' | 'us' | 'ap'
@@ -73,6 +83,10 @@ export interface ShortVisitorData {
    * A confidence score that tells how much the agent is sure about the visitor identifier
    */
   confidence: Confidence
+  /**
+   * See more details in the Sealed Client Results(https://dev.fingerprint.com/docs/sealed-client-results) guide. The field will miss if Sealed Client Results are disabled or unavailable for another reason.
+   */
+  sealedResult?: string
 }
 
 /**
@@ -264,5 +278,5 @@ export interface VisitorQueryContext extends VisitorQueryResult {
    * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
    * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
    */
-  getData: (tags?: Tags, linkedId?: string) => Promise<VisitorData | null>
+  getData: (tags?: Tags, linkedId?: string, options?: RequestOptions) => Promise<VisitorData | null>
 }

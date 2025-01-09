@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native'
 import { UnknownError, unwrapError } from './errors'
-import type { FingerprintJsProAgentParams, Tags, VisitorData } from './types'
+import type { FingerprintJsProAgentParams, Tags, VisitorData, RequestOptions } from './types'
 import * as packageInfo from '../package.json'
 
 type VisitorId = string
@@ -15,12 +15,15 @@ export class FingerprintJsProAgent {
    *
    * @param params
    */
+  private requestOptions: RequestOptions = {}
+
   constructor({
     apiKey,
     region,
     endpointUrl,
     fallbackEndpointUrls = [],
     extendedResponseFormat = false,
+    requestOptions = {},
   }: FingerprintJsProAgentParams) {
     try {
       NativeModules.RNFingerprintjsPro.init(
@@ -31,6 +34,7 @@ export class FingerprintJsProAgent {
         extendedResponseFormat,
         packageInfo.version
       )
+      this.requestOptions = requestOptions
     } catch (e) {
       console.error('RNFingerprintjsPro init error: ', e)
     }
@@ -40,10 +44,16 @@ export class FingerprintJsProAgent {
    * Returns visitor identifier based on the request options {@link https://dev.fingerprint.com/docs/native-android-integration#get-the-visitor-identifier | more info in the documentation page}
    *
    * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
-   * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   * @param linkedId is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   * @param options is used to configure requests with different settings
    */
-  public async getVisitorId(tags?: Tags, linkedId?: string): Promise<VisitorId> {
+  public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
+      const timeout = options?.timeout ?? this.requestOptions.timeout
+      if (timeout != null) {
+        return await NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout(tags, linkedId, timeout)
+      }
+
       return await NativeModules.RNFingerprintjsPro.getVisitorId(tags, linkedId)
     } catch (error) {
       if (error instanceof Error) {
@@ -60,21 +70,32 @@ export class FingerprintJsProAgent {
    * Provide `extendedResponseFormat` option in the {@link constructor} to get response in the {@link https://dev.fingerprint.com/docs/native-android-integration#response-format | extended format}
    *
    * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
-   * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   * @param linkedId is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   * @param options is used to configure requests with different settings
    */
-  public async getVisitorData(tags?: Tags, linkedId?: string): Promise<VisitorData> {
+  public async getVisitorData(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorData> {
     try {
-      const [requestId, confidenceScore, visitorDataJsonString] = await NativeModules.RNFingerprintjsPro.getVisitorData(
-        tags,
-        linkedId
-      )
-      return {
-        ...JSON.parse(visitorDataJsonString),
+      const timeout = options?.timeout ?? this.requestOptions.timeout
+      let visitorData: unknown[] | null
+      if (timeout != null) {
+        visitorData = await NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout(tags, linkedId, timeout)
+      } else {
+        visitorData = await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
+      }
+      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] = visitorData!
+      const result = {
+        ...JSON.parse(visitorDataJsonString as string),
         requestId,
         confidence: {
           score: confidenceScore,
         },
       }
+
+      if (sealedResult) {
+        result['sealedResult'] = sealedResult
+      }
+
+      return result
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
