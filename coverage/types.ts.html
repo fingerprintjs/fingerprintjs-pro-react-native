@@ -331,7 +331,21 @@
 <a name='L266'></a><a href='#L266'>266</a>
 <a name='L267'></a><a href='#L267'>267</a>
 <a name='L268'></a><a href='#L268'>268</a>
-<a name='L269'></a><a href='#L269'>269</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -599,7 +613,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface RequestOptions {
+  /**
+   * Custom timeout for the request in milliseconds
+   */
+  timeout?: number
+}
+/**
  * Configuration options for the {@link FingerprintJsProProvider} and {@link FingerprintJsProAgent}
  *
  * @group Types and interfaces
@@ -625,6 +659,10 @@ export interface FingerprintJsProAgentParams {
    * set this flag to get response in extended format
    */
   extendedResponseFormat?: boolean
+  /**
+   * Custom request options
+   */
+  requestOptions?: RequestOptions
 }
 &nbsp;
 export interface QueryResult&lt;TData, TError = Error&gt; {
@@ -645,7 +683,7 @@ export interface QueryResult&lt;TData, TError = Error&gt; {
 /**
  * The {@link https://dev.fingerprint.com/docs/regions | region} of your application.
  * The parameter is fully optional because JS agent detects the regions automatically using the provided API key.
- * Nevertheless, we recommend always specifying the parameter. Otherwise the default region us.
+ * Nevertheless, we recommend always specifying the parameter. Otherwise, the default region us.
  * @group Types and interfaces
  */
 export type Region = 'eu' | 'us' | 'ap'
@@ -674,6 +712,10 @@ export interface ShortVisitorData {
    * A confidence score that tells how much the agent is sure about the visitor identifier
    */
   confidence: Confidence
+  /**
+   * See more details in the Sealed Client Results(https://dev.fingerprint.com/docs/sealed-client-results) guide. The field will miss if Sealed Client Results are disabled or unavailable for another reason.
+   */
+  sealedResult?: string
 }
 &nbsp;
 /**
@@ -865,7 +907,7 @@ export interface VisitorQueryContext extends VisitorQueryResult {
    * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
    * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
    */
-  getData: (tags?: Tags, linkedId?: string) =&gt; Promise&lt;VisitorData | null&gt;
+  getData: (tags?: Tags, linkedId?: string, options?: RequestOptions) =&gt; Promise&lt;VisitorData | null&gt;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -874,7 +916,7 @@ export interface VisitorQueryContext extends VisitorQueryResult {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Oct 08 2024 04:37:41 GMT+0000 (Coordinated Universal Time)
+                at Thu Jan 09 2025 17:51:00 GMT+0000 (Coordinated Universal Time)
             </div>
         <script src="prettify.js"></script>
         <script>

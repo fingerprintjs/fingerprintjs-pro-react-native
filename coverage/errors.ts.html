@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/75</span>
+                <span class='fraction'>12/78</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">10.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/27</span>
+                <span class='fraction'>3/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/25</span>
+                <span class='fraction'>4/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/75</span>
+                <span class='fraction'>12/78</span>
             </div>
         
             
@@ -435,7 +435,22 @@
 <a name='L370'></a><a href='#L370'>370</a>
 <a name='L371'></a><a href='#L371'>371</a>
 <a name='L372'></a><a href='#L372'>372</a>
-<a name='L373'></a><a href='#L373'>373</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a>
+<a name='L388'></a><a href='#L388'>388</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -696,6 +711,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -749,6 +776,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -797,6 +825,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1084,6 +1114,18 @@ export class InvalidResponseTypeError extends Error {
 }
 &nbsp;
 /**
+ * Client-side timeout error
+ *
+ * @group Errors
+ */
+export class ClientTimeoutError extends Error {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(message: string) {
+<span class="cstat-no" title="statement not covered" >    super(message)</span>
+<span class="cstat-no" title="statement not covered" >    this.name = 'ClientTimeoutError'</span>
+  }
+}
+&nbsp;
+/**
  * Other error
  *
  * @group Errors
@@ -1118,6 +1160,7 @@ export type IdentificationError =
   | NetworkError
   | JsonParsingError
   | InvalidResponseTypeError
+  | ClientTimeoutError
   | UnknownError
 &nbsp;
 export function unwrapError(error: Error): IdentificationError {
@@ -1169,11 +1212,13 @@ export function unwrapError(error: Error): IdentificationError {
 <span class="branch-22 cbranch-no" title="branch not covered" >    case 'ResponseCannotBeParsed':</span>
 <span class="cstat-no" title="statement not covered" >      return new ResponseCannotBeParsedError(errorMessage)</span>
     // end of API Errors block
-<span class="branch-23 cbranch-no" title="branch not covered" >    case 'NetworkError':</span>
+<span class="branch-23 cbranch-no" title="branch not covered" >    case 'ClientTimeout':</span>
+<span class="cstat-no" title="statement not covered" >      return new ClientTimeoutError(errorMessage)</span>
+<span class="branch-24 cbranch-no" title="branch not covered" >    case 'NetworkError':</span>
 <span class="cstat-no" title="statement not covered" >      return new NetworkError(errorMessage)</span>
     case 'JsonParsingError':
       return new JsonParsingError(errorMessage)
-<span class="branch-25 cbranch-no" title="branch not covered" >    case 'InvalidResponseType':</span>
+<span class="branch-26 cbranch-no" title="branch not covered" >    case 'InvalidResponseType':</span>
 <span class="cstat-no" title="statement not covered" >      return new InvalidResponseTypeError(errorMessage)</span>
     default:
       return new UnknownError(error.message)
@@ -1186,7 +1231,7 @@ export function unwrapError(error: Error): IdentificationError {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Oct 08 2024 04:37:41 GMT+0000 (Coordinated Universal Time)
+                at Thu Jan 09 2025 17:51:00 GMT+0000 (Coordinated Universal Time)
             </div>
         <script src="prettify.js"></script>
         <script>
