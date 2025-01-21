@@ -5,35 +5,28 @@
  * @format
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import React from 'react'
+import { SafeAreaView, ScrollView, StatusBar, useColorScheme } from 'react-native'
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
-import { FingerprintJsProProvider, Region } from '@fingerprintjs/fingerprintjs-pro-react-native';
-import {Visitor} from './src/Visitor';
-import { PUBLIC_API_KEY, REGION, ENDPOINT, CUSTOM_TIMEOUT } from '@env';
+import { FingerprintJsProProvider, Region } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { Visitor } from './src/Visitor'
+import { PUBLIC_API_KEY, REGION, ENDPOINT, CUSTOM_TIMEOUT } from '@env'
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const apiKey = PUBLIC_API_KEY;
-  const region = REGION;
-  const endpoint = ENDPOINT;
-  const customTimeout = Number(CUSTOM_TIMEOUT ?? '60000');
+  const isDarkMode = useColorScheme() === 'dark'
+  const apiKey = PUBLIC_API_KEY
+  const region = REGION
+  const endpoint = ENDPOINT
+  const customTimeout = Number(CUSTOM_TIMEOUT ?? '60000')
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     // flex: 1,
     // justifyContent: 'center',
-  };
-  console.log(FingerprintJsProProvider);
+  }
+  console.log(FingerprintJsProProvider)
 
   return (
     <FingerprintJsProProvider
@@ -48,14 +41,12 @@ function App(): React.JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-        <Visitor />
+        <ScrollView contentInsetAdjustmentBehavior='automatic' style={backgroundStyle}>
+          <Visitor />
         </ScrollView>
       </SafeAreaView>
     </FingerprintJsProProvider>
-  );
+  )
 }
 
-export default App;
+export default App

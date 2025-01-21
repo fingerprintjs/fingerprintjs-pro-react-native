@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, Button, View, Modal, Platform} from 'react-native';
+import React, { useState } from 'react'
+import { StyleSheet, Text, Button, View, Modal, Platform } from 'react-native'
 import {
   FingerprintJsProAgent,
   useVisitorData,
   ClientTimeoutError,
   Region,
-} from '@fingerprintjs/fingerprintjs-pro-react-native';
-import {PUBLIC_API_KEY, REGION, ENDPOINT} from '@env';
+} from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { PUBLIC_API_KEY, REGION, ENDPOINT } from '@env'
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     fontSize: 12,
   },
-});
+})
 
 const tags = {
   a: 'a',
@@ -50,52 +50,51 @@ const tags = {
     bar: [1, 2, 3],
   },
   d: false,
-};
+}
 
-const linkedId = 'React native';
+const linkedId = 'React native'
 
 export const Visitor = () => {
-  const {isLoading, data, getData, error} = useVisitorData();
+  const { isLoading, data, getData, error } = useVisitorData()
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [sealedResultModalVisible, setSealedResultModalVisible] =
-    useState(false);
-  const [testResults, setTestResults] = useState('tests not running');
+  const [modalVisible, setModalVisible] = useState(false)
+  const [sealedResultModalVisible, setSealedResultModalVisible] = useState(false)
+  const [testResults, setTestResults] = useState('tests not running')
 
   const onLoadData = () => {
-    getData();
-  };
+    getData()
+  }
 
   const onLoadSealedResult = () => {
-    getData();
-    setSealedResultModalVisible(true);
-  };
+    getData()
+    setSealedResultModalVisible(true)
+  }
 
   const onLoadDataWithTag = () => {
-    getData(tags, linkedId);
-  };
+    getData(tags, linkedId)
+  }
 
   const onLoadExtendedResult = async () => {
-    await getData(tags, linkedId);
-    setModalVisible(true);
-  };
+    await getData(tags, linkedId)
+    setModalVisible(true)
+  }
 
   const onRunTestsPressed = async () => {
-    setTestResults('Running tests');
+    setTestResults('Running tests')
     try {
-      await runTests();
-      setTestResults('Success!');
+      await runTests()
+      setTestResults('Success!')
     } catch (e) {
-      setTestResults(`Failed: ${e}`);
+      setTestResults(`Failed: ${e}`)
     }
-  };
+  }
 
   const runTests = async () => {
     const fingerprintClient = new FingerprintJsProAgent({
       apiKey: PUBLIC_API_KEY,
       region: REGION as Region,
       endpointUrl: ENDPOINT || undefined,
-    });
+    })
 
     const tests = [
       () => fingerprintClient.getVisitorId(),
@@ -106,98 +105,92 @@ export const Visitor = () => {
       () => fingerprintClient.getVisitorData(tags),
       () => fingerprintClient.getVisitorId(tags, 'checkIdWithTag'),
       () => fingerprintClient.getVisitorData(tags, 'checkDataWithTag'),
-      () => fingerprintClient.getVisitorId(undefined, undefined, {timeout: 5_000}),
-      () => fingerprintClient.getVisitorData(undefined, undefined, {timeout: 5_000}),
-    ];
+      () => fingerprintClient.getVisitorId(undefined, undefined, { timeout: 5_000 }),
+      () =>
+        fingerprintClient.getVisitorData(undefined, undefined, {
+          timeout: 5_000,
+        }),
+    ]
 
     const timeoutTests = [
-      () => fingerprintClient.getVisitorId(undefined, undefined, {timeout: 5}),
-      () => fingerprintClient.getVisitorData(undefined, undefined, {timeout: 5}),
-    ];
+      () => fingerprintClient.getVisitorId(undefined, undefined, { timeout: 5 }),
+      () => fingerprintClient.getVisitorData(undefined, undefined, { timeout: 5 }),
+    ]
 
     for (const test of tests) {
-      await test();
-      setTestResults(testResult => `${testResult}.`);
+      await test()
+      setTestResults((testResult) => `${testResult}.`)
     }
 
     for (const test of timeoutTests) {
       try {
-        await test();
-        throw new Error('Expected timeout for test');
+        await test()
+        throw new Error('Expected timeout for test')
       } catch (e) {
         if (e instanceof ClientTimeoutError) {
-          setTestResults(testResult => `${testResult}!`);
+          setTestResults((testResult) => `${testResult}!`)
         } else {
-          throw e;
+          throw e
         }
       }
     }
-  };
+  }
 
-  let info = 'Loading...';
+  let info = 'Loading...'
   if (!isLoading) {
     if (error) {
-      info = `${error.name}: ${error.message}`;
+      info = `${error.name}: ${error.message}`
     } else {
-      info = `Visitor id: ${data?.visitorId}`;
+      info = `Visitor id: ${data?.visitorId}`
     }
   }
 
-  const extendedResult = JSON.stringify(data, null, '  ');
-  const sealedResultInfo = JSON.stringify(data?.sealedResult ?? '', null, '  ');
+  const extendedResult = JSON.stringify(data, null, '  ')
+  const sealedResultInfo = JSON.stringify(data?.sealedResult ?? '', null, '  ')
 
   return (
     <View style={styles.centeredView}>
       <View style={styles.buttonsBlock}>
         <Text>{info}</Text>
-        <Button title="Load data" onPress={onLoadData} />
-        <Button
-          title="Load with tag and linkedId"
-          onPress={onLoadDataWithTag}
-        />
-        <Button title="Load extendedResult" onPress={onLoadExtendedResult} />
-        <Button title="Load sealedResult" onPress={onLoadSealedResult} />
-        <Button title="Run tests!" onPress={onRunTestsPressed} />
+        <Button title='Load data' onPress={onLoadData} />
+        <Button title='Load with tag and linkedId' onPress={onLoadDataWithTag} />
+        <Button title='Load extendedResult' onPress={onLoadExtendedResult} />
+        <Button title='Load sealedResult' onPress={onLoadSealedResult} />
+        <Button title='Run tests!' onPress={onRunTestsPressed} />
         <Text>{testResults}</Text>
       </View>
 
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent={true}
         visible={sealedResultModalVisible}
         onRequestClose={() => {
-          setSealedResultModalVisible(!setSealedResultModalVisible);
-        }}>
+          setSealedResultModalVisible(!setSealedResultModalVisible)
+        }}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.monoText}>{sealedResultInfo}</Text>
-            <Button
-              title="Close"
-              onPress={() =>
-                setSealedResultModalVisible(!sealedResultModalVisible)
-              }
-            />
+            <Button title='Close' onPress={() => setSealedResultModalVisible(!sealedResultModalVisible)} />
           </View>
         </View>
       </Modal>
 
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
+          setModalVisible(!modalVisible)
+        }}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.monoText}>{extendedResult}</Text>
-            <Button
-              title="Close"
-              onPress={() => setModalVisible(!modalVisible)}
-            />
+            <Button title='Close' onPress={() => setModalVisible(!modalVisible)} />
           </View>
         </View>
       </Modal>
     </View>
-  );
-};
+  )
+}

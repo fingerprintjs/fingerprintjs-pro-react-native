@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
-  ignorePatterns: ['!.prettierrc.js'],
-};
+  extends: '../.eslintrc.js',
+  ignorePatterns: ['Pods/*', '!.prettierrc.js'],
+}

@@ -1,5 +1,5 @@
 module.exports = {
   // reactNativePath: '.',
-  ios: {newArchEnabled: false},
+  ios: { newArchEnabled: false },
   newArchEnabled: false,
-};
+}
