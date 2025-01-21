@@ -26,7 +26,7 @@ export class FingerprintJsProAgent {
     requestOptions = {},
   }: FingerprintJsProAgentParams) {
     try {
-      NativeModules.RNFingerprintjsPro.init(
+      NativeModules.RNFingerprintjsPro.configure(
         apiKey,
         region,
         endpointUrl,
@@ -36,7 +36,7 @@ export class FingerprintJsProAgent {
       )
       this.requestOptions = requestOptions
     } catch (e) {
-      console.error('RNFingerprintjsPro init error: ', e)
+      console.error('RNFingerprintjsPro configure error: ', e)
     }
   }
 

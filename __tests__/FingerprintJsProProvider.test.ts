@@ -6,14 +6,14 @@ import { NativeModules } from 'react-native'
 import * as packageInfo from '../package.json'
 import { FingerprintJsProAgent } from '../src'
 
-const init = jest.fn()
+const configure = jest.fn()
 const getVisitorId = jest.fn()
 const getVisitorData = jest.fn()
 const getVisitorIdWithTimeout = jest.fn()
 const getVisitorDataWithTimeout = jest.fn()
 
 NativeModules.RNFingerprintjsPro = {
-  init: init,
+  configure: configure,
   getVisitorId: getVisitorId,
   getVisitorIdWithTimeout: getVisitorIdWithTimeout,
   getVisitorData: getVisitorData,
@@ -37,7 +37,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
+    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -58,7 +58,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
+    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -79,7 +79,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.init).toHaveBeenCalledWith(
+    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,

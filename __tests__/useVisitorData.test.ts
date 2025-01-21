@@ -3,13 +3,13 @@ import { NativeModules } from 'react-native'
 import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
-const init = jest.fn()
+const configure = jest.fn()
 const getVisitorId = jest.fn()
 const getVisitorData = jest.fn()
 const getVisitorDataWithTimeout = jest.fn()
 
 NativeModules.RNFingerprintjsPro = {
-  init: init,
+  configure: configure,
   getVisitorId: getVisitorId,
   getVisitorData: getVisitorData,
   getVisitorDataWithTimeout: getVisitorDataWithTimeout,
