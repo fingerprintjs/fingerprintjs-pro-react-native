@@ -2,7 +2,7 @@
 
 @interface RCT_EXTERN_MODULE(RNFingerprintjsPro, NSObject)
 
-RCT_EXTERN_METHOD(init:(NSString *)apiToken
+RCT_EXTERN_METHOD(configure:(NSString *)apiToken
   region:(NSString *)region
   endpoint:(NSString *)endpointUrl
   endpointFallbacks:(NSArray<NSString *> *)fallbackEndpointUrls

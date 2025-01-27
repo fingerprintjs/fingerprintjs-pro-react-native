@@ -4,8 +4,8 @@ on:
   push:
 
 jobs:
-  android-build:
-    name: Android - Build and Test React Native Library
+  android-build-TestProject:
+    name: Android TestProject - Build and Test React Native Library
     runs-on: macos-latest
 
     steps:
@@ -34,8 +34,8 @@ jobs:
           sleep 10 # Allow Metro Bundler to start
         #  yarn test
 
-  ios-build:
-    name: iOS - Build and Test React Native Library
+  ios-build-TestProject:
+    name: iOS TestProject - Build and Test React Native Library
     runs-on: macos-latest
 
     steps:
@@ -67,6 +67,73 @@ jobs:
       - name: Start Metro Bundler # and Test App
         run: |
           cd TestProject
+          yarn start &
+          sleep 10 # Allow Metro Bundler to start
+        #  yarn test
+
+  android-build-TestProjectLatestRN:
+    name: Android TestProjectLatestRN - Build and Test React Native Library
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          yarn build
+          cd TestProjectLatestRN
+          yarn install
+
+      - name: Build Android
+        run: |
+          cd TestProjectLatestRN/android
+          ./gradlew assembleDebug
+
+      - name: Start Metro Bundler # and Test App
+        run: |
+          cd TestProjectLatestRN
+          yarn start &
+          sleep 10 # Allow Metro Bundler to start
+        #  yarn test
+
+  ios-build-TestProjectLatestRN:
+    name: iOS TestProjectLatestRN - Build and Test React Native Library
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: |
+          yarn install
+          yarn build
+          cd TestProjectLatestRN
+          yarn install
+
+      - name: Install Pods
+        run: |
+          cd TestProjectLatestRN/ios
+          pod install
+
+      - name: Build iOS
+        env:
+          CI: true
+        run: |
+          cd TestProjectLatestRN/ios
+          xcodebuild -workspace TestProjectLatestRN.xcworkspace -scheme TestProjectLatestRN -sdk iphonesimulator -configuration Debug build
+
+      - name: Start Metro Bundler # and Test App
+        run: |
+          cd TestProjectLatestRN
           yarn start &
           sleep 10 # Allow Metro Bundler to start
         #  yarn test
