@@ -119,11 +119,11 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   private fun getTags(tags: ReadableMap?): Map<String, Any> {
-//    return tags?.toHashMap()
-//      ?.mapValues { it.value ?: "" }
-//      ?.filterValues { it != null } as Map<String, Any>
-//      ?: emptyMap()
-    return tags?.toHashMap()?.mapValues { it.value ?: "" } ?: emptyMap()
+    return tags
+      ?.toHashMap()
+      ?.filterValues { it != null }
+      ?.mapValues { it.value!! }
+      ?: emptyMap()
   }
 
   private fun getErrorDescription(error: Error): String {
