@@ -1,3 +1,11 @@
+## [3.3.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.0...v3.3.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* fix compatibility with React Native new architecture (v0.76+) ([8b2003b](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/8b2003bf4e535721e816106a3a15760fa79baf59))
+* improve Android types to make project Kotlin v2 compatible (RN 0.77+) ([891c9c3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/891c9c37544ae09e90f94cb51da18c6cf332bb80))
+
 ## [3.3.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.2.0...v3.3.0) (2025-01-09)
 
 
