@@ -20,7 +20,14 @@ class JSONTypeConvertor {
     }
 
     static func convertObjectToJSONTypeConvertible(_ object: Any) -> JSONTypeConvertible? {
-        if let intValue = object as? Int {
+        // React Native Bridge uses NSBoolean instead of Bool which is a subclass of NSNumber
+        if let number = object as? NSNumber {
+            if CFGetTypeID(number) == CFBooleanGetTypeID() {
+                return number.boolValue
+            } else {
+                return number.intValue
+            }
+        } else if let intValue = object as? Int {
             return intValue
         } else if let stringValue = object as? String {
             return stringValue
