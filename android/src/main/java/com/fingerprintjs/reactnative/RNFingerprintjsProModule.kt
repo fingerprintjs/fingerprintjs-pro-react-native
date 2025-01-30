@@ -67,14 +67,14 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       if (timeout != null) {
         fpjsClient?.getVisitorId(
           timeout,
-          tags?.toHashMap() ?: emptyMap(),
+          getTags(tags),
           linkedId ?: "",
           { result -> promise.resolve(result.visitorId) },
           { error -> promise.reject("Error: ", getErrorDescription(error)) }
         )
       } else {
         fpjsClient?.getVisitorId(
-          tags?.toHashMap() ?: emptyMap(),
+          getTags(tags),
           linkedId ?: "",
           { result -> promise.resolve(result.visitorId) },
           { error -> promise.reject("Error: ", getErrorDescription(error)) }
@@ -100,14 +100,14 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       if (timeout != null) {
         fpjsClient?.getVisitorId(
           timeout,
-          tags?.toHashMap() ?: emptyMap(),
+          getTags(tags),
           linkedId ?: "",
           callback,
           { error -> promise.reject("Error: ", getErrorDescription(error)) }
         )
       } else {
         fpjsClient?.getVisitorId(
-          tags?.toHashMap() ?: emptyMap(),
+          getTags(tags),
           linkedId ?: "",
           callback,
           { error -> promise.reject("Error: ", getErrorDescription(error)) }
@@ -116,6 +116,14 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     } catch (e: Exception) {
       promise.reject("Error: ", e)
     }
+  }
+
+  private fun getTags(tags: ReadableMap?): Map<String, Any> {
+    return tags
+      ?.toHashMap()
+      ?.filterValues { it != null }
+      ?.mapValues { it.value!! }
+      ?: emptyMap()
   }
 
   private fun getErrorDescription(error: Error): String {
