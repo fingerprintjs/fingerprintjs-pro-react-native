@@ -88,25 +88,36 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
 
-### 2. Configure iOS dependencies
+### 2. Configure native dependencies
 
+#### iOS
 
   ```shell
   cd ios && pod install
   ```
 
-### 3. Configure Android dependencies
-
-To declare the Fingerprint Maven repository, add the following declarations:
-```groovy
-maven {
-  url("https://maven.fpregistry.io/releases")
-}
-```
+#### Android
 
 Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
 
-#### Gradle versions before 7.0
+#### Gradle 7 or newer
+
+For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)), you likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block:
+
+```groovy
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+  repositories {
+    google()
+    mavenCentral()
+    maven {
+      url("https://maven.fpregistry.io/releases") // Add this
+    }
+  }
+}
+```
+
+#### Gradle 6.0 or older
 
 For Gradle versions before 7.0, you likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block:
 
@@ -131,23 +142,6 @@ allprojects {
 }
 ```
 
-#### Gradle versions 7.0 and higher
-
-For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)), you likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block: 
-
-```groovy
-dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-  repositories {
-    google()
-    mavenCentral()
-    maven {
-      url("https://maven.fpregistry.io/releases") // Add this
-    }
-  }
-}
-```
-
 ## Usage
 
 To identify visitors, you need a Fingerprint Pro account (you can [sign up for free](https://dashboard.fingerprint.com/signup/)).
@@ -165,6 +159,7 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
 import App from './App';
+import { name as appName } from './app.json';
 
 const WrappedApp = () => (
     <FingerprintJsProProvider
@@ -175,49 +170,39 @@ const WrappedApp = () => (
     </FingerprintJsProProvider>
 );
 
-AppRegistry.registerComponent('AppName', () => WrappedApp);
+AppRegistry.registerComponent(appName, () => WrappedApp);
 ```
 
 Use the `useVisitorData` hook in your components to perform visitor identification and get the data.
 
 ```javascript
 // src/App.js
-import React, { useEffect } from 'react';
-import { Text } from 'react-native';
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import React from 'react'
+import {Button, SafeAreaView, Text, View} from 'react-native'
+import {useVisitorData} from '@fingerprintjs/fingerprintjs-pro-react-native'
 
-function App() {
-  const {
-    isLoading,
-    error,
-    data,
-    getData,
-  } = useVisitorData();
+export default function App() {
+  const {isLoading, error, data, getData} = useVisitorData()
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
-  if (error) {
-    return <Text>An error occured: {error.message}</Text>;
-  }
-
-  if (data) {
-    // perform some logic based on the visitor data
-    return (
-      <Text>
-        Visitor id is {data.visitorId}
-      </Text>
-    );
-  } else {
-    return null;
-  }
+  return (
+          <SafeAreaView>
+            <View style={{margin: 8}}>
+              <Button title='Reload data' onPress={() => getData()} />
+              {isLoading ? (
+                      <Text>Loading...</Text>
+              ) : (
+                      <>
+                        <Text>VisitorId: {data?.visitorId}</Text>
+                        <Text>Full visitor data:</Text>
+                        <Text>
+                          {error ? error.message : JSON.stringify(data, null, 2)}
+                        </Text>
+                      </>
+              )}
+            </View>
+          </SafeAreaView>
+  )
 }
-
-export default App;
 ```
 
 ### API Client approach
@@ -301,4 +286,3 @@ please email us at `oss-support@fingerprint.com`.
 
 ## License
 This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
-
