@@ -121,7 +121,7 @@ dependencyResolutionManagement {
 
 For Gradle versions before 7.0, you likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block:
 
-  ```groovy
+```groovy
 allprojects {
     repositories {
       mavenCentral()
