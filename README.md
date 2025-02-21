@@ -88,15 +88,13 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
 
-### 2. Configure native dependencies
-
-#### iOS
+### 2. Configure iOS dependencies (if developing on iOS)
 
   ```shell
   cd ios && pod install
   ```
 
-#### Android
+### 3. Configure Android dependencies (if developing on Android)
 
 Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
 
