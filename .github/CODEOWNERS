@@ -1,9 +1,1 @@
-/src/ @ilfa @necipallef
-*.ts @ilfa @necipallef
-*.tsx @ilfa @necipallef
-*.js @ilfa @necipallef
-*.jsx @ilfa @necipallef
-*.json @ilfa @necipallef
-
-ios/ @mgutski
-android/ @Alexey-Verkhovsky
+* @ilfa @necipallef
