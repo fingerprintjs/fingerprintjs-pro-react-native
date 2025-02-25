@@ -35,6 +35,7 @@ identification. Fingerprint Pro React Native SDK is an easy way to integrate Fin
 application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
 ## Table of contents
+
 - [Fingerprint Pro React Native](#fingerprint-pro-react-native)
   - [Table of contents](#table-of-contents)
   - [Requirements and limitations](#requirements-and-limitations)
@@ -61,11 +62,11 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 - Android 5.0 (API level 21+) or higher
 - iOS 13+/tvOS 15+, Swift 5.7 or higher (stable releases)
 
-
 - Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
 - Usage inside the [Expo environment](https://docs.expo.dev) is not supported right now.
 
 ## Dependencies
+
 - [Fingerprint Pro iOS](https://github.com/fingerprintjs/fingerprintjs-pro-ios)
 - [Fingerprint Pro Android](https://github.com/fingerprintjs/fingerprintjs-pro-android)
 
@@ -73,26 +74,28 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 ### 1. Install the package using your favorite package manager:
 
-* [NPM](https://npmjs.org):
+- [NPM](https://npmjs.org):
+
   ```shell
   npm install @fingerprintjs/fingerprintjs-pro-react-native --save
   ```
 
-* [Yarn](https://yarnpkg.com):
+- [Yarn](https://yarnpkg.com):
+
   ```shell
   yarn add @fingerprintjs/fingerprintjs-pro-react-native
   ```
 
-* [PNPM](https://pnpm.js.org):
+- [PNPM](https://pnpm.js.org):
   ```shell
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
 
 ### 2. Configure iOS dependencies (if developing on iOS)
 
-  ```shell
-  cd ios && pod install
-  ```
+```shell
+cd ios && pod install
+```
 
 ### 3. Configure Android dependencies (if developing on Android)
 
@@ -160,13 +163,10 @@ import App from './App';
 import { name as appName } from './app.json';
 
 const WrappedApp = () => (
-    <FingerprintJsProProvider
-        apiKey={'your-fpjs-public-api-key'}
-        region={'eu'}
-    >
-        <App />
-    </FingerprintJsProProvider>
-);
+  <FingerprintJsProProvider apiKey={'your-fpjs-public-api-key'} region={'eu'}>
+    <App />
+  </FingerprintJsProProvider>
+)
 
 AppRegistry.registerComponent(appName, () => WrappedApp);
 ```
@@ -183,22 +183,20 @@ export default function App() {
   const {isLoading, error, data, getData} = useVisitorData()
 
   return (
-          <SafeAreaView>
-            <View style={{margin: 8}}>
-              <Button title='Reload data' onPress={() => getData()} />
-              {isLoading ? (
-                      <Text>Loading...</Text>
-              ) : (
-                      <>
-                        <Text>VisitorId: {data?.visitorId}</Text>
-                        <Text>Full visitor data:</Text>
-                        <Text>
-                          {error ? error.message : JSON.stringify(data, null, 2)}
-                        </Text>
-                      </>
-              )}
-            </View>
-          </SafeAreaView>
+    <SafeAreaView>
+      <View style={{ margin: 8 }}>
+        <Button title='Reload data' onPress={() => getData()} />
+        {isLoading ? (
+          <Text>Loading...</Text>
+        ) : (
+          <>
+            <Text>VisitorId: {data?.visitorId}</Text>
+            <Text>Full visitor data:</Text>
+            <Text>{error ? error.message : JSON.stringify(data, null, 2)}</Text>
+          </>
+        )}
+      </View>
+    </SafeAreaView>
   )
 }
 ```
@@ -235,18 +233,21 @@ It can be requested using the `extendedResponseFormat`: true parameter. See more
 Providing `extendedResponseFormat` using hooks:
 
 ```javascript
-  return (
-    <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
-      <App />
-    </FingerprintJsProProvider>
-  )
+return (
+  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
+    <App />
+  </FingerprintJsProProvider>
+)
 ```
 
 Providing `extendedResponseFormat` using the API Client:
 
 ```javascript
-const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu', extendedResponseFormat: true }); // Region may be 'us', 'eu', or 'ap'
-// =================================================================================================^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+const FingerprintClient = new FingerprintJsProAgent({
+  apiKey: 'PUBLIC_API_KEY',
+  region: 'eu',
+  extendedResponseFormat: true,
+})
 ```
 
 ### Linking and tagging information
@@ -271,16 +272,20 @@ const visitor = await FingerprintClient.getVisitorData(tag, linkedId);
 ```
 
 ## API Reference
+
 See the full [generated API Reference](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
 
 ## Additional Resources
+
 - [Server-to-Server API](https://dev.fingerprint.com/docs/server-api)
 - [Fingerprint Pro documentation](https://dev.fingerprint.com/docs)
 
 ## Support and feedback
+
 To report problems, ask questions or provide feedback, please
 use [Issues](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues). If you need private support,
 please email us at `oss-support@fingerprint.com`.
 
 ## License
+
 This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
