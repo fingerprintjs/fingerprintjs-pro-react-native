@@ -45,7 +45,6 @@
           "package.json"
         ]
       }
-    ],
-    "@semantic-release/github"
+    ]
   ]
 }
