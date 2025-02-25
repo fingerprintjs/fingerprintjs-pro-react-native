@@ -1,6 +1,7 @@
 {
   "branches": [
     "main",
+    "semantic-release-testing",
     {
       "name": "test",
       "prerelease": true
@@ -18,6 +19,14 @@
       "@semantic-release/release-notes-generator",
       {
         "config": "@fingerprintjs/conventional-changelog-dx-team"
+      }
+    ],
+    [
+      "@fingerprintjs/semantic-release-native-sdk-plugin",
+      {
+        "iOSPodSpecJsonPath": "RNFingerprintjsPro.podspec.json",
+        "androidPath": "android",
+        "androidGradleTaskName": "printFingerprintNativeSDKVersion"
       }
     ],
     "@semantic-release/changelog",
