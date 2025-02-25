@@ -21,14 +21,6 @@
         "config": "@fingerprintjs/conventional-changelog-dx-team"
       }
     ],
-    [
-      "@fingerprintjs/semantic-release-native-sdk-plugin",
-      {
-        "iOSPodSpecJsonPath": "RNFingerprintjsPro.podspec.json",
-        "androidPath": "android",
-        "androidGradleTaskName": "printFingerprintNativeSDKVersion"
-      }
-    ],
     "@semantic-release/changelog",
     "@semantic-release/npm",
     [
