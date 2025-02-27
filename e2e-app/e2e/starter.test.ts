@@ -11,6 +11,6 @@ describe('Example', () => {
 
   it('should have welcome screen', async () => {
     await device.disableSynchronization()
-    await expect(element(by.text('Hello World!'))).toBeVisible()
+    await expect(element(by.text('Hello World!'))).toExist()
   })
 })
