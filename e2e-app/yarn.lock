@@ -3500,6 +3500,13 @@ detect-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
+detox-cli@^20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/detox-cli/-/detox-cli-20.0.0.tgz#ea70b45db7ff10cb8ca9e304b02e6593cc27a645"
+  integrity sha512-0xfPs6q8vxYlai0bjqmw34/iTmQle4PLAI9W/u5DldOq94/nMP2sZn4ZF3ieQ39oWrPeGHco/pXG845p5TSe3Q==
+  dependencies:
+    chalk "^4.0.0"
+
 detox-copilot@^0.0.27:
   version "0.0.27"
   resolved "https://registry.yarnpkg.com/detox-copilot/-/detox-copilot-0.0.27.tgz#350ee91ae6ba77acac78513ccbda7aafcb3c6faf"
