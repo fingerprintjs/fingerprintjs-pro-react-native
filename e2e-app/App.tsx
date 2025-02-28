@@ -1,4 +1,12 @@
 import { SafeAreaView, Text, View } from 'react-native'
+import { LaunchArguments } from 'react-native-launch-arguments'
+
+export type LaunchArgs = {
+  apiKey: string
+  region: string
+}
+
+const args = LaunchArguments.value<LaunchArgs>()
 
 export default function App() {
   return (
@@ -9,6 +17,8 @@ export default function App() {
         }}
       >
         <Text>Hello World!</Text>
+        <Text>API Key: {args.apiKey}</Text>
+        <Text>Region: {args.region}</Text>
       </SafeAreaView>
     </View>
   )
