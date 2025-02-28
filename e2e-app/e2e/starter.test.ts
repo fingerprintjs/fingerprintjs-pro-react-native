@@ -16,7 +16,6 @@ describe('Example', () => {
   })
 
   it('should have welcome screen', async () => {
-    await device.disableSynchronization()
     await expect(element(by.text('Hello World!'))).toExist()
     await expect(element(by.text('API Key: 1234'))).toExist()
     await expect(element(by.text('Region: Test'))).toExist()
