@@ -16,7 +16,7 @@ function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SafeAreaView
         style={{
           paddingTop: 24,
