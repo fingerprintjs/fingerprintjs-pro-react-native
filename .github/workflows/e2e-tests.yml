@@ -52,7 +52,7 @@ jobs:
           api-level: 35
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
+          script: MAXIMUM_US_DEFAULT_PUBLIC_KEY=${{secrets.MAXIMUM_US_DEFAULT_PUBLIC_KEY}} cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
 
       - name: Upload artifacts
         if: always()
@@ -115,6 +115,8 @@ jobs:
 
       - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all
         working-directory: e2e-app
+        env:
+          MAXIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MAXIMUM_US_DEFAULT_PUBLIC_KEY }}
 
       - name: Upload artifacts
         if: always()
