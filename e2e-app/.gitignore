@@ -17,6 +17,9 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
+# Detox
+artifacts
+
 # Metro
 .metro-health-check*
 
