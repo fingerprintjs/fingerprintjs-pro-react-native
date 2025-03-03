@@ -55,7 +55,7 @@ jobs:
           script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
 
       - name: Upload artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: detox-artifacts
@@ -117,7 +117,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Upload artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: detox-artifacts
