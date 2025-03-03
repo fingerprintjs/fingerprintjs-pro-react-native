@@ -1,4 +1,4 @@
-import { device, expect } from 'detox'
+import { device, expect, by } from 'detox'
 import type { LaunchArgs } from '@/App'
 
 describe('Example', () => {
