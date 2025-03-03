@@ -31,7 +31,10 @@ function InnerApp() {
         )}
         {data && <Text testID={testIds.data}>{JSON.stringify(data)}</Text>}
       </SafeAreaView>
-      <Pressable testID={testIds.getData} onPress={() => getData(args.tags, args.linkedId)}>
+      <Pressable
+        testID={testIds.getData}
+        onPress={() => getData(args.tags, args.linkedId)}
+      >
         <Text>Get data</Text>
       </Pressable>
     </View>
