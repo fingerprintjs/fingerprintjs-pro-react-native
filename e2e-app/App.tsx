@@ -1,14 +1,20 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import { LaunchArguments } from 'react-native-launch-arguments'
+import { FingerprintJsProProvider, Region, Tags, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { testIds } from '@/e2e/ids'
 
 export type LaunchArgs = {
   apiKey: string
-  region: string
+  region: Region
+  tags?: Tags
+  linkedId?: string
 }
 
 const args = LaunchArguments.value<LaunchArgs>()
 
-export default function App() {
+function InnerApp() {
+  const { isLoading, error, data, getData } = useVisitorData()
+
   return (
     <View>
       <SafeAreaView
@@ -16,10 +22,26 @@ export default function App() {
           paddingTop: 24,
         }}
       >
-        <Text>Hello World!</Text>
-        <Text>API Key: {args.apiKey}</Text>
-        <Text>Region: {args.region}</Text>
+        {isLoading && <Text testID={testIds.loading}>Loading...</Text>}
+        {error && (
+          <View>
+            <Text testID={testIds.errorName}>{error.name}</Text>
+            <Text testID={testIds.errorMessage}>{error.message}</Text>
+          </View>
+        )}
+        {data && <Text testID={testIds.data}>{JSON.stringify(data)}</Text>}
       </SafeAreaView>
+      <Pressable testID={testIds.getData} onPress={() => getData(args.tags, args.linkedId)}>
+        <Text>Get data</Text>
+      </Pressable>
     </View>
+  )
+}
+
+export default function App() {
+  return (
+    <FingerprintJsProProvider apiKey={args.apiKey} region={args.region}>
+      <InnerApp />
+    </FingerprintJsProProvider>
   )
 }
