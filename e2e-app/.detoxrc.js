@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   artifacts: {
-    rootDir: 'e2e-app/artifacts',
+    rootDir: './artifacts',
     uiHierarchy: true,
   },
   apps: {
