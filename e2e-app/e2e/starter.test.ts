@@ -6,7 +6,7 @@ describe('Example', () => {
     await device.launchApp({
       launchArgs: {
         apiKey: '1234',
-        region: 'Test',
+        region: 'us',
       } as LaunchArgs,
     })
   })
