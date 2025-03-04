@@ -52,6 +52,14 @@ jobs:
       - run: npx detox build --configuration android.emu.release
         working-directory: e2e-app
 
+      - run: df -h
+
+      # Cleanup is required to free up space needed to run avd
+      - name: Cleanup
+        run: rm -rf ./node_modules && rm -rf e2e-app/ios && rm -rf e2e-app/.expo
+
+      - run: df -h
+
       - name: Detox test
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
         with:
