@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   artifacts: {
-    rootDir: './artifacts',
+    rootDir: './detox-artifacts',
     uiHierarchy: true,
   },
   apps: {

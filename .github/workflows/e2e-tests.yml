@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: detox-artifacts
-          path: e2e-app/artifacts
+          path: '**/detox-artifacts'
 
   e2e-tests-ios:
     env:
@@ -129,5 +129,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: detox-artifacts
-          path: e2e-app/artifacts
+          path: '**/detox-artifacts'
 
