@@ -11,8 +11,9 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react",
+    "build:ios": "detox build --configuration ios.sim.release",
     "test:ios": "detox test --configuration ios.sim.release",
-    "test:ios:ci": "detox test --configuration ios.sim.release"
+    "test:ios:ci": "detox test --configuration ios.sim.release --cleanup --headless --record-logs all"
   },
   "jest": {
     "preset": "jest-expo"
