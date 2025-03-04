@@ -97,7 +97,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: app-release
-          path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
+          path: e2e-app/android/app
+
+      - name: Debug build directory
+        run: ls -a
+        working-directory: e2e-app/android/app
 
       - name: Get device name
         id: device
