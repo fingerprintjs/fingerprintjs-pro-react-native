@@ -7,17 +7,11 @@ on:
       - published
 
 jobs:
-  e2e-tests-android:
+  build-android:
     runs-on: ubuntu-latest
-    name: Android E2E Tests
+    name: Build android for E2E tests
     steps:
       - uses: actions/checkout@v4
-
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
 
       - uses: actions/setup-node@v3
         with:
@@ -44,26 +38,81 @@ jobs:
         if: github.event_name == 'release'
         working-directory: e2e-app
 
+      - run: npx detox build --configuration android.emu.release
+        working-directory: e2e-app
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
+
+  e2e-tests-android:
+    needs: build-android
+    runs-on: ubuntu-latest
+    name: Android E2E Tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: actions/setup-java@v3
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-35
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-release.apk
+          path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
+
       - name: Get device name
         id: device
         run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
         working-directory: e2e-app
 
-      - run: npx detox build --configuration android.emu.release
-        working-directory: e2e-app
-
-      - run: df -h
-
-      # Cleanup is required to free up space needed to run avd
-      - name: Cleanup
-        run: rm -rf ./node_modules && rm -rf e2e-app/ios && rm -rf e2e-app/.expo
-
-      - run: df -h
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
+        with:
+          api-level: 35
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+          avd-name: ${{ steps.device.outputs.AVD_NAME }}
 
       - name: Detox test
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
         with:
           api-level: 35
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
           script: MAXIMUM_US_DEFAULT_PUBLIC_KEY=${{secrets.MAXIMUM_US_DEFAULT_PUBLIC_KEY}} cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
