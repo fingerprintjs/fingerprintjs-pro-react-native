@@ -28,8 +28,8 @@ jobs:
         uses: actions/cache@v4
         id: build-cache
         with:
-          path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
-          key: build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts')}}
+          path: e2e-app/android/app/build
+          key: android-build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts')}}
 
       - run: yarn install
         if: steps.build-cache.outputs.cache-hit != 'true'
@@ -54,8 +54,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-release.apk
-          path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
+          name: app-release
+          path: e2e-app/android/app/build
 
   e2e-tests-android:
     needs: build-android
@@ -96,7 +96,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: app-release.apk
+          name: app-release
           path: e2e-app/android/app/build/outputs/apk/release/app-release.apk
 
       - name: Get device name
