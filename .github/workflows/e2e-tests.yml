@@ -97,7 +97,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: app-release
-          path: e2e-app/android/app
+          path: e2e-app/android/app/build
 
       - name: Debug build directory
         run: ls -R
