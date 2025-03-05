@@ -25,8 +25,12 @@ describe('React Native Identification on US Region', () => {
       .toExist()
       .withTimeout(10_000)
 
-    const attributes = await element(by.id(testIds.data)).getAttributes()
+    const attributes = await element(by.id(testIds.data)).getAttributes() as Record<string, any>
 
     console.log(attributes)
+
+    const text = attributes?.text ?? attributes?.label
+    const json = JSON.parse(text)
+    expect(json.visitorId).toBeTruthy()
   })
 })
