@@ -21,6 +21,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@fingerprintjs/fingerprintjs-pro-react-native": "../",
+    "dotenv": "^16.4.7",
     "expo": "~52.0.37",
     "expo-asset": "~11.0.4",
     "expo-build-properties": "~0.13.2",
