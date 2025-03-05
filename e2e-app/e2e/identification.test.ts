@@ -4,10 +4,10 @@ import { testIds } from './ids'
 
 describe('React Native Identification on US Region', () => {
   beforeAll(async () => {
-    const apiKey = process.env.MAXIMUM_US_DEFAULT_PUBLIC_KEY
+    const apiKey = process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY
 
     if(!apiKey) {
-      throw new Error('MAXIMUM_US_DEFAULT_PUBLIC_KEY is required to run this test')
+      throw new Error('MINIMUM_US_DEFAULT_PUBLIC_KEY is required to run this test')
     }
 
     await device.launchApp({
