@@ -1315,7 +1315,7 @@
     semver "^7.6.0"
     xml2js "0.6.0"
 
-"@expo/prebuild-config@^8.0.27", "@expo/prebuild-config@^8.0.28":
+"@expo/prebuild-config@^8.0.28":
   version "8.0.28"
   resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-8.0.28.tgz#8a97059cca4a0dff7b40cd02130fbdeaad7c2022"
   integrity sha512-SDDgCKKS1wFNNm3de2vBP8Q5bnxcabuPDE9Mnk9p7Gb4qBavhwMbAtrLcAyZB+WRb4QM+yan3z3K95vvCfI/+A==
@@ -3506,9 +3506,9 @@ detox-copilot@^0.0.27:
   integrity sha512-H2febTNp0arVx2A8rvM1C2BwDiBEP/2Ya8Hd1mVyV66rR5u8om1gdIypaRGm+plpTLCHhlefe4+7qLtHgVzpng==
 
 detox@^20.34.3:
-  version "20.34.3"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-20.34.3.tgz#8a1c11188b038247441b89886c9b60c487b25782"
-  integrity sha512-FYYIZxAJoPuBkvEStmQQaAp4buqtwPKa0fQCtr45V02xN467OfnBL9XD3a3ICLf4YMx5I6mIAmn8dot+8QP7Iw==
+  version "20.34.4"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-20.34.4.tgz#68708928458ba76e8a5f1df3e09eae1551408973"
+  integrity sha512-URN1KZ1cwX5V1mHLKYgAzTEvDWJHfDOYvo0oOzLSrTP0hanjBJlCZRbTA7SVIMFNvghz7xVipiL/a4FLaofKvQ==
   dependencies:
     ajv "^8.6.3"
     bunyan "^1.8.12"
@@ -4043,13 +4043,6 @@ expo-modules-core@2.2.2:
   integrity sha512-SgjK86UD89gKAscRK3bdpn6Ojfs/KU4GujtuFx1wm4JaBjmXH4aakWkItkPlAV2pjIiHJHWQbENL9xjbw/Qr/g==
   dependencies:
     invariant "^2.2.4"
-
-expo-splash-screen@~0.29.22:
-  version "0.29.22"
-  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.29.22.tgz#fd75a19cbc2989e154c0293d8e782d3de03c3296"
-  integrity sha512-f+bPpF06bqiuW1Fbrd3nxeaSsmTVTBEKEYe3epYt4IE6y4Ulli3qEUamMLlRQiDGuIXPU6zQlscpy2mdBUI5cA==
-  dependencies:
-    "@expo/prebuild-config" "^8.0.27"
 
 expo@~52.0.37:
   version "52.0.37"

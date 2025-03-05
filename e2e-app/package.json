@@ -1,5 +1,5 @@
 {
-  "name": "e2e-app",
+  "name": "E2EApp",
   "main": "expo/AppEntry.js",
   "version": "1.0.0",
   "scripts": {
@@ -25,7 +25,6 @@
     "expo-asset": "~11.0.4",
     "expo-build-properties": "~0.13.2",
     "expo-linking": "~7.0.5",
-    "expo-splash-screen": "~0.29.22",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.77.1",

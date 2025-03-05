@@ -13,7 +13,7 @@ install! 'cocoapods',
 
 prepare_react_native_project!
 
-target 'e2eapp' do
+target 'E2EApp' do
   use_expo_modules!
 
   if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'

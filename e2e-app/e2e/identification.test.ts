@@ -4,16 +4,19 @@ import { testIds } from './ids'
 
 describe('React Native Identification on US Region', () => {
   beforeAll(async () => {
+    const apiKey = process.env.MAXIMUM_US_DEFAULT_PUBLIC_KEY
+
+    if(!apiKey) {
+      throw new Error('MAXIMUM_US_DEFAULT_PUBLIC_KEY is required to run this test')
+    }
+
     await device.launchApp({
+      newInstance: true,
       launchArgs: {
-        apiKey: process.env.MAXIMUM_US_DEFAULT_PUBLIC_KEY ?? '',
+        apiKey,
         region: 'us',
       } as LaunchArgs,
     })
-  })
-
-  beforeEach(async () => {
-    await device.reloadReactNative()
   })
 
   it('should return visitor data', async () => {

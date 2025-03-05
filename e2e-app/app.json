@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "e2e-app",
-    "slug": "e2e-app",
+    "name": "E2EApp",
+    "slug": "e2eapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -41,15 +41,6 @@
         }
       ],
       "./plugins/withGradleProperties.js",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
       "expo-build-properties",
       "expo-asset"
     ]
