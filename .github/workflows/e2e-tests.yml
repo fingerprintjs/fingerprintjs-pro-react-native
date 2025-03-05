@@ -100,7 +100,7 @@ jobs:
           path: e2e-app/android/app
 
       - name: Debug build directory
-        run: ls -a
+        run: ls -R
         working-directory: e2e-app/android/app
 
       - name: Get device name
