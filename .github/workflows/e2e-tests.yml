@@ -130,7 +130,9 @@ jobs:
           disable-animations: true
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: MINIMUM_US_DEFAULT_PUBLIC_KEY=${{secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY}} cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
+          script: | 
+            export MINIMUM_US_DEFAULT_PUBLIC_KEY=${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+            cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
 
       - name: Upload artifacts
         if: always()
