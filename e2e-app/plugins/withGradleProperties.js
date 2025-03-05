@@ -24,11 +24,11 @@ module.exports = (expoConfig) => {
       gradleConfig.modResults.push(gradleProperty)
     })
 
-    gradleConfig.modResults.push({
+  /*  gradleConfig.modResults.push({
       key: 'android.injected.testOnly',
       value: 'true',
       type: 'property',
-    })
+    })*/
 
     return gradleConfig
   })
