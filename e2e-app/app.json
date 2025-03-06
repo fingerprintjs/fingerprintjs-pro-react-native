@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "E2EApp",
+    "slug": "e2eapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fingerprint.e2eapp"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.fingerprint.e2eapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "@config-plugins/detox",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "34.0.0",
+            "extraMavenRepos": [
+              {
+                "url": "https://maven.fpregistry.io/releases"
+              }
+            ]
+          }
+        }
+      ],
+      "./plugins/withGradleProperties.js",
+      "expo-build-properties",
+      "expo-asset"
+    ]
+  }
+}
