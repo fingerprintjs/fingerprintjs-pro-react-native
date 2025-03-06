@@ -1,4 +1,5 @@
 import { by, device, element, waitFor } from 'detox'
+import {expect as jestExpect} from '@jest/globals'
 import type { LaunchArgs } from '@/App'
 import { testIds } from './ids'
 
@@ -31,6 +32,6 @@ describe('React Native Identification on US Region', () => {
 
     const text = attributes?.text ?? attributes?.label
     const json = JSON.parse(text)
-    expect(json.visitorId).toBeTruthy()
+    jestExpect(json.visitorId).toBeTruthy()
   })
 })
