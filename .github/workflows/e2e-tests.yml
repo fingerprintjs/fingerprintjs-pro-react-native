@@ -195,6 +195,11 @@ jobs:
         if: github.event_name == 'release' && steps.build-cache.outputs.cache-hit != 'true'
         working-directory: e2e-app
 
+      - name: Install pods
+        run: pod install
+        working-directory: e2e-app/ios
+        if: steps.build-cache.outputs.cache-hit != 'true'
+
       - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
         if: steps.build-cache.outputs.cache-hit != 'true'
