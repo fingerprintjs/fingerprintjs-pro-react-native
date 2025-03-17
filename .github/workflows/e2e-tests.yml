@@ -29,7 +29,7 @@ jobs:
         id: build-cache
         with:
           path: e2e-app/android/app/build
-          key: android-build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts')}}
+          key: android-build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts', 'e2e-app/android/**/*')}}
 
       - run: yarn install
         if: steps.build-cache.outputs.cache-hit != 'true'
@@ -144,12 +144,75 @@ jobs:
           name: detox-artifacts
           path: '**/detox-artifacts'
 
+  build-ios:
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+    runs-on: macos-latest
+    name: Build iOS for E2E tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
+        with:
+          xcode-version: latest-stable
+
+      - name: Install macOS deps
+        run: |
+          brew install fastlane
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.2
+
+      - name: Cache build
+        uses: actions/cache@v4
+        id: build-cache
+        with:
+          path: e2e-app/ios/build/Build
+          key: ios-build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts', 'e2e-app/ios/**/*')}}
+
+      - run: yarn install
+        if: steps.build-cache.outputs.cache-hit != 'true'
+
+      - run: yarn build
+        if: github.event_name != 'release' && steps.build-cache.outputs.cache-hit != 'true'
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+        if: steps.build-cache.outputs.cache-hit != 'true'
+
+      - name: Install ${{github.event.release.tag_name}} version of the package
+        run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        if: github.event_name == 'release' && steps.build-cache.outputs.cache-hit != 'true'
+        working-directory: e2e-app
+
+      - run: npx detox build --configuration ios.sim.release
+        working-directory: e2e-app
+        if: steps.build-cache.outputs.cache-hit != 'true'
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: e2e-app/ios/build/Build
+
+
   e2e-tests-ios:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-latest
     name: iOS E2E Tests
+    needs: build-ios
     steps:
       - uses: actions/checkout@v4
 
@@ -174,26 +237,22 @@ jobs:
           bundler-cache: true
           ruby-version: 3.2
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-release
+          path: e2e-app/ios/build/Build
+
+      - name: Debug build directory
+        run: ls -R
+        working-directory: e2e-app/ios/build/Build
+
       - name: Start iPhone simulator
         uses: futureware-tech/simulator-action@dab10d813144ef59b48d401cd95da151222ef8cd
         with:
           model: 'iPhone 16'
 
-      - run: yarn install
-
-      - run: yarn build
-        if: github.event_name != 'release'
-
       - name: Install dependencies in e2e-app
         run: yarn install
-        working-directory: e2e-app
-
-      - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
-        if: github.event_name == 'release'
-        working-directory: e2e-app
-
-      - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
 
       - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all
@@ -207,4 +266,3 @@ jobs:
         with:
           name: detox-artifacts
           path: '**/detox-artifacts'
-
