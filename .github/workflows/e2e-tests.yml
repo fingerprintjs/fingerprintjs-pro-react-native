@@ -54,7 +54,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
+          name: android-app-release
           path: e2e-app/android/app/build
 
   e2e-tests-android:
@@ -96,7 +96,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: app-release
+          name: android-app-release
           path: e2e-app/android/app/build
 
       - name: Debug build directory
@@ -141,7 +141,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: detox-artifacts
+          name: android/detox-artifacts
           path: '**/detox-artifacts'
 
   build-ios:
@@ -269,5 +269,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: detox-artifacts
+          name: ios-detox-artifacts
           path: '**/detox-artifacts'
