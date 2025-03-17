@@ -17,15 +17,15 @@ module.exports = {
   apps: {
     'ios.debug': {
       type: 'ios.app',
-      binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/e2eapp.app',
+      binaryPath: 'ios/build/Build/Products/Debug-iphonesimulator/E2EApp.app',
       build:
-        'xcodebuild -workspace ios/e2eapp.xcworkspace -scheme e2eapp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
+        'xcodebuild -workspace ios/E2EApp.xcworkspace -scheme E2EApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build',
     },
     'ios.release': {
       type: 'ios.app',
-      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/e2eapp.app',
+      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/E2EApp.app',
       build:
-        'xcodebuild -workspace ios/e2eapp.xcworkspace -scheme e2eapp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build',
+        'xcodebuild -workspace ios/E2EApp.xcworkspace -scheme E2EApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build',
     },
     'android.debug': {
       type: 'android.apk',
