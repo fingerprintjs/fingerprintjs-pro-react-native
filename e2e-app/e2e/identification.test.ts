@@ -56,8 +56,12 @@ describe.each([['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MIN
         } as LaunchArgs,
       })
 
-      const json = await identify()
-      expect(json.visitorId).toMatch(VISITOR_ID_REGEX)
+      const identificationResult = await identify()
+      expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+
+      const event = await client.getEvent(identificationResult.requestId)
+      expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
+      expect(event.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
     })
 
     it('should return visitor data with linkedId and tag', async () => {
@@ -76,10 +80,10 @@ describe.each([['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MIN
         } as LaunchArgs,
       })
 
-      const json = await identify()
-      expect(json.visitorId).toMatch(VISITOR_ID_REGEX)
+      const identificationResult = await identify()
+      expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
 
-      const event = await client.getEvent(json.requestId)
+      const event = await client.getEvent(identificationResult.requestId)
       expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
       expect(event.products.identification?.data?.tag).toEqual(tags)
     })
