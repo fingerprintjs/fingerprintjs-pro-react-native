@@ -2,7 +2,12 @@ import { by, device, element, waitFor } from 'detox'
 import { expect } from '@jest/globals'
 import type { LaunchArgs } from '@/App'
 import { testIds } from './ids'
-import { FingerprintJsServerApiClient, Region } from '@fingerprintjs/fingerprintjs-pro-server-api'
+import {
+  DecryptionAlgorithm,
+  FingerprintJsServerApiClient,
+  Region,
+  unsealEventsResponse,
+} from '@fingerprintjs/fingerprintjs-pro-server-api'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
 
@@ -15,7 +20,7 @@ async function identify() {
   const attributes = (await element(by.id(testIds.data)).getAttributes()) as Record<string, any>
   const text = attributes?.text ?? attributes?.label
 
-  return JSON.parse(text) as { visitorId: string; requestId: string }
+  return JSON.parse(text) as { visitorId: string; requestId: string; sealedResult?: string }
 }
 
 describe.each([
@@ -91,5 +96,45 @@ describe.each([
     const event = await client.getEvent(identificationResult.requestId)
     expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
     expect(event.products.identification?.data?.tag).toEqual(tags)
+  })
+})
+
+describe('React Native Identification with sealed results', () => {
+  const encryptionKey = process.env.MINIMUM_US_SEALED_ENCRYPTION_KEY!
+  const apiKey = process.env.MINIMUM_US_SEALED_PUBLIC_KEY!
+
+  beforeAll(async () => {
+    if (!apiKey) {
+      throw new Error('MINIMUM_US_SEALED_PUBLIC_KEY is required to run this test')
+    }
+
+    if (!encryptionKey) {
+      throw new Error('MINIMUM_US_SEALED_ENCRYPTION_KEY is required to run this test')
+    }
+
+    await device.launchApp({
+      newInstance: true,
+      launchArgs: {
+        apiKey,
+        region: 'us',
+      } as LaunchArgs,
+    })
+  })
+
+  it('should return sealed visitor data', async () => {
+    const identificationResult = await identify()
+    expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+    expect(identificationResult.sealedResult).toBeTruthy()
+
+    const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult!, 'base64'), [
+      {
+        key: Buffer.from(encryptionKey, 'base64'),
+        algorithm: DecryptionAlgorithm.Aes256Gcm,
+      },
+    ])
+
+    expect(unsealedData).toBeTruthy()
+    expect(unsealedData.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
+    expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
   })
 })
