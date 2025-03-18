@@ -55,9 +55,7 @@ describe.each([
       apiKey: privateApiKey,
       region: serverRegion,
     })
-  })
 
-  it('should return visitor data', async () => {
     await device.launchApp({
       newInstance: true,
       launchArgs: {
@@ -65,7 +63,9 @@ describe.each([
         region,
       } as LaunchArgs,
     })
+  })
 
+  it('should return visitor data', async () => {
     const identificationResult = await identify()
     expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
 
@@ -73,12 +73,45 @@ describe.each([
     expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
     expect(event.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
   })
+})
 
-  it('should return visitor data with linkedId and tag', async () => {
-    const linkedId = `${Date.now()}-rn-test`
-    const tags = {
-      'react-native-test': true,
+describe.each([
+  ['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MINIMUM_US_DEFAULT_PRIVATE_KEY],
+  ['eu', process.env.DEFAULT_EU_DEFAULT_PUBLIC_KEY, process.env.DEFAULT_EU_DEFAULT_PRIVATE_KEY],
+] as const)('React Native Identification on %s Region with linkedId and tags', (region, apiKey, privateApiKey) => {
+  let client: FingerprintJsServerApiClient
+
+  const linkedId = `${Date.now()}-rn-test`
+  const tags = {
+    'react-native-test': true,
+  }
+
+  beforeAll(async () => {
+    if (!apiKey) {
+      throw new Error('apiKey is required to run this test')
     }
+
+    if (!privateApiKey) {
+      throw new Error('privateApiKey is required to run this test')
+    }
+
+    let serverRegion: Region
+
+    switch (region) {
+      case 'eu':
+        serverRegion = Region.EU
+        break
+
+      case 'us':
+      default:
+        serverRegion = Region.Global
+        break
+    }
+
+    client = new FingerprintJsServerApiClient({
+      apiKey: privateApiKey,
+      region: serverRegion,
+    })
 
     await device.launchApp({
       newInstance: true,
@@ -89,7 +122,9 @@ describe.each([
         tags,
       } as LaunchArgs,
     })
+  })
 
+  it('should return visitor data with linkedId and tag', async () => {
     const identificationResult = await identify()
     expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
 
