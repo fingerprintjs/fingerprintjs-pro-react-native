@@ -126,6 +126,7 @@ jobs:
         run: |
           echo "MINIMUM_US_DEFAULT_PUBLIC_KEY=${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}" > .env
           echo "MINIMUM_US_DEFAULT_PRIVATE_KEY=${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}" >> .env
+          echo "MINIMUM_US_SEALED_ENCRYPTION_KEY=${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}" >> .env
           echo "DEFAULT_EU_DEFAULT_PUBLIC_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}" >> .env
           echo "DEFAULT_EU_DEFAULT_PRIVATE_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}" >> .env
 
@@ -270,6 +271,7 @@ jobs:
           MINIMUM_US_DEFAULT_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
           DEFAULT_EU_DEFAULT_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
           DEFAULT_EU_DEFAULT_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
+          MINIMUM_US_SEALED_ENCRYPTION_KEY: ${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}
 
       - name: Upload artifacts
         if: always()
