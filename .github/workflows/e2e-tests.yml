@@ -252,7 +252,7 @@ jobs:
         working-directory: e2e-app/ios/build/Build
 
       - name: Start iPhone simulator
-        uses: futureware-tech/simulator-action@dab10d813144ef59b48d401cd95da151222ef8cd
+        uses: ./.github/actions/ios-simulator
         with:
           model: 'iPhone 16'
 

@@ -14,7 +14,8 @@
     "test:coverage": "jest --coverage",
     "test:dts": "tsc -p check.tsconfig.json",
     "docs": "typedoc src/index.ts --out docs --readme README.md",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "build:ios-simulator-action": "ncc build .github/actions/ios-simulator/main.ts -o .github/actions/ios-simulator/dist"
   },
   "files": [
     "android",
@@ -64,6 +65,7 @@
     "@types/react-native": "0.73.0",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
+    "@vercel/ncc": "^0.38.3",
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.23.1",
@@ -93,5 +95,8 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1"
   }
 }
