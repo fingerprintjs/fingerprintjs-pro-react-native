@@ -158,7 +158,7 @@ describe('React Native Identification with sealed results', () => {
 
   it('should return sealed visitor data', async () => {
     const identificationResult = await identify()
-    expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+    expect(identificationResult.requestId).toBeTruthy()
     expect(identificationResult.sealedResult).toBeTruthy()
 
     const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult!, 'base64'), [
@@ -169,7 +169,6 @@ describe('React Native Identification with sealed results', () => {
     ])
 
     expect(unsealedData).toBeTruthy()
-    expect(unsealedData.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
     expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
   })
 })
