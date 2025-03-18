@@ -136,7 +136,7 @@ jobs:
           disable-animations: true
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all
+          script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all --record-videos failing
 
       - name: Upload artifacts
         if: always()
@@ -261,7 +261,7 @@ jobs:
         run: yarn install
         working-directory: e2e-app
 
-      - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all
+      - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
         working-directory: e2e-app
         env:
           MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
