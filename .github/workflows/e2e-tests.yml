@@ -125,6 +125,7 @@ jobs:
         working-directory: e2e-app
         run: |
           echo "MINIMUM_US_DEFAULT_PUBLIC_KEY=${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}" > .env
+          echo "MINIMUM_US_DEFAULT_PRIVATE_KEY=${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}" >> .env
 
       - name: Detox test
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
@@ -264,6 +265,7 @@ jobs:
         working-directory: e2e-app
         env:
           MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          MINIMUM_US_DEFAULT_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
 
       - name: Upload artifacts
         if: always()
