@@ -119,7 +119,7 @@ describe.each([
         apiKey,
         region,
         linkedId,
-        tags: JSON.stringify(tags),
+        //tags: JSON.stringify(tags),
       } as LaunchArgs,
     })
   })
