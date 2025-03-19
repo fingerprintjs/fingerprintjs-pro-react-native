@@ -5,10 +5,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "e2eapp",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
       "bundleIdentifier": "com.fingerprint.e2eapp"
     },
     "android": {
@@ -17,10 +16,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.fingerprint.e2eapp"
-    },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "@config-plugins/detox",
@@ -41,7 +36,6 @@
         }
       ],
       "./plugins/withGradleProperties.js",
-      "expo-build-properties",
       "expo-asset"
     ]
   }

@@ -1,5 +1,6 @@
 const { withGradleProperties } = require('@expo/config-plugins')
 
+// Expo plugin that modifies gradle.properties
 module.exports = (expoConfig) => {
   const newProperties = [
     // Allocate more memory for android build
@@ -23,12 +24,6 @@ module.exports = (expoConfig) => {
 
       gradleConfig.modResults.push(gradleProperty)
     })
-
-  /*  gradleConfig.modResults.push({
-      key: 'android.injected.testOnly',
-      value: 'true',
-      type: 'property',
-    })*/
 
     return gradleConfig
   })
