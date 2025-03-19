@@ -1,6 +1,0 @@
-appId: com.fingerprint.e2eapp
-tags:
-  - android
----
-- launchApp
-- tapOn: "Get data"
