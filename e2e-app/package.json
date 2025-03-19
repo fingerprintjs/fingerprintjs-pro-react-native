@@ -4,16 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react",
-    "build:ios": "detox build --configuration ios.sim.release",
-    "test:ios": "detox test --configuration ios.sim.release",
-    "test:ios:ci": "detox test --configuration ios.sim.release --cleanup --headless --record-logs all"
+    "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react"
   },
   "jest": {
     "preset": "jest-expo"
