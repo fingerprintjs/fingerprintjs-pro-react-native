@@ -7,6 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "e2eapp",
     "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "bundleIdentifier": "com.fingerprint.e2eapp"
     },
@@ -28,9 +31,7 @@
             "targetSdkVersion": 35,
             "buildToolsVersion": "34.0.0",
             "extraMavenRepos": [
-              {
-                "url": "https://maven.fpregistry.io/releases"
-              }
+              "https://maven.fpregistry.io/releases"
             ]
           }
         }
