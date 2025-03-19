@@ -8,6 +8,7 @@ import {
   Region,
   unsealEventsResponse,
 } from '@fingerprintjs/fingerprintjs-pro-server-api'
+import { testTags } from './tags'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
 
@@ -82,9 +83,6 @@ describe.each([
   let client: FingerprintJsServerApiClient
 
   const linkedId = `${Date.now()}-rn-test`
-  const tags = {
-    'react-native-test': 'true',
-  }
 
   beforeAll(async () => {
     if (!apiKey) {
@@ -119,7 +117,7 @@ describe.each([
         apiKey,
         region,
         linkedId,
-        //tags: JSON.stringify(tags),
+        useTags: true,
       } as LaunchArgs,
     })
   })
@@ -130,7 +128,7 @@ describe.each([
 
     const event = await client.getEvent(identificationResult.requestId)
     expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
-    expect(event.products.identification?.data?.tag).toEqual(tags)
+    expect(event.products.identification?.data?.tag).toEqual(testTags)
   })
 })
 
