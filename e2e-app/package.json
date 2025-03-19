@@ -7,7 +7,9 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react",
-    "prebuild": "expo prebuild --clean"
+    "prebuild": "expo prebuild --clean",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "jest": {
     "preset": "jest-expo"

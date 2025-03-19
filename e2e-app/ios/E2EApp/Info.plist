@@ -27,7 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>myapp</string>
+          <string>e2eapp</string>
           <string>com.fingerprint.e2eapp</string>
         </array>
       </dict>
