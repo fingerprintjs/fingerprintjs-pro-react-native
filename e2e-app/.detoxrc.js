@@ -46,12 +46,6 @@ module.exports = {
         type: 'iPhone 16',
       },
     },
-    attached: {
-      type: 'android.attached',
-      device: {
-        adbName: '.*',
-      },
-    },
     emulator: {
       type: 'android.emulator',
       device: {
@@ -67,14 +61,6 @@ module.exports = {
     'ios.sim.release': {
       device: 'simulator',
       app: 'ios.release',
-    },
-    'android.att.debug': {
-      device: 'attached',
-      app: 'android.debug',
-    },
-    'android.att.release': {
-      device: 'attached',
-      app: 'android.release',
     },
     'android.emu.debug': {
       device: 'emulator',
