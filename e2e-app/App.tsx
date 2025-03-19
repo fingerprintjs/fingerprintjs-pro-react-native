@@ -1,13 +1,13 @@
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import { LaunchArguments } from 'react-native-launch-arguments'
-import { FingerprintJsProProvider, Region, Tags, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintJsProProvider, Region, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 
 export type LaunchArgs = {
   apiKey: string
   region: Region
-  tags?: Tags
+  tags?: string
   linkedId?: string
 }
 
@@ -27,7 +27,7 @@ function InnerApp() {
           padding: 24,
           alignItems: 'center',
           justifyContent: 'center',
-          flex: 1
+          flex: 1,
         }}
       >
         {isLoading && <Text testID={testIds.loading}>Loading...</Text>}
@@ -40,10 +40,14 @@ function InnerApp() {
         {data && <Text testID={testIds.data}>{JSON.stringify(data)}</Text>}
         <Pressable
           testID={testIds.getData}
-          onPress={() => getData(args.tags, args.linkedId)}
+          onPress={async () => {
+            const tags = args.tags ? JSON.parse(args.tags) : undefined
+
+            await getData(tags, args.linkedId)
+          }}
           style={{
             paddingBottom: 48,
-            paddingLeft: 24
+            paddingLeft: 24,
           }}
         >
           <Text>Get data</Text>
