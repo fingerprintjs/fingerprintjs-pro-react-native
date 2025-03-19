@@ -1,55 +1,77 @@
-# Welcome to your Expo app 👋
+# E2E-App
 
-This is an [Expo](https://expo.dev) project created with [
-`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This application is used for running E2E tests via [Detox](https://github.com/wix/Detox)
+and was bootstraped using [Expo](https://expo.dev).
 
 ## Get started
 
-1. Install dependencies
+To install dependencies, run:
 
    ```bash
-   npm install
+   yarn install
    ```
 
-2. Start the app
+The app is intended to run via Detox. To learn more, head to the sections below.
 
-   ```bash
-    npx expo start
-   ```
+## Running iOS tests
 
-In the output, you'll find options to open the app in a
+### Prerequisites
+- [React-Native Prerequisites](https://reactnative.dev/docs/next/set-up-your-environment?platform=ios)
+- [Detox Prerequisites](https://wix.github.io/Detox/docs/introduction/environment-setup)
+- Device running the latest MacOS version
+- Running `iPhone 16` simulator
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+> To use different simulator, update the `devices.simulator.device.type` value in `.detoxrc.js`
 
-You can start developing by editing the files inside the **app** directory. This project
-uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### 1. Building the app
 ```bash
-npm run reset-project
+npx detox build --configuration ios.sim.release
+```
+When debugging tests locally, it is recommended to use ios.sim.debug for faster build and easier logs access.
+```bash
+npx detox build --configuration ios.sim.debug
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you
-can start developing.
+### 2. Running tests
+```bash
+npx detox test --configuration ios.sim.release
+```
 
-## Learn more
+The configuration passed via `--configuration` must match the one used in `detox build`.
 
-To learn more about developing your project with Expo, look at the following resources:
+> If you're using `ios.sim.debug` configuration, don't forget to run `yarn start` to start the bundler before running tests.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with
-  our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll
-  create a project that runs on Android, iOS, and the web.
+## Running android tests
 
-## Join the community
+### Prerequisites
+- [React-Native Prerequisites](https://reactnative.dev/docs/next/set-up-your-environment?platform=android)
+- [Detox Prerequisites](https://wix.github.io/Detox/docs/introduction/environment-setup)
+- Running `Pixel 9 API 35` simulator
 
-Join our community of developers creating universal apps.
+> To use different simulator, update the `devices.emulator.device.avdName` value in `.detoxrc.js`
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 1. Building the app
+```bash
+npx detox build --configuration android.emu.release
+```
+When debugging tests locally, it is recommended to use `android.emu.debug` for faster build and easier logs access.
+```bash
+npx detox build --configuration android.emu.debug
+```
+
+### 2. Running tests
+```bash
+npx detox test --configuration android.emu.release
+```
+
+The configuration passed via `--configuration` must match the one used in `detox build`.
+
+> If you're using `android.emu.debug` configuration, don't forget to run `yarn start` to start the bundler before running tests.
+
+## Dealing with native code
+
+Every action that affects native code, such as updating `react-native` or installing a native library, requires running `yarn prebuild` to regenerate native code located in `ios` and `android`.
+
+To learn more, head to [expo docs about Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/#cng-in-react-native-apps).
+
+
