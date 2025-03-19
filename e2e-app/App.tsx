@@ -3,11 +3,12 @@ import { LaunchArguments } from 'react-native-launch-arguments'
 import { FingerprintJsProProvider, Region, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
+import { testTags } from '@/e2e/tags'
 
 export type LaunchArgs = {
   apiKey: string
   region: Region
-  tags?: string
+  useTags?: boolean
   linkedId?: string
 }
 
@@ -41,7 +42,7 @@ function InnerApp() {
         <Pressable
           testID={testIds.getData}
           onPress={async () => {
-            const tags = args.tags ? JSON.parse(args.tags) : undefined
+            const tags = args.useTags ? testTags : undefined
 
             await getData(tags, args.linkedId)
           }}
