@@ -74,4 +74,8 @@ Every action that affects native code, such as updating `react-native` or instal
 
 To learn more, head to [expo docs about Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/#cng-in-react-native-apps).
 
+## Debugging failing tests on GitHub actions
 
+Failed tests generate artifacts specific for tested platform:
+- `android-detox-artifacts` and `ios-detox-artifacts` contain details about tests itself, device logs and videos of the test session.
+- `android-app-release` and `ios-app-release` contain built app that can be installed on simulator and tested locally.
