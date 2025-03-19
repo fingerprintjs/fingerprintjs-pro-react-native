@@ -257,9 +257,10 @@ jobs:
         working-directory: e2e-app/ios/build/Build
 
       - name: Start iPhone simulator
-        uses: ./.github/actions/ios-simulator
+        uses: futureware-tech/simulator-action@dab10d813144ef59b48d401cd95da151222ef8cd
         with:
           model: 'iPhone 16'
+          shutdown_after_job: 'false'
 
       - name: Install dependencies in e2e-app
         run: yarn install
