@@ -83,7 +83,7 @@ describe.each([
 
   const linkedId = `${Date.now()}-rn-test`
   const tags = {
-    'react-native-test': true,
+    'react-native-test': 'true',
   }
 
   beforeAll(async () => {
@@ -119,7 +119,7 @@ describe.each([
         apiKey,
         region,
         linkedId,
-        tags,
+        tags: JSON.stringify(tags),
       } as LaunchArgs,
     })
   })
