@@ -1,3 +1,5 @@
+apply from: 'fingerprint.gradle'
+
 buildscript {
     ext.kotlin_version = '1.8.0'
 
@@ -46,6 +48,6 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation "com.fingerprint.android:pro:[2.7.0, 3.0.0)"
+    implementation "com.fingerprint.android:pro:$fingerprint_native_sdk_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
