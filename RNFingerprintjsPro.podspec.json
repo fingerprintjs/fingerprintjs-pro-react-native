@@ -1,0 +1,32 @@
+{
+  "name": "RNFingerprintjsPro",
+  "version": "1.0.4",
+  "summary": "Fingerprint Pro visitor identification in a React Native app",
+  "description": "Official React Native client for Fingerprint PRO. Best identification solution for React Native.",
+  "homepage": "https://github.com/fingerprintjs",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "FingerprintJS, Inc": "support@fingerprint.com"
+  },
+  "source": {
+    "git": "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git",
+    "tag": "main"
+  },
+  "platforms": {
+    "ios": "13.0",
+    "tvos": "15.0"
+  },
+  "source_files": "ios/**/*.{h,m,mm,swift}",
+  "dependencies": {
+    "React-Core": [
+
+    ],
+    "FingerprintPro": [
+      ">= 2.7.0",
+      "< 3.0.0"
+    ]
+  }
+}
