@@ -32,6 +32,7 @@ const reactNativeMetadata = {
   },
   0.76: {
     packages: ['expo@51', 'detox@20'],
+    callbacks: [stripExtraBuildProperties],
   },
 }
 
