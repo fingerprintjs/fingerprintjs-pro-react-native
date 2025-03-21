@@ -36,8 +36,7 @@
           }
         }
       ],
-      "./plugins/withGradleProperties.js",
-      "expo-asset"
+      "./plugins/withGradleProperties.js"
     ]
   }
 }
