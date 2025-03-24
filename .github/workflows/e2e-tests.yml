@@ -181,7 +181,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-detox-artifacts
+          name: android-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
 
   build-ios:
