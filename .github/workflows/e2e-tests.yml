@@ -191,6 +191,12 @@ jobs:
           name: android-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
 
+      - uses: geekyeggo/delete-artifact@f275313e70c08f6120db482d7a6b98377786765b
+        name: Delete build artifact
+        if: success()
+        with:
+          name: ios-app-release-${{ matrix.react-native }}
+
   build-ios:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
@@ -351,3 +357,9 @@ jobs:
         with:
           name: ios-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
+
+      - uses: geekyeggo/delete-artifact@f275313e70c08f6120db482d7a6b98377786765b
+        name: Delete build artifact
+        if: success()
+        with:
+          name: ios-app-release-${{ matrix.react-native }}
