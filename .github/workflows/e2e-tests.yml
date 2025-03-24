@@ -218,7 +218,7 @@ jobs:
       - run: yarn install
         if: github.event_name != 'release'
 
-      - run: yarn build && rm -rf node_modules
+      - run: yarn build
         if: github.event_name != 'release'
 
       - name: Setup react-native specific dependencies
@@ -251,7 +251,7 @@ jobs:
         run: pod install
         working-directory: e2e-app/ios
         # Only needed for local version, for other ones the `Prebuild` step also runs `pod install`
-        if: matrix.react-native == 'local'
+        if: matrix.react-native == 'local' && github.event_name != 'release'
 
       - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
