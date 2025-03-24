@@ -216,6 +216,7 @@ jobs:
           ruby-version: 3.2
 
       - run: yarn install
+        if: github.event_name != 'release'
 
       - run: yarn build && rm -rf node_modules
         if: github.event_name != 'release'
