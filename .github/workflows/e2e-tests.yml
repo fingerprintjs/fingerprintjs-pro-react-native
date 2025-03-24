@@ -35,6 +35,10 @@ jobs:
           path: e2e-app/android/app/build
           key: android-build-${{matrix.react-native}}-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts', 'e2e-app/android/**/*')}}
 
+      - name: Debug build directory
+        run: ls -R
+        working-directory: e2e-app/android/app
+
       - name: Format React Native version
         id: formatted-rn-version
         run: echo "rn-version=$(echo ${{ matrix.react-native }} | tr -d '.')" >> $GITHUB_OUTPUT
@@ -164,18 +168,12 @@ jobs:
         id: formatted-rn-version
         run: echo "rn-version=$(echo ${{ matrix.react-native }} | tr -d '.')" >> $GITHUB_OUTPUT
 
-      - name: Read detox version
-        id: detox-version
-        uses: notiz-dev/github-action-json-property@a5a9c668b16513c737c3e1f8956772c99c73f6e8
-        if: matrix.react-native != 'local'
-        with:
-          path: e2e-app/compat_map.json
-          prop_path: '${{steps.formatted-rn-version.outputs.rn-version}}.detox_version'
-
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
-        run: yarn add detox@${{ steps.detox-version.outputs.prop }} -D
+        run: node scripts/compatibility.mjs
         working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Detox test
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
