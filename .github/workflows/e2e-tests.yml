@@ -245,6 +245,8 @@ jobs:
       - name: Install pods
         run: pod install
         working-directory: e2e-app/ios
+        # Only needed for local version, for other ones the `Prebuild` step also runs `pod install`
+        if: matrix.react-native == 'local'
 
       - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
