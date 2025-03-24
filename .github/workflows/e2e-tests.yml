@@ -32,12 +32,7 @@ jobs:
         run: ls -R
         working-directory: e2e-app/android/app
 
-      - name: Format React Native version
-        id: formatted-rn-version
-        run: echo "rn-version=$(echo ${{ matrix.react-native }} | tr -d '.')" >> $GITHUB_OUTPUT
-
       - run: yarn install
-
 
       - run: yarn build && rm -rf node_modules
         if: github.event_name != 'release'
@@ -190,6 +185,10 @@ jobs:
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-latest
     name: Build iOS for E2E tests
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: [ local, 0.73, 0.74, 0.75, 0.76 ]
     steps:
       - uses: actions/checkout@v4
 
