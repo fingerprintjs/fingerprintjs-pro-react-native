@@ -75,7 +75,7 @@ jobs:
   e2e-tests-android:
     needs: build-android
     runs-on: ubuntu-latest
-    name: Android E2E Tests
+    name: Android E2E Tests for react-native ${{ matrix.react-native }}
     strategy:
       fail-fast: false
       matrix:
@@ -184,7 +184,7 @@ jobs:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-latest
-    name: Build iOS for E2E tests
+    name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
     strategy:
       fail-fast: false
       matrix:
@@ -211,42 +211,48 @@ jobs:
           bundler-cache: true
           ruby-version: 3.2
 
-      - name: Cache build
-        uses: actions/cache@v4
-        id: build-cache
-        with:
-          path: e2e-app/ios/build/Build
-          key: ios-build-${{hashFiles('**/package-lock.json', 'src/**/*.ts', 'e2e-app/**/*.ts', 'e2e-app/ios/**/*')}}
-
       - run: yarn install
-        if: steps.build-cache.outputs.cache-hit != 'true'
 
-      - run: yarn build
-        if: github.event_name != 'release' && steps.build-cache.outputs.cache-hit != 'true'
+      - run: yarn build && rm -rf node_modules
+        if: github.event_name != 'release'
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
         run: yarn install
         working-directory: e2e-app
-        if: steps.build-cache.outputs.cache-hit != 'true'
 
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
-        if: github.event_name == 'release' && steps.build-cache.outputs.cache-hit != 'true'
+        if: github.event_name == 'release'
+        working-directory: e2e-app
+
+      - name: Fix expo dependencies
+        if: matrix.react-native != 'local'
+        run: npx expo install --fix
+        working-directory: e2e-app
+
+      - name: Prebuild
+        if: matrix.react-native != 'local' || github.event_name == 'release'
+        run: yarn prebuild
         working-directory: e2e-app
 
       - name: Install pods
         run: pod install
         working-directory: e2e-app/ios
-        if: steps.build-cache.outputs.cache-hit != 'true'
 
       - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
-        if: steps.build-cache.outputs.cache-hit != 'true'
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ios-app-release
+          name: ios-app-release-${{ matrix.react-native }}
           path: e2e-app/ios/build/Build
 
 
@@ -255,8 +261,12 @@ jobs:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-latest
-    name: iOS E2E Tests
+    name: iOS E2E Tests for react-native ${{ matrix.react-native }}
     needs: build-ios
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: [ local, 0.73, 0.74, 0.75, 0.76 ]
     steps:
       - uses: actions/checkout@v4
 
@@ -283,7 +293,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: ios-app-release
+          name: ios-app-release-${{ matrix.react-native }}
           path: e2e-app/ios/build/Build
 
       - name: Debug build directory
@@ -295,6 +305,13 @@ jobs:
         with:
           model: 'iPhone 16'
           shutdown_after_job: 'false'
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
         run: yarn install
@@ -314,5 +331,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ios-detox-artifacts
+          name: ios-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
