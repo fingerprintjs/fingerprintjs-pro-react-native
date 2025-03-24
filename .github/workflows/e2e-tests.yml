@@ -6,12 +6,16 @@ on:
     types:
       - published
 
+env:
+  REACT_NATIVE_VERSIONS: '["local", "0.73", "0.74", "0.75", "0.76"]'
+
+
 jobs:
   build-android:
     strategy:
       fail-fast: false
       matrix:
-        react-native: [local, 0.73, 0.74, 0.75, 0.76]
+        react-native: ${{ fromJSON(env.REACT_NATIVE_VERSIONS) }}
     runs-on: ubuntu-latest
     name: Build android for E2E tests for react-native ${{ matrix.react-native }}
     steps:
@@ -79,7 +83,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        react-native: [ local, 0.73, 0.74, 0.75, 0.76 ]
+        react-native: ${{ fromJSON(env.REACT_NATIVE_VERSIONS) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -188,7 +192,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        react-native: [ local, 0.73, 0.74, 0.75, 0.76 ]
+        react-native: ${{ fromJSON(env.REACT_NATIVE_VERSIONS) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -268,7 +272,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        react-native: [ local, 0.73, 0.74, 0.75, 0.76 ]
+        react-native: ${{ fromJSON(env.REACT_NATIVE_VERSIONS) }}
     steps:
       - uses: actions/checkout@v4
 
