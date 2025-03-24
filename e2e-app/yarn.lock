@@ -1498,7 +1498,7 @@
   resolved "https://registry.yarnpkg.com/@expo/timeago.js/-/timeago.js-1.0.0.tgz#8fb2b17e93e7a8d28387a4d292af12e071040045"
   integrity sha512-PD45CGlCL8kG0U3YcH1NvYxQThw5XAS7qE9bgP4L7dakm8lsMz+p8BQ1IjBFMmImawVWsV3py6JZINaEebXLnw==
 
-"@expo/vector-icons@^14.0.0", "@expo/vector-icons@^14.0.2":
+"@expo/vector-icons@^14.0.0":
   version "14.0.4"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-14.0.4.tgz#fa9d4351877312badf91a806598b2f0bab16039a"
   integrity sha512-+yKshcbpDfbV4zoXOgHxCwh7lkE9VVTT5T03OUlBsqfze1PLy6Hi4jp1vSb1GVbY6eskvMIivGVc9SKzIv0oEQ==
@@ -4204,7 +4204,7 @@ expo-build-properties@^0.13.1, expo-build-properties@~0.13.2:
     ajv "^8.11.0"
     semver "^7.6.0"
 
-expo-constants@~17.0.5, expo-constants@~17.0.8:
+expo-constants@~17.0.8:
   version "17.0.8"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-17.0.8.tgz#d7a21ec6f1f4834ea25aa645be20292ef99c0b81"
   integrity sha512-XfWRyQAf1yUNgWZ1TnE8pFBMqGmFP5Gb+SFSgszxDdOoheB/NI5D4p7q86kI2fvGyfTrxAe+D+74nZkfsGvUlg==
@@ -4230,14 +4230,6 @@ expo-keep-awake@~14.0.3:
   version "14.0.3"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-14.0.3.tgz#74c91b68effdb6969bc1e8371621aad90386cfbf"
   integrity sha512-6Jh94G6NvTZfuLnm2vwIpKe3GdOiVBuISl7FI8GqN0/9UOg9E0WXXp5cDcfAG8bn80RfgLJS8P7EPUGTZyOvhg==
-
-expo-linking@~7.0.5:
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-7.0.5.tgz#6f583c636a3cc29f02d67a1550b21f8e636fe2af"
-  integrity sha512-3KptlJtcYDPWohk0MfJU75MJFh2ybavbtcSd84zEPfw9s1q3hjimw3sXnH03ZxP54kiEWldvKmmnGcVffBDB1g==
-  dependencies:
-    expo-constants "~17.0.5"
-    invariant "^2.2.4"
 
 expo-modules-autolinking@2.0.8:
   version "2.0.8"

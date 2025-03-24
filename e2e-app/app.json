@@ -30,6 +30,7 @@
             "compileSdkVersion": 35,
             "targetSdkVersion": 35,
             "buildToolsVersion": "34.0.0",
+            "kotlinVersion": "2.0.21",
             "extraMavenRepos": [
               "https://maven.fpregistry.io/releases"
             ]
