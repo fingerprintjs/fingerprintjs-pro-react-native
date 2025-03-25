@@ -253,12 +253,8 @@ jobs:
         if: github.event_name == 'release'
         working-directory: e2e-app
 
-      - name: Install local version of the package
-        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@../
-        if: github.event_name != 'release'
+      - run: yarn why @fingerprintjs/fingerprintjs-pro-react-native
         working-directory: e2e-app
-
-      - run: yarn list --pattern @fingerprintjs/fingerprintjs-pro-react-native
 
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
