@@ -1520,8 +1520,10 @@
     find-up "^5.0.0"
     js-yaml "^4.1.0"
 
-"@fingerprintjs/fingerprintjs-pro-react-native@../":
+"@fingerprintjs/fingerprintjs-pro-react-native@^3.3.1":
   version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@fingerprintjs/fingerprintjs-pro-react-native/-/fingerprintjs-pro-react-native-3.3.1.tgz#5d1133dbe9b4b3ee861a83c088a5b67c016273f9"
+  integrity sha512-/0P0HFmUnEeqWj2HffLOKkCcB/6nk1fwZt3KyVsKYY1sm5h3QebsMORf9GxPv4CmkWbwg3YDpqvNPheru5mNqw==
 
 "@fingerprintjs/fingerprintjs-pro-server-api@^6.3.0":
   version "6.3.0"
