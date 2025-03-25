@@ -36,6 +36,8 @@ function InnerApp() {
           <View>
             <Text testID={testIds.errorName}>{error.name}</Text>
             <Text testID={testIds.errorMessage}>{error.message}</Text>
+            {error.stack && <Text testID={testIds.errorStack}>{error.stack}</Text>}
+            {Boolean(error.cause) && <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text>}
           </View>
         )}
         {data && <Text testID={testIds.data}>{JSON.stringify(data)}</Text>}
