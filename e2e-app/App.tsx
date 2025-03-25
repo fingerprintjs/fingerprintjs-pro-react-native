@@ -21,6 +21,12 @@ function InnerApp() {
     console.log('App loaded')
   }, [])
 
+  useEffect(() => {
+    if (error) {
+      console.error(error)
+    }
+  }, [error])
+
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView
