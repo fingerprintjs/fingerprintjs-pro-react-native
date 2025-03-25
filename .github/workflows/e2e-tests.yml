@@ -249,9 +249,16 @@ jobs:
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
+
+      - name: Install local version of the package
+        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@../
+        if: github.event_name != 'release'
+        working-directory: e2e-app
+
+      - run: yarn list --pattern @fingerprintjs/fingerprintjs-pro-react-native
 
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
@@ -259,15 +266,8 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        if: matrix.react-native != 'local' || github.event_name == 'release'
         run: yarn prebuild
         working-directory: e2e-app
-
-      - name: Install pods
-        run: pod install
-        working-directory: e2e-app/ios
-        # Only needed for local version, for other ones the `Prebuild` step also runs `pod install`
-        if: matrix.react-native == 'local' && github.event_name != 'release'
 
       - run: npx detox build --configuration ios.sim.release
         working-directory: e2e-app
