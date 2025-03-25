@@ -9,8 +9,19 @@ import {
   unsealEventsResponse,
 } from '@fingerprintjs/fingerprintjs-pro-server-api'
 import { testTags } from './tags'
+import { DeviceLaunchAppConfig } from 'detox/detox'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function launchApp(params?: DeviceLaunchAppConfig) {
+  await device.launchApp(params)
+
+  await wait(4000)
+}
 
 async function identify() {
   await element(by.id(testIds.getData)).tap()
@@ -57,7 +68,7 @@ describe.each([
       region: serverRegion,
     })
 
-    await device.launchApp({
+    await launchApp({
       newInstance: true,
       launchArgs: {
         apiKey,
@@ -111,7 +122,7 @@ describe.each([
       region: serverRegion,
     })
 
-    await device.launchApp({
+    await launchApp({
       newInstance: true,
       launchArgs: {
         apiKey,
@@ -145,7 +156,7 @@ describe('React Native Identification with sealed results', () => {
       throw new Error('MINIMUM_US_SEALED_ENCRYPTION_KEY is required to run this test')
     }
 
-    await device.launchApp({
+    await launchApp({
       newInstance: true,
       launchArgs: {
         apiKey,
