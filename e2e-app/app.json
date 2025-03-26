@@ -21,6 +21,14 @@
       [
         "expo-build-properties",
         {
+          "ios": {
+            "extraPods": [
+              {
+                "name": "FingerprintPro",
+                "version": "~> 2.7"
+              }
+            ]
+          },
           "android": {
             "minSdkVersion": 24,
             "compileSdkVersion": 35,
