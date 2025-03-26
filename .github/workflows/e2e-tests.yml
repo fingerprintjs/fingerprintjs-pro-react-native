@@ -234,7 +234,7 @@ jobs:
       - run: yarn install
         if: github.event_name != 'release'
 
-      - run: yarn build && yarn pack --filename sdk.tgz
+      - run: yarn build
         if: github.event_name != 'release'
 
       - name: Setup react-native specific dependencies
@@ -251,11 +251,6 @@ jobs:
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
-        working-directory: e2e-app
-
-      - name: Install local version of the package
-        run: yarn add ../sdk.tgz
-        if: github.event_name != 'release'
         working-directory: e2e-app
 
       - run: yarn why @fingerprintjs/fingerprintjs-pro-react-native
