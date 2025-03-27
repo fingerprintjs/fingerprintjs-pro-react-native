@@ -51,7 +51,7 @@ if (metadata.callbacks?.length) {
 }
 
 function installPackages(...packages) {
-  execSync(`yarn add ${packages.join(' ')} -D`, {
+  execSync(`pnpm add ${packages.join(' ')} -D`, {
     stdio: 'inherit',
   })
 }

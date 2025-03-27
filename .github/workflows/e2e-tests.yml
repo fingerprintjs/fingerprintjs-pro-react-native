@@ -28,9 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: actions/setup-java@v3
@@ -43,9 +47,9 @@ jobs:
         run: ls -R
         working-directory: e2e-app/android/app
 
-      - run: yarn install
+      - run: pnpm install --no-frozen-lockfile
 
-      - run: yarn build && rm -rf node_modules
+      - run: pnpm build && rm -rf node_modules
         if: github.event_name != 'release'
 
       - name: Setup react-native specific dependencies
@@ -56,11 +60,11 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --no-frozen-lockfile
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
@@ -71,7 +75,7 @@ jobs:
 
       - name: Prebuild
         if: matrix.react-native != 'local' || github.event_name == 'release'
-        run: yarn prebuild
+        run: pnpm prebuild:ci
         working-directory: e2e-app
 
       - run: npx detox build --configuration android.emu.release
@@ -96,6 +100,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -104,7 +112,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: actions/setup-java@v3
@@ -123,7 +131,7 @@ jobs:
           key: avd-35
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --no-frozen-lockfile
         working-directory: e2e-app
 
       - uses: actions/download-artifact@v4
@@ -212,9 +220,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
@@ -231,10 +243,10 @@ jobs:
           bundler-cache: true
           ruby-version: 3.2
 
-      - run: yarn install
+      - run: pnpm install --no-frozen-lockfile
         if: github.event_name != 'release'
 
-      - run: yarn build
+      - run: pnpm build
         if: github.event_name != 'release'
 
       - name: Setup react-native specific dependencies
@@ -245,15 +257,15 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --no-frozen-lockfile
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
-      - run: yarn why @fingerprintjs/fingerprintjs-pro-react-native
+      - run: pnpm why @fingerprintjs/fingerprintjs-pro-react-native
         working-directory: e2e-app
 
       - name: Fix expo dependencies
@@ -262,7 +274,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: yarn prebuild
+        run: pnpm prebuild:ci && cd ios && pod install
         working-directory: e2e-app
 
       - run: npx detox build --configuration ios.sim.release
@@ -290,9 +302,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
@@ -334,7 +350,7 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --no-frozen-lockfile
         working-directory: e2e-app
 
       - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
