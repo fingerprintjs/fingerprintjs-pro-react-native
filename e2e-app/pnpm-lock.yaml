@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@fingerprintjs/fingerprintjs-pro-react-native':
-        specifier: link:../
+        specifier: ../
         version: link:..
       dotenv:
         specifier: ^16.4.7
