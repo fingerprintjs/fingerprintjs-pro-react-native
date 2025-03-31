@@ -39,10 +39,6 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Debug build directory
-        run: ls -R
-        working-directory: e2e-app/android/app
-
       - run: yarn install
 
       - run: yarn build && rm -rf node_modules
@@ -129,10 +125,6 @@ jobs:
         with:
           name: android-app-release-${{ matrix.react-native }}
           path: e2e-app/android/app/build
-
-      - name: Debug build directory
-        run: ls -R
-        working-directory: e2e-app/android/app
 
       - name: Get device name
         id: device
@@ -314,10 +306,6 @@ jobs:
         with:
           name: ios-app-release-${{ matrix.react-native }}
           path: e2e-app/ios/build/Build
-
-      - name: Debug build directory
-        run: ls -R
-        working-directory: e2e-app/ios/build/Build
 
       - name: Start iPhone simulator
         uses: futureware-tech/simulator-action@dab10d813144ef59b48d401cd95da151222ef8cd
