@@ -7,9 +7,14 @@ and was bootstraped using [Expo](https://expo.dev).
 
 To install dependencies, run:
 
-   ```bash
-   yarn install
-   ```
+```bash
+yarn install
+```
+and then run:
+```bash
+yarn prebuild
+```
+This will generate the native code for iOS and Android.
 
 The app is intended to run via Detox. To learn more, head to the sections below.
 

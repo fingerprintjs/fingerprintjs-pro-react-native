@@ -70,7 +70,6 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        if: matrix.react-native != 'local' || github.event_name == 'release'
         run: yarn prebuild
         working-directory: e2e-app
 
