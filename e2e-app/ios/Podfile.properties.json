@@ -2,7 +2,7 @@
   "expo.jsEngine": "hermes",
   "EX_DEV_CLIENT_NETWORK_INSPECTOR": "true",
   "newArchEnabled": "true",
-  "apple.extraPods": "[{\"name\":\"FingerprintPro\",\"version\":\"~> 2.7\"}]",
+  "apple.extraPods": "[{\"name\":\"RNFingerprintjsPro\",\"path\":\"../node_modules/@fingerprintjs/fingerprintjs-pro-react-native\"}]",
   "apple.ccacheEnabled": "false",
   "apple.privacyManifestAggregationEnabled": "true"
 }

@@ -24,8 +24,8 @@
           "ios": {
             "extraPods": [
               {
-                "name": "FingerprintPro",
-                "version": "~> 2.7"
+                "name": "RNFingerprintjsPro",
+                "path": "../node_modules/@fingerprintjs/fingerprintjs-pro-react-native"
               }
             ]
           },
