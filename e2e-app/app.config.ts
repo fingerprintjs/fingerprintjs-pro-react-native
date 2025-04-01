@@ -3,7 +3,14 @@ import { dependencies } from './package.json'
 import { ExtraIosPodDependency } from 'expo-build-properties/build/pluginConfig'
 import * as semver from 'semver'
 
-const rnVersion = semver.parse(dependencies['react-native'])
+let rawReactNativeVersion = dependencies['react-native']
+
+// Ensure that react-native version contains patch range so that semver can parse it
+if (rawReactNativeVersion.split('.').length === 2) {
+  rawReactNativeVersion = rawReactNativeVersion + '.0'
+}
+
+const rnVersion = semver.parse(rawReactNativeVersion)
 if (!rnVersion) {
   throw new Error(`Could not parse react-native version: ${dependencies['react-native']}`)
 }
