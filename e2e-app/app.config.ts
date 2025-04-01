@@ -59,16 +59,12 @@ const reactNativeMetadata: Record<string, { callbacks: (() => void)[] }> = {
 }
 const metadataKey = rnVersion.major + '.' + rnVersion.minor
 if (reactNativeMetadata[metadataKey]?.callbacks?.length) {
-  console.info(`Applying metadata for React Native ${metadataKey}.`)
   reactNativeMetadata[metadataKey].callbacks.forEach((callback) => callback())
 }
 
 const extraPods = [] as ExtraIosPodDependency[]
 const usesLocalPackage = dependencies['@fingerprintjs/fingerprintjs-pro-react-native'] === '../'
 if (usesLocalPackage) {
-  console.info(
-    'Pushing RNFingerprintjsPro as extra pod, because app uses local version of @fingerprintjs/fingerprintjs-pro-react-native.'
-  )
   extraPods.push({
     name: 'RNFingerprintjsPro',
     path: '../node_modules/@fingerprintjs/fingerprintjs-pro-react-native',
