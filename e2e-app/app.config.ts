@@ -94,7 +94,6 @@ const config: ExpoConfig = {
     package: 'com.fingerprint.e2eapp',
   },
   plugins: [
-    '@config-plugins/detox',
     [
       'expo-build-properties',
       {
@@ -104,6 +103,7 @@ const config: ExpoConfig = {
         android: androidBuildProperties,
       },
     ],
+    '@config-plugins/detox',
     './plugins/withGradleProperties.js',
   ],
 }
