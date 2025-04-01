@@ -64,16 +64,12 @@ if (reactNativeMetadata[metadataKey]?.callbacks?.length) {
 
 const extraPods = [] as ExtraIosPodDependency[]
 const sdkVersion = dependencies['@fingerprintjs/fingerprintjs-pro-react-native']
-console.log(`Sdk version: ${sdkVersion}`)
 const usesLocalPackage = sdkVersion === '../'
 if (usesLocalPackage) {
-  console.info('Adding RNFingerprintjsPro as extra pod')
   extraPods.push({
     name: 'RNFingerprintjsPro',
     path: '../node_modules/@fingerprintjs/fingerprintjs-pro-react-native',
   })
-} else {
-  console.info(`Not adding RNFingerprintjsPro as extra pod, because npm version of the package is used.`)
 }
 
 const config: ExpoConfig = {
