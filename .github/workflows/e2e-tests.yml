@@ -154,10 +154,6 @@ jobs:
           echo "DEFAULT_EU_DEFAULT_PUBLIC_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}" >> .env
           echo "DEFAULT_EU_DEFAULT_PRIVATE_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}" >> .env
 
-      - name: Format React Native version
-        id: formatted-rn-version
-        run: echo "rn-version=$(echo ${{ matrix.react-native }} | tr -d '.')" >> $GITHUB_OUTPUT
-
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
         run: node scripts/compatibility.mjs
@@ -212,10 +208,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Install macOS deps
-        run: |
-          brew install fastlane
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -242,9 +234,6 @@ jobs:
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
-        working-directory: e2e-app
-
-      - run: yarn why @fingerprintjs/fingerprintjs-pro-react-native
         working-directory: e2e-app
 
       - name: Fix expo dependencies
@@ -294,7 +283,6 @@ jobs:
         run: |
           brew tap wix/brew
           brew install applesimutils
-          brew install fastlane
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
