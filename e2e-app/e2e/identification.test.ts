@@ -9,7 +9,7 @@ import {
   unsealEventsResponse,
 } from '@fingerprintjs/fingerprintjs-pro-server-api'
 import { testTags } from './tags'
-import { DeviceLaunchAppConfig } from 'detox/detox'
+import { DeviceLaunchAppConfig, IndexableNativeElement } from 'detox/detox'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
 
@@ -23,16 +23,35 @@ async function launchApp(params?: DeviceLaunchAppConfig) {
   await wait(4000)
 }
 
+async function getElementText(element: IndexableNativeElement): Promise<string> {
+  const attributes = (await element.getAttributes()) as Record<string, any>
+  return attributes?.text ?? attributes?.label ?? '';
+}
+
 async function identify() {
   await element(by.id(testIds.getData)).tap()
   await waitFor(element(by.id(testIds.data)))
     .toExist()
     .withTimeout(10_000)
 
-  const attributes = (await element(by.id(testIds.data)).getAttributes()) as Record<string, any>
-  const text = attributes?.text ?? attributes?.label
+  const text = await getElementText(element(by.id(testIds.data)))
 
   return JSON.parse(text) as { visitorId: string; requestId: string; sealedResult?: string }
+}
+
+async function identifyWithError() {
+  await element(by.id(testIds.getData)).tap()
+  await waitFor(element(by.id(testIds.errorName)))
+    .toExist()
+    .withTimeout(10_000)
+
+  const errorName = await getElementText(element(by.id(testIds.errorName)))
+  const errorMessage = await getElementText(element(by.id(testIds.errorMessage)))
+
+  const error = new Error(errorMessage)
+  error.name = errorName
+
+  return error
 }
 
 describe.each([
@@ -140,6 +159,23 @@ describe.each([
     const event = await client.getEvent(identificationResult.requestId)
     expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
     expect(event.products.identification?.data?.tag).toEqual(testTags)
+  })
+})
+
+describe("React Native Identification invalid API Key", () => {
+  beforeAll(async () => {
+    await launchApp({
+      newInstance: true,
+      launchArgs: {
+        apiKey: "invalid",
+      } as LaunchArgs,
+    })
+  })
+
+  it('should return error', async () => {
+    const error = await identifyWithError()
+    expect(error.message).toEqual('invalid public key')
+    expect(error.name).toEqual('ApiKeyNotFoundError')
   })
 })
 
