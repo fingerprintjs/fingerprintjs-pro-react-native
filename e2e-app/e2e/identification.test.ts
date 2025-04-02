@@ -1,7 +1,6 @@
-import { by, device, element, waitFor } from 'detox'
+import { device } from 'detox'
 import { expect } from '@jest/globals'
 import type { LaunchArgs } from '@/App'
-import { testIds } from './ids'
 import {
   DecryptionAlgorithm,
   FingerprintJsServerApiClient,
@@ -9,49 +8,16 @@ import {
   unsealEventsResponse,
 } from '@fingerprintjs/fingerprintjs-pro-server-api'
 import { testTags } from './tags'
-import { DeviceLaunchAppConfig, IndexableNativeElement } from 'detox/detox'
+import { DeviceLaunchAppConfig } from 'detox/detox'
+import { identify, identifyWithError } from './identify'
+import { wait } from './wait'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
 
 async function launchApp(params?: DeviceLaunchAppConfig) {
   await device.launchApp(params)
 
   await wait(4000)
-}
-
-async function getElementText(element: IndexableNativeElement): Promise<string> {
-  const attributes = (await element.getAttributes()) as Record<string, any>
-  return attributes?.text ?? attributes?.label ?? '';
-}
-
-async function identify() {
-  await element(by.id(testIds.getData)).tap()
-  await waitFor(element(by.id(testIds.data)))
-    .toExist()
-    .withTimeout(10_000)
-
-  const text = await getElementText(element(by.id(testIds.data)))
-
-  return JSON.parse(text) as { visitorId: string; requestId: string; sealedResult?: string }
-}
-
-async function identifyWithError() {
-  await element(by.id(testIds.getData)).tap()
-  await waitFor(element(by.id(testIds.errorName)))
-    .toExist()
-    .withTimeout(10_000)
-
-  const errorName = await getElementText(element(by.id(testIds.errorName)))
-  const errorMessage = await getElementText(element(by.id(testIds.errorMessage)))
-
-  const error = new Error(errorMessage)
-  error.name = errorName
-
-  return error
 }
 
 describe.each([
@@ -162,12 +128,12 @@ describe.each([
   })
 })
 
-describe("React Native Identification invalid API Key", () => {
+describe('React Native Identification invalid API Key', () => {
   beforeAll(async () => {
     await launchApp({
       newInstance: true,
       launchArgs: {
-        apiKey: "invalid",
+        apiKey: 'invalid',
       } as LaunchArgs,
     })
   })
