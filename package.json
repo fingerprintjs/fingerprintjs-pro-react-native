@@ -55,6 +55,7 @@
     "@commitlint/cli": "^17.1.2",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
     "@fingerprintjs/conventional-changelog-dx-team": "^0.1.0",
+    "@fingerprintjs/semantic-release-native-dependency-plugin": "^1.0.0",
     "@react-native/eslint-config": "0.76.6",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-typescript": "^11.1.6",
