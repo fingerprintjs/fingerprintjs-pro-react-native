@@ -64,7 +64,6 @@ docs
 *.jsbundle
 coverage
 dist/
-!.github/actions/**/dist
 
 # Ruby / CocoaPods
 /ios/Pods/
