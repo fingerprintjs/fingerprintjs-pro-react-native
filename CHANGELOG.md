@@ -1,3 +1,16 @@
+## [3.3.2-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.1...v3.3.2-test.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* don't convert boolean fields of `tag` to int for iOS platform ([82c91a8](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/82c91a8256ef0c98c2a9905fdd77a6fb07bb3a09))
+
+
+
+Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
+Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.3.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.0...v3.3.1) (2025-01-30)
 
 
