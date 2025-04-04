@@ -42,4 +42,7 @@ export {
   InvalidResponseTypeError,
   ClientTimeoutError,
   UnknownError,
+  HostnameRestrictedError,
+  InvalidProxyIntegrationHeadersError,
+  InvalidProxyIntegrationSecretError,
 } from './errors'
