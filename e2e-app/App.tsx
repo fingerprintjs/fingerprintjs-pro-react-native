@@ -18,10 +18,6 @@ function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
 
   useEffect(() => {
-    console.log('App loaded')
-  }, [])
-
-  useEffect(() => {
     if (error) {
       console.error(error)
     }
