@@ -32,7 +32,7 @@ The app is intended to run via Detox. To learn more, head to the sections below.
 ```bash
 npx detox build --configuration ios.sim.release
 ```
-When debugging tests locally, it is recommended to use ios.sim.debug for faster build and easier logs access.
+When debugging tests locally, it is recommended to use `ios.sim.debug` for faster build and easier logs access.
 ```bash
 npx detox build --configuration ios.sim.debug
 ```
