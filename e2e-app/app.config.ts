@@ -62,14 +62,18 @@ if (reactNativeMetadata[metadataKey]?.callbacks?.length) {
   reactNativeMetadata[metadataKey].callbacks.forEach((callback) => callback())
 }
 
-const extraPods = [] as ExtraIosPodDependency[]
-const sdkVersion = dependencies['@fingerprintjs/fingerprintjs-pro-react-native']
-const usesLocalPackage = sdkVersion === '../'
-if (usesLocalPackage) {
-  extraPods.push({
-    name: 'RNFingerprintjsPro',
-    path: '../node_modules/@fingerprintjs/fingerprintjs-pro-react-native',
-  })
+function createExtraPods() {
+  const extraPods = [] as ExtraIosPodDependency[]
+  const sdkVersion = dependencies['@fingerprintjs/fingerprintjs-pro-react-native']
+  const usesLocalPackage = sdkVersion === '../'
+  if (usesLocalPackage) {
+    extraPods.push({
+      name: 'RNFingerprintjsPro',
+      path: '../node_modules/@fingerprintjs/fingerprintjs-pro-react-native',
+    })
+  }
+
+  return extraPods
 }
 
 const config: ExpoConfig = {
@@ -94,7 +98,7 @@ const config: ExpoConfig = {
       'expo-build-properties',
       {
         ios: {
-          extraPods,
+          extraPods: createExtraPods(),
         },
         android: androidBuildProperties,
       },
