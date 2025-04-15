@@ -46,7 +46,7 @@ The configuration passed via `--configuration` must match the one used in `detox
 
 > If you're using `ios.sim.debug` configuration, don't forget to run `yarn start` to start the bundler before running tests.
 
-## Running android tests
+## Running Android tests
 
 ### Prerequisites
 - [React-Native Prerequisites](https://reactnative.dev/docs/next/set-up-your-environment?platform=android)
