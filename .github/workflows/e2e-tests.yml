@@ -183,7 +183,7 @@ jobs:
         name: Delete build artifact
         if: success()
         with:
-          name: ios-app-release-${{ matrix.react-native }}
+          name: android-app-release-${{ matrix.react-native }}
 
   build-ios:
     env:
