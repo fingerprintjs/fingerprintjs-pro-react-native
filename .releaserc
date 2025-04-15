@@ -41,15 +41,18 @@
     [
       "@fingerprintjs/semantic-release-native-dependency-plugin",
       {
-        "iOS": {
-          "podSpecJsonPath": "RNFingerprintjsPro.podspec.json",
-          "dependencyName": "FingerprintPro",
-          "displayName": "Fingerprint iOS SDK"
-        },
-        "android": {
-          "path": "android",
-          "gradleTaskName": "printFingerprintNativeSDKVersion",
-          "displayName": "Fingerprint Android SDK"
+        "heading": "Supported Native SDK Version Range",
+        "platforms": {
+          "iOS": {
+            "podSpecJsonPath": "RNFingerprintjsPro.podspec.json",
+            "dependencyName": "FingerprintPro",
+            "displayName": "Fingerprint iOS SDK"
+          },
+          "android": {
+            "path": "android",
+            "gradleTaskName": "printFingerprintNativeSDKVersion",
+            "displayName": "Fingerprint Android SDK"
+          }
         }
       }
     ],
