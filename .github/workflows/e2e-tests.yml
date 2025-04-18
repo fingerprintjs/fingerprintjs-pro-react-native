@@ -1,0 +1,336 @@
+name: E2E Tests
+
+on:
+  pull_request:
+  release:
+    types:
+      - published
+
+jobs:
+  build-matrix:
+    name: Build matrix with react-native versions
+    runs-on: ubuntu-latest
+    outputs:
+      react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: echo "matrix=['local', '0.73', '0.74', '0.75', '0.76']" >> $GITHUB_OUTPUT
+
+  build-android:
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    runs-on: ubuntu-latest
+    needs:
+      build-matrix
+    name: Build android for E2E tests for react-native ${{ matrix.react-native }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: actions/setup-java@v3
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
+      - run: yarn install
+
+      - run: yarn build && rm -rf node_modules
+        if: github.event_name != 'release'
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
+      - name: Install ${{github.event.release.tag_name}} version of the package
+        run: yarn install @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        if: github.event_name == 'release'
+        working-directory: e2e-app
+
+      - name: Fix expo dependencies
+        if: matrix.react-native != 'local'
+        run: npx expo install --fix
+        working-directory: e2e-app
+
+      - name: Prebuild
+        run: yarn prebuild
+        working-directory: e2e-app
+
+      - run: npx detox build --configuration android.emu.release
+        working-directory: e2e-app
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-app-release-${{ matrix.react-native }}
+          path: e2e-app/android/app/build
+
+  e2e-tests-android:
+    needs:
+      - build-android
+      - build-matrix
+    runs-on: ubuntu-latest
+    name: Android E2E Tests for react-native ${{ matrix.react-native }}
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: actions/setup-java@v3
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-35
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-app-release-${{ matrix.react-native }}
+          path: e2e-app/android/app/build
+
+      - name: Get device name
+        id: device
+        run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
+        working-directory: e2e-app
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
+        with:
+          api-level: 35
+          target: 'default'
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+          avd-name: ${{ steps.device.outputs.AVD_NAME }}
+      
+      - name: Create .env file
+        working-directory: e2e-app
+        run: |
+          echo "MINIMUM_US_DEFAULT_PUBLIC_KEY=${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}" > .env
+          echo "MINIMUM_US_DEFAULT_PRIVATE_KEY=${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}" >> .env
+          echo "MINIMUM_US_SEALED_ENCRYPTION_KEY=${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}" >> .env
+          echo "MINIMUM_US_SEALED_PUBLIC_KEY=${{ secrets.MINIMUM_US_SEALED_PUBLIC_KEY }}" >> .env
+          echo "DEFAULT_EU_DEFAULT_PUBLIC_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}" >> .env
+          echo "DEFAULT_EU_DEFAULT_PRIVATE_KEY=${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}" >> .env
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Detox test
+        uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
+        with:
+          api-level: 35
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          arch: x86_64
+          avd-name: ${{ steps.device.outputs.AVD_NAME }}
+          script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all --record-videos failing
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-detox-artifacts-${{matrix.react-native}}
+          path: '**/detox-artifacts'
+
+      - uses: geekyeggo/delete-artifact@f275313e70c08f6120db482d7a6b98377786765b
+        name: Delete build artifact
+        if: success()
+        with:
+          name: android-app-release-${{ matrix.react-native }}
+
+  build-ios:
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+    runs-on: macos-latest
+    name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    needs: build-matrix
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.2
+
+      - run: yarn install
+        if: github.event_name != 'release'
+
+      - run: yarn build
+        if: github.event_name != 'release'
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
+      - name: Install ${{github.event.release.tag_name}} version of the package
+        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        if: github.event_name == 'release'
+        working-directory: e2e-app
+
+      - name: Fix expo dependencies
+        if: matrix.react-native != 'local'
+        run: npx expo install --fix
+        working-directory: e2e-app
+
+      - name: Prebuild
+        run: yarn prebuild
+        working-directory: e2e-app
+
+      - run: npx detox build --configuration ios.sim.release
+        working-directory: e2e-app
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-app-release-${{ matrix.react-native }}
+          path: e2e-app/ios/build/Build
+
+  e2e-tests-ios:
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+    runs-on: macos-latest
+    name: iOS E2E Tests for react-native ${{ matrix.react-native }}
+    needs:
+      - build-ios
+      - build-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
+        with:
+          xcode-version: latest-stable
+
+      - name: Install macOS deps
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.2
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ios-app-release-${{ matrix.react-native }}
+          path: e2e-app/ios/build/Build
+
+      - name: Start iPhone simulator
+        uses: futureware-tech/simulator-action@dab10d813144ef59b48d401cd95da151222ef8cd
+        with:
+          model: 'iPhone 16'
+          shutdown_after_job: 'false'
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
+      - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
+        working-directory: e2e-app
+        env:
+          MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          MINIMUM_US_DEFAULT_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
+          DEFAULT_EU_DEFAULT_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
+          DEFAULT_EU_DEFAULT_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
+          MINIMUM_US_SEALED_ENCRYPTION_KEY: ${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}
+          MINIMUM_US_SEALED_PUBLIC_KEY: ${{ secrets.MINIMUM_US_SEALED_PUBLIC_KEY }}
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-detox-artifacts-${{matrix.react-native}}
+          path: '**/detox-artifacts'
+
+      - uses: geekyeggo/delete-artifact@f275313e70c08f6120db482d7a6b98377786765b
+        name: Delete build artifact
+        if: success()
+        with:
+          name: ios-app-release-${{ matrix.react-native }}
