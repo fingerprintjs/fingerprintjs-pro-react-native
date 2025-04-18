@@ -5,16 +5,9 @@ and was bootstraped using [Expo](https://expo.dev).
 
 ## Get started
 
-To install dependencies, run:
-
-```bash
-yarn install
-```
-and then run:
-```bash
-yarn prebuild
-```
-This will generate the native code for iOS and Android.
+1. The app needs the SDK to be built. To do that, run `yarn install` and `yarn build` in the root directory.
+2. Install dependencies in the `e2e-app` directory, run `yarn install`:
+3. Run `yarn prebuild` in the `e2e-app` directory to prepare native code.
 
 The app is intended to run via Detox. To learn more, head to the sections below.
 
