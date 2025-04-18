@@ -1,7 +1,7 @@
 # E2E-App
 
 This application is used for running E2E tests via [Detox](https://github.com/wix/Detox)
-and was bootstraped using [Expo](https://expo.dev).
+and was bootstrapped using [Expo](https://expo.dev).
 
 ## Get started
 
