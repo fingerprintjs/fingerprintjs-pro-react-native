@@ -1,3 +1,17 @@
+## [3.4.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.2-test.2...v3.4.0-test.1) (2025-04-23)
+
+
+### Features
+
+* **android:** set minSdkVersion to 24 ([78a96d9](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/78a96d9f9e5efea0770ff1c51ec9b9d0136c8f49))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+* Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.3.2-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.2-test.1...v3.3.2-test.2) (2025-04-15)
 
 
