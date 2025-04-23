@@ -1,3 +1,17 @@
+## [3.4.0-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0-test.1...v3.4.0-test.2) (2025-04-23)
+
+
+### Bug Fixes
+
+* add `RNFingerprintjsPro.podspec.json` to package files ([7557a5c](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/7557a5c80d4e47fda3f1d6bc3272cd61581145d3))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+* Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.4.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.2-test.2...v3.4.0-test.1) (2025-04-23)
 
 
