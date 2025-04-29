@@ -4,7 +4,6 @@ import { ExpoConfig } from '@expo/config'
 import { dependencies } from './package.json'
 import * as semver from 'semver'
 import { handleReactNativeVersion } from './app-config-tools/reactNativeMetadata'
-import { createExtraPods } from './app-config-tools/ios'
 import { getAndroidBuildProperties } from './app-config-tools/android'
 import { getNewArch } from './app-config-tools/arch'
 
@@ -44,9 +43,6 @@ const config: ExpoConfig = {
     [
       'expo-build-properties',
       {
-        ios: {
-          extraPods: createExtraPods(),
-        },
         android: getAndroidBuildProperties(),
       },
     ],
