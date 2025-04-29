@@ -1351,10 +1351,10 @@
   dependencies:
     conventional-changelog-conventionalcommits "^7.0.2"
 
-"@fingerprintjs/semantic-release-native-dependency-plugin@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@fingerprintjs/semantic-release-native-dependency-plugin/-/semantic-release-native-dependency-plugin-1.1.0.tgz#1aaa7aeef678295e673dc5ad79a9efaf309cc778"
-  integrity sha512-u4PIvfqAedoGI3WDf1afGVHWOnoWcrxl8ewbyBuHfgPZI6qMmH3g/Gx/N4za5mn90VDKYsjILxhvHT9kz6l/IA==
+"@fingerprintjs/semantic-release-native-dependency-plugin@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@fingerprintjs/semantic-release-native-dependency-plugin/-/semantic-release-native-dependency-plugin-1.2.0.tgz#7076d2dca91192f1eaeec40af287a6755bbcd236"
+  integrity sha512-m8uBQaOAfxwDfj/3LBO3UotTaPHZ/sSPXXeVecxtL7AL48CJ5CelkDf+VMncggKj9eD9w+bfjQuhTRoFH/7YnA==
 
 "@hapi/hoek@^9.0.0", "@hapi/hoek@^9.3.0":
   version "9.3.0"
