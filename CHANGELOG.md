@@ -1,3 +1,17 @@
+## [3.4.0-test.3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0-test.2...v3.4.0-test.3) (2025-04-30)
+
+
+### Bug Fixes
+
+* **ios:** revert podspec to dsl format ([ff02a97](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/ff02a97918c6bdec6193e2145ea75189cb72044e))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+* Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.4.0-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0-test.1...v3.4.0-test.2) (2025-04-23)
 
 
