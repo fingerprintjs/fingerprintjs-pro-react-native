@@ -19,7 +19,7 @@
   "files": [
     "android",
     "ios",
-    "RNFingerprintjsPro.podspec.json",
+    "RNFingerprintjsPro.podspec",
     "dist"
   ],
   "keywords": [
