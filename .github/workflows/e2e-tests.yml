@@ -65,6 +65,11 @@ jobs:
         run: npx expo install --fix
         working-directory: e2e-app
 
+      - name: Setup fresh node_modules
+        if: matrix.react-native != 'local'
+        run: rm -rf node_modules && yarn
+        working-directory: e2e-app
+
       - name: Prebuild
         run: yarn prebuild
         working-directory: e2e-app
@@ -227,18 +232,23 @@ jobs:
         env:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
-      - name: Install dependencies in e2e-app
-        run: yarn install
-        working-directory: e2e-app
-
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
+      - name: Install dependencies in e2e-app
+        run: yarn install
+        working-directory: e2e-app
+
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
         run: npx expo install --fix
+        working-directory: e2e-app
+      
+      - name: Setup fresh node_modules
+        if: matrix.react-native != 'local'
+        run: rm -rf node_modules && yarn
         working-directory: e2e-app
 
       - name: Prebuild
