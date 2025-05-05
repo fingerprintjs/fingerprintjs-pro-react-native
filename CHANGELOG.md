@@ -1,3 +1,17 @@
+## [3.4.0-test.5](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0-test.4...v3.4.0-test.5) (2025-05-05)
+
+
+### Bug Fixes
+
+* bug fix to trigger new release ([4649154](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/4649154fc9b8ef56d259669a272b84f82ad53fda))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+* Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.4.0-test.4](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0-test.3...v3.4.0-test.4) (2025-04-30)
 
 
