@@ -44,7 +44,7 @@
         "heading": "Supported Native SDK Version Range",
         "platforms": {
           "iOS": {
-            "podSpecJsonPath": "RNFingerprintjsPro.podspec.json",
+            "podSpecPath": "RNFingerprintjsPro.podspec",
             "dependencyName": "FingerprintPro",
             "displayName": "Fingerprint iOS SDK"
           },
