@@ -30,8 +30,8 @@
 
 # Fingerprint Pro React Native
 
-[Fingerprint](https://fingerprint.com/) is a device intelligence platform offering 99.5% accurate visitor
-identification. Fingerprint Pro React Native SDK is an easy way to integrate Fingerprint Pro into your React Native
+[Fingerprint](https://fingerprint.com/) is a device intelligence platform offering industry-leading accuracy.
+Fingerprint Pro React Native SDK is an easy way to integrate Fingerprint Pro into your React Native
 application to call the native Fingerprint Pro libraries (Android and iOS) and identify devices.
 
 ## Table of contents
