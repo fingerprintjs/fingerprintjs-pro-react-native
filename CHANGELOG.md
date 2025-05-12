@@ -1,3 +1,29 @@
+## [3.4.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.1...v3.4.0) (2025-05-12)
+
+
+### Features
+
+* **android:** set minSdkVersion to 24 ([78a96d9](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/78a96d9f9e5efea0770ff1c51ec9b9d0136c8f49))
+
+
+### Bug Fixes
+
+* don't convert boolean fields of `tag` to int for iOS platform ([82c91a8](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/82c91a8256ef0c98c2a9905fdd77a6fb07bb3a09))
+* **ios:** revert podspec to dsl format ([38fc9ae](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/38fc9aefbf646fd96c678d1d7b5c28ed37a7afde))
+
+
+### Documentation
+
+* **README:** mention support for react-native version up to 0.79 ([a783162](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a783162f7a6f279f3424d594744f76de71ee221d))
+* **README:** update package description ([62d3f91](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/62d3f91b6fe507b99dfd38176a76e1323d786dd0))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+* Fingerprint iOS SDK Version Range: **`>= 2.7.0 and < 3.0.0`**
+
 ## [3.3.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.3.0...v3.3.1) (2025-01-30)
 
 
