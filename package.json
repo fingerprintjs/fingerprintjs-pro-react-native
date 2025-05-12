@@ -1,7 +1,7 @@
 {
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
-  "version": "3.3.1",
-  "description": "Official React Native client for Fingerprint PRO. Best identification solution for React Native.",
+  "version": "3.4.0-test.5",
+  "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "main": "./dist/fpjs-pro-react-native.cjs.js",
   "module": "./dist/fpjs-pro-react-native.esm.js",
   "types": "./dist/fpjs-pro-react-native.d.ts",
@@ -55,7 +55,7 @@
     "@commitlint/cli": "^17.1.2",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
     "@fingerprintjs/conventional-changelog-dx-team": "^0.1.0",
-    "@fingerprintjs/semantic-release-native-dependency-plugin": "^1.1.0",
+    "@fingerprintjs/semantic-release-native-dependency-plugin": "^1.2.1",
     "@react-native/eslint-config": "0.76.6",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-typescript": "^11.1.6",
