@@ -10,10 +10,10 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "test(deps):"
-      groups:
-        test-deps:
-          patterns:
-            - "*"
+    groups:
+      test-deps:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "/"
