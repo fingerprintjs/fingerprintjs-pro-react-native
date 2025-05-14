@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directories:
+      - "/e2e-app"
+      - "/TestProject"
+      - "/TestProjectLatestRN"
+    open-pull-requests-limit: 0 # install only security updates
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "test(deps):"
+      groups:
+        test-deps:
+          patterns:
+            - "*"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    open-pull-requests-limit: 0 # install only security updates
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "build(deps):"
+      prefix-development: "build(deps-dev):"
+    groups:
+      dev-deps:
+        dependency-type: "development"
+      prod-deps:
+        dependency-type: "production"
