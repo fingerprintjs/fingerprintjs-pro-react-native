@@ -14,6 +14,7 @@ updates:
       test-deps:
         patterns:
           - "*"
+        applies-to: security-updates
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -21,10 +22,9 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "build(deps):"
-      prefix-development: "build(deps-dev):"
+      prefix: "build"
+      include: scope
     groups:
       dev-deps:
         dependency-type: "development"
-      prod-deps:
-        dependency-type: "production"
+        applies-to: security-updates
