@@ -7,7 +7,9 @@
   "types": "./dist/fpjs-pro-react-native.d.ts",
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf ./dist && rollup -c rollup.config.mjs",
+    "build": "yarn build:sdk && yarn build:plugin",
+    "build:sdk": "rm -rf ./dist && rollup -c rollup.config.mjs",
+    "build:plugin": "rm -rf ./plugin/dist && tsc --build plugin",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
@@ -20,7 +22,10 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "dist"
+    "dist",
+    "plugin/dist",
+    "app.plugin.js",
+    "README.md"
   ],
   "keywords": [
     "fraud",
@@ -73,6 +78,7 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.0.0",
+    "expo": "^53.0.9",
     "husky": "^8.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -92,7 +98,17 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
+    "expo": ">=51.0.0",
     "react": "*",
+    "react-dom": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   }
 }
