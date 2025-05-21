@@ -12,7 +12,7 @@ import { execSync } from 'node:child_process'
  */
 const reactNativeMetadata = {
   0.73: {
-    packages: ['expo@50', 'detox@20.17.0', '@config-plugins/detox@7'],
+    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
   },
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
