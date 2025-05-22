@@ -1,18 +1,9 @@
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
-import { LaunchArguments } from 'react-native-launch-arguments'
-import { FingerprintJsProProvider, Region, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintJsProProvider, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
-
-export type LaunchArgs = {
-  apiKey: string
-  region: Region
-  useTags?: boolean
-  linkedId?: string
-}
-
-const args = LaunchArguments.value<LaunchArgs>()
+import config from '@/src/config'
 
 function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
@@ -33,22 +24,22 @@ function InnerApp() {
           flex: 1,
         }}
       >
-        {isLoading && <Text testID={testIds.loading}>Loading...</Text>}
-        {error && (
+        {isLoading ? <Text testID={testIds.loading}>Loading...</Text> : null}
+        {error ? (
           <View>
             <Text testID={testIds.errorName}>{error.name}</Text>
             <Text testID={testIds.errorMessage}>{error.message}</Text>
-            {error.stack && <Text testID={testIds.errorStack}>{error.stack}</Text>}
-            {Boolean(error.cause) && <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text>}
+            {error.stack ? <Text testID={testIds.errorStack}>{error.stack}</Text> : null}
+            {error.cause ? <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text> : null}
           </View>
-        )}
-        {data && <Text testID={testIds.data}>{JSON.stringify(data)}</Text>}
+        ) : null}
+        {data ? <Text testID={testIds.data}>{JSON.stringify(data)}</Text> : null}
         <Pressable
           testID={testIds.getData}
           onPress={async () => {
-            const tags = args.useTags ? testTags : undefined
+            const tags = config.useTags ? testTags : undefined
 
-            await getData(tags, args.linkedId)
+            await getData(tags, config.linkedId)
           }}
           style={{
             paddingBottom: 48,
@@ -64,7 +55,7 @@ function InnerApp() {
 
 export default function App() {
   return (
-    <FingerprintJsProProvider apiKey={args.apiKey} region={args.region}>
+    <FingerprintJsProProvider apiKey={config.apiKey} region={config.region}>
       <InnerApp />
     </FingerprintJsProProvider>
   )

@@ -2,13 +2,13 @@
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
   "version": "3.5.0",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
-  "main": "./dist/fpjs-pro-react-native.cjs.js",
-  "module": "./dist/fpjs-pro-react-native.esm.js",
-  "types": "./dist/fpjs-pro-react-native.d.ts",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/module/index.js",
+  "types": "./dist/typescript/commonjs/src/index.d.ts",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky install && yarn build",
     "build": "yarn build:sdk && yarn build:plugin",
-    "build:sdk": "rm -rf ./dist && rollup -c rollup.config.mjs",
+    "build:sdk": "bob build",
     "build:plugin": "rm -rf ./plugin/dist && tsc --build plugin",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
@@ -19,10 +19,11 @@
     "release": "semantic-release"
   },
   "files": [
+    "src",
+    "dist",
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "dist",
     "plugin/dist",
     "app.plugin.js",
     "README.md"
@@ -60,6 +61,7 @@
     "@commitlint/cli": "^17.1.2",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
     "@fingerprintjs/conventional-changelog-dx-team": "^0.1.0",
+    "@fingerprintjs/fingerprintjs-pro-spa": "^1.3.2",
     "@fingerprintjs/semantic-release-native-dependency-plugin": "^1.2.1",
     "@react-native/eslint-config": "0.76.6",
     "@rollup/plugin-json": "^6.1.0",
@@ -87,6 +89,7 @@
     "prettier": "^2.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-native-builder-bob": "^0.40.11",
     "react-test-renderer": "18.2.0",
     "rollup": "^4.13.1",
     "rollup-plugin-dts": "^6.1.0",
@@ -98,17 +101,56 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
+    "@fingerprintjs/fingerprintjs-pro-spa": "^1.3.2",
     "expo": ">=51.0.0",
     "react": "*",
     "react-dom": "*",
     "react-native": "*"
   },
   "peerDependenciesMeta": {
+    "@fingerprintjs/fingerprintjs-pro-spa": {
+      "optional": true
+    },
     "expo": {
       "optional": true
     },
     "react-dom": {
       "optional": true
     }
+  },
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "import": {
+        "types": "./dist/typescript/module/src/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "types": "./dist/typescript/commonjs/src/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json",
+    "./app.plugin.js": "./app.plugin.js",
+    "./plugin/dist/withFingerprint.js": "./plugin/dist/withFingerprint.js"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      "typescript"
+    ]
   }
 }

@@ -96,6 +96,28 @@ Install the package using your favorite package manager:
 
 > ℹ️ Our SDK cannot be used in [Expo Go](https://expo.dev/go) because it requires custom native code.
 
+<details>
+<summary>Web support</summary>
+In order to use our SDK in web, install the peer dependency using your favorite package manager:
+
+- [NPM](https://npmjs.org):
+
+  ```shell
+  npm install @fingerprintjs/fingerprintjs-pro-spa --save
+  ```
+
+- [Yarn](https://yarnpkg.com):
+
+  ```shell
+  yarn add @fingerprintjs/fingerprintjs-pro-spa
+  ```
+
+- [PNPM](https://pnpm.js.org):
+  ```shell
+  pnpm add @fingerprintjs/fingerprintjs-pro-spa
+  ```
+</details>
+
 ### 1. Add config plugin
 ```json
 {

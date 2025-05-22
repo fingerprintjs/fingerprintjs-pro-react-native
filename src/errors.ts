@@ -366,6 +366,11 @@ export type IdentificationError =
 export function unwrapError(error: Error): IdentificationError {
   const [errorType, ...errorMessageParts] = error.message.split(':')
   const errorMessage = errorMessageParts.join(':')
+  console.log('unwrapError', {
+    errorType,
+    errorMessageParts,
+    errorMessage,
+  })
   switch (errorType) {
     case 'InvalidURL':
       return new InvalidUrlError(errorMessage)
