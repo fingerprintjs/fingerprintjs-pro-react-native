@@ -1,4 +1,8 @@
 {
   "name": "TestProject",
-  "displayName": "TestProject"
+  "displayName": "TestProject",
+  "ios": {
+    "newArchEnabled": false
+  },
+  "newArchEnabled": false
 }

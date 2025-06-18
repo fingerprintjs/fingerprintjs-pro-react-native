@@ -4,7 +4,6 @@ updates:
     directories:
       - "/e2e-app"
       - "/TestProject"
-      - "/TestProjectLatestRN"
     open-pull-requests-limit: 0 # install only security updates
     schedule:
       interval: "daily"

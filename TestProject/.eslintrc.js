@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
   extends: '../.eslintrc.js',
-  ignorePatterns: ['Pods/*'],
+  ignorePatterns: ['Pods/*', '!.prettierrc.js'],
 }

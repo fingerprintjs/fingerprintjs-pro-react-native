@@ -1,4 +1,4 @@
-package com.testprojectlatestrn
+package com.TestProject
 
 import android.app.Application
 import com.facebook.react.PackageList
