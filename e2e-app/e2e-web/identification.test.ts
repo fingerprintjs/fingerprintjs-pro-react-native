@@ -84,7 +84,9 @@ test.describe('Web tests', () => {
       let client: FingerprintJsServerApiClient
 
       test.beforeEach(async ({ page }) => {
-        test.skip(!apiKey || !privateApiKey, 'API keys are required to run this test')
+        if (!apiKey || !privateApiKey) {
+          throw new Error('API keys are required to run this test')
+        }
 
         let serverRegion = Region.Global
         if (region === 'eu') {
@@ -126,7 +128,9 @@ test.describe('Web tests', () => {
       const linkedId = `${Date.now()}-web-test`
 
       test.beforeEach(async ({ page }) => {
-        test.skip(!apiKey || !privateApiKey, 'API keys are required to run this test')
+        if (!apiKey || !privateApiKey) {
+          throw new Error('API keys are required to run this test')
+        }
 
         let serverRegion = Region.Global
         if (region === 'eu') {
@@ -177,7 +181,9 @@ test.describe('Web tests', () => {
     const apiKey = process.env.MINIMUM_US_SEALED_PUBLIC_KEY
 
     test.beforeEach(async ({ page }) => {
-      test.skip(!apiKey || !encryptionKey, 'Sealed API keys are required to run this test')
+      if (!apiKey || !encryptionKey) {
+        throw new Error('Sealed API keys are required to run this test')
+      }
 
       await setupPage(page, {
         apiKey: apiKey!,
