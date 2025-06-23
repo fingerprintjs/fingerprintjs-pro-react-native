@@ -98,7 +98,7 @@ Install the package using your favorite package manager:
 
 <details>
 <summary>Web support</summary>
-In order to use our SDK in web, install the peer dependency using your favorite package manager:
+To use the SDK on the web, install the peer dependency with your preferred package manager:
 
 - [NPM](https://npmjs.org):
 
@@ -116,6 +116,8 @@ In order to use our SDK in web, install the peer dependency using your favorite 
   ```shell
   pnpm add @fingerprintjs/fingerprintjs-pro-spa
   ```
+  
+Then, use the SDK as you would with the native version.
 </details>
 
 ### 1. Add config plugin
