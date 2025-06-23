@@ -1,6 +1,7 @@
-import { UnknownError, unwrapError } from './errors'
+import { UnknownError } from './errors'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
 import { FingerprintJSPro, FpjsClient } from '@fingerprintjs/fingerprintjs-pro-spa'
+import { unwrapError } from './unwrapError'
 
 /**
  *
