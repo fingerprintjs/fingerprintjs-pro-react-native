@@ -1,7 +1,8 @@
 import { NativeModules } from 'react-native'
-import { UnknownError, unwrapError } from './errors'
+import { UnknownError } from './errors'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
 import * as packageInfo from '../package.json'
+import { unwrapError } from './unwrapError'
 
 /**
  *
