@@ -372,3 +372,10 @@ jobs:
 
       - run: yarn test:web
         working-directory: e2e-app
+        env:
+          MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          MINIMUM_US_DEFAULT_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
+          DEFAULT_EU_DEFAULT_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
+          DEFAULT_EU_DEFAULT_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
+          MINIMUM_US_SEALED_ENCRYPTION_KEY: ${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}
+          MINIMUM_US_SEALED_PUBLIC_KEY: ${{ secrets.MINIMUM_US_SEALED_PUBLIC_KEY }}
