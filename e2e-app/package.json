@@ -32,6 +32,7 @@
     "@config-plugins/detox": "^9.0.0",
     "@expo/config-plugins": "^9.0.16",
     "@fingerprintjs/fingerprintjs-pro-server-api": "^6.3.0",
+    "@playwright/test": "^1.53.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
     "@types/react": "~18.3.12",
