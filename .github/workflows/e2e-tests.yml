@@ -344,3 +344,31 @@ jobs:
         if: success()
         with:
           name: ios-app-release-${{ matrix.react-native }}
+  
+  e2e-tests-web:
+    name: Web E2E tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - run: yarn install
+
+      - run: yarn build && rm -rf node_modules
+        if: github.event_name != 'release'
+
+      - name: Install dependencies in e2e-app
+        run: yarn install && yarn playwright install chromium
+        working-directory: e2e-app
+
+      - name: Install ${{github.event.release.tag_name}} version of the package
+        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        if: github.event_name == 'release'
+        working-directory: e2e-app
+
+      - run: yarn test:web
+        working-directory: e2e-app
