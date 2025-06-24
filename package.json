@@ -137,8 +137,10 @@
   "tsup": {
     "entry": ["src"],
     "splitting": false,
+    "bundle": false,
     "sourcemap": true,
     "clean": true,
+    "treeshake": false,
     "format": ["esm", "cjs"],
     "legacyOutput": true,
     "dts": true
