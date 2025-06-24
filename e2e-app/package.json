@@ -6,6 +6,8 @@
     "start": "expo start",
     "start:web": "expo start --web",
     "test:web": "playwright test",
+    "build:web": "expo export --platform web",
+    "serve:web": "serve dist -p 8081",
     "lint": "expo lint",
     "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react",
     "prebuild": "expo prebuild --clean",
@@ -43,6 +45,7 @@
     "jest-expo": "~52.0.4",
     "react-test-renderer": "18.3.1",
     "semver": "^7.7.2",
+    "serve": "^14.2.4",
     "ts-jest": "^29.2.6",
     "typescript": "^5.3.3"
   },
