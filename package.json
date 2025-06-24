@@ -2,13 +2,13 @@
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
   "version": "3.5.0",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
-  "main": "./dist/commonjs/index.js",
-  "module": "./dist/module/index.js",
-  "types": "./dist/typescript/commonjs/src/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prepare": "husky install && yarn build",
     "build": "yarn build:sdk && yarn build:plugin",
-    "build:sdk": "bob build",
+    "build:sdk": "tsup src",
     "build:plugin": "rm -rf ./plugin/dist && tsc --build plugin",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
@@ -89,7 +89,6 @@
     "prettier": "^2.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native-builder-bob": "^0.40.11",
     "react-test-renderer": "18.2.0",
     "rollup": "^4.13.1",
     "rollup-plugin-dts": "^6.1.0",
@@ -97,6 +96,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "ts-jest": "^29.1.2",
     "tslib": "^2.6.2",
+    "tsup": "^8.5.0",
     "typedoc": "^0.25.7",
     "typescript": "5.0.4"
   },
@@ -122,35 +122,25 @@
     ".": {
       "source": "./src/index.ts",
       "import": {
-        "types": "./dist/typescript/module/src/index.d.ts",
-        "default": "./dist/module/index.js"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/esm/index.js"
       },
       "require": {
-        "types": "./dist/typescript/commonjs/src/index.d.ts",
-        "default": "./dist/commonjs/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     },
     "./package.json": "./package.json",
     "./app.plugin.js": "./app.plugin.js",
     "./plugin/dist/withFingerprint.js": "./plugin/dist/withFingerprint.js"
   },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "dist",
-    "targets": [
-      [
-        "module",
-        {
-          "esm": true
-        }
-      ],
-      [
-        "commonjs",
-        {
-          "esm": true
-        }
-      ],
-      "typescript"
-    ]
+  "tsup": {
+    "entry": ["src"],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "format": ["esm", "cjs"],
+    "legacyOutput": true,
+    "dts": true
   }
 }
