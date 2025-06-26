@@ -1,4 +1,5 @@
-import { ApiKeyRequiredError, JsonParsingError, UnknownError, unwrapError } from '../src/errors'
+import { ApiKeyRequiredError, JsonParsingError, UnknownError } from '../src/errors'
+import { unwrapError } from '../src/unwrapError'
 
 describe('unwrapError function', () => {
   it('should return ApiKeyRequiredError when TokenRequired error passed', () => {
