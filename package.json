@@ -1,6 +1,6 @@
 {
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
-  "version": "3.4.0",
+  "version": "3.4.1-test.1",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "main": "./dist/fpjs-pro-react-native.cjs.js",
   "module": "./dist/fpjs-pro-react-native.esm.js",
