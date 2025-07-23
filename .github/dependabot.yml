@@ -9,6 +9,8 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "test(deps):"
+    allow:
+      - dependency-type: "all"
     groups:
       test-deps:
         patterns:
@@ -23,6 +25,8 @@ updates:
     commit-message:
       prefix: "build"
       include: scope
+    allow:
+      - dependency-type: "all"
     groups:
       dev-deps:
         dependency-type: "development"
