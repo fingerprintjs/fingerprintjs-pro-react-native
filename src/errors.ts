@@ -322,6 +322,18 @@ export class InvalidProxyIntegrationSecretError extends Error {
   }
 }
 
+/**
+ * Proxy integration secret is from the different env with Public key
+ *
+ * @group Errors
+ */
+export class ProxyIntegrationSecretEnvironmentMismatch extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ProxyIntegrationSecretEnvironmentMismatch'
+  }
+}
+
 export type IdentificationError =
   | InvalidUrlError
   | InvalidURLParamsError
@@ -349,6 +361,7 @@ export type IdentificationError =
   | UnknownError
   | InvalidProxyIntegrationHeadersError
   | InvalidProxyIntegrationSecretError
+  | ProxyIntegrationSecretEnvironmentMismatch
 
 export function unwrapError(error: Error): IdentificationError {
   const [errorType, ...errorMessageParts] = error.message.split(':')
@@ -402,6 +415,8 @@ export function unwrapError(error: Error): IdentificationError {
       return new InvalidProxyIntegrationHeadersError(errorMessage)
     case 'InvalidProxyIntegrationSecret':
       return new InvalidProxyIntegrationSecretError(errorMessage)
+    case 'ProxyIntegrationSecretEnvironmentMismatch':
+      return new ProxyIntegrationSecretEnvironmentMismatch(errorMessage)
     // end of API Errors block
     case 'ClientTimeout':
       return new ClientTimeoutError(errorMessage)

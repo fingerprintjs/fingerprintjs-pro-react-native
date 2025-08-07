@@ -27,6 +27,7 @@ import com.fingerprintjs.android.fpjs_pro.ClientTimeout
 import com.fingerprintjs.android.fpjs_pro.UnknownError
 import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationHeaders
 import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationSecret
+import com.fingerprintjs.android.fpjs_pro.ProxyIntegrationSecretEnvironmentMismatch
 import java.lang.Exception
 
 
@@ -151,6 +152,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       is UnknownError -> "UnknownError"
       is InvalidProxyIntegrationHeaders -> "InvalidProxyIntegrationHeaders"
       is InvalidProxyIntegrationSecret -> "InvalidProxyIntegrationSecret"
+      is ProxyIntegrationSecretEnvironmentMismatch -> "ProxyIntegrationSecretEnvironmentMismatch"
       else -> "UnknownError"
     }
     return errorType + ":" + error.description

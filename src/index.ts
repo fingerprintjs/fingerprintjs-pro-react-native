@@ -45,4 +45,5 @@ export {
   HostnameRestrictedError,
   InvalidProxyIntegrationHeadersError,
   InvalidProxyIntegrationSecretError,
+  ProxyIntegrationSecretEnvironmentMismatch,
 } from './errors'
