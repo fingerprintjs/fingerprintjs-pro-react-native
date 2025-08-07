@@ -25,9 +25,8 @@ import com.fingerprintjs.android.fpjs_pro.ResponseCannotBeParsed
 import com.fingerprintjs.android.fpjs_pro.NetworkError
 import com.fingerprintjs.android.fpjs_pro.ClientTimeout
 import com.fingerprintjs.android.fpjs_pro.UnknownError
-// We must wait for Android SDK 2.9 release to use these errors
-// import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationHeaders
-// import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationSecret
+import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationHeaders
+import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationSecret
 import java.lang.Exception
 
 
@@ -150,9 +149,8 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       is NetworkError -> "NetworkError"
       is ClientTimeout -> "ClientTimeout"
       is UnknownError -> "UnknownError"
-      // We must wait for Android SDK 2.9 release to use these errors
-      // is InvalidProxyIntegrationHeaders -> "InvalidProxyIntegrationHeaders"
-      // is InvalidProxyIntegrationSecret -> "InvalidProxyIntegrationSecret"
+      is InvalidProxyIntegrationHeaders -> "InvalidProxyIntegrationHeaders"
+      is InvalidProxyIntegrationSecret -> "InvalidProxyIntegrationSecret"
       else -> "UnknownError"
     }
     return errorType + ":" + error.description
