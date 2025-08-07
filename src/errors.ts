@@ -298,6 +298,42 @@ export class UnknownError extends Error {
   }
 }
 
+/**
+ * Unexpected proxy integration implementation or networking error
+ *
+ * @group Errors
+ */
+export class InvalidProxyIntegrationHeadersError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'InvalidProxyIntegrationHeadersError'
+  }
+}
+
+/**
+ * Proxy integration secret is missing or invalid
+ *
+ * @group Errors
+ */
+export class InvalidProxyIntegrationSecretError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'InvalidProxyIntegrationSecretError'
+  }
+}
+
+/**
+ * Proxy integration secret is from the different env with Public key
+ *
+ * @group Errors
+ */
+export class ProxyIntegrationSecretEnvironmentMismatch extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ProxyIntegrationSecretEnvironmentMismatch'
+  }
+}
+
 export type IdentificationError =
   | InvalidUrlError
   | InvalidURLParamsError
@@ -323,6 +359,9 @@ export type IdentificationError =
   | InvalidResponseTypeError
   | ClientTimeoutError
   | UnknownError
+  | InvalidProxyIntegrationHeadersError
+  | InvalidProxyIntegrationSecretError
+  | ProxyIntegrationSecretEnvironmentMismatch
 
 export function unwrapError(error: Error): IdentificationError {
   const [errorType, ...errorMessageParts] = error.message.split(':')
@@ -372,6 +411,12 @@ export function unwrapError(error: Error): IdentificationError {
       return new InstallationMethodRestrictedError(errorMessage)
     case 'ResponseCannotBeParsed':
       return new ResponseCannotBeParsedError(errorMessage)
+    case 'InvalidProxyIntegrationHeaders':
+      return new InvalidProxyIntegrationHeadersError(errorMessage)
+    case 'InvalidProxyIntegrationSecret':
+      return new InvalidProxyIntegrationSecretError(errorMessage)
+    case 'ProxyIntegrationSecretEnvironmentMismatch':
+      return new ProxyIntegrationSecretEnvironmentMismatch(errorMessage)
     // end of API Errors block
     case 'ClientTimeout':
       return new ClientTimeoutError(errorMessage)
