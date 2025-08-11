@@ -48,6 +48,7 @@ export class FingerprintJsProAgent implements ProAgent {
         storageKey,
         urlHashing,
         remoteControlDetection,
+        integrationInfo: ['fingerprint-pro-react-native-web'],
       },
       cache,
       cachePrefix,
