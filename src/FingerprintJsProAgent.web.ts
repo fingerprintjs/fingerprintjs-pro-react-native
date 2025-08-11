@@ -78,9 +78,9 @@ export class FingerprintJsProAgent implements ProAgent {
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
-      } else {
-        throw new UnknownError(String(error))
       }
+
+      throw new UnknownError(String(error))
     }
   }
 
