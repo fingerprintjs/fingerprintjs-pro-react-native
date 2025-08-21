@@ -1,3 +1,25 @@
+import type { CacheLocation, FpjsClientOptions, ICache } from '@fingerprintjs/fingerprintjs-pro-spa'
+
+export interface ProAgent {
+  /**
+   * Returns visitor identifier based on the request options.
+   *
+   * @param tags - Custom tags attached to the event.
+   * @param linkedId - Event linkage identifier.
+   * @param options - Custom request options.
+   */
+  getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<string>
+
+  /**
+   * Returns visitor identification data based on the request options.
+   *
+   * @param tags - Custom tags attached to the event.
+   * @param linkedId - Event linkage identifier.
+   * @param options - Custom request options.
+   */
+  getVisitorData(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorData>
+}
+
 export interface RequestOptions {
   /**
    * Custom timeout for the request in milliseconds
@@ -34,6 +56,76 @@ export interface FingerprintJsProAgentParams {
    * Custom request options
    */
   requestOptions?: RequestOptions
+
+  /**
+   * The pattern of the JS agent script URL.
+   * If multiple endpoints are given, the agent will try them one by one until it finds a working one.
+   * If an empty array is given, the agent will throw an error.
+   *
+   * @platform web
+   */
+  scriptUrlPattern?: FpjsClientOptions['loadOptions']['scriptUrlPattern']
+
+  /**
+   * Override storages name (cookies, localStorage, etc).
+   * Should only be used when the default name conflicts with some of your existing names.
+   * @default '_vid'
+   *
+   * @platform web
+   */
+  storageKey?: FpjsClientOptions['loadOptions']['storageKey']
+
+  /**
+   * Hashes URL parts before sending them to Fingerprint the server.
+   * The sources of URLs: window.location.href, document.referrer.
+   * Сan be used to hide sensitive data (tokens, payment info, etc) that these URLs may contain.
+   *
+   * Example of URL stripping 'https://example.com/path?token=secret#anchor' -> 'https://example.com/oK-fhlv2N-ZzaBf0zlUuTN97jDbqdbwlTB0fCvdEtb8?E1kifZXhuoBEZ_zkQa60jyxcaHNX3QFaydaaIEtL7j0#eb-w4rp2udRHYG3bzElINPBaTBHesFLnS0nqMHo8W80'
+   *
+   * @platform web
+   */
+  urlHashing?: FpjsClientOptions['loadOptions']['urlHashing']
+
+  /**
+   * Enables data collection for remote control detection.
+   * Once enabled, please contact our support team to active the result exposure.
+   * @see https://fingerprint.com/support/
+   *
+   * @default false
+   *
+   * @see https://dev.fingerprint.com/docs/smart-signals-overview#remote-control-tools-detection
+   *
+   * @platform web
+   */
+  remoteControlDetection?: FpjsClientOptions['loadOptions']['remoteControlDetection']
+
+  /**
+   * Defines which built-in cache mechanism the client should use.
+   *
+   * @platform web
+   */
+  cacheLocation?: CacheLocation
+
+  /**
+   * Custom cache implementation. Takes precedence over the `cacheLocation` property.
+   *
+   * @platform web
+   */
+  cache?: ICache
+
+  /**
+   * Duration in seconds for which data is stored in cache. Cannot exceed 86_400 (24h) because caching data
+   * for longer than 24 hours can negatively affect identification accuracy.
+   *
+   * @platform web
+   */
+  cacheTimeInSeconds?: number
+  /**
+   * Custom prefix for localStorage and sessionStorage cache keys. Will be ignored if `cache` is provided.
+   *
+   * @platform web
+   */
+  cachePrefix?: string
 }
 
 export interface QueryResult<TData, TError = Error> {
@@ -280,3 +372,5 @@ export interface VisitorQueryContext extends VisitorQueryResult {
    */
   getData: (tags?: Tags, linkedId?: string, options?: RequestOptions) => Promise<VisitorData | null>
 }
+
+export type VisitorId = string
