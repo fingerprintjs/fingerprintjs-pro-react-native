@@ -1,6 +1,8 @@
 import { defineConfig } from 'tsup'
 import esbuildPluginLicense from 'esbuild-plugin-license'
 import * as fs from 'node:fs'
+import * as pkg from './package.json'
+import { replacePlugin } from './esbuild/replace.plugin'
 
 const licenseBanner = fs.readFileSync('res/license_banner.txt', 'utf-8')
 
@@ -17,6 +19,9 @@ export default defineConfig({
   esbuildPlugins: [
     esbuildPluginLicense({
       banner: `/**\n${licenseBanner}\n*/`,
+    }),
+    replacePlugin({
+      __VERSION__: pkg.version,
     }),
   ],
 })

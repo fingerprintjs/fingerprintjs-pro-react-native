@@ -2,7 +2,8 @@ import { UnknownError } from './errors'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
 import { FingerprintJSPro, FpjsClient } from '@fingerprintjs/fingerprintjs-pro-spa'
 import { unwrapError } from './unwrapError'
-import { version } from '../package.json'
+
+const packageVersion = '__VERSION__'
 
 /**
  *
@@ -49,7 +50,7 @@ export class FingerprintJsProAgent implements ProAgent {
         storageKey,
         urlHashing,
         remoteControlDetection,
-        integrationInfo: [`fingerprint-pro-react-native/${version}/web`],
+        integrationInfo: [`fingerprint-pro-react-native/${packageVersion}/web`],
       },
       cache,
       cachePrefix,
