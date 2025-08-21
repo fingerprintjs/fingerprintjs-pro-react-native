@@ -5714,7 +5714,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild-plugin-license@^1.2.3:
+esbuild-plugin-license@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/esbuild-plugin-license/-/esbuild-plugin-license-1.2.3.tgz#4fde9b0ce257516e3fcec459f401d9e8df19554d"
   integrity sha512-/ovWsIFHYIRqapsPCojMRHFppCgU3jFTVSu9r6MjpUArCWukL64+NwYJkX28ZXzYtw/cOYkGmbC3EhX0qwnn9w==
