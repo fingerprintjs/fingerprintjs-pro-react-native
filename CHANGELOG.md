@@ -1,3 +1,25 @@
+## [3.5.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.1...v3.5.0) (2025-08-26)
+
+
+### Features
+
+* add `InvalidProxyIntegrationHeadersError` and `InvalidProxyIntegrationSecretError` ([4e38a66](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/4e38a66a056c27ff2715cb9c91b1fd8385af034e))
+* add `ProxyIntegrationSecretEnvironmentMismatch` error ([ac29477](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/ac294771cad76fb38980f2e033261757cff665cb))
+* use Fingerprint Pro Android v2.9.0 ([7ca1703](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/7ca17034460105fd162ca1a0bc57b83a0c3342dd))
+* use Fingerprint Pro iOS v2.9.0 ([d20c88d](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/d20c88db445fc45bff6ddf3b848d83bf381d0996))
+
+
+### Build System
+
+* **deps:** bump form-data from 4.0.0 to 4.0.4 ([a495670](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a49567083c20017dccda91ce076caa709fbe76f9))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.9.0 and < 2.10.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.9.0`**
+
 ## [3.4.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.4.0...v3.4.1) (2025-06-26)
 
 
