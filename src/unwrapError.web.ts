@@ -8,8 +8,11 @@ import {
   HostnameRestrictedError,
   IdentificationError,
   InstallationMethodRestrictedError,
+  InvalidProxyIntegrationHeadersError,
+  InvalidProxyIntegrationSecretError,
   NetworkError,
   OriginNotAvailableError,
+  ProxyIntegrationSecretEnvironmentMismatch,
   RequestCannotBeParsedError,
   RequestTimeoutError,
   ResponseCannotBeParsedError,
@@ -82,6 +85,15 @@ export function unwrapError(error: Error): IdentificationError {
     case FingerprintJSPro.ERROR_NETWORK_ABORT:
     case FingerprintJSPro.ERROR_NETWORK_RESTRICTED:
       return new NetworkError(error.message)
+
+    case FingerprintJSPro.ERROR_INVALID_PROXY_INTEGRATION_HEADERS:
+      return new InvalidProxyIntegrationHeadersError(error.message)
+
+    case FingerprintJSPro.ERROR_PROXY_INTEGRATION_SECRET_ENVIRONMENT_MISMATCH:
+      return new ProxyIntegrationSecretEnvironmentMismatch(error.message)
+
+    case FingerprintJSPro.ERROR_INVALID_PROXY_INTEGRATION_SECRET:
+      return new InvalidProxyIntegrationSecretError(error.message)
 
     default:
       return new UnknownError(error.message)

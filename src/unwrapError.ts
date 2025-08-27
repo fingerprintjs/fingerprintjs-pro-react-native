@@ -9,6 +9,8 @@ import {
   HostnameRestrictedError,
   IdentificationError,
   InstallationMethodRestrictedError,
+  InvalidProxyIntegrationHeadersError,
+  InvalidProxyIntegrationSecretError,
   InvalidResponseTypeError,
   InvalidUrlError,
   InvalidURLParamsError,
@@ -17,6 +19,7 @@ import {
   NotAvailableForCrawlBotsError,
   NotAvailableWithoutUAError,
   OriginNotAvailableError,
+  ProxyIntegrationSecretEnvironmentMismatch,
   RequestCannotBeParsedError,
   RequestTimeoutError,
   ResponseCannotBeParsedError,
@@ -30,7 +33,11 @@ import {
 export function unwrapError(error: Error): IdentificationError {
   const [errorType, ...errorMessageParts] = error.message.split(':')
   const errorMessage = errorMessageParts.join(':')
-
+  console.log('unwrapError', {
+    errorType,
+    errorMessageParts,
+    errorMessage,
+  })
   switch (errorType) {
     case 'InvalidURL':
       return new InvalidUrlError(errorMessage)
@@ -76,6 +83,12 @@ export function unwrapError(error: Error): IdentificationError {
       return new InstallationMethodRestrictedError(errorMessage)
     case 'ResponseCannotBeParsed':
       return new ResponseCannotBeParsedError(errorMessage)
+    case 'InvalidProxyIntegrationHeaders':
+      return new InvalidProxyIntegrationHeadersError(errorMessage)
+    case 'InvalidProxyIntegrationSecret':
+      return new InvalidProxyIntegrationSecretError(errorMessage)
+    case 'ProxyIntegrationSecretEnvironmentMismatch':
+      return new ProxyIntegrationSecretEnvironmentMismatch(errorMessage)
     // end of API Errors block
     case 'ClientTimeout':
       return new ClientTimeoutError(errorMessage)
