@@ -3,6 +3,7 @@ const androidBuildProperties = {
   compileSdkVersion: 35,
   targetSdkVersion: 35,
   buildToolsVersion: '34.0.0',
+  enableBundleCompression: false,
 } as Record<string, any>
 
 export function stripAndroidExtraBuildProperties() {
