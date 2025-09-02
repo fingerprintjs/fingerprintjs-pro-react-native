@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react'
 import { createWrapper, getDefaultLoadOptions } from './helpers'
 import { FingerprintJsProContext } from '../src/FingerprintJsProContext'
 import { NativeModules } from 'react-native'
-import * as packageInfo from '../package.json'
 import { FingerprintJsProAgent } from '../src'
 
 const configure = jest.fn()
