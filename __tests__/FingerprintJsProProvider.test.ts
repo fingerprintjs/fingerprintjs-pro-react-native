@@ -24,7 +24,7 @@ const mockedVisitorId = 'some visitor id'
 const mockedRequestId = 'some request id'
 const mockedConfidenceScore = 0.99
 
-const pluginVersion = packageInfo.version
+const pluginVersion = '__VERSION__'
 
 describe(`FingerprintJsProProvider`, () => {
   it('should pass options to agent with regular result', () => {
