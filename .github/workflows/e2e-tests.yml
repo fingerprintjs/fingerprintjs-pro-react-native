@@ -14,7 +14,7 @@ jobs:
       react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.78', '0.79']" >> $GITHUB_OUTPUT
+        run: echo "matrix=['local', 0.73', '0.74', '0.75', '0.76', '0.78', '0.79', '0.80', 0.81']" >> $GITHUB_OUTPUT
 
   build-android:
     strategy:

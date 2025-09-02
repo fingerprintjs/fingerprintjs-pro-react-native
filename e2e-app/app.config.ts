@@ -1,5 +1,5 @@
 // Required in order to import other .ts files - https://docs.expo.dev/guides/typescript/#appconfigjs
-import 'ts-node/register'
+import 'tsx/cjs'
 import { ExpoConfig } from '@expo/config'
 import { dependencies } from './package.json'
 import * as semver from 'semver'

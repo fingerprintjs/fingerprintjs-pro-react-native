@@ -24,10 +24,16 @@ const reactNativeMetadata = {
     packages: ['expo@51', 'detox@20'],
   },
   0.78: {
-    packages: ['detox@20.28.0'],
+    packages: ['expo@52', 'detox@20.28.0'],
   },
   0.79: {
-    packages: ['detox@20.28.0'],
+    packages: ['expo@52', 'detox@20.28.0'],
+  },
+  '0.80': {
+    packages: ['expo@52', 'detox@20.37.0'],
+  },
+  0.81: {
+    packages: ['expo@53', 'detox@20.37.0'],
   },
 }
 
