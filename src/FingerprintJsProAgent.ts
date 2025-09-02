@@ -1,8 +1,9 @@
 import { NativeModules } from 'react-native'
 import { UnknownError } from './errors'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
-import * as packageInfo from '../package.json'
 import { unwrapError } from './unwrapError'
+
+const packageVersion = '__VERSION__'
 
 /**
  *
@@ -31,7 +32,7 @@ export class FingerprintJsProAgent implements ProAgent {
         endpointUrl,
         fallbackEndpointUrls,
         extendedResponseFormat,
-        packageInfo.version
+        packageVersion
       )
       this.requestOptions = requestOptions
     } catch (e) {
