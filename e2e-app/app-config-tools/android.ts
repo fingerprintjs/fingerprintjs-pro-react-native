@@ -3,7 +3,7 @@ const androidBuildProperties = {
   compileSdkVersion: 35,
   targetSdkVersion: 35,
   buildToolsVersion: '34.0.0',
-  extraMavenRepos: ['https://maven.fpregistry.io/releases'],
+  enableBundleCompression: false,
 } as Record<string, any>
 
 export function stripAndroidExtraBuildProperties() {

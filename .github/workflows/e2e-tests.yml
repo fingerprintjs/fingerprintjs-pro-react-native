@@ -14,7 +14,7 @@ jobs:
       react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.78', '0.79']" >> $GITHUB_OUTPUT
+        run: echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.78', '0.79', '0.80', '0.81']" >> $GITHUB_OUTPUT
 
   build-android:
     strategy:
@@ -344,3 +344,42 @@ jobs:
         if: success()
         with:
           name: ios-app-release-${{ matrix.react-native }}
+  
+  e2e-tests-web:
+    name: Web E2E tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 22.x
+
+      - run: yarn install
+
+      - run: yarn build && rm -rf node_modules
+        if: github.event_name != 'release'
+
+      - name: Install dependencies in e2e-app
+        run: yarn install && yarn playwright install chromium
+        working-directory: e2e-app
+
+      - name: Install ${{github.event.release.tag_name}} version of the package
+        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        if: github.event_name == 'release'
+        working-directory: e2e-app
+      
+      - name: Build web
+        run: yarn build:web
+        working-directory: e2e-app
+
+      - run: yarn test:web
+        working-directory: e2e-app
+        env:
+          MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          MINIMUM_US_DEFAULT_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
+          DEFAULT_EU_DEFAULT_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
+          DEFAULT_EU_DEFAULT_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
+          MINIMUM_US_SEALED_ENCRYPTION_KEY: ${{ secrets.MINIMUM_US_SEALED_ENCRYPTION_KEY }}
+          MINIMUM_US_SEALED_PUBLIC_KEY: ${{ secrets.MINIMUM_US_SEALED_PUBLIC_KEY }}
