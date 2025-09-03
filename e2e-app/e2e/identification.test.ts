@@ -1,6 +1,5 @@
 import { device } from 'detox'
 import { expect } from '@jest/globals'
-import type { LaunchArgs } from '@/App'
 import {
   DecryptionAlgorithm,
   FingerprintJsServerApiClient,
@@ -11,6 +10,7 @@ import { testTags } from './tags'
 import { DeviceLaunchAppConfig } from 'detox/detox'
 import { identify, identifyWithError } from './identify'
 import { wait } from './wait'
+import { Config } from '@/src/config.types'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
 
@@ -58,7 +58,7 @@ describe.each([
       launchArgs: {
         apiKey,
         region,
-      } as LaunchArgs,
+      } as Config,
     })
   })
 
@@ -114,7 +114,7 @@ describe.each([
         region,
         linkedId,
         useTags: true,
-      } as LaunchArgs,
+      } as Config,
     })
   })
 
@@ -134,7 +134,7 @@ describe('React Native Identification invalid API Key', () => {
       newInstance: true,
       launchArgs: {
         apiKey: 'invalid',
-      } as LaunchArgs,
+      } as Config,
     })
   })
 
@@ -163,7 +163,7 @@ describe('React Native Identification with sealed results', () => {
       launchArgs: {
         apiKey,
         region: 'us',
-      } as LaunchArgs,
+      } as Config,
     })
   })
 

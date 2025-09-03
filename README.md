@@ -41,11 +41,15 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   - [Requirements and limitations](#requirements-and-limitations)
   - [Dependencies](#dependencies)
   - [How to install](#how-to-install)
-    - [1. Install the package using your favorite package manager:](#1-install-the-package-using-your-favorite-package-manager)
-    - [2. Configure iOS dependencies (if developing on iOS)](#2-configure-ios-dependencies-if-developing-on-ios)
-    - [3. Configure Android dependencies (if developing on Android)](#3-configure-android-dependencies-if-developing-on-android)
-      - [Gradle 7 or newer](#gradle-7-or-newer)
-      - [Gradle 6.0 or older](#gradle-60-or-older)
+    - [Expo setup](#expo-setup)
+        - [1. Add config plugin](#1-add-config-plugin)
+        - [2. Rebuild the native code](#2-rebuild-the-native-code)
+        - [3. Rebuild the app](#3-rebuild-the-app)
+    - [Bare react-native](#bare-react-native-setup)
+      - [1. Configure iOS dependencies (if developing on iOS)](#1-configure-ios-dependencies-if-developing-on-ios)
+      - [2. Configure Android dependencies (if developing on Android)](#2-configure-android-dependencies-if-developing-on-android)
+        - [Gradle 7 or newer](#gradle-7-or-newer)
+        - [Gradle 6.0 or older](#gradle-60-or-older)
   - [Usage](#usage)
     - [Hooks approach](#hooks-approach)
     - [API Client approach](#api-client-approach)
@@ -59,6 +63,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 ## Requirements and limitations
 
 - React Native versions 0.73 through 0.79 are supported
+- Expo 51.0.0 or higher is supported
 - Android 5.0 (API level 21+) or higher
 - iOS 13+/tvOS 15+, Swift 5.7 or higher (stable releases)
 
@@ -72,7 +77,7 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 ## How to install
 
-### 1. Install the package using your favorite package manager:
+Install the package using your favorite package manager:
 
 - [NPM](https://npmjs.org):
 
@@ -90,14 +95,71 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   ```shell
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
+  
+## Expo setup
 
-### 2. Configure iOS dependencies (if developing on iOS)
+> ℹ️ Our SDK cannot be used in [Expo Go](https://expo.dev/go) because it requires custom native code.
+
+<details>
+<summary>Web support</summary>
+To use the SDK on the web, install the peer dependency with your preferred package manager:
+
+- [NPM](https://npmjs.org):
+
+  ```shell
+  npm install @fingerprintjs/fingerprintjs-pro-spa --save
+  ```
+
+- [Yarn](https://yarnpkg.com):
+
+  ```shell
+  yarn add @fingerprintjs/fingerprintjs-pro-spa
+  ```
+
+- [PNPM](https://pnpm.js.org):
+  ```shell
+  pnpm add @fingerprintjs/fingerprintjs-pro-spa
+  ```
+  
+Then, use the SDK as you would with the native version.
+</details>
+
+### 1. Add config plugin
+```json
+{
+  "expo": {
+    "plugins": [
+      "@fingerprintjs/fingerprintjs-pro-react-native"
+    ]
+  }
+}
+```
+
+### 2. Rebuild the native code
+```bash
+npx expo prebuild --clean
+```
+
+### 3. Rebuild the app
+For Android:
+```bash
+npx expo run:android
+```
+
+For iOS:
+```bash
+npx expo run:ios
+```
+  
+## Bare react-native setup
+
+### 1. Configure iOS dependencies (if developing on iOS)
 
 ```shell
 cd ios && pod install
 ```
 
-### 3. Configure Android dependencies (if developing on Android)
+### 2. Configure Android dependencies (if developing on Android)
 
 Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
 

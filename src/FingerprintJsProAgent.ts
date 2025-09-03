@@ -1,15 +1,15 @@
 import { NativeModules } from 'react-native'
-import { UnknownError, unwrapError } from './errors'
-import type { FingerprintJsProAgentParams, Tags, VisitorData, RequestOptions } from './types'
-import * as packageInfo from '../package.json'
+import { UnknownError } from './errors'
+import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
+import { unwrapError } from './unwrapError'
 
-type VisitorId = string
+const packageVersion = '__VERSION__'
 
 /**
  *
  * @group API Client approach
  */
-export class FingerprintJsProAgent {
+export class FingerprintJsProAgent implements ProAgent {
   /**
    * Initialises FingerprintJS Pro Agent with certain settings
    *
@@ -32,7 +32,7 @@ export class FingerprintJsProAgent {
         endpointUrl,
         fallbackEndpointUrls,
         extendedResponseFormat,
-        packageInfo.version
+        packageVersion
       )
       this.requestOptions = requestOptions
     } catch (e) {
