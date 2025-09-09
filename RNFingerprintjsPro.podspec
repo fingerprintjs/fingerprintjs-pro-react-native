@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.dependency "React-Core"
   # See: https://guides.cocoapods.org/using/the-podfile.html#specifying-pod-versions
   # ~> 2.8.2 means >= 2.8.2 and < 2.9.0 (pessimistic operator)
-  s.dependency "FingerprintPro", '~> 2.9.0'
+  s.dependency "FingerprintPro", '~> 2.10.0'
 end
