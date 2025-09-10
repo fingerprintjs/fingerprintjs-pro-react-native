@@ -41,8 +41,9 @@ jobs:
 
       - run: yarn install
 
-      - run: yarn build && rm -rf node_modules
+      - run: yarn install && yarn build
         if: github.event_name != 'release'
+        working-directory: sdk
 
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
@@ -222,8 +223,9 @@ jobs:
       - run: yarn install
         if: github.event_name != 'release'
 
-      - run: yarn build
+      - run: yarn install && yarn build
         if: github.event_name != 'release'
+        working-directory: sdk
 
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
