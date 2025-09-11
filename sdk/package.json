@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage && mv ./coverage ../coverage",
     "test:dts": "tsc -p check.tsconfig.json",
     "docs": "typedoc src/index.ts --out ../docs --readme ../README.md",
     "release": "semantic-release"
