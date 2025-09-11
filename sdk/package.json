@@ -7,9 +7,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepare": "yarn build",
-    "build": "yarn build:sdk && yarn build:plugin",
+    "build": "yarn build:sdk && yarn build:plugin && yarn copy:readme",
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf sdk/plugin/dist && tsc --build plugin",
+    "copy:readme": "cp ../README.md ./README.MD",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
@@ -24,8 +25,8 @@
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
-    "sdk/plugin/dist",
-    "sdk/app.plugin.js",
+    "plugin/dist",
+    "app.plugin.js",
     "README.md"
   ],
   "keywords": [
