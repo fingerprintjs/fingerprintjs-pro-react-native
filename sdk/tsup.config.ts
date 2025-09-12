@@ -7,6 +7,7 @@ import { replacePlugin } from './esbuild/replace.plugin'
 const licenseBanner = fs.readFileSync('../res/license_banner.txt', 'utf-8')
 
 export default defineConfig({
+  tsconfig: './tsconfig.sdk.json',
   entry: ['src'],
   splitting: false,
   bundle: false,

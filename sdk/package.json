@@ -13,8 +13,8 @@
     "copy:readme": "cp ../README.md ./README.MD",
     "test": "jest",
     "test:coverage": "jest --coverage && mv ./coverage ../coverage",
-    "test:dts": "tsc -p check.tsconfig.json",
-    "docs": "typedoc src/index.ts --out ../docs --readme ../README.md",
+    "test:dts": "tsc -p tsconfig.check.json",
+    "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json",
     "release": "semantic-release"
   },
   "files": [

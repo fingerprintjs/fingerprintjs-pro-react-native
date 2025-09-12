@@ -1,10 +1,17 @@
 {
   "extends": "../tsconfig.json",
-  "exclude": ["node_modules"],
-  "include": ["src"],
+  "compilerOptions": {
+    "composite": true
+  },
   "references": [
     {
       "path": "./tsconfig.tests.json"
+    },
+    {
+      "path": "./tsconfig.check.json"   
+    },
+    {
+      "path": "./tsconfig.sdk.json"
     }
   ]
 }
