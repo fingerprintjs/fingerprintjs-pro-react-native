@@ -4,6 +4,7 @@ updates:
     directories:
       - "/e2e-app"
       - "/TestProject"
+      - "/"
     open-pull-requests-limit: 0 # install only security updates
     schedule:
       interval: "daily"
@@ -18,7 +19,7 @@ updates:
         applies-to: security-updates
 
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: sdk
     open-pull-requests-limit: 0 # install only security updates
     schedule:
       interval: "daily"

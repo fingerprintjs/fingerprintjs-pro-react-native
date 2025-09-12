@@ -3,17 +3,7 @@ import { NativeModules } from 'react-native'
 import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
-const configure = jest.fn()
-const getVisitorId = jest.fn()
-const getVisitorData = jest.fn()
-const getVisitorDataWithTimeout = jest.fn()
-
-NativeModules.RNFingerprintjsPro = {
-  configure: configure,
-  getVisitorId: getVisitorId,
-  getVisitorData: getVisitorData,
-  getVisitorDataWithTimeout: getVisitorDataWithTimeout,
-}
+const { getVisitorData, getVisitorDataWithTimeout } = NativeModules.RNFingerprintjsPro as Record<string, jest.Mock>
 
 const mockedVisitorId = 'some visitor id'
 const mockedRequestId = 'some request id'

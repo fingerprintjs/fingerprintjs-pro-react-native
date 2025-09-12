@@ -5,19 +5,8 @@ import { FingerprintJsProContext } from '../src/FingerprintJsProContext'
 import { NativeModules } from 'react-native'
 import { FingerprintJsProAgent } from '../src'
 
-const configure = jest.fn()
-const getVisitorId = jest.fn()
-const getVisitorData = jest.fn()
-const getVisitorIdWithTimeout = jest.fn()
-const getVisitorDataWithTimeout = jest.fn()
-
-NativeModules.RNFingerprintjsPro = {
-  configure: configure,
-  getVisitorId: getVisitorId,
-  getVisitorIdWithTimeout: getVisitorIdWithTimeout,
-  getVisitorData: getVisitorData,
-  getVisitorDataWithTimeout: getVisitorDataWithTimeout,
-}
+const { getVisitorData, getVisitorIdWithTimeout, getVisitorDataWithTimeout } =
+  NativeModules.RNFingerprintjsPro as Record<string, jest.Mock>
 
 const mockedVisitorId = 'some visitor id'
 const mockedRequestId = 'some request id'
