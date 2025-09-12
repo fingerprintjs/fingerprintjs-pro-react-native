@@ -1,11 +1,11 @@
 {
   "name": "fingerprintjs-pro-react-native",
-  "version": "3.7.0",
+  "version": "0.0.0",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "scripts": {
     "prepare": "husky install && cd sdk && yarn install",
-    "build": "cd sdk && yarn build:sdk && yarn build:plugin",
-    "build:sdk": "cd sdk && yarn build",
+    "build": "cd sdk && yarn build",
+    "build:sdk": "cd sdk && yarn build:sdk",
     "build:plugin": "cd sdk && yarn build:plugin",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
@@ -13,7 +13,7 @@
     "test:coverage": "cd sdk && yarn test:coverage",
     "test:dts": "cd sdk && yarn test:dts",
     "docs": "cd sdk && yarn docs",
-    "release": "cd sdk && semantic-release"
+    "release": "cd sdk && yarn release"
   },
   "repository": {
     "type": "git",
@@ -35,8 +35,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
-    "@fingerprintjs/conventional-changelog-dx-team": "^0.1.0",
-    "@fingerprintjs/semantic-release-native-dependency-plugin": "^1.2.1",
     "@react-native/eslint-config": "0.76.6",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
