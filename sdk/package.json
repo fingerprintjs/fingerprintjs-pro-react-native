@@ -14,8 +14,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage && mv ./coverage ../coverage",
     "test:dts": "tsc -p tsconfig.check.json",
-    "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json",
-    "release": "semantic-release"
+    "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json"
   },
   "files": [
     "src",

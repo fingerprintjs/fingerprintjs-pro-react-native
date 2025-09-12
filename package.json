@@ -12,8 +12,7 @@
     "test": "cd sdk && yarn test",
     "test:coverage": "cd sdk && yarn test:coverage",
     "test:dts": "cd sdk && yarn test:dts",
-    "docs": "cd sdk && yarn docs",
-    "release": "cd sdk && yarn release"
+    "docs": "cd sdk && yarn docs"
   },
   "repository": {
     "type": "git",
