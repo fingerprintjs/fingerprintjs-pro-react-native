@@ -18,7 +18,9 @@ updates:
         applies-to: security-updates
 
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "/sdk"
+      - "/"
     open-pull-requests-limit: 0 # install only security updates
     schedule:
       interval: "daily"
