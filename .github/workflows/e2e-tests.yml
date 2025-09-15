@@ -1,5 +1,8 @@
 name: E2E Tests
 
+env:
+  XCODE_VERSION: 16.4
+
 on:
   pull_request:
   release:
@@ -212,7 +215,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -289,7 +292,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install macOS deps
         run: |
