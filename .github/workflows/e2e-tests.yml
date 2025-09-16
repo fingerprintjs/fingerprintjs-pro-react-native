@@ -1,5 +1,8 @@
 name: E2E Tests
 
+env:
+  XCODE_VERSION: 16.4
+
 on:
   pull_request:
   release:
@@ -41,8 +44,9 @@ jobs:
 
       - run: yarn install
 
-      - run: yarn build && rm -rf node_modules
+      - run: yarn install && yarn build
         if: github.event_name != 'release'
+        working-directory: sdk
 
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
@@ -211,7 +215,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -222,8 +226,9 @@ jobs:
       - run: yarn install
         if: github.event_name != 'release'
 
-      - run: yarn build
+      - run: yarn install && yarn build
         if: github.event_name != 'release'
+        working-directory: sdk
 
       - name: Setup react-native specific dependencies
         if: matrix.react-native != 'local'
@@ -287,7 +292,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install macOS deps
         run: |

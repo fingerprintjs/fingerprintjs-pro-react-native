@@ -8,10 +8,10 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react"
+    "postinstall": "rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react && rm -rf ./node_modules/@fingerprintjs/fingerprintjs-pro-react-native/node_modules/react-native"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs-pro-react-native": "../",
+    "@fingerprintjs/fingerprintjs-pro-react-native": "../sdk",
     "react": "18.3.1",
     "react-native": "0.77.1"
   },
