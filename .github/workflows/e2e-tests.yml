@@ -5,6 +5,10 @@ env:
 
 on:
   pull_request:
+    paths:
+      - 'e2e-app/**'
+      - 'sdk/**'
+      - '.github/workflows/e2e-tests.yml'
   release:
     types:
       - published
