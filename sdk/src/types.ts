@@ -56,6 +56,14 @@ export interface FingerprintJsProAgentParams {
    * Custom request options
    */
   requestOptions?: RequestOptions
+  /**
+   * set this flag to allow Fingerprint SDK collect location data on Mobile platforms
+   */
+  allowUseOfLocationData?: boolean
+  /**
+   * location retrieval timeout for Android platform
+   */
+  locationTimeoutMillis?: number
 
   /**
    * The pattern of the JS agent script URL.
