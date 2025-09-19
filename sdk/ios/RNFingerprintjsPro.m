@@ -8,6 +8,8 @@ RCT_EXTERN_METHOD(configure:(NSString *)apiToken
   endpointFallbacks:(NSArray<NSString *> *)fallbackEndpointUrls
   extendedResponseFormat:(BOOL)extendedResponseFormat
   pluginVersion:(NSString *)pluginVersion
+  allowUseOfLocationData:(BOOL)allowUseOfLocationData
+  locationTimeoutMillis:(nonnull NSNumber)locationTimeoutMillis
 )
 
 RCT_EXTERN_METHOD(getVisitorId:(NSDictionary *)tags
