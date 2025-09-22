@@ -14,5 +14,5 @@ jobs:
         sudo gem install -n /usr/local/bin cocoapods
         pod --version
       semanticReleasePlugins: |
-        @fingerprintjs/semantic-release-native-dependency-plugin@^1.2.1
+        @fingerprintjs/semantic-release-native-dependency-plugin@^1.2.2
       releaseWorkingDirectory: ./sdk
