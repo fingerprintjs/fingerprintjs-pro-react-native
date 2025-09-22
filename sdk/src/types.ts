@@ -62,6 +62,9 @@ export interface FingerprintJsProAgentParams {
   allowUseOfLocationData?: boolean
   /**
    * location retrieval timeout for Android platform
+   * The SDK will delay identification up to the specified timeout to collect the device location.
+   * If it cannot collect the location information within the specified time,
+   * identification continues without location information.
    */
   locationTimeoutMillisAndroid?: number
 

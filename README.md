@@ -350,6 +350,7 @@ return (
 ```
 
 For Android platform it's possible to configure the location retrieval timeout by setting the `locationTimeoutMillisAndroid` option to a desired value. By default, it's set to 5 seconds.
+The SDK will delay identification up to the specified timeout to collect the device location. If it cannot collect the location information within the specified time, identification continues without location information.
 
 ```javascript
 return (
