@@ -15,4 +15,4 @@ jobs:
         pod --version
       semanticReleasePlugins: |
         @fingerprintjs/semantic-release-native-dependency-plugin@^1.2.1
-      releaseWorkingDirectory: ${{github.workspace}}/sdk
+      releaseWorkingDirectory: ./sdk
