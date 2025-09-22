@@ -57,7 +57,7 @@ export interface FingerprintJsProAgentParams {
    */
   requestOptions?: RequestOptions
   /**
-   * set this flag to allow Fingerprint SDK collect location data on Mobile platforms
+   * set this flag to allow Fingerprint SDK to collect location data on Mobile platforms
    */
   allowUseOfLocationData?: boolean
   /**
