@@ -349,11 +349,11 @@ return (
 )
 ```
 
-For Android platform it's possible to configure the location retrieval timeout by setting the `locationTimeoutMillis` option to a desired value. By default, it's set to 5 seconds.
+For Android platform it's possible to configure the location retrieval timeout by setting the `locationTimeoutMillisAndroid` option to a desired value. By default, it's set to 5 seconds.
 
 ```javascript
 return (
-  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} allowUseOfLocationData={true} locationTimeoutMillis={10000}>
+  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} allowUseOfLocationData={true} locationTimeoutMillisAndroid={10000}>
     <App />
   </FingerprintJsProProvider>
 )

@@ -25,7 +25,7 @@ export class FingerprintJsProAgent implements ProAgent {
     extendedResponseFormat = false,
     requestOptions = {},
     allowUseOfLocationData = false,
-    locationTimeoutMillis = 5000,
+    locationTimeoutMillisAndroid = 5000,
   }: FingerprintJsProAgentParams) {
     try {
       NativeModules.RNFingerprintjsPro.configure(
@@ -36,7 +36,7 @@ export class FingerprintJsProAgent implements ProAgent {
         extendedResponseFormat,
         packageVersion,
         allowUseOfLocationData,
-        locationTimeoutMillis
+        locationTimeoutMillisAndroid
       )
       this.requestOptions = requestOptions
     } catch (e) {

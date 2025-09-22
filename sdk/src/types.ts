@@ -63,7 +63,7 @@ export interface FingerprintJsProAgentParams {
   /**
    * location retrieval timeout for Android platform
    */
-  locationTimeoutMillis?: number
+  locationTimeoutMillisAndroid?: number
 
   /**
    * The pattern of the JS agent script URL.

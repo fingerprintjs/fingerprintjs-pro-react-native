@@ -83,12 +83,12 @@ describe(`FingerprintJsProProvider`, () => {
     )
   })
 
-  it('should pass options to agent with allowUseOfLocationData and locationTimeoutMillis', () => {
+  it('should pass options to agent with allowUseOfLocationData and locationTimeoutMillisAndroid', () => {
     const options = getDefaultLoadOptions()
     options.region = 'us'
     options.endpointUrl = 'https://example.com'
     options.allowUseOfLocationData = true
-    options.locationTimeoutMillis = 6000
+    options.locationTimeoutMillisAndroid = 6000
 
     const wrapper = createWrapper(options)
     renderHook(() => useContext(FingerprintJsProContext), {
@@ -103,7 +103,7 @@ describe(`FingerprintJsProProvider`, () => {
       false,
       pluginVersion,
       true,
-      options.locationTimeoutMillis
+      options.locationTimeoutMillisAndroid
     )
   })
 
