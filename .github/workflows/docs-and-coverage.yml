@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - chore/fix-docs-gen
 
 jobs:
   generate-docs-and-coverage:
