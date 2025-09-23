@@ -19,7 +19,6 @@
     "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json"
   },
   "files": [
-    "src",
     "dist",
     "android",
     "ios",
