@@ -7,24 +7,26 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepare": "yarn build",
-    "build": "yarn build:sdk && yarn build:plugin && yarn copy:readme",
+    "build": "yarn build:sdk && yarn build:plugin && yarn copy:assets",
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf plugin/dist && tsc --build plugin",
+    "copy:assets": "yarn copy:readme && yarn copy:license",
     "copy:readme": "cp ../README.md ./README.MD",
+    "copy:license": "cp ../LICENSE ./LICENSE",
     "test": "jest",
     "test:coverage": "jest --coverage && mv ./coverage ../coverage",
     "test:dts": "tsc -p tsconfig.check.json",
     "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json"
   },
   "files": [
-    "src",
     "dist",
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
     "plugin/dist",
     "app.plugin.js",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "fraud",
