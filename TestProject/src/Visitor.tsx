@@ -7,6 +7,7 @@ import {
   Region,
 } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { PUBLIC_API_KEY, REGION, ENDPOINT } from '@env'
+import { requestLocationPermission } from './locationUtils.ts'
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -61,25 +62,30 @@ export const Visitor = () => {
   const [sealedResultModalVisible, setSealedResultModalVisible] = useState(false)
   const [testResults, setTestResults] = useState('tests not running')
 
-  const onLoadData = () => {
-    getData()
+  const onLoadData = async () => {
+    await requestLocationPermission()
+    await getData()
   }
 
-  const onLoadSealedResult = () => {
-    getData()
+  const onLoadSealedResult = async () => {
+    await requestLocationPermission()
+    await getData()
     setSealedResultModalVisible(true)
   }
 
-  const onLoadDataWithTag = () => {
-    getData(tags, linkedId)
+  const onLoadDataWithTag = async () => {
+    await requestLocationPermission()
+    await getData(tags, linkedId)
   }
 
   const onLoadExtendedResult = async () => {
+    await requestLocationPermission()
     await getData(tags, linkedId)
     setModalVisible(true)
   }
 
   const onRunTestsPressed = async () => {
+    await requestLocationPermission()
     setTestResults('Running tests')
     try {
       await runTests()

@@ -11,11 +11,11 @@ class RNFingerprintjsPro: NSObject {
     @objc
     static func requiresMainQueueSetup() -> Bool { false }
 
-    @objc(configure:region:endpoint:endpointFallbacks:extendedResponseFormat:pluginVersion:)
-    public func configure(_ apiToken: String, _ region: String? = "us", _ endpoint: String?, _ endpointFallbacks: [String] = [], _ extendedResponseFormat: Bool = false, _ pluginVersion: String) {
+    @objc(configure:region:endpoint:endpointFallbacks:extendedResponseFormat:pluginVersion:allowUseOfLocationData:locationTimeoutMillis:)
+    public func configure(_ apiToken: String, _ region: String? = "us", _ endpoint: String?, _ endpointFallbacks: [String] = [], _ extendedResponseFormat: Bool = false, _ pluginVersion: String, allowUseOfLocationData: Bool = false, locationTimeoutMillis: NSNumber?) -> Void {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpoint, endpointFallbacks: endpointFallbacks)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
-        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat)
+        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat, allowUseOfLocationData: allowUseOfLocationData)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 

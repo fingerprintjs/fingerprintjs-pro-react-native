@@ -70,3 +70,6 @@ dist/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+sdk/README.MD
+sdk/LICENSE
