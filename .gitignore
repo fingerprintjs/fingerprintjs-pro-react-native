@@ -72,3 +72,4 @@ dist/
 /vendor/bundle/
 
 sdk/README.MD
+sdk/LICENSE
