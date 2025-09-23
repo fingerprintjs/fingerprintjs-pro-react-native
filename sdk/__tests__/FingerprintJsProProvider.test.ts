@@ -31,7 +31,9 @@ describe(`FingerprintJsProProvider`, () => {
       options.endpointUrl,
       [],
       false,
-      pluginVersion
+      pluginVersion,
+      false,
+      5000
     )
   })
 
@@ -52,7 +54,9 @@ describe(`FingerprintJsProProvider`, () => {
       options.endpointUrl,
       options.fallbackEndpointUrls,
       false,
-      pluginVersion
+      pluginVersion,
+      false,
+      5000
     )
   })
 
@@ -73,7 +77,33 @@ describe(`FingerprintJsProProvider`, () => {
       options.endpointUrl,
       [],
       options.extendedResponseFormat,
-      pluginVersion
+      pluginVersion,
+      false,
+      5000
+    )
+  })
+
+  it('should pass options to agent with allowUseOfLocationData and locationTimeoutMillisAndroid', () => {
+    const options = getDefaultLoadOptions()
+    options.region = 'us'
+    options.endpointUrl = 'https://example.com'
+    options.allowUseOfLocationData = true
+    options.locationTimeoutMillisAndroid = 6000
+
+    const wrapper = createWrapper(options)
+    renderHook(() => useContext(FingerprintJsProContext), {
+      wrapper,
+    })
+
+    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
+      options.apiKey,
+      options.region,
+      options.endpointUrl,
+      [],
+      false,
+      pluginVersion,
+      true,
+      options.locationTimeoutMillisAndroid
     )
   })
 
