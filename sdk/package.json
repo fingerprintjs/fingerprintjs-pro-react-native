@@ -11,7 +11,7 @@
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf plugin/dist && tsc --build plugin",
     "copy:assets": "yarn copy:readme && yarn copy:license",
-    "copy:readme": "cp ../README.md ./README.MD",
+    "copy:readme": "cp ../README.md ./README.md",
     "copy:license": "cp ../LICENSE ./LICENSE",
     "test": "jest",
     "test:coverage": "jest --coverage && mv ./coverage ../coverage",
