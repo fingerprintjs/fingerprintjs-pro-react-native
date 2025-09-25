@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepare": "yarn build",
-    "posttest:coverage": "mv ./coverage ../coverage && mv report.json ../report.json",
+    "posttest:coverage": "./scripts/move-coverage.sh",
     "build": "yarn build:sdk && yarn build:plugin && yarn copy:assets",
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf plugin/dist && tsc --build plugin",
