@@ -7,6 +7,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepare": "yarn build",
+    "posttest:coverage": "mv ./coverage ../coverage",
     "build": "yarn build:sdk && yarn build:plugin && yarn copy:assets",
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf plugin/dist && tsc --build plugin",
@@ -14,7 +15,7 @@
     "copy:readme": "cp ../README.md ./README.md",
     "copy:license": "cp ../LICENSE ./LICENSE",
     "test": "jest",
-    "test:coverage": "jest --coverage && mv ./coverage ../coverage",
+    "test:coverage": "jest --coverage",
     "test:dts": "tsc -p tsconfig.check.json",
     "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json"
   },
