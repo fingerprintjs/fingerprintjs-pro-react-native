@@ -11,4 +11,4 @@ jobs:
       pull-requests: write
     uses: fingerprintjs/dx-team-toolkit/.github/workflows/coverage-diff.yml@v1
     with:
-      testScript: 'yarn test'
+      testScript: 'yarn test:coverage'
