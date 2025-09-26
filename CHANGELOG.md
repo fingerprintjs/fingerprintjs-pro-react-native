@@ -1,3 +1,51 @@
+## [3.8.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.7.0...v3.8.0) (2025-09-23)
+
+
+### Features
+
+* add Proximity Detection init options (`allowUseOfLocationData` - to allow collect location data and `locationTimeoutMillisAndroid` - to configure the location retrieval timeout on Android ([636622c](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/636622cb02f781c3e0a5a0c973d42d34201c3136))
+
+
+### Bug Fixes
+
+* remove `src` folder from the release artifacts ([a0c9121](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a0c9121c9d30c87547424c243ba30a79256dfbc9))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.10.0 and < 2.11.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.10.0`**
+
+## [3.8.0-test.2](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.8.0-test.1...v3.8.0-test.2) (2025-09-23)
+
+
+### Bug Fixes
+
+* remove `src` folder from the release artifacts ([a0c9121](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/a0c9121c9d30c87547424c243ba30a79256dfbc9))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.10.0 and < 2.11.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.10.0`**
+
+## [3.8.0-test.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.7.0...v3.8.0-test.1) (2025-09-23)
+
+
+### Features
+
+* add Proximity Detection init options (`allowUseOfLocationData` - to allow collect location data and `locationTimeoutMillisAndroid` - to configure the location retrieval timeout on Android ([636622c](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/636622cb02f781c3e0a5a0c973d42d34201c3136))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.10.0 and < 2.11.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.10.0`**
+
+
 ## [3.7.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.6.0...v3.7.0) (2025-09-09)
 
 
@@ -273,8 +321,8 @@
 ### ⚠ BREAKING CHANGES
 
 * In previous version `FingerprintJsProAgent` constructor had several position arguments.
-In new version it is one `params` argument of type `FingerprintJsProAgentParams`.
-Type `FingerprintJsProAgentParams` will be used instead of type `FingerprintJsProProviderOptions`.
+  In new version it is one `params` argument of type `FingerprintJsProAgentParams`.
+  Type `FingerprintJsProAgentParams` will be used instead of type `FingerprintJsProProviderOptions`.
 * `getData` method of the `useVisitorData` hook now returns answer of type `VisitorData` instead of simple `visitorId` string type.
 
 ### Features
@@ -365,15 +413,15 @@ Type `FingerprintJsProAgentParams` will be used instead of type `FingerprintJsPr
 *  fixed iOS build (2f2a7694)
 *  make agent compatible with mocks (285a7351)
 * **deps:**
-  *  bump vulnerable simple-plist from 1.3.0 to 1.3.1 (f35317a8)
-  *  bump ansi-regex from 4.1.0 to 4.1.1 (584b8a60)
-  *  bump minimist from 1.2.5 to 1.2.6 (bd02e14f)
-  *  bump plist from 3.0.4 to 3.0.5 (b35d3b90)
-  *  bump plist from 3.0.4 to 3.0.5 in /TestProject (a9e6b776)
-  *  bump async from 2.6.3 to 2.6.4 (7caf632b)
-  *  bump minimist from 1.2.5 to 1.2.6 in /TestProject (2abc2347)
-  *  bump async from 2.6.3 to 2.6.4 in /TestProject (97212225)
-  *  bump ansi-regex from 4.1.0 to 4.1.1 in /TestProject (a465ae5a)
+    *  bump vulnerable simple-plist from 1.3.0 to 1.3.1 (f35317a8)
+    *  bump ansi-regex from 4.1.0 to 4.1.1 (584b8a60)
+    *  bump minimist from 1.2.5 to 1.2.6 (bd02e14f)
+    *  bump plist from 3.0.4 to 3.0.5 (b35d3b90)
+    *  bump plist from 3.0.4 to 3.0.5 in /TestProject (a9e6b776)
+    *  bump async from 2.6.3 to 2.6.4 (7caf632b)
+    *  bump minimist from 1.2.5 to 1.2.6 in /TestProject (2abc2347)
+    *  bump async from 2.6.3 to 2.6.4 in /TestProject (97212225)
+    *  bump ansi-regex from 4.1.0 to 4.1.1 in /TestProject (a465ae5a)
 
 ##### Documentation Changes
 
