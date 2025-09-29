@@ -381,4 +381,4 @@ This project is licensed under the [MIT license](https://github.com/fingerprintj
 
 ## Changelog
 
-You can find up-to-date changelog [here](./sdk/CHANGELOG.md).
+You can find an up-to-date changelog [here](./sdk/CHANGELOG.md).
