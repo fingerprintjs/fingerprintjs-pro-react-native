@@ -378,3 +378,7 @@ please email us at `oss-support@fingerprint.com`.
 ## License
 
 This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
+
+## Changelog
+
+You can find up-to-date changelog [here](./sdk/CHANGELOG.md).
