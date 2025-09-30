@@ -1644,7 +1644,7 @@
     js-yaml "^4.1.0"
 
 "@fingerprintjs/fingerprintjs-pro-react-native@../sdk":
-  version "3.7.0"
+  version "3.8.0"
 
 "@fingerprintjs/fingerprintjs-pro-server-api@^6.3.0":
   version "6.3.0"
@@ -2534,10 +2534,10 @@
     "@urql/core" "^5.1.1"
     wonka "^6.3.2"
 
-"@wix-pilot/core@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@wix-pilot/core/-/core-3.4.1.tgz#434c8db3a9b85f03aa44d316c090fda5575afcd0"
-  integrity sha512-9WvI+FuDYQ1IJsyHRfZphehlbOXIOswlxowwJZ0FlUaebGhR78T61qY1e532HHlJfKyuIu1IwdSQ2tg5L+hUhg==
+"@wix-pilot/core@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@wix-pilot/core/-/core-3.4.2.tgz#a421404893b90913145df399136d3e0dd4d57895"
+  integrity sha512-O8V2NLfPEKI2IviJXG4g/vNbMfsBZNBhzAKFUOOaOR9TTDUJYlZUttqjhjP/fPnaDky0/hrfGES15sO0N7zEkw==
   dependencies:
     chalk "^4.1.0"
     pngjs "^7.0.0"
@@ -3724,12 +3724,12 @@ detect-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
-detox@^20.37.0:
-  version "20.40.2"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-20.40.2.tgz#4fd56ea0f3cbae25eb17d6b20b255a42b47830ed"
-  integrity sha512-gb9o8Gg5yVd2+xjVLDb5IbS4tg96r9nX/MNCgHqYMUxKcW49oOMlGcodp+f6w29x8HLEn1aKdwGYXEPl9xNZHw==
+detox@^20.42.0:
+  version "20.42.0"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-20.42.0.tgz#9bb0734e6d4d053f35550faa550d1028d5cfddb3"
+  integrity sha512-JUUFxa3wikawYd7BnjEHNB2+IIZRtWKaWhdpEO/+RDpPZ/P+cWWJDtlaqnDVtWppXxX+Ccyc7fUBuVBBeHfshg==
   dependencies:
-    "@wix-pilot/core" "^3.4.1"
+    "@wix-pilot/core" "^3.4.2"
     "@wix-pilot/detox" "^1.0.13"
     ajv "^8.6.3"
     bunyan "^1.8.12"
