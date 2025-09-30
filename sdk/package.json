@@ -27,7 +27,8 @@
     "plugin/dist",
     "app.plugin.js",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "fraud",
