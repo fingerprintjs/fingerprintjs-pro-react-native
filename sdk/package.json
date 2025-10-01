@@ -28,7 +28,7 @@
     "app.plugin.js",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "../CHANGELOG.md"
   ],
   "keywords": [
     "fraud",
