@@ -393,8 +393,8 @@
 ## 1.0.0 (2022-05-12)
 
 ##### Breaking changes
-* Added react hooks approach, read [the documentation](../README.md#hooks-approach) for more details
-* Due to creating hooks approach, API of client has changed, read more in [the documentation](../README.md#api-client-approach)
+* Added react hooks approach, read [the documentation](README.md#hooks-approach) for more details
+* Due to creating hooks approach, API of client has changed, read more in [the documentation](README.md#api-client-approach)
 
 ##### Chores
 
