@@ -64,8 +64,8 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
 
 - React Native versions 0.73 through 0.81 are supported
 - Expo 51.0.0 or higher is supported
-- Android 5.0 (API level 21+) or higher
-- iOS 13+/tvOS 15+, Swift 5.7 or higher (stable releases)
+- Android 6.0 (API level 23+) or higher
+- iOS 13+/tvOS 15+, Swift 5.9 or higher (stable releases)
 
 - Fingerprint Pro [request filtering](https://dev.fingerprint.com/docs/request-filtering) is not supported right now. Allowed and forbidden origins cannot be used.
 - Usage inside the [Expo environment](https://docs.expo.dev) is not supported right now.
