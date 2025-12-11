@@ -78,6 +78,12 @@ jobs:
         run: yarn prebuild
         working-directory: e2e-app
 
+      - name: Cleanup caches before Android build to prevent "No space left on device" errors
+        run: |
+          yarn cache clean || true
+          rm -rf ~/.gradle/caches ~/.gradle/daemon ~/.gradle/native
+        working-directory: e2e-app
+
       - run: npx detox build --configuration android.emu.release
         working-directory: e2e-app
 
@@ -152,7 +158,7 @@ jobs:
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-      
+
       - name: Create .env file
         working-directory: e2e-app
         run: |
@@ -250,7 +256,7 @@ jobs:
         if: matrix.react-native != 'local'
         run: npx expo install --fix
         working-directory: e2e-app
-      
+
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
         run: rm -rf node_modules && yarn install
@@ -349,7 +355,7 @@ jobs:
         if: success()
         with:
           name: ios-app-release-${{ matrix.react-native }}
-  
+
   e2e-tests-web:
     name: Web E2E tests
     runs-on: ubuntu-latest
@@ -374,7 +380,7 @@ jobs:
         run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
-      
+
       - name: Build web
         run: yarn build:web
         working-directory: e2e-app
