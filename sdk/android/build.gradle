@@ -40,10 +40,14 @@ repositories {
     google()
     maven { url 'https://maven.fpregistry.io/releases' }
     maven { url 'https://jitpack.io' }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation "com.fingerprint.android:pro:$fingerprint_native_sdk_version"
+    //implementation "com.fingerprint.android:pro:$fingerprint_native_sdk_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation(name: '2.13.1', ext: 'aar')
 }
