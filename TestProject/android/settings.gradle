@@ -13,5 +13,8 @@ dependencyResolutionManagement {
         maven {
             url("https://maven.fpregistry.io/releases")
         }
+        flatDir {
+            dirs("../../sdk/android/libs")
+        }
     }
 }

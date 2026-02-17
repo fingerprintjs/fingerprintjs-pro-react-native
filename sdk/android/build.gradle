@@ -49,5 +49,5 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
     //implementation "com.fingerprint.android:pro:$fingerprint_native_sdk_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation files('libs/2.13.1.aar')
+    implementation(name: '2.13.1', ext: 'aar')
 }
