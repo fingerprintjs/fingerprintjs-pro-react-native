@@ -10,3 +10,7 @@ plugins {
     id 'com.android.library' version '8.6.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.24' apply false
 }
+
+include ':fingerprintjs_fingerprintjs-pro-react-native'
+project(':fingerprintjs_fingerprintjs-pro-react-native').projectDir =
+    new File(rootProject.projectDir, '../../node_modules/fingerprintjs-pro-react-native/sdk/android')
