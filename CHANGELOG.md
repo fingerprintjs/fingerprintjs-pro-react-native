@@ -1,3 +1,19 @@
+## [3.12.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.11.0...v3.12.0) (2026-03-31)
+
+
+### Features
+
+* use Fingerprint Pro Android v2.14.0 ([abc4513](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/abc4513c72aaf8bdbaaf2181e005aa3eb2a75c17))
+* use Fingerprint Pro iOS v2.14.0 ([ebbc9e4](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/ebbc9e468b55b54337c9510244407c9b9ac29f18))
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.14.0 and < 2.15.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.14.0`**
+
+
 ## [3.11.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.10.0...v3.11.0) (2026-02-18)
 
 
