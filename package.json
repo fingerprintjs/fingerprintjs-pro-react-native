@@ -17,7 +17,7 @@
     "test:coverage": "cd sdk && yarn test:coverage",
     "test:dts": "cd sdk && yarn test:dts",
     "docs": "cd sdk && yarn docs",
-    "changeset:version": "changeset version && node ./sdk/scripts/createNativeDepsChangeset.mjs",
+    "changeset:version": "changeset version",
     "changeset:publish": "HUSKY=0 changeset publish"
   },
   "repository": {
