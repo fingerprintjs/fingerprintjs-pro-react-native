@@ -1,9 +1,13 @@
 {
   "name": "fingerprintjs-pro-react-native",
   "version": "0.0.0",
+  "private": true,
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
+  "workspaces": [
+    "sdk"
+  ],
   "scripts": {
-    "prepare": "husky install && cd sdk && yarn install",
+    "prepare": "husky install",
     "build": "cd sdk && yarn build",
     "build:sdk": "cd sdk && yarn build:sdk",
     "build:plugin": "cd sdk && yarn build:plugin",
@@ -12,7 +16,9 @@
     "test": "cd sdk && yarn test",
     "test:coverage": "cd sdk && yarn test:coverage",
     "test:dts": "cd sdk && yarn test:dts",
-    "docs": "cd sdk && yarn docs"
+    "docs": "cd sdk && yarn docs",
+    "changeset:version": "changeset version && node ./sdk/scripts/createNativeDepsChangeset.mjs",
+    "changeset:publish": "HUSKY=0 changeset publish"
   },
   "repository": {
     "type": "git",
@@ -26,19 +32,14 @@
     "*.js": "yarn run lint:fix",
     "*.jsx": "yarn run lint:fix"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^17.1.2",
+    "@fingerprintjs/changesets-changelog-format": "^0.2.0",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
     "@react-native/eslint-config": "0.76.6",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
-    "commitizen": "^4.2.5",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",

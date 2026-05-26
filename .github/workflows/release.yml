@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-release:
+    name: 'Build project, run CI checks and publish new release'
+    uses: ./.github/workflows/release-sdk-changesets.yml
+    with:
+      appId: ${{ vars.APP_ID }}
+      runnerAppId: ${{ vars.RUNNER_APP_ID }}
+      version-command: yarn changeset:version
+      publish-command: yarn changeset:publish
+      language: node
+      language-version: 24
+      prepare-command: yarn build
+      useTrustedPublishing: true
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+      RUNNER_APP_PRIVATE_KEY: ${{ secrets.RUNNER_APP_PRIVATE_KEY }}
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
