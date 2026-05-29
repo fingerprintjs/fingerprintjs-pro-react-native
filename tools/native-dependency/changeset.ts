@@ -30,9 +30,6 @@ interface ChangesetStatus {
 }
 
 export function getChangesetStatus() {
-  // Fetch main locally to get latest version - required by `changeset status
-  execSync('git fetch origin main:main')
-
   const jsonPath = path.join(os.tmpdir(), `changset-status-${Date.now()}.json`)
 
   execSync(`changeset status --output ${jsonPath}`)
