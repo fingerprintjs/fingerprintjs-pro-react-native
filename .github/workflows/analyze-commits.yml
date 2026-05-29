@@ -17,3 +17,4 @@ jobs:
     uses: fingerprintjs/dx-team-toolkit/.github/workflows/preview-changeset-release.yml@v1
     with:
       pr-title: ${{ github.event.pull_request.title }}
+      changeset-command: 'yarn exec changeset'
