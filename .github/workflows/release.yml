@@ -20,7 +20,10 @@ jobs:
       publish-command: yarn changeset:publish
       language: node
       language-version: 24
-      prepare-command: yarn build
+      prepare-command: |
+        sudo gem install -n /usr/local/bin cocoapods
+        pod --version
+        yarn build
       useTrustedPublishing: true
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
