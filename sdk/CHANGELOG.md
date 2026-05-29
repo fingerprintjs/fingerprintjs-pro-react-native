@@ -1,3 +1,5 @@
+# @fingerprintjs/fingerprintjs-pro-react-native
+
 ## [3.14.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.13.0...v3.14.0) (2026-05-05)
 
 
