@@ -18,3 +18,6 @@ jobs:
     with:
       pr-title: ${{ github.event.pull_request.title }}
       changeset-command: 'yarn exec changeset'
+      prepare-command: |
+        sudo gem install -n /usr/local/bin cocoapods
+        pod --version
