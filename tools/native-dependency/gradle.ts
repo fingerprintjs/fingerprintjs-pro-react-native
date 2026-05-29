@@ -38,6 +38,7 @@ export function getCommand(cwd: string): Promise<string> {
         if (err.code === 'ENOENT') {
           if (await isGradleAvailable()) {
             resolve('gradle')
+            return
           }
 
           reject(new Error('Gradle or Gradle wrapper not found.'))
