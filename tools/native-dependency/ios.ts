@@ -25,8 +25,8 @@ export async function resolveIOSDependency({ podSpecPath, dependencyName }: IOSP
   return podspecContents.dependencies[dependencyName].join(' and ')
 }
 
-function readPodspecDSL(podspecFilePath: string): Promise<PodspecJson> {
-  if (!isPodAvailable()) {
+async function readPodspecDSL(podspecFilePath: string): Promise<PodspecJson> {
+  if (!(await isPodAvailable())) {
     throw new Error(`Pods not found in your system.`)
   }
 
