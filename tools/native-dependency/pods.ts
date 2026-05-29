@@ -36,6 +36,7 @@ export function podIpcSpec(podspecFile: string): Promise<PodspecJson> {
     exec(`pod ipc spec ${podspecFile}`, (err, stdout) => {
       if (err) {
         reject(err)
+        return
       }
 
       try {
