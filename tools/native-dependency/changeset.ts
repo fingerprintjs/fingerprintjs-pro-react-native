@@ -50,7 +50,7 @@ export function getChangesetStatus() {
       throw e
     }
 
-    // Fetch main localy to solve the above error
+    // Fetch main locally to solve the above error
     execSync('git fetch origin main:main')
     getStatus()
   }
