@@ -2,7 +2,7 @@ import { resolveIOSDependency } from './ios.ts'
 import { resolveAndroidDependency } from './android.ts'
 
 function formatter(platforms: { displayName: string; versionRange: string }[], heading?: string) {
-  let result = `### ${heading ?? 'Native Dependencies'}\n\n`
+  let result = `### ${heading ?? 'Supported Native SDK Version Range'}\n\n`
 
   result += platforms
     .map(({ displayName, versionRange }) => {
