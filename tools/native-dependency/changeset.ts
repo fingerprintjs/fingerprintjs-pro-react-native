@@ -30,30 +30,12 @@ interface ChangesetStatus {
 }
 
 export function getChangesetStatus() {
+  // Fetch main locally to get latest version - required by `changeset status
+  execSync('git fetch origin main:main')
+
   const jsonPath = path.join(os.tmpdir(), `changset-status-${Date.now()}.json`)
 
-  const getStatus = () => execSync(`changeset status --output ${jsonPath}`)
-
-  try {
-    getStatus()
-  } catch (e) {
-    if (!(e instanceof Error) || !('stderr' in e)) {
-      throw e
-    }
-
-    const message = e.stderr?.toString()
-    if (
-      !message?.includes(
-        'Failed to find where HEAD diverged from "main". Does "main" exist and it\'s synced with remote?'
-      )
-    ) {
-      throw e
-    }
-
-    // Fetch main locally to solve the above error
-    execSync('git fetch origin main:main')
-    getStatus()
-  }
+  execSync(`changeset status --output ${jsonPath}`)
 
   try {
     return JSON.parse(fs.readFileSync(jsonPath, 'utf-8')) as ChangesetStatus
