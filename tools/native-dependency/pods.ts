@@ -14,8 +14,10 @@ export function isPodAvailable(): Promise<boolean> {
       if (err) {
         if (isNotFoundErrorCode(err.code)) {
           resolve(false)
+          return
         }
         reject(err)
+        return
       }
 
       resolve(true)
