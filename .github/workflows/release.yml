@@ -12,7 +12,7 @@ permissions:
 jobs:
   build-and-release:
     name: 'Build project, run CI checks and publish new release'
-    uses: ./.github/workflows/release-sdk-changesets.yml
+    uses: fingerprintjs/dx-team-toolkit/.github/workflows/release-sdk-changesets.yml@v1
     with:
       appId: ${{ vars.APP_ID }}
       runnerAppId: ${{ vars.RUNNER_APP_ID }}
