@@ -37,3 +37,8 @@ React native instruments don't support `npm`/`yarn` links for packages, because 
 
 1. Change `"main"` section in library's `package.json` to `"./src/index.ts"`. With this fix you don't need to build library for getting updates in `TestApp`, but don't forget to revert this change.
 2. Run `sync.sh` script, it will sync `src`, `build`, `ios` and `android` folder between library and library copy in TestApp `node_modules` folder.
+
+## How to publish
+
+We use [changesets](https://github.com/changesets/changesets) for handling release notes. If there are relevant changes,
+please add them to changeset via `yarn run changeset`. You need to run `yarn install` before doing so.
