@@ -21,7 +21,8 @@ jobs:
       language: node
       language-version: 24
       prepare-command: |
-        yarn install
+        yarn cache clean
+        yarn install --frozen-lockfile
         sudo gem install -n /usr/local/bin cocoapods
         pod --version
         yarn build
