@@ -21,6 +21,7 @@ jobs:
       language: node
       language-version: 24
       prepare-command: |
+        yarn install
         sudo gem install -n /usr/local/bin cocoapods
         pod --version
         yarn build
@@ -28,4 +29,3 @@ jobs:
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
       RUNNER_APP_PRIVATE_KEY: ${{ secrets.RUNNER_APP_PRIVATE_KEY }}
-      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
