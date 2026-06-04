@@ -5,9 +5,9 @@ and was bootstrapped using [Expo](https://expo.dev).
 
 ## Get started
 
-1. The app needs the SDK to be built. To do that, run `yarn install` and `yarn build` in the root directory.
-2. Install dependencies in the `e2e-app` directory, run `yarn install`:
-3. Run `yarn prebuild` in the `e2e-app` directory to prepare native code.
+1. The app needs the SDK to be built. To do that, run `pnpm install` and `pnpm build` in the root directory.
+2. Install dependencies in the `e2e-app` directory: run `pnpm install --ignore-workspace` (e2e-app manages its own dependencies outside the root workspace).
+3. Run `pnpm prebuild` in the `e2e-app` directory to prepare native code.
 
 The app is intended to run via Detox. To learn more, head to the sections below.
 
@@ -37,7 +37,7 @@ npx detox test --configuration ios.sim.release
 
 The configuration passed via `--configuration` must match the one used in `detox build`.
 
-> If you're using `ios.sim.debug` configuration, don't forget to run `yarn start` to start the bundler before running tests.
+> If you're using `ios.sim.debug` configuration, don't forget to run `pnpm start` to start the bundler before running tests.
 
 ## Running Android tests
 
@@ -64,11 +64,11 @@ npx detox test --configuration android.emu.release
 
 The configuration passed via `--configuration` must match the one used in `detox build`.
 
-> If you're using `android.emu.debug` configuration, don't forget to run `yarn start` to start the bundler before running tests.
+> If you're using `android.emu.debug` configuration, don't forget to run `pnpm start` to start the bundler before running tests.
 
 ## Dealing with native code
 
-Every action that affects native code, such as updating `react-native` or installing a native library, requires running `yarn prebuild` to regenerate native code located in `ios` and `android`.
+Every action that affects native code, such as updating `react-native` or installing a native library, requires running `pnpm prebuild` to regenerate native code located in `ios` and `android`.
 
 To learn more, head to [expo docs about Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/#cng-in-react-native-apps).
 

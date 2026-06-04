@@ -1,0 +1,7 @@
+packages:
+  - 'sdk'
+  - 'TestProject'
+allowBuilds:
+  detox: true
+  dtrace-provider: true
+  esbuild: true

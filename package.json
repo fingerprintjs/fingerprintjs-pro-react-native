@@ -2,21 +2,19 @@
   "name": "fingerprintjs-pro-react-native",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "pnpm@11.5.1",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
-  "workspaces": [
-    "sdk"
-  ],
   "scripts": {
     "prepare": "husky install",
-    "build": "cd sdk && yarn build",
-    "build:sdk": "cd sdk && yarn build:sdk",
-    "build:plugin": "cd sdk && yarn build:plugin",
+    "build": "cd sdk && pnpm build",
+    "build:sdk": "cd sdk && pnpm build:sdk",
+    "build:plugin": "cd sdk && pnpm build:plugin",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore --max-warnings 0 .",
-    "lint:fix": "yarn lint --fix",
-    "test": "cd sdk && yarn test",
-    "test:coverage": "cd sdk && yarn test:coverage",
-    "test:dts": "cd sdk && yarn test:dts",
-    "docs": "cd sdk && yarn docs",
+    "lint:fix": "pnpm lint --fix",
+    "test": "cd sdk && pnpm test",
+    "test:coverage": "cd sdk && pnpm test:coverage",
+    "test:dts": "cd sdk && pnpm test:dts",
+    "docs": "cd sdk && pnpm docs",
     "changeset:version": "changeset version",
     "changeset:publish": "HUSKY=0 changeset publish"
   },
@@ -27,10 +25,10 @@
   "author": "FingerprintJS, Inc (https://fingerprint.com)",
   "license": "MIT",
   "lint-staged": {
-    "*.ts": "yarn run lint:fix",
-    "*.tsx": "yarn run lint:fix",
-    "*.js": "yarn run lint:fix",
-    "*.jsx": "yarn run lint:fix"
+    "*.ts": "pnpm run lint:fix",
+    "*.tsx": "pnpm run lint:fix",
+    "*.js": "pnpm run lint:fix",
+    "*.jsx": "pnpm run lint:fix"
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",

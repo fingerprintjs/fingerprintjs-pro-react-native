@@ -31,9 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: actions/setup-java@v3
@@ -42,9 +44,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - run: yarn install
+      - run: pnpm install --frozen-lockfile
 
-      - run: yarn install && yarn build
+      - run: pnpm install --frozen-lockfile && pnpm build
         if: github.event_name != 'release'
         working-directory: sdk
 
@@ -56,11 +58,11 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
@@ -71,16 +73,16 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && yarn install
+        run: rm -rf node_modules && pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - name: Prebuild
-        run: yarn prebuild
+        run: pnpm prebuild
         working-directory: e2e-app
 
       - name: Cleanup caches before Android build to prevent "No space left on device" errors
         run: |
-          yarn cache clean || true
+          pnpm store prune || true
           rm -rf ~/.gradle/caches ~/.gradle/daemon ~/.gradle/native
         working-directory: e2e-app
 
@@ -112,9 +114,11 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: actions/setup-java@v3
@@ -133,7 +137,7 @@ jobs:
           key: avd-35
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - uses: actions/download-artifact@v4
@@ -214,9 +218,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
@@ -229,10 +235,10 @@ jobs:
           bundler-cache: true
           ruby-version: 3.2
 
-      - run: yarn install
+      - run: pnpm install --frozen-lockfile
         if: github.event_name != 'release'
 
-      - run: yarn install && yarn build
+      - run: pnpm install --frozen-lockfile && pnpm build
         if: github.event_name != 'release'
         working-directory: sdk
 
@@ -244,12 +250,12 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - name: Fix expo dependencies
@@ -259,11 +265,11 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && yarn install
+        run: rm -rf node_modules && pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - name: Prebuild
-        run: yarn prebuild
+        run: pnpm prebuild
         working-directory: e2e-app
 
       - run: npx detox build --configuration ios.sim.release
@@ -291,9 +297,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
@@ -330,7 +338,7 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: yarn install
+        run: pnpm install --ignore-workspace
         working-directory: e2e-app
 
       - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
@@ -362,30 +370,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - uses: actions/setup-node@v3
         with:
-          cache: yarn
+          cache: pnpm
           node-version: 22.x
 
-      - run: yarn install
+      - run: pnpm install --frozen-lockfile
 
-      - run: yarn build && rm -rf node_modules
+      - run: pnpm build && rm -rf node_modules
         if: github.event_name != 'release'
 
       - name: Install dependencies in e2e-app
-        run: yarn install && yarn playwright install chromium
+        run: pnpm install --ignore-workspace && pnpm playwright install chromium
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: yarn add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
       - name: Build web
-        run: yarn build:web
+        run: pnpm build:web
         working-directory: e2e-app
 
-      - run: yarn test:web
+      - run: pnpm test:web
         working-directory: e2e-app
         env:
           MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}

@@ -16,16 +16,14 @@ jobs:
     with:
       appId: ${{ vars.APP_ID }}
       runnerAppId: ${{ vars.RUNNER_APP_ID }}
-      version-command: yarn changeset:version
-      publish-command: yarn changeset:publish
+      version-command: pnpm changeset:version
+      publish-command: pnpm changeset:publish
       language: node
       language-version: 24
       prepare-command: |
-        yarn cache clean
-        yarn install --frozen-lockfile
         sudo gem install -n /usr/local/bin cocoapods
         pod --version
-        yarn build
+        pnpm build
       useTrustedPublishing: true
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}

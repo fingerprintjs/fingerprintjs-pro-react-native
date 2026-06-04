@@ -15,15 +15,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          cache: pnpm
 
       - name: Install dependencies
         run: |
-          yarn install
-          yarn build
+          pnpm install --frozen-lockfile
+          pnpm build
           cd TestProject
-          yarn install
+          pnpm install --frozen-lockfile
 
       - name: Build Android
         run: |
@@ -33,9 +37,9 @@ jobs:
       - name: Start Metro Bundler # and Test App
         run: |
           cd TestProject
-          yarn start &
+          pnpm start &
           sleep 10 # Allow Metro Bundler to start
-        #  yarn test
+        #  pnpm test
 
   ios-build-TestProject:
     name: iOS TestProject - Build and Test React Native Library
@@ -45,16 +49,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          cache: pnpm
 
       - name: Install dependencies
         run: |
-          yarn install
-          yarn build
+          pnpm install --frozen-lockfile
+          pnpm build
           cd TestProject
-          yarn install
-          
+          pnpm install --frozen-lockfile
+
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
@@ -74,6 +82,6 @@ jobs:
       - name: Start Metro Bundler # and Test App
         run: |
           cd TestProject
-          yarn start &
+          pnpm start &
           sleep 10 # Allow Metro Bundler to start
-        #  yarn test
+        #  pnpm test
