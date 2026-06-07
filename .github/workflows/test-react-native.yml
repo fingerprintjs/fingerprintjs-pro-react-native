@@ -27,7 +27,7 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build
           cd TestProject
-          pnpm install --frozen-lockfile
+          pnpm install --ignore-workspace --frozen-lockfile
 
       - name: Build Android
         run: |
@@ -61,7 +61,7 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build
           cd TestProject
-          pnpm install --frozen-lockfile
+          pnpm install --ignore-workspace --frozen-lockfile
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:

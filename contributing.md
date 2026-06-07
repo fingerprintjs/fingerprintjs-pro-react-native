@@ -10,11 +10,11 @@ In `TestProject` folder you can find demo application. React Native provides not
 #### Common steps
 
 1. Run `pnpm install` in the project root.
-2. Go back to project root, and run `pnpm build`.
-3. After build is done, run `sync.sh` to copy references of the library into the Test project.
-4. Go to `TestProject` folder.
+2. Run `pnpm build` in the project root.
+3. Go to the `TestProject` folder and run `pnpm install --ignore-workspace` (TestProject manages its own dependencies outside the root workspace).
+4. After build is done, run `sync.sh` to copy references of the library into the Test project.
 5. Set environment variable `PUBLIC_API_KEY`, you can just use `.env` [approach](https://www.npmjs.com/package/dotenv).
-6. Run `pnpm start`. From this moment it will keep your terminal.
+6. Run `pnpm start` from `TestProject` folder. From this moment it will keep your terminal.
 
 #### Android
 1. Run emulator in Android Studio or connect your device. You can check connected devices with `/android/sdk/platform-tools/adb devices` command.

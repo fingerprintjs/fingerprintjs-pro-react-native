@@ -6,4 +6,5 @@ module.exports = {
   collectCoverageFrom: ['./src/**/**.{ts,tsx}'],
   coverageReporters: ['lcov', 'json-summary', ['text', { file: 'coverage.txt', path: './' }]],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
+  transformIgnorePatterns: ['node_modules/(?!(?:\\.pnpm/)?(?:@react-native|react-native)(?:[+/]|$))'],
 }
