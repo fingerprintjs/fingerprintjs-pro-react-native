@@ -48,7 +48,7 @@ const metadata = getCompatibilityMetadata(rnVersion)
 installPackages(`react-native@${rnVersion}`, ...metadata.packages)
 
 function installPackages(...packages) {
-  execSync(`yarn add ${packages.join(' ')} -D`, {
+  execSync(`pnpm add ${packages.join(' ')} -D`, {
     stdio: 'inherit',
   })
 }

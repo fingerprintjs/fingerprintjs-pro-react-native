@@ -2,6 +2,7 @@
   "name": "E2EApp",
   "main": "expo/AppEntry.js",
   "version": "1.0.0",
+  "packageManager": "pnpm@11.5.1",
   "scripts": {
     "start": "expo start",
     "start:web": "expo start --web",

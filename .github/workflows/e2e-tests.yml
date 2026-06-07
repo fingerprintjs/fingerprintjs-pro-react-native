@@ -58,11 +58,11 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: pnpm install --ignore-workspace
+        run: pnpm install
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
@@ -73,7 +73,7 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --ignore-workspace
+        run: rm -rf node_modules && pnpm install
         working-directory: e2e-app
 
       - name: Prebuild
@@ -137,7 +137,7 @@ jobs:
           key: avd-35
 
       - name: Install dependencies in e2e-app
-        run: pnpm install --ignore-workspace
+        run: pnpm install
         working-directory: e2e-app
 
       - uses: actions/download-artifact@v4
@@ -250,12 +250,12 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 
       - name: Install dependencies in e2e-app
-        run: pnpm install --ignore-workspace
+        run: pnpm install
         working-directory: e2e-app
 
       - name: Fix expo dependencies
@@ -265,7 +265,7 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --ignore-workspace
+        run: rm -rf node_modules && pnpm install
         working-directory: e2e-app
 
       - name: Prebuild
@@ -338,7 +338,7 @@ jobs:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
       - name: Install dependencies in e2e-app
-        run: pnpm install --ignore-workspace
+        run: pnpm install
         working-directory: e2e-app
 
       - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
@@ -383,11 +383,11 @@ jobs:
         if: github.event_name != 'release'
 
       - name: Install dependencies in e2e-app
-        run: pnpm install --ignore-workspace && pnpm playwright install chromium
+        run: pnpm install && pnpm playwright install chromium
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
-        run: pnpm add --ignore-workspace @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
+        run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
         working-directory: e2e-app
 

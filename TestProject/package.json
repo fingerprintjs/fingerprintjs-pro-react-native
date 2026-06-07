@@ -2,6 +2,7 @@
   "name": "TestProject",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@11.5.1",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
