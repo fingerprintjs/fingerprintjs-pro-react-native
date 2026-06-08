@@ -37,6 +37,7 @@
     "@config-plugins/detox": "^11.0.0",
     "@expo/config-plugins": "~10.1.1",
     "@fingerprintjs/fingerprintjs-pro-server-api": "^6.3.0",
+    "@jest/globals": "^30.4.1",
     "@playwright/test": "^1.53.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.5",
