@@ -48,8 +48,7 @@ if (!rnVersion) {
 
 const metadata = getCompatibilityMetadata(rnVersion)
 
-installPackages(`react-native@${rnVersion}`)
-installDevPackages(...metadata.packages)
+installPackages(`react-native@${rnVersion}`, ...metadata.packages)
 
 function installPackages(...packages) {
   const devPackagesToInstall = packages.filter((pkg) => devPackages.includes(pkg))
