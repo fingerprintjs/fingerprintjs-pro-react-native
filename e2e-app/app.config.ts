@@ -1,17 +1,11 @@
 // Required in order to import other .ts files - https://docs.expo.dev/guides/typescript/#appconfigjs
 import 'tsx/cjs'
 import { ExpoConfig } from '@expo/config'
+import { dependencies } from './package.json'
 import * as semver from 'semver'
 import { handleReactNativeVersion } from './app-config-tools/reactNativeMetadata'
 import { getAndroidBuildProperties } from './app-config-tools/android'
 import { getNewArch } from './app-config-tools/arch'
-import fs from 'fs'
-import path from 'path'
-
-// For some reason, direct import from package.json doesn't work :/
-const { dependencies } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'))
-
-console.log('Dependencies:', dependencies)
 
 let rawReactNativeVersion = dependencies['react-native']
 
