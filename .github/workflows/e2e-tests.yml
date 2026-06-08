@@ -238,7 +238,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
         if: github.event_name != 'release'
 
-      - run: pnpm install --frozen-lockfile && pnpm build
+      - run: pnpm build
         if: github.event_name != 'release'
         working-directory: sdk
 
@@ -252,10 +252,6 @@ jobs:
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
-        working-directory: e2e-app
-
-      - name: Install dependencies in e2e-app
-        run: pnpm install
         working-directory: e2e-app
 
       - name: Fix expo dependencies
