@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@babel/runtime": "^7.29.7",
     "@config-plugins/detox": "^11.0.0",
     "@expo/config-plugins": "~10.1.1",
     "@fingerprintjs/fingerprintjs-pro-server-api": "^6.3.0",

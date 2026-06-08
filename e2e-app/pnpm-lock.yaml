@@ -48,6 +48,9 @@ importers:
       '@babel/core':
         specifier: ^7.25.2
         version: 7.29.7
+      '@babel/runtime':
+        specifier: ^7.29.7
+        version: 7.29.7
       '@config-plugins/detox':
         specifier: ^11.0.0
         version: 11.0.0(expo@53.0.22(@babel/core@7.29.7)(@expo/metro-runtime@5.0.5(react-native@0.79.5(@babel/core@7.29.7)(@types/react@19.0.14)(react@19.0.0)))(graphql@16.8.1)(react-native@0.79.5(@babel/core@7.29.7)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))
