@@ -46,7 +46,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm install --frozen-lockfile && pnpm build
+      - run: pnpm build
         if: github.event_name != 'release'
         working-directory: sdk
 
@@ -57,10 +57,6 @@ jobs:
         env:
           REACT_NATIVE_VERSION: ${{ matrix.react-native }}
 
-      - name: Install dependencies in e2e-app
-        run: pnpm install
-        working-directory: e2e-app
-
       - name: Install ${{github.event.release.tag_name}} version of the package
         run: pnpm add @fingerprintjs/fingerprintjs-pro-react-native@${{github.event.release.tag_name}}
         if: github.event_name == 'release'
@@ -69,11 +65,6 @@ jobs:
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
         run: pnpm exec expo install --fix
-        working-directory: e2e-app
-
-      - name: Setup fresh node_modules
-        if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install
         working-directory: e2e-app
 
       - name: Prebuild
@@ -379,7 +370,7 @@ jobs:
         if: github.event_name != 'release'
 
       - name: Install dependencies in e2e-app
-        run: pnpm install && pnpm playwright install chromium
+        run: pnpm exec playwright install chromium
         working-directory: e2e-app
 
       - name: Install ${{github.event.release.tag_name}} version of the package
