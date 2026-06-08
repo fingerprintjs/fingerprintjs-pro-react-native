@@ -68,7 +68,7 @@ jobs:
 
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
-        run: npx expo install --fix
+        run: pnpm exec expo install --fix
         working-directory: e2e-app
 
       - name: Setup fresh node_modules
@@ -86,7 +86,7 @@ jobs:
           rm -rf ~/.gradle/caches ~/.gradle/daemon ~/.gradle/native
         working-directory: e2e-app
 
-      - run: npx detox build --configuration android.emu.release
+      - run: pnpm exec detox build --configuration android.emu.release
         working-directory: e2e-app
 
       - name: Upload artifacts
@@ -189,7 +189,7 @@ jobs:
           disable-animations: true
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: cd e2e-app && npx detox test --configuration android.emu.release --headless --record-logs all --record-videos failing
+          script: cd e2e-app && pnpm exec detox test --configuration android.emu.release --headless --record-logs all --record-videos failing
 
       - name: Upload artifacts
         if: always()
@@ -260,7 +260,7 @@ jobs:
 
       - name: Fix expo dependencies
         if: matrix.react-native != 'local'
-        run: npx expo install --fix
+        run: pnpm exec expo install --fix
         working-directory: e2e-app
 
       - name: Setup fresh node_modules
@@ -272,7 +272,7 @@ jobs:
         run: pnpm prebuild
         working-directory: e2e-app
 
-      - run: npx detox build --configuration ios.sim.release
+      - run: pnpm exec detox build --configuration ios.sim.release
         working-directory: e2e-app
 
       - name: Upload artifacts
@@ -341,7 +341,7 @@ jobs:
         run: pnpm install
         working-directory: e2e-app
 
-      - run: npx detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
+      - run: pnpm exec detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
         working-directory: e2e-app
         env:
           MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
