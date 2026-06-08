@@ -49,7 +49,7 @@ installPackages(`react-native@${rnVersion}`)
 installDevPackages(...metadata.packages)
 
 function installPackages(...packages) {
-  execSync(`pnpm add ${packages.join(' ')} -D`, {
+  execSync(`pnpm add ${packages.join(' ')}`, {
     stdio: 'inherit',
   })
 }
