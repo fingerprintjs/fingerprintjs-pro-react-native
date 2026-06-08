@@ -51,7 +51,7 @@ const metadata = getCompatibilityMetadata(rnVersion)
 installPackages(`react-native@${rnVersion}`, ...metadata.packages)
 
 function extractPackageName(dependency) {
-  return dependency.split('@')[0]
+  return dependency.replace(/@[0-9].*/, '')
 }
 
 function installPackages(...packages) {
