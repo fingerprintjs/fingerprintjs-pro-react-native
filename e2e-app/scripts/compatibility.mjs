@@ -58,14 +58,12 @@ function installPackages(...packages) {
   const devPackagesToInstall = packages.filter((pkg) => devPackages.includes(extractPackageName(pkg)))
   const nonDevPackagesToInstall = packages.filter((pkg) => !devPackages.includes(extractPackageName(pkg)))
 
-  console.debug('devPackages', devPackagesToInstall)
-  console.debug('nonDevPackages', nonDevPackagesToInstall)
-
   if (devPackagesToInstall.length) {
-    installDevPackages(devPackagesToInstall)
+    installDevPackages(...devPackagesToInstall)
   }
 
   if (nonDevPackagesToInstall.length) {
+    console.info('Installing non-dev packages', nonDevPackagesToInstall)
     execSync(`pnpm add ${nonDevPackagesToInstall.join(' ')}`, {
       stdio: 'inherit',
     })
@@ -73,6 +71,7 @@ function installPackages(...packages) {
 }
 
 function installDevPackages(...packages) {
+  console.info('Installing dev packages', packages)
   execSync(`pnpm add ${packages.join(' ')} -D`, {
     stdio: 'inherit',
   })
