@@ -50,9 +50,13 @@ const metadata = getCompatibilityMetadata(rnVersion)
 
 installPackages(`react-native@${rnVersion}`, ...metadata.packages)
 
+function extractPackageName(dependency) {
+  return dependency.split('@')[0]
+}
+
 function installPackages(...packages) {
-  const devPackagesToInstall = packages.filter((pkg) => devPackages.includes(pkg))
-  const nonDevPackagesToInstall = packages.filter((pkg) => !devPackages.includes(pkg))
+  const devPackagesToInstall = packages.filter((pkg) => devPackages.includes(extractPackageName(pkg)))
+  const nonDevPackagesToInstall = packages.filter((pkg) => !devPackages.includes(extractPackageName(pkg)))
 
   console.debug('devPackages', devPackagesToInstall)
   console.debug('nonDevPackages', nonDevPackagesToInstall)
