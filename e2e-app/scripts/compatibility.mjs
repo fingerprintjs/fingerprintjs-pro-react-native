@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process'
-import { devDependencies } from '../package.json' with { type: 'json' };
+import * as pkg from '../package.json' with { type: 'json' };
 
-const devPackages = Object.keys(devDependencies)
+const devPackages = Object.keys(pkg.devDependencies)
 
 /**
  * An object representing metadata for different versions of React Native.
