@@ -9,6 +9,8 @@ import { getNewArch } from './app-config-tools/arch'
 
 let rawReactNativeVersion = dependencies['react-native']
 
+console.log(`Detected react-native version: ${rawReactNativeVersion}`)
+
 // Ensure that react-native version contains patch range so that semver can parse it
 if (rawReactNativeVersion.split('.').length === 2) {
   rawReactNativeVersion = rawReactNativeVersion + '.0'
