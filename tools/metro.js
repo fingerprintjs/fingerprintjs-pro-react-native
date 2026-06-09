@@ -18,12 +18,12 @@ function getMetroConfig(config, projectRoot) {
   config.resolver.unstable_enablePackageExports = true
   config.watchFolders = [...(config.watchFolders ?? []), sdkRoot]
   config.resolver.nodeModulesPaths = [
-    path.resolve(__dirname, 'node_modules'),
+    path.resolve(projectRoot, 'node_modules'),
     ...(config.resolver.nodeModulesPaths ?? []),
   ]
   config.resolver.extraNodeModules = {
     ...(config.resolver.extraNodeModules ?? {}),
-    ...Object.fromEntries(hoistedModules.map((name) => [name, path.resolve(__dirname, 'node_modules', name)])),
+    ...Object.fromEntries(hoistedModules.map((name) => [name, path.resolve(projectRoot, 'node_modules', name)])),
   }
   config.resolver.blockList = [
     ...(Array.isArray(config.resolver.blockList)
@@ -32,7 +32,7 @@ function getMetroConfig(config, projectRoot) {
       ? [config.resolver.blockList]
       : []),
     ...hoistedModules.map(
-      (name) => new RegExp(`${projectRoot.replace(/[/\\]/g, '[/\\\\]')}[/\\\\]node_modules[/\\\\]${name}[/\\\\].*`)
+      (name) => new RegExp(`${sdkRoot.replace(/[/\\]/g, '[/\\\\]')}[/\\\\]node_modules[/\\\\]${name}[/\\\\].*`)
     ),
   ]
 
