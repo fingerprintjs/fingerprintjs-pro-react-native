@@ -2,19 +2,19 @@ import path from 'path'
 
 const hoistedModules = ['react', 'react-native']
 
-function getMetroConfig(sdkRoot) {
-  const workspaceRoot = path.resolve(__dirname, '..')
+function getMetroConfig(projectRoot) {
+  const sdkRoot = path.resolve(__dirname, '..', 'sdk')
   return {
-    watchFolders: [workspaceRoot],
+    watchFolders: [sdkRoot],
     resolver: {
       unstable_enableSymlinks: true,
       unstable_enablePackageExports: true,
-      nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+      nodeModulesPaths: [path.resolve(projectRoot, 'node_modules')],
       extraNodeModules: {
-        ...Object.fromEntries(hoistedModules.map((name) => [name, path.resolve(__dirname, 'node_modules', name)])),
+        ...Object.fromEntries(hoistedModules.map((name) => [name, path.resolve(projectRoot, 'node_modules', name)])),
       },
       blockList: hoistedModules.map(
-        (name) => new RegExp(`${sdkRoot.replace(/[/\\]/g, '[/\\\\]')}[/\\\\]node_modules[/\\\\]${name}[/\\\\].*`)
+        (name) => new RegExp(`${projectRoot.replace(/[/\\]/g, '[/\\\\]')}[/\\\\]node_modules[/\\\\]${name}[/\\\\].*`)
       ),
     },
   }
