@@ -46,8 +46,8 @@ importers:
         specifier: 0.77.0
         version: 0.77.0(eslint@8.57.1)(jest@29.7.0(@types/node@25.9.2))(prettier@2.8.8)(typescript@5.0.4)
       '@react-native/gradle-plugin':
-        specifier: ^0.85.3
-        version: 0.85.3
+        specifier: 0.77.0
+        version: 0.77.0
       '@react-native/metro-config':
         specifier: 0.77.0
         version: 0.77.0(@babel/core@7.29.7)(@babel/preset-env@7.29.7(@babel/core@7.29.7))
@@ -1032,13 +1032,13 @@ packages:
     resolution: {integrity: sha512-1DXUDiqsgvFpK633SsOF01aAtWAaI/+KqPJAoZOVdSsodk70wNYyrHpF9rJBXWhyT/peTBE5y2kK2kT/Y7JcQA==}
     engines: {node: '>=18'}
 
+  '@react-native/gradle-plugin@0.77.0':
+    resolution: {integrity: sha512-rmfh93jzbndSq7kihYHUQ/EGHTP8CCd3GDCmg5SbxSOHAaAYx2HZ28ZG7AVcGUsWeXp+e/90zGIyfOzDRx0Zaw==}
+    engines: {node: '>=18'}
+
   '@react-native/gradle-plugin@0.77.1':
     resolution: {integrity: sha512-QNuNMWH0CeC+PYrAXiuUIBbwdeGJ3fZpQM03vdG3tKdk66cVSFvxLh60P0w5kRHN7UFBg2FAcYx5eQ/IdcAntg==}
     engines: {node: '>=18'}
-
-  '@react-native/gradle-plugin@0.85.3':
-    resolution: {integrity: sha512-39dY2j50Q1pntejzwt3XL7vwXtrj8jcIfHq6E+gyu3jzYxZJVvMkMutQ39vSg6zinIQOX36oQDhidXUbCXzgoA==}
-    engines: {node: ^20.19.4 || ^22.13.0 || ^24.3.0 || >= 25.0.0}
 
   '@react-native/js-polyfills@0.77.0':
     resolution: {integrity: sha512-kHFcMJVkGb3ptj3yg1soUsMHATqal4dh0QTGAbYihngJ6zy+TnP65J3GJq4UlwqFE9K1RZkeCmTwlmyPFHOGvA==}
@@ -5137,9 +5137,9 @@ snapshots:
 
   '@react-native/eslint-plugin@0.77.0': {}
 
-  '@react-native/gradle-plugin@0.77.1': {}
+  '@react-native/gradle-plugin@0.77.0': {}
 
-  '@react-native/gradle-plugin@0.85.3': {}
+  '@react-native/gradle-plugin@0.77.1': {}
 
   '@react-native/js-polyfills@0.77.0': {}
 
