@@ -25,6 +25,8 @@ jobs:
         pod --version
         pnpm build
       useTrustedPublishing: true
+      # Required by Gradle
+      java-version: '17'
     secrets:
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
       RUNNER_APP_PRIVATE_KEY: ${{ secrets.RUNNER_APP_PRIVATE_KEY }}

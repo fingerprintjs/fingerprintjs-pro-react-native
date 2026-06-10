@@ -32,6 +32,8 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
+    "@changesets/get-release-plan": "^4.0.16",
+    "@changesets/types": "^6.1.0",
     "@commitlint/cli": "^17.1.2",
     "@fingerprintjs/changesets-changelog-format": "^0.2.0",
     "@fingerprintjs/commit-lint-dx-team": "^0.0.2",
