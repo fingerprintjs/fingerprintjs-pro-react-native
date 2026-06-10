@@ -14,7 +14,7 @@
     "test": "cd sdk && pnpm test",
     "test:coverage": "cd sdk && pnpm test:coverage",
     "test:dts": "cd sdk && pnpm test:dts",
-    "docs": "cd sdk && pnpm docs",
+    "docs": "cd sdk && pnpm run docs",
     "changeset:version": "changeset version",
     "changeset:publish": "HUSKY=0 changeset publish"
   },
