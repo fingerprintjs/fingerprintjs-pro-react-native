@@ -10,70 +10,71 @@ jobs:
   android-build-TestProject:
     name: Android TestProject - Build and Test React Native Library
     runs-on: macos-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          cache: pnpm
 
       - name: Install dependencies
-        run: |
-          yarn install
-          yarn build
-          cd TestProject
-          yarn install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies in TestProject
+        run: pnpm install --frozen-lockfile
+        working-directory: TestProject
 
       - name: Build Android
-        run: |
-          cd TestProject/android
-          ./gradlew assembleDebug
+        working-directory: TestProject/android
+        run: ./gradlew assembleDebug
 
       - name: Start Metro Bundler # and Test App
+        working-directory: TestProject
         run: |
-          cd TestProject
-          yarn start &
+          pnpm start &
           sleep 10 # Allow Metro Bundler to start
-        #  yarn test
 
   ios-build-TestProject:
     name: iOS TestProject - Build and Test React Native Library
     runs-on: macos-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          cache: pnpm
 
       - name: Install dependencies
-        run: |
-          yarn install
-          yarn build
-          cd TestProject
-          yarn install
-          
+        run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies in TestProject
+        run: pnpm install --frozen-lockfile
+        working-directory: TestProject
+
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install Pods
-        run: |
-          cd TestProject/ios
-          pod install
+        working-directory: TestProject/ios
+        run: pod install
 
       - name: Build iOS
+        working-directory: TestProject/ios
         env:
           CI: true
-        run: |
-          cd TestProject/ios
-          xcodebuild -workspace TestProject.xcworkspace -scheme TestProject -sdk iphonesimulator -configuration Debug build
+        run: xcodebuild -workspace TestProject.xcworkspace -scheme TestProject -sdk iphonesimulator -configuration Debug build
 
       - name: Start Metro Bundler # and Test App
+        working-directory: TestProject
         run: |
-          cd TestProject
-          yarn start &
+          pnpm start &
           sleep 10 # Allow Metro Bundler to start
-        #  yarn test

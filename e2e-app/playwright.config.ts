@@ -48,7 +48,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'yarn serve:web',
+    command: 'pnpm serve:web',
     url: 'http://localhost:8081',
     reuseExistingServer: !process.env.CI,
   },

@@ -1,4 +1,7 @@
 import { execSync } from 'node:child_process'
+import pkg from '../package.json' with { type: 'json' };
+
+const devPackages = Object.keys(pkg.devDependencies)
 
 /**
  * An object representing metadata for different versions of React Native.
@@ -47,8 +50,29 @@ const metadata = getCompatibilityMetadata(rnVersion)
 
 installPackages(`react-native@${rnVersion}`, ...metadata.packages)
 
+function extractPackageName(dependency) {
+  return dependency.replace(/@[0-9].*/, '')
+}
+
 function installPackages(...packages) {
-  execSync(`yarn add ${packages.join(' ')} -D`, {
+  const devPackagesToInstall = packages.filter((pkg) => devPackages.includes(extractPackageName(pkg)))
+  const nonDevPackagesToInstall = packages.filter((pkg) => !devPackages.includes(extractPackageName(pkg)))
+
+  if (devPackagesToInstall.length) {
+    installDevPackages(...devPackagesToInstall)
+  }
+
+  if (nonDevPackagesToInstall.length) {
+    console.info('Installing non-dev packages', nonDevPackagesToInstall)
+    execSync(`pnpm add ${nonDevPackagesToInstall.join(' ')}`, {
+      stdio: 'inherit',
+    })
+  }
+}
+
+function installDevPackages(...packages) {
+  console.info('Installing dev packages', packages)
+  execSync(`pnpm add ${packages.join(' ')} -D`, {
     stdio: 'inherit',
   })
 }

@@ -75,3 +75,5 @@ sdk/README.MD
 sdk/LICENSE
 
 .local
+
+*.tsbuildinfo
