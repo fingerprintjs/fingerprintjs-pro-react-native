@@ -4,5 +4,7 @@
   "initialVersions": {
     "@fingerprintjs/fingerprintjs-pro-react-native": "3.14.0"
   },
-  "changesets": []
+  "changesets": [
+    "update-mobile-agents-2-16-0"
+  ]
 }
