@@ -1,5 +1,19 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
+## 3.15.0
+
+### Minor Changes
+
+- Update mobile agents to v2.16.0
+
+  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2160)
+  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2160) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`~> 2.16.0`**
+- Fingerprint Android SDK Version Range: **`>= 2.16.0 and < 2.17.0`**
+
 ## 3.15.0-test.0
 
 ### Minor Changes
