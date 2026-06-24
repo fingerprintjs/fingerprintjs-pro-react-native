@@ -36,6 +36,10 @@ const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
     callbacks: [stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
     patchExpoConfig: [withNewArchFlag, withSplashscreen],
   },
+  0.77: {
+    callbacks: [stripAndroidExtraBuildProperties, setCompileSdkVersion(35)],
+    patchExpoConfig: [withNewArchFlag, withSplashscreen],
+  },
 }
 
 export function handleReactNativeVersion(rnVersion: string) {
