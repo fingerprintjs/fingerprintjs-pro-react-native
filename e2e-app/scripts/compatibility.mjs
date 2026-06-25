@@ -9,37 +9,59 @@ const devPackages = Object.keys(pkg.devDependencies)
  * Each key in the object represents a specific React Native version, and its
  * associated value contains information about the packages applicable for that version.
  *
- * Structure:
- * - `packages`: An array of strings specifying the version-specific package dependencies.
+ * The matrix `react-native` version is always installed as-is — the goal is to exercise the SDK
+ * against every listed RN version. The packages below only provide the *scaffolding* (Expo SDK +
+ * Detox config plugin) and supporting build tooling around that RN.
  *
+ * `packages`: version-specific dependencies installed alongside `react-native@<matrix version>`.
+ *
+ * Two things have to be right per RN version, or the Android build fails:
+ *
+ * 1. Expo SDK / Detox plugin. `expo prebuild` scaffolds the native project from the Expo SDK's
+ *    template, and @config-plugins/detox peer-requires a matching SDK. Pick the SDK whose own RN
+ *    is the nearest one <= the matrix RN, so the generated settings.gradle never references a
+ *    Gradle plugin the installed RN lacks (e.g. `com.facebook.react.settings`, added in RN 0.74 —
+ *    this is why 0.73 must use SDK 50, not 51):
+ *      SDK 50 = RN 0.73 = @config-plugins/detox@7
+ *      SDK 51 = RN 0.74 = @config-plugins/detox@8
+ *      SDK 52 = RN 0.76 = @config-plugins/detox@9
+ *      SDK 53 = RN 0.79 = @config-plugins/detox@11
+ *      SDK 54 = RN 0.81 = (no @config-plugins/detox release yet -> unusable, 0.80/0.81 use SDK 53)
+ *
+ * 2. @react-native-community/cli. RN >= 0.75 calls `autolinkLibrariesFromCommand` (i.e.
+ *    `npx @react-native-community/cli config`) during Gradle settings evaluation. The CLI is only
+ *    a transitive dep of RN 0.75 (and not a dep at all from 0.76+), and pnpm does not link
+ *    transitive bins, so npx can't find it -> "exited with error code: 127". Installing it as a
+ *    direct dep fixes it. The major is aligned to each RN's release (peer constraint is just `*`).
+ *    RN <= 0.74 used file-based autolinking and needs no CLI.
  */
 const reactNativeMetadata = {
   0.73: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@50', 'detox@20.20.3', '@config-plugins/detox@7'],
   },
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
   },
   0.75: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', '@react-native-community/cli@14'],
   },
   0.76: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@15'],
   },
   0.77: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
   },
   0.78: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
   },
   0.79: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
+    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
   },
   '0.80': {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
+    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@19'],
   },
   0.81: {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
+    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
 }
 
