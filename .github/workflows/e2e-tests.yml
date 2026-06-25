@@ -26,6 +26,7 @@ jobs:
   build-android:
     strategy:
       fail-fast: false
+      max-parallel: 5
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
     runs-on: ubuntu-latest
