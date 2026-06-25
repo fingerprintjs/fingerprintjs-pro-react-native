@@ -1,6 +1,6 @@
 import { disableNewArch } from './arch'
 import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './android'
-import { withNewArchFlag, withSplashscreen } from '@/app-config-tools/expoConfigPatchers'
+import { withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
 
 // config is typed as any, as different expo version have different types for the config object
 type ExpoConfigPatcher = (config: any) => void

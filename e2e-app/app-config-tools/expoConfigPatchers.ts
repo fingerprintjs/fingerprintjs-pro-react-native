@@ -1,4 +1,4 @@
-import { getNewArch } from '@/app-config-tools/arch'
+import { getNewArch } from './arch'
 
 export function withNewArchFlag(config: any) {
   config.newArchEnabled = getNewArch()
