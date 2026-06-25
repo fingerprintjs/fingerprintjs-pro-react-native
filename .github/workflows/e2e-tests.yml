@@ -80,12 +80,6 @@ jobs:
         run: pnpm prebuild
         working-directory: e2e-app
 
-      - name: Cleanup caches before Android build to prevent "No space left on device" errors
-        run: |
-          pnpm store prune || true
-          rm -rf ~/.gradle/caches ~/.gradle/daemon ~/.gradle/native
-        working-directory: e2e-app
-
       - run: pnpm exec detox build --configuration android.emu.release
         working-directory: e2e-app
 
