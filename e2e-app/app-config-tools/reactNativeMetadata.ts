@@ -29,7 +29,7 @@ const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
     patchExpoConfig: [withNewArchFlag, withSplashscreen],
   },
   0.75: {
-    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(35)],
+    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
     patchExpoConfig: [withNewArchFlag, withSplashscreen],
   },
   0.76: {
