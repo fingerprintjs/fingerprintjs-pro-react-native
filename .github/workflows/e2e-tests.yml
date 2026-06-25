@@ -318,7 +318,7 @@ jobs:
       - name: Start iPhone simulator
         uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5 # v5
         with:
-          model: 'iPhone 16'
+          model: 'iPhone 17'
           shutdown_after_job: 'false'
 
       - run: pnpm install --frozen-lockfile
