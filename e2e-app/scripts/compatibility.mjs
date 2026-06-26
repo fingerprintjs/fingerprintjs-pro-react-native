@@ -17,7 +17,8 @@ const reactNativeMetadata = {
     packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
   },
   0.78: {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
+    // https://expo.dev/changelog/react-native-78
+    packages: ['expo@53.0.0-canary-20250306-d9d3e02', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
   },
   0.79: {
     packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
