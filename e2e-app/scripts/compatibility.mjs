@@ -3,6 +3,11 @@ import pkg from '../package.json' with { type: 'json' };
 
 const devPackages = Object.keys(pkg.devDependencies)
 
+// Tested RN versions are those a STABLE Expo SDK officially builds. Each Expo SDK's native modules
+// compile only against the RN minor(s) it supports: its own RN, plus any next minor Expo explicitly
+// backported via `expo install` (SDK 51 also supports 0.75, SDK 52 also supports 0.77). RN versions
+// Expo offers only through a pre-release CANARY (0.78, 0.80, 0.82, 0.84) are excluded: that
+// toolchain is fragile (template vs. autolinking drift).
 const reactNativeMetadata = {
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
@@ -16,43 +21,14 @@ const reactNativeMetadata = {
   0.77: {
     packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
   },
-  0.78: {
-    // RN 0.78 has no stable Expo SDK, and neither stable neighbor compiles against it (expo@52's
-    // native code references ReactNativeConfig, gone in 0.78; expo@53 targets 0.79). Only the SDK
-    // 53 canary carries RN 0.78 native code. That canary's autolinking predates
-    // useExpoVersionCatalog(), so the prebuild tooling (@expo/config-plugins, @expo/config,
-    // @expo/prebuild-config) must be pinned to the same canary. They are absent from the canary's
-    // bundledNativeModules, so `expo install --fix` would otherwise leave them at the base ~56 and
-    // emit a settings.gradle the canary's autolinking can't evaluate.
-    packages: [
-      'expo@53.0.0-canary-20250306-d9d3e02',
-      'detox@20.37.0',
-      '@config-plugins/detox@11',
-      '@react-native-community/cli@18',
-      '@expo/config-plugins@9.1.0-canary-20250306-d9d3e02',
-      '@expo/config@11.0.0-canary-20250306-d9d3e02',
-      '@expo/prebuild-config@9.0.0-canary-20250306-d9d3e02',
-    ],
-  },
   0.79: {
     packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
-  },
-  0.80: {
-    packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
   0.81: {
     packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
-  0.82: {
-    // SDK 55 stable bundles RN 0.83; this is the last SDK 55 canary that pinned RN 0.82 (0.82.1).
-    packages: ['expo@55.0.0-canary-20251223-b83b31e', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
-  },
   0.83: {
     packages: ['expo@55', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
-  },
-  0.84: {
-    // SDK 56 stable bundles RN 0.85; this is the last SDK 56 canary that pinned RN 0.84 (0.84.1).
-    packages: ['expo@56.0.0-canary-20260305-5163746', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
 }
 
