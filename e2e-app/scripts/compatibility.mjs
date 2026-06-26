@@ -17,11 +17,14 @@ const devPackages = Object.keys(pkg.devDependencies)
  *
  * Two things have to be right per RN version, or the Android build fails:
  *
+ * The SDK supports Expo >= 51 (see its peerDependencies), so the matrix floor is RN 0.74 (Expo
+ * 51's RN). RN 0.73 is only supported in bare React Native and cannot be built through this
+ * Expo-prebuild harness: Expo 51's template applies `com.facebook.react.settings` (added in RN
+ * 0.74), which RN 0.73 doesn't ship, and no Expo >= 51 bundles RN 0.73.
+ *
  * 1. Expo SDK / Detox plugin. `expo prebuild` scaffolds the native project from the Expo SDK's
  *    template. Pick the SDK whose own RN is the nearest one <= the matrix RN, so the generated
- *    settings.gradle never references a Gradle plugin the installed RN lacks (e.g.
- *    `com.facebook.react.settings`, added in RN 0.74; this is why 0.73 must use SDK 50, not 51):
- *      SDK 50 = RN 0.73 = @config-plugins/detox@7
+ *    settings.gradle never references a Gradle plugin the installed RN lacks:
  *      SDK 51 = RN 0.74 = @config-plugins/detox@8
  *      SDK 52 = RN 0.76 = @config-plugins/detox@9
  *      SDK 53 = RN 0.79 = @config-plugins/detox@11
@@ -40,9 +43,6 @@ const devPackages = Object.keys(pkg.devDependencies)
  *    RN <= 0.74 used file-based autolinking and needs no CLI.
  */
 const reactNativeMetadata = {
-  0.73: {
-    packages: ['expo@50', 'detox@20.20.3', '@config-plugins/detox@7'],
-  },
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
   },
