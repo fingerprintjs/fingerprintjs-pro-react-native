@@ -17,7 +17,22 @@ const reactNativeMetadata = {
     packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
   },
   0.78: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@18'],
+    // RN 0.78 has no stable Expo SDK, and neither stable neighbor compiles against it (expo@52's
+    // native code references ReactNativeConfig, gone in 0.78; expo@53 targets 0.79). Only the SDK
+    // 53 canary carries RN 0.78 native code. That canary's autolinking predates
+    // useExpoVersionCatalog(), so the prebuild tooling (@expo/config-plugins, @expo/config,
+    // @expo/prebuild-config) must be pinned to the same canary. They are absent from the canary's
+    // bundledNativeModules, so `expo install --fix` would otherwise leave them at the base ~56 and
+    // emit a settings.gradle the canary's autolinking can't evaluate.
+    packages: [
+      'expo@53.0.0-canary-20250306-d9d3e02',
+      'detox@20.37.0',
+      '@config-plugins/detox@11',
+      '@react-native-community/cli@18',
+      '@expo/config-plugins@9.1.0-canary-20250306-d9d3e02',
+      '@expo/config@11.0.0-canary-20250306-d9d3e02',
+      '@expo/prebuild-config@9.0.0-canary-20250306-d9d3e02',
+    ],
   },
   0.79: {
     packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
