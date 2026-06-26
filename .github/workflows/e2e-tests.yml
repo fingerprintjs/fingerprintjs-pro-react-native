@@ -317,6 +317,7 @@ jobs:
 
       - name: Install macOS deps
         run: |
+          brew trust wix/brew
           brew tap wix/brew
           brew install applesimutils
 
