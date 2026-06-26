@@ -30,13 +30,15 @@ const reactNativeMetadata = {
     packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
   0.82: {
-    packages: ['expo@55', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
+    // SDK 55 stable bundles RN 0.83; this is the last SDK 55 canary that pinned RN 0.82 (0.82.1).
+    packages: ['expo@55.0.0-canary-20251223-b83b31e', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
   0.83: {
     packages: ['expo@55', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
   0.84: {
-    packages: ['expo@55', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
+    // SDK 56 stable bundles RN 0.85; this is the last SDK 56 canary that pinned RN 0.84 (0.84.1).
+    packages: ['expo@56.0.0-canary-20260305-5163746', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
   },
 }
 
