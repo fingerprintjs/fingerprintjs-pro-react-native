@@ -27,10 +27,10 @@ const reactNativeMetadata = {
     packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
   },
   0.81: {
-    packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11'],
+    packages: ['expo@54', 'detox@20.51.0', '@config-plugins/detox@11'],
   },
   0.83: {
-    packages: ['expo@55', 'detox@20.47.0', '@config-plugins/detox@11'],
+    packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11'],
   },
 }
 
