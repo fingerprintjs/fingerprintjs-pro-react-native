@@ -8,10 +8,10 @@ const reactNativeMetadata = {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@19.0.0', 'react-dom@19.0.0'],
   },
   0.75: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@19.0.0', 'react-dom@19.0.0'],
+    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@19.0.0', 'react-dom@19.0.0', '@react-native-community/cli@14'],
   },
   0.76: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@15'],
   },
   0.77: {
     packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
