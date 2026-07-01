@@ -3,11 +3,6 @@ import pkg from '../package.json' with { type: 'json' };
 
 const devPackages = Object.keys(pkg.devDependencies)
 
-// Tested RN versions are those a STABLE Expo SDK officially builds. Each Expo SDK's native modules
-// compile only against the RN minor(s) it supports: its own RN, plus any next minor Expo explicitly
-// backported via `expo install` (SDK 51 also supports 0.75, SDK 52 also supports 0.77). RN versions
-// Expo offers only through a pre-release CANARY (0.78, 0.80, 0.82, 0.84) are excluded: that
-// toolchain is fragile (template vs. autolinking drift).
 const reactNativeMetadata = {
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
