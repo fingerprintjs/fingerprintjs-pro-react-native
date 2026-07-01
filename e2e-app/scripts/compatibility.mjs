@@ -16,19 +16,19 @@ const reactNativeMetadata = {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', '@react-native-community/cli@14'],
   },
   0.76: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@15'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
   },
   0.77: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', '@react-native-community/cli@16'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
   },
   0.79: {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', '@react-native-community/cli@18'],
+    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
   },
   0.81: {
-    packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
+    packages: ['expo@54', 'detox@20.42.0', '@config-plugins/detox@11'],
   },
   0.83: {
-    packages: ['expo@55', 'detox@20.47.0', '@config-plugins/detox@11', '@react-native-community/cli@20'],
+    packages: ['expo@55', 'detox@20.47.0', '@config-plugins/detox@11'],
   },
 }
 
