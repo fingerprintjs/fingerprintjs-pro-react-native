@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  XCODE_VERSION: 16.4
+  XCODE_VERSION: 26.3
 
 jobs:
   android-build-TestProject:
@@ -40,7 +40,7 @@ jobs:
 
   ios-build-TestProject:
     name: iOS TestProject - Build and Test React Native Library
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
