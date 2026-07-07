@@ -6,8 +6,8 @@
 
 - Update mobile agents to v2.16.0
 
-  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2160)
-  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2160) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
+  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2-16-0)
+  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2-16-0) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
 
 ### Supported Native SDK Version Range
 
@@ -20,8 +20,8 @@
 
 - Update mobile agents to v2.16.0
 
-  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2160)
-  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2160) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
+  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2-16-0)
+  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2-16-0) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
 
 ## [3.14.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.13.0...v3.14.0) (2026-05-05)
 
