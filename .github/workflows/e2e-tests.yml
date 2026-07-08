@@ -23,6 +23,7 @@ jobs:
   build-android:
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
     runs-on: ubuntu-latest
@@ -100,6 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Android E2E Tests for react-native ${{ matrix.react-native }}
     strategy:
+      max-parallel: 3
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
@@ -211,6 +213,7 @@ jobs:
     runs-on: macos-26
     name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
     strategy:
+      max-parallel: 3
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
@@ -295,6 +298,7 @@ jobs:
       - build-ios
       - build-matrix
     strategy:
+      max-parallel: 3
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
