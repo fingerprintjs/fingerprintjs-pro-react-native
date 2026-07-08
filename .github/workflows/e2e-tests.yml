@@ -15,13 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
-      xcode-map: ${{ steps.set-matrix.outputs.xcode-map }}
     steps:
       - id: set-matrix
         run: |
           echo "matrix=['local', '0.74', '0.75', '0.76', '0.77', '0.79', '0.81', '0.83']" >> $GITHUB_OUTPUT
-          # Per-react-native Xcode overrides. Any version not listed here falls back to env.XCODE_VERSION.
-          echo 'xcode-map={}' >> $GITHUB_OUTPUT
 
   build-android:
     strategy:
@@ -230,7 +227,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: ${{ fromJSON(needs.build-matrix.outputs.xcode-map)[matrix.react-native] || env.XCODE_VERSION }}
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -313,7 +310,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
         with:
-          xcode-version: ${{ fromJSON(needs.build-matrix.outputs.xcode-map)[matrix.react-native] || env.XCODE_VERSION }}
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install macOS deps
         run: |
