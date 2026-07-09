@@ -1,6 +1,6 @@
 import { disableNewArch } from './arch'
 import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './android'
-import { withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
+import { withFingerprintMavenRepo, withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
 
 // config is typed as any, as different expo version have different types for the config object
 type ExpoConfigPatcher = (config: any) => void
@@ -22,7 +22,7 @@ type ReactNativeMetadata = {
 const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
   0.73: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withNewArchFlag, withSplashscreen],
+    patchExpoConfig: [withNewArchFlag, withSplashscreen, withFingerprintMavenRepo],
   },
   0.74: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
