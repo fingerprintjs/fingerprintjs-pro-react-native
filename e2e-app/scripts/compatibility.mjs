@@ -28,6 +28,9 @@ const reactNativeMetadata = {
   0.83: {
     packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0'],
   },
+  0.85: {
+    packages: ['expo@56', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0']
+  }
 }
 
 const rnVersion = process.env.REACT_NATIVE_VERSION
