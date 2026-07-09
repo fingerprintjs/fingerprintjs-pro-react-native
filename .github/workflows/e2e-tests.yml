@@ -18,7 +18,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.77', '0.79', '0.81', '0.83', '0.85]" >> $GITHUB_OUTPUT
+          echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.77', '0.79', '0.81', '0.83', '0.85']" >> $GITHUB_OUTPUT
 
   build-android:
     strategy:
