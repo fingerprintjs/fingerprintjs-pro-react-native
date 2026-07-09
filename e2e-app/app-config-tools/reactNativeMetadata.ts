@@ -20,6 +20,10 @@ type ReactNativeMetadata = {
  *   - `callbacks`: An array of functions to execute in the context of the respective React Native version.
  */
 const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
+  0.73: {
+    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
+    patchExpoConfig: [withNewArchFlag, withSplashscreen],
+  },
   0.74: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
     patchExpoConfig: [withNewArchFlag, withSplashscreen],
