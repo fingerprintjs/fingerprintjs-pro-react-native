@@ -26,12 +26,7 @@ const reactNativeMetadata = {
     packages: ['expo@54', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.1.0', 'react-dom@19.1.0'],
   },
   0.83: {
-    // @expo/dom-webview is an optional peer of expo, absent from bundledNativeModules (so
-    // `expo install --fix` never realigns it) and only published for SDK 55+. It must be pinned to
-    // the SDK 55 line, otherwise the base's SDK 56 build (56.0.x) is kept and its native module
-    // references expo-modules-core classes (e.g. AnyTypeCache) that SDK 55 lacks, crashing at
-    // module registration.
-    packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0', '@expo/dom-webview@55'],
+    packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0'],
   },
 }
 
