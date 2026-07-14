@@ -47,6 +47,12 @@ supports. A React Native version with no corresponding Expo SDK can only be forc
 mismatched scaffold or a pre-release canary, both of which break in ways no real user would hit, so
 testing them wouldn't produce enough value.
 
+With that being said, it would be possible to test these versions without Expo, but it's not worth the effort at the moment.
+
+Below is the list of React Native versions that are **not** tested in CI:
+
+```0.78, 0.80, 0.82, 0.84```
+
 ## How to publish
 
 We use [changesets](https://github.com/changesets/changesets) for handling release notes. If there are relevant changes,
