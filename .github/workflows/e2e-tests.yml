@@ -207,7 +207,7 @@ jobs:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
-    runs-on: macos-latest
+    runs-on: macos-15
     name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
     strategy:
       fail-fast: false
@@ -281,7 +281,7 @@ jobs:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
-    runs-on: macos-latest
+    runs-on: macos-15
     name: iOS E2E Tests for react-native ${{ matrix.react-native }}
     needs:
       - build-ios
