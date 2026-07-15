@@ -265,6 +265,7 @@ jobs:
 
       - name: Prebuild
         run: |
+          # Expo can report success without generating native files after an archive error.
           if ! pnpm prebuild || [ ! -d ios/E2EApp.xcworkspace ]; then
             rm -rf ios android
             pnpm prebuild
