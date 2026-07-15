@@ -373,15 +373,34 @@ export interface VisitorQueryResult extends QueryResult<VisitorData> {
 }
 
 /**
+ * Configuration for {@link VisitorQueryContext.getData}.
+ *
+ * @group Hooks approach
+ */
+export interface GetDataOptions extends RequestOptions {
+  /**
+   * Rethrow an identification error after updating the query state.
+   *
+   * Defaults to `false`.
+   */
+  throwOnError?: boolean
+}
+
+/**
  * @group Hooks approach
  */
 export interface VisitorQueryContext extends VisitorQueryResult {
   /**
-   * Retrieve the visitor identifier using your public API key.
+   * Retrieve visitor identification data using your public API key.
+   *
+   * By default, errors are stored in {@link VisitorQueryResult.error} and this method returns `null`.
+   * Set {@link GetDataOptions.throwOnError} to `true` to rethrow the error after the state is updated.
+   *
    * @param tags is a customer-provided value or an object that will be saved together with the analysis event and will be returned back to you in a webhook message or when you search for the visit in the server API. {@link https://dev.fingerprint.com/docs/js-agent#tag | more info in the documentation page}
    * @param linkedId  is a way of linking current analysis event with a custom identifier. This will allow you to filter visit information when using the Server API {@link https://dev.fingerprint.com/docs/js-agent#linkedid | more info in the documentation page}
+   * @param options configures the request and error handling.
    */
-  getData: (tags?: Tags, linkedId?: string, options?: RequestOptions) => Promise<VisitorData | null>
+  getData: (tags?: Tags, linkedId?: string, options?: GetDataOptions) => Promise<VisitorData | null>
 }
 
 export type VisitorId = string

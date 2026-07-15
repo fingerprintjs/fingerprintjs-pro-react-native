@@ -59,22 +59,41 @@ describe('useVisitorData', () => {
     })
   })
 
-  it('should fill error field in case of error', async () => {
+  it('should store errors and return null by default', async () => {
     const error = new Error('Unknown error')
     getVisitorData.mockReturnValueOnce(Promise.reject(error))
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
-    act(() => {
-      result.current.getData()
+
+    await act(async () => {
+      await expect(result.current.getData()).resolves.toBeNull()
     })
-    expect(result.current.isLoading).toBeTruthy()
-    expect(result.current.error).toBeFalsy()
-    await waitFor(() => {
-      expect(result.current.isLoading).toBeFalsy()
-      expect(result.current.data).toBeUndefined()
-      expect(result.current.error).toBeInstanceOf(Error)
-      expect(result.current.error?.name).toBe('UnknownError')
-      expect(result.current.error?.message).toContain(error.message)
+
+    expect(result.current.isLoading).toBeFalsy()
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.error).toBeInstanceOf(Error)
+    expect(result.current.error?.name).toBe('UnknownError')
+    expect(result.current.error?.message).toContain(error.message)
+  })
+
+  it('should rethrow errors when throwOnError is enabled', async () => {
+    const error = new Error('Unknown error')
+    getVisitorData.mockReturnValueOnce(Promise.reject(error))
+    const wrapper = createWrapper()
+    const { result } = renderHook(() => useVisitorData(), { wrapper })
+
+    await act(async () => {
+      await expect(result.current.getData(undefined, undefined, { throwOnError: true })).rejects.toMatchObject({
+        name: 'UnknownError',
+        message: error.message,
+      })
+    })
+
+    expect(result.current.isLoading).toBeFalsy()
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.error).toMatchObject({
+      name: 'UnknownError',
+      message: error.message,
     })
   })
 
