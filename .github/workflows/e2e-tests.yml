@@ -311,9 +311,8 @@ jobs:
           xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install macOS deps
-        run: |
-          brew tap wix/brew
-          brew install applesimutils
+        # Fully-qualified install auto-trusts the third-party formula under Homebrew 6+.
+        run: brew install wix/brew/applesimutils
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
