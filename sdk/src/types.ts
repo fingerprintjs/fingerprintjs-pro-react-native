@@ -367,7 +367,7 @@ export type Tag = string | number | boolean | Tags
 
 export interface VisitorQueryResult extends QueryResult<VisitorData> {
   /**
-   * Visitor identification dataaaa
+   * Visitor identification data
    */
   data?: VisitorData
 }
