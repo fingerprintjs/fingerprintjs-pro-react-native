@@ -264,7 +264,12 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild
+        run: |
+          if ! pnpm prebuild || [ ! -d ios/E2EApp.xcworkspace ]; then
+            rm -rf ios android
+            pnpm prebuild
+            test -d ios/E2EApp.xcworkspace
+          fi
         working-directory: e2e-app
 
       - run: pnpm exec detox build --configuration ios.sim.release
