@@ -65,7 +65,12 @@ jobs:
 
       - name: Install Pods
         working-directory: TestProject/ios
-        run: pod install
+        run: |
+          # CocoaPods can intermittently fail while resolving pnpm symlinks.
+          if ! pod install; then
+            rm -rf Pods
+            pod install
+          fi
 
       - name: Build iOS
         working-directory: TestProject/ios
