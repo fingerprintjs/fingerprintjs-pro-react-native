@@ -1,5 +1,21 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
+## 3.7.1
+
+### Patch Changes
+
+- Maintenance release for customers pinned to the 3.7.x line. Contains the same
+  `useVisitorData().getData` rethrow option shipped in 3.17.0
+  (call `getData(tags, linkedId, { throwOnError: true })` to reject on error),
+  but keeps the mobile agents on v2.10.0 so upgrading does not change identification
+  behavior (e.g. no newer root-detection signals). Cut from `main`; only the native
+  SDK pins were rolled back.
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`~> 2.10.0`**
+- Fingerprint Android SDK Version Range: **`>= 2.10.0 and < 2.11.0`**
+
 ## 3.17.0
 
 ### Minor Changes
