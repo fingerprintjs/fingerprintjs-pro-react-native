@@ -1,6 +1,6 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
-## 3.7.1-rc.0
+## 3.7.1-rethrow-rc.0
 
 ### Patch Changes
 

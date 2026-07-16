@@ -1,6 +1,6 @@
 {
   "name": "@fingerprintjs/fingerprintjs-pro-react-native",
-  "version": "3.7.1-rc.0",
+  "version": "3.7.1-rethrow-rc.0",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "publishConfig": {
     "access": "public",
