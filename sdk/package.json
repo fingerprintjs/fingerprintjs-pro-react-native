@@ -4,7 +4,7 @@
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "publishConfig": {
     "access": "public",
-    "tag": "rc"
+    "tag": "rethrow-rc"
   },
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
