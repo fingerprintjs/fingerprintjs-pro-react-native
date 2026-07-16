@@ -4,12 +4,14 @@
 
 ### Patch Changes
 
-- Pre-release for validation by customers pinned to the 3.7.x line. Contains the same
-  `useVisitorData().getData` rethrow option shipped in 3.17.0
-  (call `getData(tags, linkedId, { throwOnError: true })` to reject on error),
-  but keeps the mobile agents on v2.10.0 so upgrading does not change identification
-  behavior (e.g. no newer root-detection signals). Cut from `main`; only the native
-  SDK pins were rolled back.
+- Pre-release for validation by customers pinned to the 3.7.x line. Functionally
+  equivalent to 3.7.0 plus a single addition: the `useVisitorData().getData` rethrow
+  option shipped in 3.17.0 (call `getData(tags, linkedId, { throwOnError: true })` to
+  reject on error). Cut from `main`, but the mobile agents are pinned back to v2.10.0
+  and the Proximity Detection init options added in 3.8.0 (`allowUseOfLocationData`,
+  `locationTimeoutMillisAndroid`) are removed, so upgrading from 3.7.0 does not change
+  identification behavior (e.g. no newer root-detection signals) or the public API
+  beyond the opt-in rethrow flag.
 
 ### Supported Native SDK Version Range
 

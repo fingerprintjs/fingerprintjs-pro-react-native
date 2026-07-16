@@ -35,8 +35,6 @@ function App(): React.JSX.Element {
       region={region as Region}
       endpointUrl={endpoint || undefined}
       requestOptions={{ timeout: customTimeout }}
-      allowUseOfLocationData={true}
-      locationTimeoutMillisAndroid={7000}
     >
       <SafeAreaView style={backgroundStyle}>
         <StatusBar
