@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "rethrow-rc",
+  "initialVersions": {
+    "@fingerprintjs/fingerprintjs-pro-react-native": "3.7.1-rethrow-rc.0"
+  },
+  "changesets": []
+}
