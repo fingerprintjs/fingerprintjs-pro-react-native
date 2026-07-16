@@ -1,3 +1,17 @@
+## [3.7.1](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.7.0...v3.7.1) (2026-07-16)
+
+
+### Features
+
+* add an option to rethrow errors from `useVisitorData().getData` (backport of the `throwOnError` option from v3.17.0)
+
+
+
+### Supported Native SDK Version Range
+
+* Fingerprint Android SDK Version Range: **`>= 2.10.0 and < 2.11.0`**
+* Fingerprint iOS SDK Version Range: **`~> 2.10.0`**
+
 ## [3.7.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.6.0...v3.7.0) (2025-09-09)
 
 
