@@ -40,7 +40,7 @@ jobs:
 
   ios-build-TestProject:
     name: iOS TestProject - Build and Test React Native Library
-    runs-on: macos-15
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -65,12 +65,7 @@ jobs:
 
       - name: Install Pods
         working-directory: TestProject/ios
-        run: |
-          # CocoaPods can intermittently fail while resolving pnpm symlinks.
-          if ! pod install; then
-            rm -rf Pods
-            pod install
-          fi
+        run: pod install
 
       - name: Build iOS
         working-directory: TestProject/ios

@@ -207,7 +207,7 @@ jobs:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
-    runs-on: macos-15
+    runs-on: macos-latest
     name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
     strategy:
       fail-fast: false
@@ -264,13 +264,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: |
-          # Expo can report success without generating native files after an archive error.
-          if ! pnpm prebuild || [ ! -d ios/E2EApp.xcworkspace ]; then
-            rm -rf ios android
-            pnpm prebuild
-            test -d ios/E2EApp.xcworkspace
-          fi
+        run: pnpm prebuild
         working-directory: e2e-app
 
       - run: pnpm exec detox build --configuration ios.sim.release
@@ -287,7 +281,7 @@ jobs:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
-    runs-on: macos-15
+    runs-on: macos-latest
     name: iOS E2E Tests for react-native ${{ matrix.react-native }}
     needs:
       - build-ios
@@ -311,8 +305,9 @@ jobs:
           xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Install macOS deps
-        # Fully-qualified install auto-trusts the third-party formula under Homebrew 6+.
-        run: brew install wix/brew/applesimutils
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
