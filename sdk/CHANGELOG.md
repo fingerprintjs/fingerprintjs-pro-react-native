@@ -1,10 +1,10 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
-## 3.7.1
+## 3.7.1-rc.0
 
 ### Patch Changes
 
-- Maintenance release for customers pinned to the 3.7.x line. Contains the same
+- Pre-release for validation by customers pinned to the 3.7.x line. Contains the same
   `useVisitorData().getData` rethrow option shipped in 3.17.0
   (call `getData(tags, linkedId, { throwOnError: true })` to reject on error),
   but keeps the mobile agents on v2.10.0 so upgrading does not change identification
