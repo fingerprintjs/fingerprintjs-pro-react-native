@@ -1,10 +1,11 @@
-import { Pressable, Text, View } from 'react-native'
+// SafeAreaView is deprecated in newer RN versions, react-native-safe-area-context is recommended
+// but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
+import { Pressable, SafeAreaView, Text, View } from 'react-native'
 import { FingerprintJsProProvider, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
 import config from '@/src/config'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
@@ -17,6 +18,7 @@ function InnerApp() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
       <SafeAreaView
         style={{
           padding: 24,
