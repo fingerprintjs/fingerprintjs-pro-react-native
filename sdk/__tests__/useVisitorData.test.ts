@@ -4,7 +4,10 @@ import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const { getVisitorData, getVisitorDataWithTimeout } = NativeModules.RNFingerprintjsPro as Record<string, jest.Mock>
+const { getVisitorData, getVisitorDataWithTimeout } = NativeModules.RNFingerprintjsPro as unknown as Record<
+  string,
+  jest.Mock
+>
 
 const mockedVisitorId = 'some visitor id'
 const mockedRequestId = 'some request id'
