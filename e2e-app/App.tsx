@@ -1,9 +1,10 @@
-import { Pressable, SafeAreaView, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { FingerprintJsProProvider, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
 import config from '@/src/config'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
