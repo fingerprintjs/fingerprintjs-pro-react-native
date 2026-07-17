@@ -3,10 +3,11 @@ import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './androi
 import { withFingerprintMavenRepo, withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
 
 // config is typed as any, as different expo version have different types for the config object
-type ExpoConfigPatcher = (config: unknown) => void
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ExpoConfigPatcher = (config: any) => void
 
 type ReactNativeMetadata = {
-  callbacks: (() => void)[]
+  callbacks?: (() => void)[]
   patchExpoConfig?: ExpoConfigPatcher[]
 }
 /**
@@ -19,7 +20,7 @@ type ReactNativeMetadata = {
  * - The value is an object containing:
  *   - `callbacks`: An array of functions to execute in the context of the respective React Native version.
  */
-const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
+const reactNativeMetadata: Record<string, ReactNativeMetadata | undefined> = {
   0.73: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
     patchExpoConfig: [withNewArchFlag, withSplashscreen, withFingerprintMavenRepo],
@@ -43,7 +44,7 @@ const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
 }
 
 export function handleReactNativeVersion(rnVersion: string) {
-  if (reactNativeMetadata[rnVersion].callbacks.length) {
+  if (reactNativeMetadata[rnVersion]?.callbacks?.length) {
     reactNativeMetadata[rnVersion].callbacks.forEach((callback) => callback())
   }
 }
@@ -55,7 +56,7 @@ export function handleReactNativeVersion(rnVersion: string) {
 export function patchExpoConfig<T>(rnVersion: string, config: T): T {
   const metadata = reactNativeMetadata[rnVersion]
 
-  if (metadata.patchExpoConfig?.length) {
+  if (metadata?.patchExpoConfig?.length) {
     metadata.patchExpoConfig.forEach((patcher) => patcher(config))
   }
 
