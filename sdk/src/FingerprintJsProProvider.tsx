@@ -35,11 +35,11 @@ export function FingerprintJsProProvider({
     [client]
   )
 
-  const firstRender = useRef(true)
+  const firstRenderRef = useRef(true)
 
   useEffect(() => {
-    if (firstRender) {
-      firstRender.current = false
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false
     } else {
       setClient(new FingerprintJsProAgent(fingerprintJsProAgentParams))
     }
