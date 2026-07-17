@@ -34,6 +34,7 @@ export function useVisitorData(): VisitorQueryContext {
         result = await getVisitorData(tags, linkedId, options)
         setState((state) => ({
           ...state,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           data: result as VisitorData,
           isLoading: false,
           error: undefined,
@@ -42,10 +43,11 @@ export function useVisitorData(): VisitorQueryContext {
         setState((state) => ({
           ...state,
           data: undefined,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           error: error as IdentificationError,
         }))
       } finally {
-        setState((state) => (state.isLoading ? { ...state, isLoading: false } : state))
+        setState((state) => (state.isLoading === true ? { ...state, isLoading: false } : state))
       }
       return result
     },

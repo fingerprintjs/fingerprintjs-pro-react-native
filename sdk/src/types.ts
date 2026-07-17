@@ -312,7 +312,7 @@ export interface IpLocation {
     {
       isoCode: string
       name: string
-    }
+    },
   ]
   /**
    * Country, when available. Will be missing for Tor/anonymous proxies.
@@ -385,3 +385,10 @@ export interface VisitorQueryContext extends VisitorQueryResult {
 }
 
 export type VisitorId = string
+
+export type NativeVisitorData = [
+  requestId: string,
+  confidenceScore: string,
+  visitorDataJsonString: string,
+  sealedResult?: string,
+]

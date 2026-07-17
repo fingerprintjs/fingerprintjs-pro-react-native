@@ -3,7 +3,7 @@ import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './androi
 import { withFingerprintMavenRepo, withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
 
 // config is typed as any, as different expo version have different types for the config object
-type ExpoConfigPatcher = (config: any) => void
+type ExpoConfigPatcher = (config: unknown) => void
 
 type ReactNativeMetadata = {
   callbacks: (() => void)[]
@@ -43,7 +43,7 @@ const reactNativeMetadata: Record<string, ReactNativeMetadata> = {
 }
 
 export function handleReactNativeVersion(rnVersion: string) {
-  if (reactNativeMetadata[rnVersion]?.callbacks?.length) {
+  if (reactNativeMetadata[rnVersion].callbacks.length) {
     reactNativeMetadata[rnVersion].callbacks.forEach((callback) => callback())
   }
 }
@@ -55,7 +55,7 @@ export function handleReactNativeVersion(rnVersion: string) {
 export function patchExpoConfig<T>(rnVersion: string, config: T): T {
   const metadata = reactNativeMetadata[rnVersion]
 
-  if (metadata?.patchExpoConfig?.length) {
+  if (metadata.patchExpoConfig?.length) {
     metadata.patchExpoConfig.forEach((patcher) => patcher(config))
   }
 

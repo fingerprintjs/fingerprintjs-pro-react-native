@@ -3,6 +3,7 @@ import { NativeModules } from 'react-native'
 import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const { getVisitorData, getVisitorDataWithTimeout } = NativeModules.RNFingerprintjsPro as Record<string, jest.Mock>
 
 const mockedVisitorId = 'some visitor id'
@@ -23,7 +24,7 @@ describe('useVisitorData', () => {
     const { result } = renderHook(() => useVisitorData(), { wrapper })
 
     act(() => {
-      result.current.getData()
+      void result.current.getData()
     })
 
     expect(result.current.isLoading).toBeTruthy()
@@ -44,7 +45,7 @@ describe('useVisitorData', () => {
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
-      result.current.getData()
+      void result.current.getData()
     })
     expect(result.current.data).toBeUndefined()
     await waitFor(() => {
@@ -65,7 +66,7 @@ describe('useVisitorData', () => {
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
-      result.current.getData()
+      void result.current.getData()
     })
     expect(result.current.isLoading).toBeTruthy()
     expect(result.current.error).toBeFalsy()
@@ -102,10 +103,10 @@ describe('useVisitorData', () => {
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
-      result.current.getData(mockedTags, mockedLinkedId)
+      void result.current.getData(mockedTags, mockedLinkedId)
     })
     await waitFor(() => {
-      expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId)
     })
   })
 
@@ -135,10 +136,10 @@ describe('useVisitorData', () => {
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
-      result.current.getData(mockedTags, mockedLinkedId, options)
+      void result.current.getData(mockedTags, mockedLinkedId, options)
     })
     await waitFor(() => {
-      expect(getVisitorData).toBeCalledWith(mockedTags, mockedLinkedId)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId)
     })
   })
 
@@ -168,10 +169,10 @@ describe('useVisitorData', () => {
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
     act(() => {
-      result.current.getData(mockedTags, mockedLinkedId, options)
+      void result.current.getData(mockedTags, mockedLinkedId, options)
     })
     await waitFor(() => {
-      expect(getVisitorDataWithTimeout).toBeCalledWith(mockedTags, mockedLinkedId, options.timeout)
+      expect(getVisitorDataWithTimeout).toHaveBeenCalledWith(mockedTags, mockedLinkedId, options.timeout)
     })
   })
 })

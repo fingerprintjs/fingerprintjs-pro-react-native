@@ -7,5 +7,4 @@ export const getDefaultLoadOptions = (): FingerprintJsProAgentParams => ({
 
 export const createWrapper =
   (loadOptions: FingerprintJsProAgentParams = getDefaultLoadOptions()) =>
-  ({ children }: PropsWithChildren<{}>): JSX.Element =>
-    <FingerprintJsProProvider {...loadOptions}>{children}</FingerprintJsProProvider>
+  ({ children }: PropsWithChildren) => <FingerprintJsProProvider {...loadOptions}>{children}</FingerprintJsProProvider>

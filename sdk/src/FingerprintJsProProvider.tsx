@@ -24,12 +24,12 @@ export function FingerprintJsProProvider({
   const [client, setClient] = useState<FingerprintJsProAgent>(
     () => new FingerprintJsProAgent(fingerprintJsProAgentParams)
   )
-  const [visitorId, updateVisitorId] = useState('')
+  const [visitorId, setVisitorId] = useState('')
 
   const getVisitorData = useCallback(
     async (tags?: Tags, linkedId?: string, requestOptions?: RequestOptions) => {
       const result = await client.getVisitorData(tags, linkedId, requestOptions)
-      updateVisitorId(result.visitorId)
+      setVisitorId(result.visitorId)
       return result
     },
     [client]

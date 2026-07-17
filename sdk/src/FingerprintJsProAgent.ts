@@ -1,7 +1,16 @@
 import { NativeModules } from 'react-native'
 import { UnknownError } from './errors'
-import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
+import type {
+  FingerprintJsProAgentParams,
+  NativeVisitorData,
+  ProAgent,
+  RequestOptions,
+  Tags,
+  VisitorData,
+  VisitorId,
+} from './types'
 import { unwrapError } from './unwrapError'
+import { isDefined, isTruthy } from './utils'
 
 const packageVersion = '__VERSION__'
 
@@ -54,7 +63,7 @@ export class FingerprintJsProAgent implements ProAgent {
   public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      if (timeout != null) {
+      if (isDefined(timeout)) {
         return await NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout(tags, linkedId, timeout)
       }
 
@@ -80,22 +89,23 @@ export class FingerprintJsProAgent implements ProAgent {
   public async getVisitorData(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorData> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      let visitorData: unknown[] | null
-      if (timeout != null) {
+      let visitorData: NativeVisitorData | null
+      if (isDefined(timeout)) {
         visitorData = await NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout(tags, linkedId, timeout)
       } else {
         visitorData = await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
       }
-      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] = visitorData!
+      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] = visitorData
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       const result = {
-        ...JSON.parse(visitorDataJsonString as string),
+        ...JSON.parse(visitorDataJsonString),
         requestId,
         confidence: {
           score: confidenceScore,
         },
-      }
+      } as VisitorData
 
-      if (sealedResult) {
+      if (isTruthy(sealedResult)) {
         result['sealedResult'] = sealedResult
       }
 

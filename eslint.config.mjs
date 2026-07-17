@@ -20,10 +20,17 @@ const config = [
   {
     files: ['**/*.{ts,tsx}'],
     ...react.configs['recommended-type-checked'],
+    rules: {
+      ...react.configs['recommended-type-checked'].rules,
+      '@eslint-react/no-context-provider': 'off',
+      '@eslint-react/no-use-context': 'off',
+    },
   },
   reactHooks.configs.flat['recommended-latest'],
+
   {
     files: ['**/*.{ts,tsx,mts,cts}'],
+    ignores: ['sdk/__tests__/**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
@@ -33,8 +40,11 @@ const config = [
   },
   {
     files: ['sdk/__tests__/**/*.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
+    languageOptions: {
+      parserOptions: {
+        project: 'sdk/tsconfig.tests.json',
+        tsconfigRootDir: __dirname,
+      },
     },
   },
   {
