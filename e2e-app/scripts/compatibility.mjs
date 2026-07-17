@@ -1,6 +1,5 @@
 import { execSync } from 'node:child_process'
-
-const pkg = await import('../package.json', { with: { type: 'json' } })
+import pkg from '../package.json' with { type: 'json' }
 
 const devPackages = Object.keys(pkg.devDependencies)
 
