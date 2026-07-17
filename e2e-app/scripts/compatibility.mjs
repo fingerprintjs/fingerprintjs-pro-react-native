@@ -3,41 +3,42 @@ import pkg from '../package.json' with { type: 'json' };
 
 const devPackages = Object.keys(pkg.devDependencies)
 
-/**
- * An object representing metadata for different versions of React Native.
- *
- * Each key in the object represents a specific React Native version, and its
- * associated value contains information about the packages applicable for that version.
- *
- * Structure:
- * - `packages`: An array of strings specifying the version-specific package dependencies.
- *
- */
 const reactNativeMetadata = {
   0.73: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    // Expo 50 (the only SDK bundling RN 0.73) predates autolinking's `android.extraMavenRepos`
+    // support, so the SDK's Maven repo is injected directly via plugins/withAndroidMavenRepo.js
+    // (wired in for 0.73 through reactNativeMetadata). @config-plugins/detox@7 is the SDK 50 peer.
+    packages: ['expo@50', 'detox@20.20.3', '@config-plugins/detox@7', 'react@18.2.0', 'react-dom@18.2.0'],
   },
   0.74: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@18.2.0', 'react-dom@18.2.0'],
   },
   0.75: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@18.2.0', 'react-dom@18.2.0', '@react-native-community/cli@14'],
   },
   0.76: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8'],
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', 'react@18.3.1', 'react-dom@18.3.1', '@react-native-community/cli@15'],
   },
-  0.78: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
+  0.77: {
+    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', 'react@18.3.1', 'react-dom@18.3.1'],
   },
   0.79: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9'],
-  },
-  '0.80': {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
+    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', 'react@19.0.0', 'react-dom@19.0.0'],
   },
   0.81: {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11'],
+    packages: ['expo@54', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.1.0', 'react-dom@19.1.0'],
   },
+  0.83: {
+    // @expo/dom-webview is an optional peer of expo, absent from bundledNativeModules (so
+    // `expo install --fix` never realigns it) and published only for SDK 55+. Pin it to the SDK 55
+    // line; otherwise the base's SDK 56 build (56.0.x) is kept and its native module references
+    // expo-modules-core classes (e.g. AnyTypeCache, added in core 56) that SDK 55 lacks, crashing
+    // at module registration.
+    packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0', '@expo/dom-webview@55'],
+  },
+  0.85: {
+    packages: ['expo@56', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0']
+  }
 }
 
 const rnVersion = process.env.REACT_NATIVE_VERSION

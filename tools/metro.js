@@ -36,6 +36,21 @@ function getMetroConfig(config, projectRoot) {
     ),
   ]
 
+  // Force every `react`/`react-native` import to resolve from the app's own node_modules, no matter where it
+  // originates. With pnpm + symlinks the SDK resolves these symlinks to their real path under the monorepo root,
+  // which is a different physical copy than the app's. Two React instances share no hooks dispatcher, so the SDK's
+  // `useState` reads it off a `null` dispatcher ("Cannot read property 'useState' of null"). `extraNodeModules` only
+  // kicks in as a fallback and `blockList` can't match the post-symlink real path, so neither dedupes on its own.
+  const originalResolveRequest = config.resolver.resolveRequest
+  config.resolver.resolveRequest = (context, moduleName, platform) => {
+    const shouldRedirect = hoistedModules.some((name) => moduleName === name || moduleName.startsWith(`${name}/`))
+    const resolver = originalResolveRequest ?? context.resolveRequest
+    const resolverContext = shouldRedirect
+      ? { ...context, originModulePath: path.resolve(projectRoot, 'package.json') }
+      : context
+    return resolver(resolverContext, moduleName, platform)
+  }
+
   return config
 }
 

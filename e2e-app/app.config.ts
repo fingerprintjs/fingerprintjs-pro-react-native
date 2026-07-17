@@ -3,9 +3,8 @@ import 'tsx/cjs'
 import { ExpoConfig } from '@expo/config'
 import { dependencies } from './package.json'
 import * as semver from 'semver'
-import { handleReactNativeVersion } from './app-config-tools/reactNativeMetadata'
+import { handleReactNativeVersion, patchExpoConfig } from './app-config-tools/reactNativeMetadata'
 import { getAndroidBuildProperties } from './app-config-tools/android'
-import { getNewArch } from './app-config-tools/arch'
 
 let rawReactNativeVersion = dependencies['react-native']
 
@@ -29,10 +28,6 @@ const config: ExpoConfig = {
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'e2eapp',
-  newArchEnabled: getNewArch(),
-  splash: {
-    backgroundColor: '#ffffff',
-  },
   ios: {
     bundleIdentifier: 'com.fingerprint.e2eapp',
   },
@@ -49,7 +44,8 @@ const config: ExpoConfig = {
     ],
     '@config-plugins/detox',
     './plugins/withGradleProperties.js',
+    './plugins/withSonatypeSnapshotsFix.js',
   ],
 }
 
-export default config
+export default patchExpoConfig(rnVersionStr, config)

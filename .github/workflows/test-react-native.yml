@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  XCODE_VERSION: 16.4
+  XCODE_VERSION: 26.3
 
 jobs:
   android-build-TestProject:
@@ -12,12 +12,12 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           cache: pnpm
 
@@ -40,15 +40,15 @@ jobs:
 
   ios-build-TestProject:
     name: iOS TestProject - Build and Test React Native Library
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           cache: pnpm
 
@@ -59,7 +59,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: TestProject
 
-      - uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 

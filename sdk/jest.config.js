@@ -1,6 +1,6 @@
 /**@type {import('ts-jest').JestConfigWithTsJest}*/
 module.exports = {
-  preset: 'react-native',
+  preset: '@react-native/jest-preset',
   testRegex: '/__tests__/.+test.tsx?$',
   testEnvironment: 'jsdom',
   collectCoverageFrom: ['./src/**/**.{ts,tsx}'],
