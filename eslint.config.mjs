@@ -1,7 +1,7 @@
 import { includeIgnoreFile } from 'eslint/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import cfg from '@fingerprintjs/eslint-config-dx-team/type-checked'
+import dxTeamCfg from '@fingerprintjs/eslint-config-dx-team/type-checked'
 import react from '@eslint-react/eslint-plugin'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
@@ -13,10 +13,13 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
  * */
 const config = [
   includeIgnoreFile(path.resolve(__dirname, '.gitignore')),
+
   {
     ignores: ['**/build/**', '**/dist/**', '**/node_modules/**', '**/ios/**', '**/android/**', '**/.tsup/**'],
   },
-  ...cfg,
+
+  ...dxTeamCfg,
+
   {
     files: ['**/*.{ts,tsx}'],
     ...react.configs['recommended-type-checked'],
@@ -58,6 +61,7 @@ const config = [
       '@typescript-eslint/no-require-imports': 'off',
     },
   },
+
   {
     // Relax eslint rules in test/example projects
     files: ['{TestProject,e2e-app}/**/*.{ts,tsx}'],
