@@ -20,9 +20,9 @@ importers:
       '@commitlint/cli':
         specifier: ^17.1.2
         version: 17.1.2
-      '@fingerprintjs/changesets-changelog-format':
-        specifier: ^0.2.0
-        version: 0.2.0
+      '@fingerprintjs/changesets-native-dependency-format':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@fingerprintjs/commit-lint-dx-team':
         specifier: ^0.0.2
         version: 0.0.2
@@ -1276,6 +1276,9 @@ packages:
 
   '@fingerprintjs/changesets-changelog-format@0.2.0':
     resolution: {integrity: sha512-1jI+J1r8OKUtjlFfQW4bmQ8u4E1097zPaKw5fUCgAcahLPgwW4Ae+Keoc253CSyyaKgTu2v/wniUGchmPaXAsg==}
+
+  '@fingerprintjs/changesets-native-dependency-format@0.1.0':
+    resolution: {integrity: sha512-fRrunw8LFXjKEFGWxSB/LG1/0GRkZARKNEs1Zuz9rOSDsJdjzhsYnv1Bo0IEkv7tTCTTJk69oAXGYFOXtWfHeg==}
 
   '@fingerprintjs/commit-lint-dx-team@0.0.2':
     resolution: {integrity: sha512-8FDlPI+KhnWsfbf4Lo/TERdiHl9daMhnZb4MsV5nhrta13XXGRSxOvLPUnFmZA0FsxR4HHzpszlr7ZSoPVaLSg==}
@@ -7265,6 +7268,12 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
+  '@fingerprintjs/changesets-native-dependency-format@0.1.0':
+    dependencies:
+      '@changesets/get-release-plan': 4.0.16
+      '@changesets/types': 6.1.0
+      '@fingerprintjs/changesets-changelog-format': 0.2.0
+
   '@fingerprintjs/commit-lint-dx-team@0.0.2':
     dependencies:
       '@commitlint/config-conventional': 17.8.1
@@ -7794,7 +7803,7 @@ snapshots:
       eslint: 8.57.1
       eslint-config-prettier: 8.5.0(eslint@8.57.1)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.57.1)
-      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.26.5(@babel/core@7.29.7)(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.26.5(@babel/core@7.29.7)(eslint@8.56.0))(eslint@8.57.1)
       eslint-plugin-jest: 27.9.0(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@6.0.3))(eslint@8.57.1)(typescript@6.0.3))(eslint@8.57.1)(jest@29.7.0(@types/node@24.3.1)(ts-node@10.9.2(@types/node@24.3.1)(typescript@6.0.3)))(typescript@6.0.3)
       eslint-plugin-react: 7.33.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.1)
@@ -9461,9 +9470,9 @@ snapshots:
       lodash: 4.17.21
       string-natural-compare: 3.0.1
 
-  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.26.5(@babel/core@7.29.7)(eslint@8.57.1))(eslint@8.57.1):
+  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.26.5(@babel/core@7.29.7)(eslint@8.56.0))(eslint@8.57.1):
     dependencies:
-      '@babel/eslint-parser': 7.26.5(@babel/core@7.29.7)(eslint@8.57.1)
+      '@babel/eslint-parser': 7.26.5(@babel/core@7.29.7)(eslint@8.56.0)
       eslint: 8.57.1
       lodash: 4.17.21
       string-natural-compare: 3.0.1
