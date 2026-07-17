@@ -1,13 +1,38 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
+## 3.17.0
+
+### Minor Changes
+
+- Add an option to rethrow errors from `useVisitorData().getData`. ([86230b3](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/86230b35ccf27e6281cb7dd7670b805cd9b19f28))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`~> 2.17.0`**
+- Fingerprint Android SDK Version Range: **`>= 2.17.0 and < 2.18.0`**
+
+## 3.16.0
+
+### Minor Changes
+
+- Update mobile agents to v2.17.0
+
+  - [iOS Agent v2.17.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2-17-0)
+  - [Android Agent v2.17.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2-17-0) ([d80abd8](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/d80abd810567a90d54cc009372164041c8330083))
+
+### Supported Native SDK Version Range
+
+- Fingerprint iOS SDK Version Range: **`~> 2.17.0`**
+- Fingerprint Android SDK Version Range: **`>= 2.17.0 and < 2.18.0`**
+
 ## 3.15.0
 
 ### Minor Changes
 
 - Update mobile agents to v2.16.0
 
-  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2160)
-  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2160) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
+  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2-16-0)
+  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2-16-0) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
 
 ### Supported Native SDK Version Range
 
@@ -20,8 +45,8 @@
 
 - Update mobile agents to v2.16.0
 
-  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2160)
-  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2160) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
+  - [iOS Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-ios-sdk#v2-16-0)
+  - [Android Agent v2.16.0](https://docs.fingerprint.com/docs/changelog-android-sdk#v2-16-0) ([aed5000](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/aed50007498ebd184608c18ec68585586aec27a1))
 
 ## [3.14.0](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/compare/v3.13.0...v3.14.0) (2026-05-05)
 

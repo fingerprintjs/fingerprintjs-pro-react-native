@@ -5,6 +5,7 @@ export { useVisitorData } from './useVisitorData'
 export type {
   FingerprintJsProAgentParams,
   VisitorQueryContext,
+  GetDataOptions,
   Region,
   Tags,
   Tag,

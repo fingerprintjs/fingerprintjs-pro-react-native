@@ -93,6 +93,7 @@ jobs:
         with:
           name: android-app-release-${{ matrix.react-native }}
           path: e2e-app/android/app/build
+          retention-days: 3
 
   e2e-tests-android:
     needs:
@@ -199,6 +200,7 @@ jobs:
         with:
           name: android-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
+          retention-days: 3
 
       - uses: geekyeggo/delete-artifact@176a747ab7e287e3ff4787bf8a148716375ca118 # v6.0.0
         name: Delete build artifact
@@ -287,6 +289,7 @@ jobs:
         with:
           name: ios-app-release-${{ matrix.react-native }}
           path: e2e-app/ios/build/Build
+          retention-days: 3
 
   e2e-tests-ios:
     env:
@@ -368,6 +371,7 @@ jobs:
         with:
           name: ios-detox-artifacts-${{matrix.react-native}}
           path: '**/detox-artifacts'
+          retention-days: 3
 
       - uses: geekyeggo/delete-artifact@176a747ab7e287e3ff4787bf8a148716375ca118 # v6.0.0
         name: Delete build artifact
