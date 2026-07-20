@@ -9,6 +9,7 @@
     "prepare": "pnpm build",
     "posttest:coverage": "./scripts/move-coverage.sh",
     "build": "pnpm build:sdk && pnpm build:plugin && pnpm copy:assets",
+    "build:watch": "pnpm build:sdk --watch",
     "build:sdk": "tsup src",
     "build:plugin": "rm -rf plugin/dist && tsc --build plugin",
     "copy:assets": "pnpm copy:readme && pnpm copy:license",
