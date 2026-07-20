@@ -138,7 +138,7 @@ test.describe('Web tests', () => {
         }
 
         client = new FingerprintJsServerApiClient({
-          apiKey,
+          apiKey: privateApiKey,
           region: serverRegion,
         })
 
