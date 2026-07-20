@@ -26,7 +26,10 @@ export function FingerprintJsProProvider({
   // its identity. Keep a stable reference that only changes when the params change by value. This also
   // spares consumers from having to memoize inline object/array props (e.g. `requestOptions`).
   const [stableAgentParams, setStableAgentParams] = useState(fingerprintJsProAgentParams)
-  if (!deepEqual(stableAgentParams, fingerprintJsProAgentParams)) {
+  if (
+    !Object.is(stableAgentParams, fingerprintJsProAgentParams) &&
+    !deepEqual(stableAgentParams, fingerprintJsProAgentParams)
+  ) {
     setStableAgentParams(fingerprintJsProAgentParams)
   }
 
