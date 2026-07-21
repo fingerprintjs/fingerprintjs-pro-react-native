@@ -63,8 +63,8 @@ const config = [
   },
 
   {
-    // Relax eslint rules in test/example projects
-    files: ['{TestProject,e2e-app}/**/*.{ts,tsx}'],
+    // Relax eslint rules in test project
+    files: ['e2e-app/**/*.{ts,tsx}'],
     rules: {
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/consistent-type-assertions': 'off',
