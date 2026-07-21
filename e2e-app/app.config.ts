@@ -18,7 +18,7 @@ if (!rnVersion) {
   throw new Error(`Could not parse react-native version: ${dependencies['react-native']}`)
 }
 
-const rnVersionStr = rnVersion.major + '.' + rnVersion.minor
+const rnVersionStr = `${rnVersion.major}.${rnVersion.minor}`
 handleReactNativeVersion(rnVersionStr)
 
 const config: ExpoConfig = {

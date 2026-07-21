@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useS
 import { FingerprintJsProAgent } from './FingerprintJsProAgent'
 import { FingerprintJsProContext } from './FingerprintJsProContext'
 import { FingerprintJsProAgentParams, RequestOptions, Tags } from './types'
+import { deepEqual } from './utils'
 
 /**
  * Provides the FingerprintJsProContext to its child components.
@@ -21,29 +22,38 @@ export function FingerprintJsProProvider({
   children,
   ...fingerprintJsProAgentParams
 }: PropsWithChildren<FingerprintJsProAgentParams>) {
-  const [client, setClient] = useState<FingerprintJsProAgent>(
-    () => new FingerprintJsProAgent(fingerprintJsProAgentParams)
-  )
-  const [visitorId, updateVisitorId] = useState('')
+  // `fingerprintJsProAgentParams` is a fresh object on every render (rest spread), so we cannot depend on
+  // its identity. Keep a stable reference that only changes when the params change by value. This also
+  // spares consumers from having to memoize inline object/array props (e.g. `requestOptions`).
+  const [stableAgentParams, setStableAgentParams] = useState(fingerprintJsProAgentParams)
+  if (
+    !Object.is(stableAgentParams, fingerprintJsProAgentParams) &&
+    !deepEqual(stableAgentParams, fingerprintJsProAgentParams)
+  ) {
+    setStableAgentParams(fingerprintJsProAgentParams)
+  }
+
+  const [client, setClient] = useState<FingerprintJsProAgent>(() => new FingerprintJsProAgent(stableAgentParams))
+  const [visitorId, setVisitorId] = useState('')
 
   const getVisitorData = useCallback(
     async (tags?: Tags, linkedId?: string, requestOptions?: RequestOptions) => {
       const result = await client.getVisitorData(tags, linkedId, requestOptions)
-      updateVisitorId(result.visitorId)
+      setVisitorId(result.visitorId)
       return result
     },
     [client]
   )
 
-  const firstRender = useRef(true)
+  const firstRenderRef = useRef(true)
 
   useEffect(() => {
-    if (firstRender) {
-      firstRender.current = false
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false
     } else {
-      setClient(new FingerprintJsProAgent(fingerprintJsProAgentParams))
+      setClient(new FingerprintJsProAgent(stableAgentParams))
     }
-  }, [fingerprintJsProAgentParams])
+  }, [stableAgentParams])
 
   const contextValue = useMemo(() => {
     return {

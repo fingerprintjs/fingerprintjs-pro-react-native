@@ -2,6 +2,7 @@ import { UnknownError } from './errors'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
 import { FingerprintJSPro, FpjsClient } from '@fingerprintjs/fingerprintjs-pro-spa'
 import { unwrapError } from './unwrapError'
+import { isDefined } from './utils'
 
 const packageVersion = '__VERSION__'
 
@@ -36,7 +37,7 @@ export class FingerprintJsProAgent implements ProAgent {
     cacheTimeInSeconds,
   }: FingerprintJsProAgentParams) {
     const endpoints: string[] = []
-    if (endpointUrl) {
+    if (isDefined(endpointUrl)) {
       endpoints.push(endpointUrl)
     }
     endpoints.push(...fallbackEndpointUrls)

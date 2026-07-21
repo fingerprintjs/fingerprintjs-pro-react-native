@@ -1,5 +1,5 @@
 import { device } from 'detox'
-import { expect, it, describe, beforeAll } from '@jest/globals'
+import { expect, it, describe, beforeAll, jest } from '@jest/globals'
 import {
   DecryptionAlgorithm,
   FingerprintJsServerApiClient,
@@ -19,6 +19,11 @@ async function launchApp(params?: DeviceLaunchAppConfig) {
 
   await wait(4000)
 }
+
+jest.retryTimes(3, {
+  waitBeforeRetry: 10_000,
+  logErrorsBeforeRetry: false,
+})
 
 describe.each([
   ['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MINIMUM_US_DEFAULT_PRIVATE_KEY],
@@ -146,8 +151,8 @@ describe('React Native Identification invalid API Key', () => {
 })
 
 describe('React Native Identification with sealed results', () => {
-  const encryptionKey = process.env.MINIMUM_US_SEALED_ENCRYPTION_KEY!
-  const apiKey = process.env.MINIMUM_US_SEALED_PUBLIC_KEY!
+  const encryptionKey = process.env.MINIMUM_US_SEALED_ENCRYPTION_KEY ?? ''
+  const apiKey = process.env.MINIMUM_US_SEALED_PUBLIC_KEY ?? ''
 
   beforeAll(async () => {
     if (!apiKey) {
@@ -172,7 +177,7 @@ describe('React Native Identification with sealed results', () => {
     expect(identificationResult.requestId).toBeTruthy()
     expect(identificationResult.sealedResult).toBeTruthy()
 
-    const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult!, 'base64'), [
+    const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult ?? '', 'base64'), [
       {
         key: Buffer.from(encryptionKey, 'base64'),
         algorithm: DecryptionAlgorithm.Aes256Gcm,

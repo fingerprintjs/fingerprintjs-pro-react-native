@@ -77,3 +77,4 @@ sdk/LICENSE
 .local
 
 *.tsbuildinfo
+**/.expo

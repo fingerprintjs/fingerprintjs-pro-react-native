@@ -29,8 +29,8 @@ function getMetroConfig(config, projectRoot) {
     ...(Array.isArray(config.resolver.blockList)
       ? config.resolver.blockList
       : config.resolver.blockList
-      ? [config.resolver.blockList]
-      : []),
+        ? [config.resolver.blockList]
+        : []),
     ...hoistedModules.map(
       (name) => new RegExp(`${sdkRoot.replace(/[/\\]/g, '[/\\\\]')}[/\\\\]node_modules[/\\\\]${name}[/\\\\].*`)
     ),

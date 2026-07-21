@@ -2,6 +2,7 @@ import { useCallback, useContext, useState } from 'react'
 import { FingerprintJsProContextInterface, FingerprintJsProContext } from './FingerprintJsProContext'
 import { GetDataOptions, QueryResult, VisitorQueryContext, VisitorData, Tags } from './types'
 import { IdentificationError } from './errors'
+import { isTruthy } from './utils'
 
 /**
  * Use the `useVisitorData` hook in your components to perform identification requests with the FingerprintJS API.
@@ -34,6 +35,7 @@ export function useVisitorData(): VisitorQueryContext {
         result = await getVisitorData(tags, linkedId, options)
         setState((state) => ({
           ...state,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           data: result as VisitorData,
           isLoading: false,
           error: undefined,
@@ -42,13 +44,14 @@ export function useVisitorData(): VisitorQueryContext {
         setState((state) => ({
           ...state,
           data: undefined,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           error: error as IdentificationError,
         }))
-        if (options?.throwOnError) {
+        if (isTruthy(options?.throwOnError)) {
           throw error
         }
       } finally {
-        setState((state) => (state.isLoading ? { ...state, isLoading: false } : state))
+        setState((state) => (state.isLoading === true ? { ...state, isLoading: false } : state))
       }
       return result
     },
