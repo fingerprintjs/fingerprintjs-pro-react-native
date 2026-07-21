@@ -5,37 +5,34 @@ Before starting work on repository please configure environment and emulators. Y
 
 ## Development playground
 
-In `TestProject` folder you can find demo application. React Native provides not the best developer experience so please follow the steps.
+In `e2e-app` folder you can find demo application that can be used for both local development and E2E tests.
 
 #### Common steps
 
 1. Run `pnpm install` in the project root.
-2. Run `pnpm build` in the project root.
-3. Go to the `TestProject` folder and run `pnpm install --ignore-workspace` (TestProject manages its own dependencies outside the root workspace).
-4. After build is done, run `sync.sh` to copy references of the library into the Test project.
-5. Set environment variable `PUBLIC_API_KEY`, you can just use `.env` [approach](https://www.npmjs.com/package/dotenv).
-6. Run `pnpm start` from `TestProject` folder. From this moment it will keep your terminal.
+2. Go to the `e2e-app` folder and run `pnpm install`.
+3. Set environment variable `EXPO_PUBLIC_API_KEY`, you can just use `e2e-app/.env` [approach](https://www.npmjs.com/package/dotenv).
+4. Run `pnpm prebuild` to generate native projects using Expo.
+5. After prebuild is done, run `pnpm start` to start Metro bundler.
+6. Refer to the sections below to run the app on a specific platform.
 
 #### Android
 1. Run emulator in Android Studio or connect your device. You can check connected devices with `/android/sdk/platform-tools/adb devices` command.
-2. Run `pnpm android` from `TestProject` folder.
+2. Run `pnpm android` from `e2e` folder.
 3. You should see the running app in emulator or device.
 
 ### iOS
-1. Run `pod install` in `TestProject/ios` folder.
-2. Run `pnpm ios` from `TestProject` folder. You may need to run `pod install --repo-update` if you face errors.
-3. You should see the running app in a simulator.
+1. Run `pnpm ios` from `e2e` folder.
+2. You should see the running app in a simulator.
+
+### Web
+1. Run `pnpm serve:web` from `e2e` folder.
+2. You should see the running app in a browser.
 
 #### Troubleshooting
 1. Try `pnpm start --reset-cache`.
 2. Try relaunch emulator/simulator or reconnect your device.
 3. Try to delete both `node_modules` and install dependencies again in order from [common steps](#common-steps).
-
-#### Hot reload
-React native instruments don't support symlinks for packages, because of this each library update needs not only building this library but reinstalling module for demo app. Current repository have 2 ways to make development more comfortable.
-
-1. Change `"main"` section in library's `package.json` to `"./src/index.ts"`. With this fix you don't need to build library for getting updates in `TestApp`, but don't forget to revert this change.
-2. Run `sync.sh` script, it will sync `src`, `build`, `ios` and `android` folder between library and library copy in TestApp `node_modules` folder.
 
 ## E2E tests
 

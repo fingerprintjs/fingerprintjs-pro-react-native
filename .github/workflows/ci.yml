@@ -13,4 +13,3 @@ jobs:
     with:
       runAfterInstall: |
         cd e2e-app && pnpm i && cd ..
-        cd TestProject && pnpm i && cd ..
