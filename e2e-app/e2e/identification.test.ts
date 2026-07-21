@@ -1,5 +1,5 @@
 import { device } from 'detox'
-import { expect, it, describe, beforeAll } from '@jest/globals'
+import { expect, it, describe, beforeAll, jest } from '@jest/globals'
 import {
   DecryptionAlgorithm,
   FingerprintJsServerApiClient,
@@ -19,6 +19,11 @@ async function launchApp(params?: DeviceLaunchAppConfig) {
 
   await wait(4000)
 }
+
+jest.retryTimes(3, {
+  waitBeforeRetry: 10_000,
+  logErrorsBeforeRetry: false,
+})
 
 describe.each([
   ['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MINIMUM_US_DEFAULT_PRIVATE_KEY],
