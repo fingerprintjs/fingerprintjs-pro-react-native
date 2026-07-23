@@ -407,9 +407,13 @@ export interface VisitorQueryContext extends VisitorQueryResult {
 
 export type VisitorId = string
 
-export type NativeVisitorData = [
-  requestId: string,
-  confidenceScore: string,
-  visitorDataJsonString: string,
-  sealedResult?: string,
-]
+/**
+ * Raw visitor data returned by the native module. The visitor payload is delivered as a JSON
+ * string (`visitorDataJson`) that the SDK parses and merges with the top-level fields.
+ */
+export interface NativeVisitorData {
+  requestId: string
+  confidenceScore: number
+  visitorDataJson: string
+  sealedResult?: string
+}

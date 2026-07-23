@@ -153,7 +153,11 @@ describe(`FingerprintJsProProvider`, () => {
       visitorId: mockedVisitorId,
     }
     getVisitorIdWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     void fingerprintClient.getVisitorId(undefined, undefined, { timeout: getRequestTimeout })
@@ -173,7 +177,11 @@ describe(`FingerprintJsProProvider`, () => {
       visitorId: mockedVisitorId,
     }
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     void fingerprintClient.getVisitorData()
@@ -190,7 +198,11 @@ describe(`FingerprintJsProProvider`, () => {
       visitorId: mockedVisitorId,
     }
     getVisitorDataWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     void fingerprintClient.getVisitorData()
@@ -211,7 +223,11 @@ describe(`FingerprintJsProProvider`, () => {
       visitorId: mockedVisitorId,
     }
     getVisitorDataWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     void fingerprintClient.getVisitorData()
@@ -234,7 +250,11 @@ describe(`FingerprintJsProProvider`, () => {
       visitorId: mockedVisitorId,
     }
     getVisitorDataWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     void fingerprintClient.getVisitorData(undefined, undefined, { timeout: getRequestTimeout })

@@ -95,10 +95,10 @@ export class FingerprintJsProAgent implements ProAgent {
       } else {
         visitorData = await NativeModules.RNFingerprintjsPro.getVisitorData(tags, linkedId)
       }
-      const [requestId, confidenceScore, visitorDataJsonString, sealedResult] = visitorData
+      const { requestId, confidenceScore, visitorDataJson, sealedResult } = visitorData
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       const result = {
-        ...JSON.parse(visitorDataJsonString),
+        ...JSON.parse(visitorDataJson),
         requestId,
         confidence: {
           score: confidenceScore,
