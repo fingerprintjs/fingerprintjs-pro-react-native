@@ -3,6 +3,16 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true"
+}
+
+// On the New Architecture the React Gradle plugin runs Codegen for this library, generating the
+// `NativeRNFingerprintjsProSpec` base class from `src/specs/NativeRNFingerprintjsPro.ts`.
+if (isNewArchitectureEnabled()) {
+    apply plugin: 'com.facebook.react'
+}
+
 apply from: 'fingerprint.gradle'
 
 android {
@@ -32,6 +42,20 @@ android {
 
     lint {
         abortOnError = false
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += [
+                    'src/newarch',
+                    // Generated Codegen sources (the `NativeRNFingerprintjsProSpec` base class).
+                    layout.buildDirectory.dir('generated/source/codegen/java').get().asFile.path
+                ]
+            } else {
+                java.srcDirs += ['src/oldarch']
+            }
+        }
     }
 }
 
