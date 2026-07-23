@@ -108,7 +108,13 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
       val callback = { result: FingerprintJSProResponse ->
-        promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: "")))
+        val visitorData = Arguments.createMap().apply {
+          putString("requestId", result.requestId)
+          putDouble("confidenceScore", result.confidenceScore.score.toDouble())
+          putString("visitorDataJson", result.asJson)
+          putString("sealedResult", result.sealedResult ?: "")
+        }
+        promise.resolve(visitorData)
       }
 
       if (timeout != null) {

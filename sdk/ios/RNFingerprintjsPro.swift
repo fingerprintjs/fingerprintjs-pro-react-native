@@ -57,13 +57,13 @@ class RNFingerprintjsPro: NSObject {
         let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in
             switch visitorIdResponseResult {
             case let .success(visitorDataResponse):
-                let tuple = [
-                    visitorDataResponse.requestId,
-                    visitorDataResponse.confidence,
-                    visitorDataResponse.asJSON(),
-                    visitorDataResponse.sealedResult,
-                ] as [Any]
-                resolve(tuple)
+                let visitorData: [String: Any] = [
+                    "requestId": visitorDataResponse.requestId,
+                    "confidenceScore": visitorDataResponse.confidence,
+                    "visitorDataJson": visitorDataResponse.asJSON(),
+                    "sealedResult": visitorDataResponse.sealedResult ?? "",
+                ]
+                resolve(visitorData)
             case .failure(let error):
                 let description = error.reactDescription
                 reject("Error: ", description, error)
