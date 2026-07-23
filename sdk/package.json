@@ -22,6 +22,7 @@
   },
   "files": [
     "dist",
+    "src/specs",
     "android",
     "ios",
     "RNFingerprintjsPro.podspec",
@@ -31,6 +32,14 @@
     "LICENSE",
     "CHANGELOG.md"
   ],
+  "codegenConfig": {
+    "name": "RNFingerprintjsProSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "com.fingerprintjs.reactnative"
+    }
+  },
   "keywords": [
     "fraud",
     "fraud detection",

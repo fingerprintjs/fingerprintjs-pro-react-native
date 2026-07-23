@@ -5,7 +5,7 @@ import { FingerprintJsProContext } from '../src/FingerprintJsProContext'
 import { NativeModules } from 'react-native'
 import { FingerprintJsProAgent } from '../src'
 
-const { configure, getVisitorData, getVisitorIdWithTimeout, getVisitorDataWithTimeout } =
+const { configure, getVisitorId, getVisitorData, getVisitorIdWithTimeout, getVisitorDataWithTimeout } =
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   NativeModules.RNFingerprintjsPro as unknown as Record<string, jest.Mock>
 
@@ -26,7 +26,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
+    expect(configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -49,7 +49,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
+    expect(configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -72,7 +72,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
+    expect(configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -96,7 +96,7 @@ describe(`FingerprintJsProProvider`, () => {
       wrapper,
     })
 
-    expect(NativeModules.RNFingerprintjsPro.configure).toHaveBeenCalledWith(
+    expect(configure).toHaveBeenCalledWith(
       options.apiKey,
       options.region,
       options.endpointUrl,
@@ -113,7 +113,7 @@ describe(`FingerprintJsProProvider`, () => {
     const fingerprintClient = new FingerprintJsProAgent(options)
     void fingerprintClient.getVisitorId()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorId).toHaveBeenCalledWith(undefined, undefined)
+    expect(getVisitorId).toHaveBeenCalledWith(null, null)
   })
 
   it('should pass timeout to `getVisitorIdWithTimeout` function', () => {
@@ -122,11 +122,7 @@ describe(`FingerprintJsProProvider`, () => {
     const fingerprintClient = new FingerprintJsProAgent(options)
     void fingerprintClient.getVisitorId()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      options.requestOptions.timeout
-    )
+    expect(getVisitorIdWithTimeout).toHaveBeenCalledWith(null, null, options.requestOptions.timeout)
   })
 
   it('should pass timeout to `getVisitorIdWithTimeout` function when timeout is 0', () => {
@@ -135,11 +131,7 @@ describe(`FingerprintJsProProvider`, () => {
     const fingerprintClient = new FingerprintJsProAgent(options)
     void fingerprintClient.getVisitorId()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      options.requestOptions.timeout
-    )
+    expect(getVisitorIdWithTimeout).toHaveBeenCalledWith(null, null, options.requestOptions.timeout)
   })
 
   it('For `getVisitorId` function timeout from params should be more important than the timeout from client configuration', () => {
@@ -162,11 +154,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorId(undefined, undefined, { timeout: getRequestTimeout })
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorIdWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      getRequestTimeout
-    )
+    expect(getVisitorIdWithTimeout).toHaveBeenCalledWith(null, null, getRequestTimeout)
   })
 
   it('should call `getVisitorData` function when there is no timeout', () => {
@@ -186,7 +174,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorData()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorData).toHaveBeenCalledWith(undefined, undefined)
+    expect(getVisitorData).toHaveBeenCalledWith(null, null)
   })
 
   it('should pass timeout to `getVisitorDataWithTimeout` function', () => {
@@ -207,11 +195,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorData()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      options.requestOptions.timeout
-    )
+    expect(getVisitorDataWithTimeout).toHaveBeenCalledWith(null, null, options.requestOptions.timeout)
   })
 
   it('should pass timeout to `getVisitorDataWithTimeout` function when timeout is 0', () => {
@@ -232,11 +216,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorData()
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      options.requestOptions.timeout
-    )
+    expect(getVisitorDataWithTimeout).toHaveBeenCalledWith(null, null, options.requestOptions.timeout)
   })
 
   it('For `getVisitorData` function timeout from params should be more important than the timeout from client configuration', () => {
@@ -259,11 +239,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorData(undefined, undefined, { timeout: getRequestTimeout })
 
-    expect(NativeModules.RNFingerprintjsPro.getVisitorDataWithTimeout).toHaveBeenCalledWith(
-      undefined,
-      undefined,
-      getRequestTimeout
-    )
+    expect(getVisitorDataWithTimeout).toHaveBeenCalledWith(null, null, getRequestTimeout)
   })
 
   describe('agent params changes propagation', () => {
@@ -277,7 +253,7 @@ describe(`FingerprintJsProProvider`, () => {
       renderProvider({ apiKey: 'key-1' })
 
       expect(configure).toHaveBeenCalledTimes(1)
-      expect(configure).toHaveBeenLastCalledWith('key-1', undefined, undefined, [], false, pluginVersion, false, 5000)
+      expect(configure).toHaveBeenLastCalledWith('key-1', null, null, [], false, pluginVersion, false, 5000)
     })
 
     it('reconfigures the agent when a param changes by value', () => {
@@ -287,12 +263,12 @@ describe(`FingerprintJsProProvider`, () => {
       rerenderWithParams({ apiKey: 'key-2' })
 
       expect(configure).toHaveBeenCalledTimes(2)
-      expect(configure).toHaveBeenLastCalledWith('key-2', undefined, undefined, [], false, pluginVersion, false, 5000)
+      expect(configure).toHaveBeenLastCalledWith('key-2', null, null, [], false, pluginVersion, false, 5000)
     })
 
     it('propagates changes across every configure argument', () => {
       const { rerenderWithParams } = renderProvider({ apiKey: 'key' })
-      expect(configure).toHaveBeenLastCalledWith('key', undefined, undefined, [], false, pluginVersion, false, 5000)
+      expect(configure).toHaveBeenLastCalledWith('key', null, null, [], false, pluginVersion, false, 5000)
 
       rerenderWithParams({
         apiKey: 'key',
@@ -320,8 +296,8 @@ describe(`FingerprintJsProProvider`, () => {
       const { rerenderWithParams } = renderProvider({ apiKey: 'key', fallbackEndpointUrls: ['https://a.example'] })
       expect(configure).toHaveBeenLastCalledWith(
         'key',
-        undefined,
-        undefined,
+        null,
+        null,
         ['https://a.example'],
         false,
         pluginVersion,
@@ -334,8 +310,8 @@ describe(`FingerprintJsProProvider`, () => {
       expect(configure).toHaveBeenCalledTimes(2)
       expect(configure).toHaveBeenLastCalledWith(
         'key',
-        undefined,
-        undefined,
+        null,
+        null,
         ['https://a.example', 'https://b.example'],
         false,
         pluginVersion,
