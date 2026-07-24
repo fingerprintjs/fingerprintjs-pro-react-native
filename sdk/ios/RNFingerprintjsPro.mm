@@ -62,6 +62,9 @@ RCT_EXTERN_METHOD(getVisitorDataWithTimeout:(NSDictionary *)tags
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
+  // TEMP(new-arch verification): if this fires, the module is instantiated as a real TurboModule
+  // via the Codegen-generated JSI class (not the legacy interop shim).
+  NSLog(@"[RNFingerprintjsPro] getTurboModule called — running as a TurboModule (New Architecture)");
   return std::make_shared<facebook::react::NativeRNFingerprintjsProSpecJSI>(params);
 }
 @end
