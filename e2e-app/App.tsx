@@ -6,6 +6,7 @@ import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
 import config from '@/src/config'
+import { ArchInfo } from '@/src/components/ArchInfo'
 
 function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
@@ -27,6 +28,7 @@ function InnerApp() {
           flex: 1,
         }}
       >
+        <ArchInfo />
         {isLoading ? <Text testID={testIds.loading}>Loading...</Text> : null}
         {error ? (
           <View>
