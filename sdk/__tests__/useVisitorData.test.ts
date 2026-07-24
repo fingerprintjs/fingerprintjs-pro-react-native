@@ -43,7 +43,11 @@ describe('useVisitorData', () => {
     }
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
@@ -119,7 +123,11 @@ describe('useVisitorData', () => {
     const mockedLinkedId = 'test_id'
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()
@@ -152,7 +160,11 @@ describe('useVisitorData', () => {
     const options: RequestOptions = { timeout: undefined }
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()
@@ -185,7 +197,11 @@ describe('useVisitorData', () => {
     const options: RequestOptions = { timeout: 15_000 }
 
     getVisitorDataWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()

@@ -1,6 +1,7 @@
 package com.fingerprintjs.reactnative
 
 import com.facebook.react.bridge.*
+import com.facebook.react.module.annotations.ReactModule
 import com.fingerprintjs.android.fpjs_pro.Configuration
 import com.fingerprintjs.android.fpjs_pro.FingerprintJS
 import com.fingerprintjs.android.fpjs_pro.FingerprintJSProResponse
@@ -31,15 +32,16 @@ import com.fingerprintjs.android.fpjs_pro.ProxyIntegrationSecretEnvironmentMisma
 import java.lang.Exception
 
 
-class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+@ReactModule(name = RNFingerprintjsProModule.NAME)
+class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFingerprintjsProSpec(reactContext) {
   private var fpjsClient: FingerprintJS? = null
 
   override fun getName(): String {
-    return "RNFingerprintjsPro"
+    return NAME
   }
 
   @ReactMethod
-  fun configure(
+  override fun configure(
       apiToken: String,
       regionKey: String?,
       endpointUrl: String?,
@@ -71,12 +73,26 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
   }
 
   @ReactMethod
-  fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    this.getVisitorIdWithTimeout(tags, linkedId, null, promise)
+  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    getVisitorIdInternal(tags, linkedId, null, promise)
   }
 
   @ReactMethod
-  fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
+  override fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
+    getVisitorIdInternal(tags, linkedId, timeout.toInt(), promise)
+  }
+
+  @ReactMethod
+  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
+    getVisitorDataInternal(tags, linkedId, null, promise)
+  }
+
+  @ReactMethod
+  override fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
+    getVisitorDataInternal(tags, linkedId, timeout.toInt(), promise)
+  }
+
+  private fun getVisitorIdInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
       if (timeout != null) {
         fpjsClient?.getVisitorId(
@@ -99,16 +115,16 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
     }
   }
 
-  @ReactMethod
-  fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    this.getVisitorDataWithTimeout(tags, linkedId, null, promise)
-  }
-
-  @ReactMethod
-  fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
+  private fun getVisitorDataInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {
       val callback = { result: FingerprintJSProResponse ->
-        promise.resolve(Arguments.fromList(listOf(result.requestId, result.confidenceScore.score, result.asJson, result.sealedResult ?: "")))
+        val visitorData = Arguments.createMap().apply {
+          putString("requestId", result.requestId)
+          putDouble("confidenceScore", result.confidenceScore.score.toDouble())
+          putString("visitorDataJson", result.asJson)
+          putString("sealedResult", result.sealedResult ?: "")
+        }
+        promise.resolve(visitorData)
       }
 
       if (timeout != null) {
@@ -167,5 +183,9 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : ReactCon
       else -> "UnknownError"
     }
     return errorType + ":" + error.description
+  }
+
+  companion object {
+    const val NAME = "RNFingerprintjsPro"
   }
 }
