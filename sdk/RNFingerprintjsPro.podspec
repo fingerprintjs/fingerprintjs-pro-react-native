@@ -17,4 +17,9 @@ Pod::Spec.new do |s|
   # See: https://guides.cocoapods.org/using/the-podfile.html#specifying-pod-versions
   # ~> 2.8.2 means >= 2.8.2 and < 2.9.0 (pessimistic operator)
   s.dependency "FingerprintPro", '~> 2.17.0'
+
+  # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
+  # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture. On the old
+  # architecture it is effectively a no-op, keeping the module backward compatible.
+  install_modules_dependencies(s)
 end
