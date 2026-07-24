@@ -11,6 +11,11 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = "15.0"
 
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
+  # Never sweep build artifacts (e.g. generated Codegen headers under ios/build) into the pod's
+  # sources. Otherwise CocoaPods exposes the C++ `*Spec.h`/`*SpecJSI.h` as public headers of this
+  # pod, and building the Swift pod's ObjC module (`-import-underlying-module`) tries to compile
+  # them as Obj-C, failing with "This file must be compiled as Obj-C++".
+  s.exclude_files = "ios/build/**/*"
 #   s.requires_arc = true
 
   s.dependency "React-Core"
