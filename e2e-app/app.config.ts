@@ -43,6 +43,7 @@ const config: ExpoConfig = {
       },
     ],
     '@config-plugins/detox',
+    'expo-asset',
     './plugins/withGradleProperties.js',
     './plugins/withSonatypeSnapshotsFix.js',
   ],
