@@ -101,9 +101,8 @@ jobs:
         run: pnpm prebuild
         working-directory: e2e-app
 
-      # Plain release APK build - Maestro drives the installed app, so no assembleAndroidTest needed.
       - name: Build release APK
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release
         working-directory: e2e-app/android
 
       - name: Get device name
