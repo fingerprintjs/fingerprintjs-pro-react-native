@@ -98,7 +98,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild
+        run: pnpm prebuild && pnpm install --shamefully-hoist
         working-directory: e2e-app
 
       - name: Build release APK
@@ -211,7 +211,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild
+        run: pnpm prebuild && pnpm install --shamefully-hoist
         working-directory: e2e-app
 
       # Plain release Xcode build (same command Detox uses, minus the Detox test runner).
