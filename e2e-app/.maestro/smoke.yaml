@@ -1,0 +1,6 @@
+appId: com.fingerprint.e2eapp
+---
+- launchApp
+- assertVisible: "Get data"
+- assertVisible:
+    text: "TurboModules: .*" # confirms the React tree actually mounted

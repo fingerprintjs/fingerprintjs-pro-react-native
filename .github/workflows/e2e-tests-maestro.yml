@@ -1,0 +1,246 @@
+name: E2E Tests (Maestro)
+
+# POC workflow evaluating Maestro (https://maestro.dev/) as a less-flaky replacement for Detox.
+# It mirrors the build/matrix shape of e2e-tests.yml but runs a trivial smoke flow instead of the
+# full Detox suite. The existing Detox workflow is left untouched. See NEWARCH_MIGRATION_PLAN /
+# the Maestro POC plan for the two-step migration intent.
+
+env:
+  XCODE_VERSION: 26.3
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-matrix:
+    name: Build matrix with react-native versions
+    runs-on: ubuntu-latest
+    outputs:
+      react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        # POC subset: newest (local), oldest supported (0.73), current newest tagged (0.85).
+        # Widen to the full e2e-tests.yml list once the POC is validated.
+        run: |
+          echo "matrix=['local', '0.73', '0.85']" >> $GITHUB_OUTPUT
+
+  e2e-tests-android:
+    needs: build-matrix
+    runs-on: ubuntu-latest
+    name: Android Maestro E2E for react-native ${{ matrix.react-native }}
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          node-version: 24.x
+
+      - uses: actions/setup-java@v5
+        with:
+          cache: gradle
+          distribution: temurin
+          java-version: 17
+
+      - name: AVD cache
+        uses: actions/cache@v6
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-35
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: e2e-app
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Fix expo dependencies
+        if: matrix.react-native != 'local'
+        run: pnpm exec expo install --fix
+        working-directory: e2e-app
+
+      # expo install --fix coerces react-native to the SDK's bundled patch; re-pin to the tested one.
+      - name: Pin react-native to the tested version
+        if: matrix.react-native != 'local'
+        run: pnpm add react-native@${{ matrix.react-native }}
+        working-directory: e2e-app
+
+      - name: Setup fresh node_modules
+        if: matrix.react-native != 'local'
+        run: rm -rf node_modules && pnpm install --frozen-lockfile
+        working-directory: e2e-app
+
+      - run: pnpm why react-native
+        working-directory: e2e-app
+
+      - name: Prebuild
+        run: pnpm prebuild
+        working-directory: e2e-app
+
+      # Plain release APK build - Maestro drives the installed app, so no assembleAndroidTest needed.
+      - name: Build release APK
+        run: ./gradlew assembleRelease
+        working-directory: e2e-app/android
+
+      - name: Get device name
+        id: device
+        run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
+        working-directory: e2e-app
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          target: 'default'
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+          avd-name: ${{ steps.device.outputs.AVD_NAME }}
+
+      - name: Run Maestro flow
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 35
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          arch: x86_64
+          avd-name: ${{ steps.device.outputs.AVD_NAME }}
+          script: |
+            cd e2e-app
+            adb install -r android/app/build/outputs/apk/release/app-release.apk
+            maestro test .maestro/smoke.yaml
+
+      - name: Upload Maestro artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-maestro-artifacts-${{ matrix.react-native }}
+          path: ~/.maestro/tests/**
+          retention-days: 3
+          if-no-files-found: ignore
+
+  e2e-tests-ios:
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+    runs-on: macos-26
+    name: iOS Maestro E2E for react-native ${{ matrix.react-native }}
+    needs: build-matrix
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix:
+        react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          node-version: 24.x
+
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.2
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: e2e-app
+
+      - name: Setup react-native specific dependencies
+        if: matrix.react-native != 'local'
+        run: node scripts/compatibility.mjs
+        working-directory: e2e-app
+        env:
+          REACT_NATIVE_VERSION: ${{ matrix.react-native }}
+
+      - name: Fix expo dependencies
+        if: matrix.react-native != 'local'
+        run: pnpm exec expo install --fix
+        working-directory: e2e-app
+
+      - name: Pin react-native to the tested version
+        if: matrix.react-native != 'local'
+        run: pnpm add react-native@${{ matrix.react-native }}
+        working-directory: e2e-app
+
+      - name: Setup fresh node_modules
+        if: matrix.react-native != 'local'
+        run: rm -rf node_modules && pnpm install --frozen-lockfile
+        working-directory: e2e-app
+
+      - name: Prebuild
+        run: pnpm prebuild
+        working-directory: e2e-app
+
+      # Plain release Xcode build (same command Detox uses, minus the Detox test runner).
+      - name: Build release app
+        run: xcodebuild -workspace ios/E2EApp.xcworkspace -scheme E2EApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build
+        working-directory: e2e-app
+
+      - name: Start iPhone simulator
+        uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5 # v5
+        with:
+          model: 'iPhone 17'
+          shutdown_after_job: 'false'
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Install app on simulator and run Maestro flow
+        working-directory: e2e-app
+        run: |
+          xcrun simctl install booted ios/build/Build/Products/Release-iphonesimulator/E2EApp.app
+          maestro test .maestro/smoke.yaml
+
+      - name: Upload Maestro artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ios-maestro-artifacts-${{ matrix.react-native }}
+          path: ~/.maestro/tests/**
+          retention-days: 3
+          if-no-files-found: ignore
