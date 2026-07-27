@@ -43,6 +43,7 @@ export function withoutPlugins(...plugins: string[]) {
 
       return !predicate(plugin)
     })
+    console.log('Plugins after filtering', JSON.stringify(config.plugins, null, 2))
     return config
   }
 }
