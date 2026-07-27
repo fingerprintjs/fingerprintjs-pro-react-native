@@ -18,3 +18,20 @@ export function withFingerprintMavenRepo(config: { plugins?: unknown[] }) {
   config.plugins ??= []
   config.plugins.push('./plugins/withAndroidMavenRepo.js')
 }
+
+type ExpoPlugin = string | [name: string, config: unknown]
+
+export function withoutPlugins(...plugins: string[]) {
+  const predicate = (name: string) => !plugins.includes(name)
+
+  return (config: { plugins?: ExpoPlugin[] }) => {
+    config.plugins = config.plugins?.filter((plugin) => {
+      if (Array.isArray(plugin)) {
+        return !predicate(plugin[0])
+      }
+
+      return !predicate(plugin)
+    })
+    return config
+  }
+}

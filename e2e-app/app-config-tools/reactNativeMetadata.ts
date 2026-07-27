@@ -1,6 +1,6 @@
 import { disableNewArch } from './arch'
 import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './android'
-import { withFingerprintMavenRepo, withNewArchFlag, withSplashscreen } from './expoConfigPatchers'
+import { withFingerprintMavenRepo, withNewArchFlag, withoutPlugins, withSplashscreen } from './expoConfigPatchers'
 
 // config is typed as any, as different expo version have different types for the config object
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +23,13 @@ type ReactNativeMetadata = {
 const reactNativeMetadata: Record<string, ReactNativeMetadata | undefined> = {
   0.73: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withNewArchFlag, withSplashscreen, withFingerprintMavenRepo],
+    patchExpoConfig: [
+      withNewArchFlag,
+      withSplashscreen,
+      withFingerprintMavenRepo,
+      // Older RN + Expo have different expo-asset don't require expo-asset as a plugin
+      withoutPlugins('expo-asset'),
+    ],
   },
   0.74: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
