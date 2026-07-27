@@ -8,7 +8,7 @@ const reactNativeMetadata = {
     // Expo 50 (the only SDK bundling RN 0.73) predates autolinking's `android.extraMavenRepos`
     // support, so the SDK's Maven repo is injected directly via plugins/withAndroidMavenRepo.js
     // (wired in for 0.73 through reactNativeMetadata). @config-plugins/detox@7 is the SDK 50 peer.
-    packages: ['expo@50', 'detox@20.20.3', '@config-plugins/detox@7', 'react@18.2.0', 'react-dom@18.2.0'],
+    packages: ['expo@50', 'detox@20.20.3', '@config-plugins/detox@7', 'react@18.2.0', 'react-dom@18.2.0', 'expo-asset'],
   },
   0.74: {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@18.2.0', 'react-dom@18.2.0'],

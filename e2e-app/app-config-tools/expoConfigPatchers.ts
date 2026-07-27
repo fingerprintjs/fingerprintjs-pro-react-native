@@ -21,6 +21,13 @@ export function withFingerprintMavenRepo(config: { plugins?: unknown[] }) {
 
 type ExpoPlugin = string | [name: string, config: unknown]
 
+export function withPlugins(...plugins: ExpoPlugin[]) {
+  return (config: { plugins?: ExpoPlugin[] }) => {
+    config.plugins ??= []
+    config.plugins.push(...plugins)
+  }
+}
+
 export function withoutPlugins(...pluginsToRemove: string[]) {
   const predicate = (name: string) => {
     const result = pluginsToRemove.includes(name)
