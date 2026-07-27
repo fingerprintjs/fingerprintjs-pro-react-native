@@ -23,7 +23,12 @@ type ReactNativeMetadata = {
 const reactNativeMetadata: Record<string, ReactNativeMetadata | undefined> = {
   0.73: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withNewArchFlag, withSplashscreen, withFingerprintMavenRepo, withPlugins('expo-asset')],
+    patchExpoConfig: [
+      withNewArchFlag,
+      withSplashscreen,
+      withFingerprintMavenRepo,
+      withPlugins(['expo-asset', { assets: [] }]),
+    ],
   },
   0.74: {
     callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
