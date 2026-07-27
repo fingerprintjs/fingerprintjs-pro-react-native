@@ -36,7 +36,6 @@ const config: ExpoConfig = {
   },
   plugins: [
     '@fingerprintjs/fingerprintjs-pro-react-native',
-    'expo-asset',
     [
       'expo-build-properties',
       {

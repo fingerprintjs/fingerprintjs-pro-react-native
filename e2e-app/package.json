@@ -23,7 +23,6 @@
     "@fingerprintjs/fingerprintjs-pro-spa": "^1.3.2",
     "dotenv": "^16.4.7",
     "expo": "57.0.4",
-    "expo-asset": "^57.0.7",
     "expo-build-properties": "~57.0.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
