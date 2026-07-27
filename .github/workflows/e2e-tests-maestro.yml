@@ -7,6 +7,7 @@ name: E2E Tests (Maestro)
 
 env:
   XCODE_VERSION: 26.3
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: 180000
 
 on:
   pull_request:
@@ -132,13 +133,13 @@ jobs:
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
           api-level: 35
+          working-directory: e2e-app
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           arch: x86_64
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
           script: |
-            cd e2e-app
             adb install -r android/app/build/outputs/apk/release/app-release.apk
             maestro test .maestro/smoke.yaml
 
