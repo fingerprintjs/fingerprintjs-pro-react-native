@@ -21,27 +21,27 @@ export function withFingerprintMavenRepo(config: { plugins?: unknown[] }) {
 
 type ExpoPlugin = string | [name: string, config: unknown]
 
-export function withoutPlugins(...plugins: string[]) {
+export function withoutPlugins(...pluginsToRemove: string[]) {
   const predicate = (name: string) => {
-    const result = !plugins.includes(name)
+    const result = pluginsToRemove.includes(name)
 
-    if (!result) {
+    if (result) {
       console.log('Removing plugin', name)
     }
 
-    return result
+    return !result
   }
 
   return (config: { plugins?: ExpoPlugin[] }) => {
     config.plugins = config.plugins?.filter((plugin) => {
       if (Array.isArray(plugin)) {
         console.log('Checking plugin', plugin[0])
-        return !predicate(plugin[0])
+        return predicate(plugin[0])
       }
 
       console.log('Checking plugin', plugin)
 
-      return !predicate(plugin)
+      return predicate(plugin)
     })
     console.log('Plugins after filtering', JSON.stringify(config.plugins, null, 2))
     return config
