@@ -75,13 +75,13 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --frozen-lockfile --shamefully-hoist
+        run: rm -rf node_modules && pnpm install --frozen-lockfile
         working-directory: e2e-app
 
       - run: pnpm why react-native
 
       - name: Prebuild
-        run: pnpm prebuild && pnpm install --frozen-lockfile --shamefully-hoist
+        run: pnpm prebuild
         working-directory: e2e-app
 
       - run: pnpm exec detox build --configuration android.emu.release
@@ -273,17 +273,14 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --frozen-lockfile --shamefully-hoist
+        run: rm -rf node_modules && pnpm install --frozen-lockfile
         working-directory: e2e-app
 
       - run: pnpm why react-native
 
       - name: Prebuild
-        run: pnpm prebuild && pnpm install --frozen-lockfile --shamefully-hoist
+        run: pnpm prebuild
         working-directory: e2e-app
-      
-      - run: pod install
-        working-directory: e2e-app/ios
 
       - run: pnpm exec detox build --configuration ios.sim.release
         working-directory: e2e-app
