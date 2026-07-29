@@ -83,7 +83,6 @@ jobs:
         run: pnpm exec expo install --fix
         working-directory: e2e-app
 
-      # expo install --fix coerces react-native to the SDK's bundled patch; re-pin to the tested one.
       - name: Pin react-native to the tested version
         if: matrix.react-native != 'local'
         run: pnpm add react-native@${{ matrix.react-native }}
@@ -91,14 +90,14 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --shamefully-hoist
+        run: rm -rf node_modules && pnpm install --frozen-lockfile --shamefully-hoist
         working-directory: e2e-app
 
       - run: pnpm why react-native
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild && pnpm install --shamefully-hoist
+        run: pnpm prebuild --no-install
         working-directory: e2e-app
 
       - name: Build release APK
@@ -207,12 +206,19 @@ jobs:
 
       - name: Setup fresh node_modules
         if: matrix.react-native != 'local'
-        run: rm -rf node_modules && pnpm install --shamefully-hoist
+        run: rm -rf node_modules && pnpm install --frozen-lockfile --shamefully-hoist 
+        working-directory: e2e-app
+
+      - run: pnpm why react-native
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild && pnpm install --shamefully-hoist
+        run: pnpm prebuild --no-install
         working-directory: e2e-app
+      
+      - name: Install pods
+        run: pod install
+        working-directory: e2e-app/ios
 
       # Plain release Xcode build (same command Detox uses, minus the Detox test runner).
       - name: Build release app
