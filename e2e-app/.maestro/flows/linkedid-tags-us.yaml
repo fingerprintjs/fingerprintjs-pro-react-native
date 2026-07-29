@@ -1,0 +1,14 @@
+# Identification on US/Global with a dynamic linkedId and tags, verified via the Server API.
+appId: com.fingerprint.e2eapp
+---
+# Mirror the Detox test's `${Date.now()}-rn-test` linkedId.
+- evalScript: ${output.linkedId = Date.now() + '-rn-test'}
+- runFlow:
+    file: '../subflows/identify.yaml'
+    env:
+      API_KEY: ${US_PUBLIC_KEY}
+      PRIVATE_KEY: ${US_PRIVATE_KEY}
+      REGION: 'us'
+      SERVER_HOST: 'api.fpjs.io'
+      LINKED_ID: ${output.linkedId}
+      USE_TAGS: 'true'

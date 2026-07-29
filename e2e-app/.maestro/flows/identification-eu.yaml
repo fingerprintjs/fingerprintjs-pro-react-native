@@ -1,0 +1,12 @@
+# Basic identification on the EU region.
+appId: com.fingerprint.e2eapp
+---
+- runFlow:
+    file: '../subflows/identify.yaml'
+    env:
+      API_KEY: ${EU_PUBLIC_KEY}
+      PRIVATE_KEY: ${EU_PRIVATE_KEY}
+      REGION: 'eu'
+      SERVER_HOST: 'eu.api.fpjs.io'
+      LINKED_ID: ''
+      USE_TAGS: ''

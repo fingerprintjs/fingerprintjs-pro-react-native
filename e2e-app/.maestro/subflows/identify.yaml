@@ -1,0 +1,53 @@
+# Reusable identification subflow, parametrized via env vars (set by the wrapper flows in ../flows).
+#
+# Required env:
+#   API_KEY      - public API key passed to the app (FingerprintJsProProvider)
+#   REGION       - 'us' | 'eu'
+#   PRIVATE_KEY  - secret/private API key used for the Server API cross-check
+#   SERVER_HOST  - 'api.fpjs.io' (US/Global) | 'eu.api.fpjs.io' (EU)
+# Optional env (wrappers always pass them, empty when unused):
+#   LINKED_ID    - when non-empty, assert the server event echoes this linkedId
+#   USE_TAGS     - 'true' to send testTags; when set, assert the server event has them
+appId: com.fingerprint.e2eapp
+---
+- launchApp:
+    clearState: true
+    arguments:
+      apiKey: ${API_KEY}
+      region: ${REGION}
+      linkedId: ${LINKED_ID}
+      useTags: ${USE_TAGS}
+
+- assertVisible:
+    id: 'get-data'
+- tapOn:
+    id: 'get-data'
+
+# Result is rendered as JSON.stringify(data) in a Text with testID "data" once getData resolves.
+- extendedWaitUntil:
+    visible:
+      id: 'data'
+    timeout: 20000
+
+- copyTextFrom:
+    id: 'data'
+- evalScript: ${output.result = json(maestro.copiedText)}
+
+# visitorId is 20 alphanumeric chars (VISITOR_ID_REGEX in the Detox suite).
+- assertTrue: ${/^[a-zA-Z\d]{20}$/.test(output.result.visitorId)}
+
+# Cross-check against the Server API (GET /events/{requestId}, Auth-API-Key header).
+- evalScript: "${output.event = json(http.get('https://' + SERVER_HOST + '/events/' + output.result.requestId, { headers: { 'Auth-API-Key': PRIVATE_KEY } }).body)}"
+- assertTrue: ${output.event.products.identification.data.visitorId == output.result.visitorId}
+- assertTrue: ${output.event.products.identification.data.requestId == output.result.requestId}
+
+# linkedId + tags assertions only when the wrapper enabled them.
+- runFlow:
+    when:
+      true: ${LINKED_ID != null && LINKED_ID != ''}
+    commands:
+      - assertTrue: ${output.event.products.identification.data.linkedId == LINKED_ID}
+      # Representative tag fields rather than a full deep-equality (avoids key-order flakiness).
+      - assertTrue: ${output.event.products.identification.data.tag['react-native-test-string'] == 'test'}
+      - assertTrue: ${output.event.products.identification.data.tag['react-native-test-number'] == 1}
+      - assertTrue: ${output.event.products.identification.data.tag['react-native-test-bool'] == true}

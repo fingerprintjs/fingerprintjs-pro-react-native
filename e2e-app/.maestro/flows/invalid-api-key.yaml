@@ -1,0 +1,25 @@
+# Invalid API key: the SDK surfaces an error, rendered in the error-name / error-message Texts.
+# UI-only, no Server API call or secrets needed (mirrors the Detox "should return error" test).
+appId: com.fingerprint.e2eapp
+---
+- launchApp:
+    clearState: true
+    arguments:
+      apiKey: 'invalid'
+
+- assertVisible:
+    id: 'get-data'
+- tapOn:
+    id: 'get-data'
+
+- extendedWaitUntil:
+    visible:
+      id: 'error-name'
+    timeout: 20000
+
+- assertVisible:
+    id: 'error-name'
+    text: 'ApiKeyNotFoundError'
+- assertVisible:
+    id: 'error-message'
+    text: 'invalid public key'

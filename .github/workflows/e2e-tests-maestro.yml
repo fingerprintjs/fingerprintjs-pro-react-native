@@ -120,8 +120,13 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
 
-      - name: Run Maestro flow
+      - name: Run Maestro flows
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        env:
+          US_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          US_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
+          EU_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
+          EU_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
         with:
           api-level: 35
           working-directory: e2e-app
@@ -132,7 +137,12 @@ jobs:
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
           script: |
             adb install -r android/app/build/outputs/apk/release/app-release.apk
-            maestro test .maestro/smoke.yaml
+            maestro test \
+              -e US_PUBLIC_KEY="$US_PUBLIC_KEY" \
+              -e US_PRIVATE_KEY="$US_PRIVATE_KEY" \
+              -e EU_PUBLIC_KEY="$EU_PUBLIC_KEY" \
+              -e EU_PRIVATE_KEY="$EU_PRIVATE_KEY" \
+              .maestro/flows
 
       - name: Upload Maestro artifacts
         if: always()
@@ -229,11 +239,21 @@ jobs:
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
-      - name: Install app on simulator and run Maestro flow
+      - name: Install app on simulator and run Maestro flows
         working-directory: e2e-app
+        env:
+          US_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
+          US_PRIVATE_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PRIVATE_KEY }}
+          EU_PUBLIC_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PUBLIC_KEY }}
+          EU_PRIVATE_KEY: ${{ secrets.DEFAULT_EU_DEFAULT_PRIVATE_KEY }}
         run: |
           xcrun simctl install booted ios/build/Build/Products/Release-iphonesimulator/E2EApp.app
-          maestro test .maestro/smoke.yaml
+          maestro test \
+            -e US_PUBLIC_KEY="$US_PUBLIC_KEY" \
+            -e US_PRIVATE_KEY="$US_PRIVATE_KEY" \
+            -e EU_PUBLIC_KEY="$EU_PUBLIC_KEY" \
+            -e EU_PRIVATE_KEY="$EU_PRIVATE_KEY" \
+            .maestro/flows
 
       - name: Upload Maestro artifacts
         if: always()

@@ -1,0 +1,13 @@
+# Identification on EU with a dynamic linkedId and tags, verified via the Server API.
+appId: com.fingerprint.e2eapp
+---
+- evalScript: ${output.linkedId = Date.now() + '-rn-test'}
+- runFlow:
+    file: '../subflows/identify.yaml'
+    env:
+      API_KEY: ${EU_PUBLIC_KEY}
+      PRIVATE_KEY: ${EU_PRIVATE_KEY}
+      REGION: 'eu'
+      SERVER_HOST: 'eu.api.fpjs.io'
+      LINKED_ID: ${output.linkedId}
+      USE_TAGS: 'true'

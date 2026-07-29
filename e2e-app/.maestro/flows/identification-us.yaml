@@ -1,0 +1,13 @@
+# Basic identification on the US/Global region.
+# Keys come from the CLI via -e (US_PUBLIC_KEY / US_PRIVATE_KEY), wired in the workflow.
+appId: com.fingerprint.e2eapp
+---
+- runFlow:
+    file: '../subflows/identify.yaml'
+    env:
+      API_KEY: ${US_PUBLIC_KEY}
+      PRIVATE_KEY: ${US_PRIVATE_KEY}
+      REGION: 'us'
+      SERVER_HOST: 'api.fpjs.io'
+      LINKED_ID: ''
+      USE_TAGS: ''
