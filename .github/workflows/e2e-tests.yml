@@ -79,6 +79,7 @@ jobs:
         working-directory: e2e-app
 
       - run: pnpm why react-native
+        working-directory: e2e-app
 
       - name: Prebuild
         run: pnpm prebuild
@@ -277,6 +278,7 @@ jobs:
         working-directory: e2e-app
 
       - run: pnpm why react-native
+        working-directory: e2e-app
 
       - name: Prebuild
         run: pnpm prebuild
