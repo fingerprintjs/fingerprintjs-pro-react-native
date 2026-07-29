@@ -97,7 +97,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild:no-install
+        run: pnpm prebuild && pnpm install --frozen-lockfile --shamefully-hoist
         working-directory: e2e-app
 
       - name: Build release APK
@@ -213,7 +213,7 @@ jobs:
         working-directory: e2e-app
 
       - name: Prebuild
-        run: pnpm prebuild:no-install
+        run: pnpm prebuild && pnpm install --frozen-lockfile --shamefully-hoist
         working-directory: e2e-app
       
       - name: Install pods
