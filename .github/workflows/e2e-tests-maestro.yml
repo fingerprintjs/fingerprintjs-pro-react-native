@@ -21,10 +21,8 @@ jobs:
       react-native-matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        # POC subset: newest (local), oldest supported (0.73), current newest tagged (0.85).
-        # Widen to the full e2e-tests.yml list once the POC is validated.
         run: |
-          echo "matrix=['local', '0.73', '0.74', '0.85']" >> $GITHUB_OUTPUT
+          echo "matrix=['local', '0.73', '0.74', '0.75', '0.76', '0.77', '0.79', '0.81', '0.83', '0.85']" >> $GITHUB_OUTPUT
 
   e2e-tests-android:
     needs: build-matrix
