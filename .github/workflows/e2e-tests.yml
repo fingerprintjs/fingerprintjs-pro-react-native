@@ -276,9 +276,14 @@ jobs:
         run: rm -rf node_modules && pnpm install --frozen-lockfile --shamefully-hoist
         working-directory: e2e-app
 
+      - run: pnpm why react-native
+
       - name: Prebuild
         run: pnpm prebuild && pnpm install --frozen-lockfile --shamefully-hoist
         working-directory: e2e-app
+      
+      - run: pod install
+        working-directory: e2e-app/ios
 
       - run: pnpm exec detox build --configuration ios.sim.release
         working-directory: e2e-app
