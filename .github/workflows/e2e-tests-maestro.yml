@@ -1,13 +1,8 @@
 name: E2E Tests (Maestro)
 
-# POC workflow evaluating Maestro (https://maestro.dev/) as a less-flaky replacement for Detox.
-# It mirrors the build/matrix shape of e2e-tests.yml but runs a trivial smoke flow instead of the
-# full Detox suite. The existing Detox workflow is left untouched. See NEWARCH_MIGRATION_PLAN /
-# the Maestro POC plan for the two-step migration intent.
-
 env:
   XCODE_VERSION: 26.3
-  MAESTRO_DRIVER_STARTUP_TIMEOUT: 180000
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: 360000
 
 on:
   pull_request:
