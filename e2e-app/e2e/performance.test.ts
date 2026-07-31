@@ -46,11 +46,10 @@ describe('SDK Architecture Performance Benchmark', () => {
     const p50Text = await getElementText(element(by.id(testIds.benchmarkP50)))
     const p95Text = await getElementText(element(by.id(testIds.benchmarkP95)))
     const avgText = await getElementText(element(by.id(testIds.benchmarkAvg)))
-
-    const archText = global.__turboModuleProxy !== null ? 'TurboModules (New Arch)' : 'Bridge (Old Arch)'
+    const uiManagerText = await getElementText(element(by.id(testIds.uiManager)))
 
     console.log('\n==================================================')
-    console.log(`BENCHMARK RESULTS FROM APP UI - ${archText}`)
+    console.log(`BENCHMARK RESULTS FROM APP UI - ${uiManagerText}`)
     console.log(`- ${minText}`)
     console.log(`- ${maxText}`)
     console.log(`- ${p50Text}`)

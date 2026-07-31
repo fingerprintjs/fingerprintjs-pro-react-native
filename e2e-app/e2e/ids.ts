@@ -14,4 +14,5 @@ export const testIds = {
   benchmarkAvg: 'benchmark-avg',
   benchmarkP50: 'benchmark-p50',
   benchmarkP95: 'benchmark-p95',
+  uiManager: 'ui-manager',
 }
