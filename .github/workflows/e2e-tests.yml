@@ -85,7 +85,7 @@ jobs:
         run: pnpm prebuild
         working-directory: e2e-app
 
-      - run: pnpm exec detox build --configuration android.emu.release
+      - run: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox build --configuration android.emu.release"
         working-directory: e2e-app
 
       - name: Upload artifacts
@@ -284,7 +284,7 @@ jobs:
         run: pnpm prebuild
         working-directory: e2e-app
 
-      - run: pnpm exec detox build --configuration ios.sim.release
+      - run: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox build --configuration ios.sim.release"
         working-directory: e2e-app
 
       - name: Upload artifacts
