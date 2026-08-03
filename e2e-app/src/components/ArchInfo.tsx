@@ -10,10 +10,8 @@ export function ArchInfo() {
     <View>
       <Text>{`TurboModules: ${hasTurboModules}`}</Text>
       <Text>{`Bridgeless: ${isBridgeless}`}</Text>
-      <Text>
-        UI Manager:
-        <Text testID={testIds.uiManager}>{uiManager}</Text>
-      </Text>
+      <Text>UI Manager:</Text>
+      <Text testID={testIds.uiManager}>{uiManager}</Text>
     </View>
   )
 }
