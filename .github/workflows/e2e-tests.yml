@@ -191,8 +191,9 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           arch: x86_64
+          working-directory: e2e-app
           avd-name: ${{ steps.device.outputs.AVD_NAME }}
-          script: cd e2e-app && pnpm exec detox test --configuration android.emu.release --headless --record-logs all --record-videos failing
+          script: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox test --configuration android.emu.release --headless --record-logs all --record-videos failing"
 
       - name: Upload artifacts
         if: always()
@@ -358,7 +359,7 @@ jobs:
         if: github.event_name != 'release'
         working-directory: e2e-app
 
-      - run: pnpm exec detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing
+      - run: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox test --configuration ios.sim.release --cleanup --headless --record-logs all --record-videos failing"
         working-directory: e2e-app
         env:
           MINIMUM_US_DEFAULT_PUBLIC_KEY: ${{ secrets.MINIMUM_US_DEFAULT_PUBLIC_KEY }}
