@@ -6,13 +6,5 @@ export const testIds = {
   errorCause: 'error-cause',
   data: 'data',
   getData: 'get-data',
-  getDataDuration: 'get-data-duration',
-  measurePerformance: 'measure-performance',
-  benchmarkProgress: 'benchmark-progress',
-  benchmarkMin: 'benchmark-min',
-  benchmarkMax: 'benchmark-max',
-  benchmarkAvg: 'benchmark-avg',
-  benchmarkP50: 'benchmark-p50',
-  benchmarkP95: 'benchmark-p95',
   uiManager: 'ui-manager',
 }
