@@ -2,7 +2,6 @@
 //  RNFingerprintjsPro.swift
 //  RNFingerprintjsPro
 //
-import Foundation
 import FingerprintPro
 
 @objc(RNFingerprintjsPro)
@@ -14,12 +13,6 @@ class RNFingerprintjsPro: NSObject {
 
     @objc(configure:region:endpointUrl:fallbackEndpointUrls:extendedResponseFormat:pluginVersion:allowUseOfLocationData:locationTimeoutMillis:)
     public func configure(_ apiToken: String, _ region: String?, _ endpointUrl: String?, _ fallbackEndpointUrls: [String], _ extendedResponseFormat: Bool, _ pluginVersion: String, _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double) -> Void {
-        #if !RCT_NEW_ARCH_ENABLED
-        // TEMP(old-arch verification): compiled only when `RCT_NEW_ARCH_ENABLED` is NOT set, i.e. the
-        // module is registered via the legacy `RCT_EXTERN_MODULE` bridge (Old Architecture). On the
-        // New Architecture, `getTurboModule` in RNFingerprintjsPro.mm logs instead.
-        NSLog("[RNFingerprintjsPro] configure via legacy bridge — running on the Old Architecture")
-        #endif
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
         let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat, allowUseOfLocationData: allowUseOfLocationData)

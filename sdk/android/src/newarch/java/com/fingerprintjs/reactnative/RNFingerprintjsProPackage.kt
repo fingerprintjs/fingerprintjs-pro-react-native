@@ -1,6 +1,5 @@
 package com.fingerprintjs.reactnative
 
-import android.util.Log
 import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
@@ -16,10 +15,6 @@ import com.facebook.react.module.model.ReactModuleInfoProvider
 class RNFingerprintjsProPackage : BaseReactPackage() {
     override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
         return if (name == RNFingerprintjsProModule.NAME) {
-            // TEMP(new-arch verification): this new-arch-only package is used only when the module
-            // is resolved as a TurboModule (New Architecture). The old-arch build uses the legacy
-            // `ReactPackage` in `src/oldarch` instead.
-            Log.d("RNFingerprintjsPro", "getModule via new-arch package — running as a TurboModule (New Architecture)")
             RNFingerprintjsProModule(reactContext)
         } else {
             null

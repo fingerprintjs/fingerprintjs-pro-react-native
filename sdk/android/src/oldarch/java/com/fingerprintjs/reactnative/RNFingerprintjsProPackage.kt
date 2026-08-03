@@ -1,6 +1,5 @@
 package com.fingerprintjs.reactnative
 
-import android.util.Log
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
@@ -15,9 +14,6 @@ import com.facebook.react.uimanager.ViewManager
  */
 class RNFingerprintjsProPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-        // TEMP(old-arch verification): this legacy `ReactPackage` is only compiled/used on the Old
-        // Architecture. The new-arch build uses `BaseReactPackage` in `src/newarch` instead.
-        Log.d("RNFingerprintjsPro", "createNativeModules via legacy ReactPackage — running on the Old Architecture")
         return listOf(RNFingerprintjsProModule(reactContext))
     }
 
