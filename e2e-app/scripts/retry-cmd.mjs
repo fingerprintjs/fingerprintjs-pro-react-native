@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process'
 
-// Usage: node retry-cmd.js --retries=3 "<CMD>"
+// Usage: node retry-cmd.mjs --retries=3 "<CMD>"
 // Runs <CMD> and retries up to <retries> additional times if it exits non-zero.
 
 function parseArgs(argv) {
