@@ -4,11 +4,13 @@ plugins {
 }
 
 def isNewArchitectureEnabled() {
+    // To opt-in for the New Architecture, you can either:
+    // - Set `newArchEnabled` to true inside the `gradle.properties` file
+    // - Invoke gradle with `-newArchEnabled=true`
+    // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.getProperty("newArchEnabled") == "true"
 }
 
-// On the New Architecture the React Gradle plugin runs Codegen for this library, generating the
-// `NativeRNFingerprintjsProSpec` base class from `src/specs/NativeRNFingerprintjsPro.ts`.
 if (isNewArchitectureEnabled()) {
     apply plugin: 'com.facebook.react'
 }
