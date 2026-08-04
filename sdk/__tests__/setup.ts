@@ -3,8 +3,6 @@ jest.mock('react-native', () => {
     configure: jest.fn(),
     getVisitorId: jest.fn(),
     getVisitorData: jest.fn(),
-    getVisitorDataWithTimeout: jest.fn(),
-    getVisitorIdWithTimeout: jest.fn(),
   }
 
   return {

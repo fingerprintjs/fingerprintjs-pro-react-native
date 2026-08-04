@@ -3,37 +3,25 @@
 @interface RCT_EXTERN_MODULE(RNFingerprintjsPro, NSObject)
 
 RCT_EXTERN_METHOD(configure:(NSString *)apiToken
-  region:(NSString *)region
-  endpointUrl:(NSString *)endpointUrl
-  fallbackEndpointUrls:(NSArray<NSString *> *)fallbackEndpointUrls
-  extendedResponseFormat:(BOOL)extendedResponseFormat
   pluginVersion:(NSString *)pluginVersion
+  extendedResponseFormat:(BOOL)extendedResponseFormat
+  fallbackEndpointUrls:(NSArray<NSString *> *)fallbackEndpointUrls
   allowUseOfLocationData:(BOOL)allowUseOfLocationData
   locationTimeoutMillis:(double)locationTimeoutMillis
+  region:(NSString * _Nullable)region
+  endpointUrl:(NSString * _Nullable)endpointUrl
 )
 
 RCT_EXTERN_METHOD(getVisitorId:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  resolve:(RCTPromiseResolveBlock)resolve
-  reject:(RCTPromiseRejectBlock)reject
-)
-
-RCT_EXTERN_METHOD(getVisitorIdWithTimeout:(NSDictionary *)tags
-  linkedId:(NSString *)linkedId
-  timeout:(double)timeout
+  timeout:(NSNumber * _Nullable)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )
 
 RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  resolve:(RCTPromiseResolveBlock)resolve
-  reject:(RCTPromiseRejectBlock)reject
-)
-
-RCT_EXTERN_METHOD(getVisitorDataWithTimeout:(NSDictionary *)tags
-  linkedId:(NSString *)linkedId
-  timeout:(double)timeout
+  timeout:(NSNumber * _Nullable)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )

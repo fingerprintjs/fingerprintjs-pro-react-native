@@ -17,20 +17,16 @@ abstract class RNFingerprintjsProSpec(reactContext: ReactApplicationContext) :
 
   abstract fun configure(
       apiToken: String,
-      regionKey: String?,
-      endpointUrl: String?,
-      fallbackEndpointUrls: ReadableArray,
-      extendedResponseFormat: Boolean,
       pluginVersion: String,
+      extendedResponseFormat: Boolean,
+      fallbackEndpointUrls: ReadableArray,
       allowUseOfLocationData: Boolean,
-      locationTimeoutMillis: Double
+      locationTimeoutMillis: Double,
+      regionKey: String?,
+      endpointUrl: String?
   )
 
-  abstract fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise)
+  abstract fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise)
 
-  abstract fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise)
-
-  abstract fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise)
-
-  abstract fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise)
+  abstract fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise)
 }

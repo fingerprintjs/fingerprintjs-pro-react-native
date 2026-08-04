@@ -11,25 +11,16 @@ class RNFingerprintjsPro: NSObject {
     @objc
     static func requiresMainQueueSetup() -> Bool { false }
 
-    @objc(configure:region:endpointUrl:fallbackEndpointUrls:extendedResponseFormat:pluginVersion:allowUseOfLocationData:locationTimeoutMillis:)
-    public func configure(_ apiToken: String, _ region: String?, _ endpointUrl: String?, _ fallbackEndpointUrls: [String], _ extendedResponseFormat: Bool, _ pluginVersion: String, _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double) -> Void {
+    @objc(configure:pluginVersion:extendedResponseFormat:fallbackEndpointUrls:allowUseOfLocationData:locationTimeoutMillis:region:endpointUrl:)
+    public func configure(_ apiToken: String, _ pluginVersion: String, _ extendedResponseFormat: Bool, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
         let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat, allowUseOfLocationData: allowUseOfLocationData)
         fpjsClient = FingerprintProFactory.getInstance(configuration)
     }
 
-    @objc(getVisitorId:linkedId:resolve:reject:)
-    public func getVisitorId(tags: [String: Any]?, linkedId: String?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        self.getVisitorId(tags: tags, linkedId: linkedId, timeout: nil, resolve: resolve, reject: reject)
-    }
-
-    @objc(getVisitorIdWithTimeout:linkedId:timeout:resolve:reject:)
-    public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: Double, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        self.getVisitorId(tags: tags, linkedId: linkedId, timeout: NSNumber(value: timeout), resolve: resolve, reject: reject)
-    }
-
-    private func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc(getVisitorId:linkedId:timeout:resolve:reject:)
+    public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
 
         let completionHandler: FingerprintPro.VisitorIdBlock = { visitorIdResult in
@@ -49,17 +40,8 @@ class RNFingerprintjsPro: NSObject {
         }
     }
 
-    @objc(getVisitorData:linkedId:resolve:reject:)
-    public func getVisitorData(tags: [String: Any]?, linkedId: String?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        self.getVisitorData(tags: tags, linkedId: linkedId, timeout: nil, resolve: resolve, reject: reject)
-    }
-
-    @objc(getVisitorDataWithTimeout:linkedId:timeout:resolve:reject:)
-    public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: Double, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        self.getVisitorData(tags: tags, linkedId: linkedId, timeout: NSNumber(value: timeout), resolve: resolve, reject: reject)
-    }
-
-    private func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc(getVisitorData:linkedId:timeout:resolve:reject:)
+    public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
 
         let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in

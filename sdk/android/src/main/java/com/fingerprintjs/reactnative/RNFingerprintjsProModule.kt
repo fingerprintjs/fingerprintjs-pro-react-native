@@ -43,13 +43,13 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFinger
   @ReactMethod
   override fun configure(
       apiToken: String,
-      regionKey: String?,
-      endpointUrl: String?,
-      fallbackEndpointUrls: ReadableArray,
-      extendedResponseFormat: Boolean,
       pluginVersion: String,
+      extendedResponseFormat: Boolean,
+      fallbackEndpointUrls: ReadableArray,
       allowUseOfLocationData: Boolean,
-      locationTimeoutMillis: Double
+      locationTimeoutMillis: Double,
+      regionKey: String?,
+      endpointUrl: String?
   ) {
     val factory = FingerprintJSFactory(reactApplicationContext)
     val region = when(regionKey) {
@@ -73,23 +73,13 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFinger
   }
 
   @ReactMethod
-  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    getVisitorIdInternal(tags, linkedId, null, promise)
+  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
+    getVisitorIdInternal(tags, linkedId, timeout?.toInt(), promise)
   }
 
   @ReactMethod
-  override fun getVisitorIdWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
-    getVisitorIdInternal(tags, linkedId, timeout.toInt(), promise)
-  }
-
-  @ReactMethod
-  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, promise: Promise) {
-    getVisitorDataInternal(tags, linkedId, null, promise)
-  }
-
-  @ReactMethod
-  override fun getVisitorDataWithTimeout(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
-    getVisitorDataInternal(tags, linkedId, timeout.toInt(), promise)
+  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
+    getVisitorDataInternal(tags, linkedId, timeout?.toInt(), promise)
   }
 
   private fun getVisitorIdInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {

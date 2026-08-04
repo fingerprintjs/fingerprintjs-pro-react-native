@@ -2,7 +2,7 @@ import { UnknownError } from './errors'
 import RNFingerprintjsPro, { type NativeVisitorData } from './specs/NativeRNFingerprintjsPro'
 import type { FingerprintJsProAgentParams, ProAgent, RequestOptions, Tags, VisitorData, VisitorId } from './types'
 import { unwrapError } from './unwrapError'
-import { isDefined, isTruthy } from './utils'
+import { isTruthy } from './utils'
 
 const packageVersion = '__VERSION__'
 
@@ -31,13 +31,13 @@ export class FingerprintJsProAgent implements ProAgent {
     try {
       RNFingerprintjsPro.configure(
         apiKey,
-        region ?? null,
-        endpointUrl ?? null,
-        fallbackEndpointUrls,
-        extendedResponseFormat,
         packageVersion,
+        extendedResponseFormat,
+        fallbackEndpointUrls,
         allowUseOfLocationData,
-        locationTimeoutMillisAndroid
+        locationTimeoutMillisAndroid,
+        region ?? null,
+        endpointUrl ?? null
       )
       this.requestOptions = requestOptions
     } catch (e) {
@@ -55,11 +55,7 @@ export class FingerprintJsProAgent implements ProAgent {
   public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      if (isDefined(timeout)) {
-        return await RNFingerprintjsPro.getVisitorIdWithTimeout(tags ?? null, linkedId ?? null, timeout)
-      }
-
-      return await RNFingerprintjsPro.getVisitorId(tags ?? null, linkedId ?? null)
+      return await RNFingerprintjsPro.getVisitorId(tags ?? null, linkedId ?? null, timeout ?? null)
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
@@ -81,12 +77,11 @@ export class FingerprintJsProAgent implements ProAgent {
   public async getVisitorData(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorData> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      let visitorData: NativeVisitorData
-      if (isDefined(timeout)) {
-        visitorData = await RNFingerprintjsPro.getVisitorDataWithTimeout(tags ?? null, linkedId ?? null, timeout)
-      } else {
-        visitorData = await RNFingerprintjsPro.getVisitorData(tags ?? null, linkedId ?? null)
-      }
+      const visitorData: NativeVisitorData = await RNFingerprintjsPro.getVisitorData(
+        tags ?? null,
+        linkedId ?? null,
+        timeout ?? null
+      )
       const { requestId, confidenceScore, visitorDataJson, sealedResult } = visitorData
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       const result = {

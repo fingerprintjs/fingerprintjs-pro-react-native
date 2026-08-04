@@ -19,34 +19,26 @@ export interface NativeVisitorData {
 /**
  * Codegen TurboModule spec for the `RNFingerprintjsPro` native module.
  *
- * Optional arguments are modelled as nullable (`| null`) rather than optional (`?`) because
- * Codegen relies on positional arguments and some optional values are followed by required ones
- * (e.g. `timeout`). Nullability maps onto the native modules, which already treat absent
- * `tags`/`linkedId`/`region`/`endpointUrl` as "not provided".
+ * Optional arguments are modelled as nullable (`| null`) — Codegen relies on positional arguments,
+ * and nullability maps onto the native modules, which treat `null` as "not provided". Genuinely
+ * optional parameters (those without an SDK-side default: `region`, `endpointUrl`, `timeout`) come
+ * last in each signature.
  */
 export interface Spec extends TurboModule {
   configure(
     apiToken: string,
-    region: string | null,
-    endpointUrl: string | null,
-    fallbackEndpointUrls: string[],
-    extendedResponseFormat: boolean,
     pluginVersion: string,
+    extendedResponseFormat: boolean,
+    fallbackEndpointUrls: string[],
     allowUseOfLocationData: boolean,
-    locationTimeoutMillis: Double
+    locationTimeoutMillis: Double,
+    region: string | null,
+    endpointUrl: string | null
   ): void
 
-  getVisitorId(tags: UnsafeObject | null, linkedId: string | null): Promise<string>
+  getVisitorId(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<string>
 
-  getVisitorIdWithTimeout(tags: UnsafeObject | null, linkedId: string | null, timeout: Double): Promise<string>
-
-  getVisitorData(tags: UnsafeObject | null, linkedId: string | null): Promise<NativeVisitorData>
-
-  getVisitorDataWithTimeout(
-    tags: UnsafeObject | null,
-    linkedId: string | null,
-    timeout: Double
-  ): Promise<NativeVisitorData>
+  getVisitorData(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<NativeVisitorData>
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprintjsPro')
