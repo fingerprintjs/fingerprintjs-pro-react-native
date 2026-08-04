@@ -26,10 +26,20 @@ jobs:
       max-parallel: 3
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+        architecture: [old, new]
+        exclude:
+          # New architecture is not tested on the Expo 50/51 SDKs (experimental there)
+          - { react-native: '0.73', architecture: new }
+          - { react-native: '0.74', architecture: new }
+          - { react-native: '0.75', architecture: new }
+          # RN 0.82+ (Expo SDK 55+) removed the ability to disable the new architecture
+          - { react-native: '0.83', architecture: old }
+          - { react-native: '0.85', architecture: old }
+          - { react-native: 'local', architecture: old }
     runs-on: ubuntu-latest
     needs:
       build-matrix
-    name: Build android for E2E tests for react-native ${{ matrix.react-native }}
+    name: Build android for E2E tests for react-native ${{ matrix.react-native }} (${{ matrix.architecture }} arch)
     steps:
       - uses: actions/checkout@v7
 
@@ -84,6 +94,8 @@ jobs:
       - name: Prebuild
         run: pnpm prebuild
         working-directory: e2e-app
+        env:
+          E2E_NEW_ARCH: ${{ matrix.architecture == 'new' }}
 
       - run: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox build --configuration android.emu.release"
         working-directory: e2e-app
@@ -91,7 +103,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: android-app-release-${{ matrix.react-native }}
+          name: android-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
           path: e2e-app/android/app/build
           retention-days: 3
 
@@ -100,12 +112,22 @@ jobs:
       - build-android
       - build-matrix
     runs-on: ubuntu-latest
-    name: Android E2E Tests for react-native ${{ matrix.react-native }}
+    name: Android E2E Tests for react-native ${{ matrix.react-native }} (${{ matrix.architecture }} arch)
     strategy:
       max-parallel: 3
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+        architecture: [old, new]
+        exclude:
+          # New architecture is not tested on the Expo 50/51 SDKs (experimental there)
+          - { react-native: '0.73', architecture: new }
+          - { react-native: '0.74', architecture: new }
+          - { react-native: '0.75', architecture: new }
+          # RN 0.82+ (Expo SDK 55+) removed the ability to disable the new architecture
+          - { react-native: '0.83', architecture: old }
+          - { react-native: '0.85', architecture: old }
+          - { react-native: 'local', architecture: old }
     steps:
       - uses: actions/checkout@v7
 
@@ -145,7 +167,7 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
-          name: android-app-release-${{ matrix.react-native }}
+          name: android-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
           path: e2e-app/android/app/build
 
       - name: Get device name
@@ -199,7 +221,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: android-detox-artifacts-${{matrix.react-native}}
+          name: android-detox-artifacts-${{matrix.react-native}}-${{ matrix.architecture }}
           path: '**/detox-artifacts'
           retention-days: 3
 
@@ -207,19 +229,29 @@ jobs:
         name: Delete build artifact
         if: success()
         with:
-          name: android-app-release-${{ matrix.react-native }}
+          name: android-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
 
   build-ios:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-26
-    name: Build iOS for E2E tests for react-native ${{ matrix.react-native }}
+    name: Build iOS for E2E tests for react-native ${{ matrix.react-native }} (${{ matrix.architecture }} arch)
     strategy:
       max-parallel: 3
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+        architecture: [old, new]
+        exclude:
+          # New architecture is not tested on the Expo 50/51 SDKs (experimental there)
+          - { react-native: '0.73', architecture: new }
+          - { react-native: '0.74', architecture: new }
+          - { react-native: '0.75', architecture: new }
+          # RN 0.82+ (Expo SDK 55+) removed the ability to disable the new architecture
+          - { react-native: '0.83', architecture: old }
+          - { react-native: '0.85', architecture: old }
+          - { react-native: 'local', architecture: old }
     needs: build-matrix
     steps:
       - uses: actions/checkout@v7
@@ -284,6 +316,8 @@ jobs:
       - name: Prebuild
         run: pnpm prebuild
         working-directory: e2e-app
+        env:
+          E2E_NEW_ARCH: ${{ matrix.architecture == 'new' }}
 
       - run: node scripts/retry-cmd.mjs --retries=3 "pnpm exec detox build --configuration ios.sim.release"
         working-directory: e2e-app
@@ -291,7 +325,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: ios-app-release-${{ matrix.react-native }}
+          name: ios-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
           path: e2e-app/ios/build/Build
           retention-days: 3
 
@@ -300,7 +334,7 @@ jobs:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_INSTALL_CLEANUP: 1
     runs-on: macos-26
-    name: iOS E2E Tests for react-native ${{ matrix.react-native }}
+    name: iOS E2E Tests for react-native ${{ matrix.react-native }} (${{ matrix.architecture }} arch)
     needs:
       - build-ios
       - build-matrix
@@ -309,6 +343,16 @@ jobs:
       fail-fast: false
       matrix:
         react-native: ${{ fromJSON(needs.build-matrix.outputs.react-native-matrix) }}
+        architecture: [old, new]
+        exclude:
+          # New architecture is not tested on the Expo 50/51 SDKs (experimental there)
+          - { react-native: '0.73', architecture: new }
+          - { react-native: '0.74', architecture: new }
+          - { react-native: '0.75', architecture: new }
+          # RN 0.82+ (Expo SDK 55+) removed the ability to disable the new architecture
+          - { react-native: '0.83', architecture: old }
+          - { react-native: '0.85', architecture: old }
+          - { react-native: 'local', architecture: old }
     steps:
       - uses: actions/checkout@v7
 
@@ -337,7 +381,7 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
-          name: ios-app-release-${{ matrix.react-native }}
+          name: ios-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
           path: e2e-app/ios/build/Build
 
       - name: Start iPhone simulator
@@ -373,7 +417,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: ios-detox-artifacts-${{matrix.react-native}}
+          name: ios-detox-artifacts-${{matrix.react-native}}-${{ matrix.architecture }}
           path: '**/detox-artifacts'
           retention-days: 3
 
@@ -381,7 +425,7 @@ jobs:
         name: Delete build artifact
         if: success()
         with:
-          name: ios-app-release-${{ matrix.react-native }}
+          name: ios-app-release-${{ matrix.react-native }}-${{ matrix.architecture }}
 
   e2e-tests-web:
     name: Web E2E tests
