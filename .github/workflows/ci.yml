@@ -10,3 +10,7 @@ jobs:
   build-and-check:
     name: Build project and run CI checks
     uses: fingerprintjs/dx-team-toolkit/.github/workflows/build-typescript-project.yml@v1
+    with:
+      runAfterInstall: |
+        cd e2e-app && pnpm i && cd ..
+        cd TestProject && pnpm i && cd ..

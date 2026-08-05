@@ -99,7 +99,7 @@ export const Visitor = () => {
     const fingerprintClient = new FingerprintJsProAgent({
       apiKey: PUBLIC_API_KEY,
       region: REGION as Region,
-      endpointUrl: ENDPOINT || undefined,
+      endpointUrl: ENDPOINT ?? undefined,
     })
 
     const tests = [

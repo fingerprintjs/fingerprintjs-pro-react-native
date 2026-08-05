@@ -94,12 +94,12 @@ test.describe('Web tests', () => {
         }
 
         client = new FingerprintJsServerApiClient({
-          apiKey: privateApiKey!,
+          apiKey: privateApiKey,
           region: serverRegion,
         })
 
         await setupPage(page, {
-          apiKey: apiKey!,
+          apiKey,
           region,
         })
       })
@@ -138,13 +138,13 @@ test.describe('Web tests', () => {
         }
 
         client = new FingerprintJsServerApiClient({
-          apiKey: privateApiKey!,
+          apiKey: privateApiKey,
           region: serverRegion,
         })
 
         await setupPage(page, {
-          apiKey: apiKey!,
-          region: region!,
+          apiKey,
+          region,
           linkedId,
           useTags: true,
         })
@@ -186,7 +186,7 @@ test.describe('Web tests', () => {
       }
 
       await setupPage(page, {
-        apiKey: apiKey!,
+        apiKey,
         region: 'us',
       })
     })
@@ -198,7 +198,7 @@ test.describe('Web tests', () => {
 
       const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult, 'base64'), [
         {
-          key: Buffer.from(encryptionKey!, 'base64'),
+          key: Buffer.from(encryptionKey ?? '', 'base64'),
           algorithm: DecryptionAlgorithm.Aes256Gcm,
         },
       ])

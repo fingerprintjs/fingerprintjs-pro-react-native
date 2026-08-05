@@ -66,9 +66,6 @@ importers:
       '@types/react-test-renderer':
         specifier: ^18.0.0
         version: 18.3.1
-      eslint:
-        specifier: ^8.19.0
-        version: 8.57.1
       jest:
         specifier: ^29.2.1
         version: 29.7.0(@types/node@25.9.2)

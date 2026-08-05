@@ -22,9 +22,7 @@ function App(): React.JSX.Element {
   const customTimeout = Number(CUSTOM_TIMEOUT ?? '60000')
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    // flex: 1,
-    // justifyContent: 'center',
+    backgroundColor: (isDarkMode ? Colors.darker : Colors.lighter) as string,
   }
   console.log(FingerprintJsProProvider)
 
@@ -33,7 +31,7 @@ function App(): React.JSX.Element {
       apiKey={apiKey}
       extendedResponseFormat={true}
       region={region as Region}
-      endpointUrl={endpoint || undefined}
+      endpointUrl={endpoint ?? undefined}
       requestOptions={{ timeout: customTimeout }}
       allowUseOfLocationData={true}
       locationTimeoutMillisAndroid={7000}

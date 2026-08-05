@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process'
-import pkg from '../package.json' with { type: 'json' };
+import pkg from '../package.json' with { type: 'json' }
 
 const devPackages = Object.keys(pkg.devDependencies)
 
@@ -14,10 +14,24 @@ const reactNativeMetadata = {
     packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@18.2.0', 'react-dom@18.2.0'],
   },
   0.75: {
-    packages: ['expo@51', 'detox@20.20.3', '@config-plugins/detox@8', 'react@18.2.0', 'react-dom@18.2.0', '@react-native-community/cli@14'],
+    packages: [
+      'expo@51',
+      'detox@20.20.3',
+      '@config-plugins/detox@8',
+      'react@18.2.0',
+      'react-dom@18.2.0',
+      '@react-native-community/cli@14',
+    ],
   },
   0.76: {
-    packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', 'react@18.3.1', 'react-dom@18.3.1', '@react-native-community/cli@15'],
+    packages: [
+      'expo@52',
+      'detox@20.28.0',
+      '@config-plugins/detox@9',
+      'react@18.3.1',
+      'react-dom@18.3.1',
+      '@react-native-community/cli@15',
+    ],
   },
   0.77: {
     packages: ['expo@52', 'detox@20.28.0', '@config-plugins/detox@9', 'react@18.3.1', 'react-dom@18.3.1'],
@@ -34,11 +48,18 @@ const reactNativeMetadata = {
     // line; otherwise the base's SDK 56 build (56.0.x) is kept and its native module references
     // expo-modules-core classes (e.g. AnyTypeCache, added in core 56) that SDK 55 lacks, crashing
     // at module registration.
-    packages: ['expo@55', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0', '@expo/dom-webview@55'],
+    packages: [
+      'expo@55',
+      'detox@20.51.0',
+      '@config-plugins/detox@11',
+      'react@19.2.0',
+      'react-dom@19.2.0',
+      '@expo/dom-webview@55',
+    ],
   },
   0.85: {
-    packages: ['expo@56', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0']
-  }
+    packages: ['expo@56', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.2.0', 'react-dom@19.2.0'],
+  },
 }
 
 const rnVersion = process.env.REACT_NATIVE_VERSION

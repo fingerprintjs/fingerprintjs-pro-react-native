@@ -5,10 +5,10 @@ type Options = Record<string, string>
 
 function doReplace(source: string, values: Options) {
   const pattern = /__\w+__/g
-  const replacements = Object.keys(values).reduce((acc, key) => {
+  const replacements = Object.keys(values).reduce<Record<string, string>>((acc, key) => {
     acc[key] = values[key]
     return acc
-  }, {} as Record<string, string>)
+  }, {})
   return source.replace(pattern, (match) => replacements[match])
 }
 

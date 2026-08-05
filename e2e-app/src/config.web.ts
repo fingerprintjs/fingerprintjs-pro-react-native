@@ -5,7 +5,7 @@ const search = new URLSearchParams(window.location.search)
 
 function getApiKey(): string {
   if (search.has('apiKey')) {
-    return search.get('apiKey')!
+    return search.get('apiKey') ?? ''
   }
 
   if (process.env.EXPO_PUBLIC_API_KEY) {
