@@ -14,14 +14,14 @@ RCT_EXTERN_METHOD(configure:(NSString *)apiToken
 
 RCT_EXTERN_METHOD(getVisitorId:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  timeout:(NSNumber * _Nullable)timeout
+  timeout:(double)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )
 
 RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  timeout:(NSNumber * _Nullable)timeout
+  timeout:(double)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )

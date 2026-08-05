@@ -73,14 +73,17 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFinger
   }
 
   @ReactMethod
-  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
-    getVisitorIdInternal(tags, linkedId, timeout?.toInt(), promise)
+  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
+    getVisitorIdInternal(tags, linkedId, timeout.toTimeoutOrNull(), promise)
   }
 
   @ReactMethod
-  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
-    getVisitorDataInternal(tags, linkedId, timeout?.toInt(), promise)
+  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
+    getVisitorDataInternal(tags, linkedId, timeout.toTimeoutOrNull(), promise)
   }
+
+  // A negative sentinel means "no timeout" (see the JS spec: the legacy bridge can't pass a null number).
+  private fun Double.toTimeoutOrNull(): Int? = if (this >= 0) this.toInt() else null
 
   private fun getVisitorIdInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {

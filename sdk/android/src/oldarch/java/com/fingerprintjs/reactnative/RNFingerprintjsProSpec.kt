@@ -26,7 +26,7 @@ abstract class RNFingerprintjsProSpec(reactContext: ReactApplicationContext) :
       endpointUrl: String?
   )
 
-  abstract fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise)
+  abstract fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise)
 
-  abstract fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise)
+  abstract fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise)
 }
