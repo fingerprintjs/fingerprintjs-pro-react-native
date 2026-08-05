@@ -133,7 +133,7 @@ describe('useVisitorData', () => {
       void result.current.getData(mockedTags, mockedLinkedId)
     })
     await waitFor(() => {
-      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, -1)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, null)
     })
   })
 
@@ -170,7 +170,7 @@ describe('useVisitorData', () => {
       void result.current.getData(mockedTags, mockedLinkedId, options)
     })
     await waitFor(() => {
-      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, -1)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, null)
     })
   })
 

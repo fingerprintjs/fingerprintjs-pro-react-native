@@ -14,24 +14,23 @@ RCT_EXTERN_METHOD(configure:(NSString *)apiToken
 
 RCT_EXTERN_METHOD(getVisitorId:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  timeout:(double)timeout
+  timeout:(NSNumber * _Nullable)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )
 
 RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tags
   linkedId:(NSString *)linkedId
-  timeout:(double)timeout
+  timeout:(NSNumber * _Nullable)timeout
   resolve:(RCTPromiseResolveBlock)resolve
   reject:(RCTPromiseRejectBlock)reject
 )
 
 @end
 
-#ifdef RCT_NEW_ARCH_ENABLED
-// On the New Architecture, expose the Swift class as a real TurboModule backed by the
-// Codegen-generated spec. The Swift implementation already exposes the exact selectors the
-// generated `NativeRNFingerprintjsProSpecJSI` invokes.
+// Expose the Swift class as a real TurboModule backed by the Codegen-generated spec. The Swift
+// implementation already exposes the exact selectors the generated
+// `NativeRNFingerprintjsProSpecJSI` invokes.
 #import <RNFingerprintjsProSpec/RNFingerprintjsProSpec.h>
 
 // Import the Swift-generated interface so the category below can extend the Swift class.
@@ -53,4 +52,3 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tags
   return std::make_shared<facebook::react::NativeRNFingerprintjsProSpecJSI>(params);
 }
 @end
-#endif

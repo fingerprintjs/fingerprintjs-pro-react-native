@@ -19,13 +19,9 @@ export interface NativeVisitorData {
 /**
  * Codegen TurboModule spec for the `RNFingerprintjsPro` native module.
  *
- * Optional string/object arguments are modelled as nullable (`| null`); Codegen relies on positional
- * arguments and native treats `null` as "not provided". Genuinely optional parameters (those without
- * an SDK-side default: `region`, `endpointUrl`, `timeout`) come last in each signature.
- *
- * `timeout` is a NON-nullable `Double` using a negative sentinel (< 0 means "no timeout") rather than
- * `Double | null`, because the legacy (old-architecture) Android bridge cannot pass a null number
- * argument — it unboxes every numeric arg via `ReadableNativeArray.getDouble()` and NPEs on null.
+ * Optional string/object/number arguments are modelled as nullable (`| null`); Codegen relies on
+ * positional arguments and native treats `null` as "not provided". Genuinely optional parameters
+ * (those without an SDK-side default: `region`, `endpointUrl`, `timeout`) come last in each signature.
  */
 export interface Spec extends TurboModule {
   configure(
@@ -39,9 +35,9 @@ export interface Spec extends TurboModule {
     endpointUrl: string | null
   ): void
 
-  getVisitorId(tags: UnsafeObject | null, linkedId: string | null, timeout: Double): Promise<string>
+  getVisitorId(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<string>
 
-  getVisitorData(tags: UnsafeObject | null, linkedId: string | null, timeout: Double): Promise<NativeVisitorData>
+  getVisitorData(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<NativeVisitorData>
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprintjsPro')

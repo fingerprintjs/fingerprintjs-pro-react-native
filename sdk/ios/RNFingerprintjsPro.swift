@@ -20,7 +20,7 @@ class RNFingerprintjsPro: NSObject {
     }
 
     @objc(getVisitorId:linkedId:timeout:resolve:reject:)
-    public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: Double, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
 
         let completionHandler: FingerprintPro.VisitorIdBlock = { visitorIdResult in
@@ -33,8 +33,7 @@ class RNFingerprintjsPro: NSObject {
             }
         }
 
-        // A negative sentinel means "no timeout" (see the JS spec).
-        if timeout >= 0 {
+        if let timeout = timeout?.doubleValue {
             fpjsClient?.getVisitorId(metadata, timeout: timeout / 1000, completion: completionHandler)
         } else {
             fpjsClient?.getVisitorId(metadata, completion: completionHandler)
@@ -42,7 +41,7 @@ class RNFingerprintjsPro: NSObject {
     }
 
     @objc(getVisitorData:linkedId:timeout:resolve:reject:)
-    public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: Double, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
 
         let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in
@@ -61,8 +60,7 @@ class RNFingerprintjsPro: NSObject {
             }
         }
 
-        // A negative sentinel means "no timeout" (see the JS spec).
-        if timeout >= 0 {
+        if let timeout = timeout?.doubleValue {
             fpjsClient?.getVisitorIdResponse(metadata, timeout: timeout / 1000, completion: completionHandler)
         } else {
             fpjsClient?.getVisitorIdResponse(metadata, completion: completionHandler)

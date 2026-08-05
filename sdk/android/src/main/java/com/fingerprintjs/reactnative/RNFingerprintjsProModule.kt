@@ -33,14 +33,13 @@ import java.lang.Exception
 
 
 @ReactModule(name = RNFingerprintjsProModule.NAME)
-class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFingerprintjsProSpec(reactContext) {
+class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRNFingerprintjsProSpec(reactContext) {
   private var fpjsClient: FingerprintJS? = null
 
   override fun getName(): String {
     return NAME
   }
 
-  @ReactMethod
   override fun configure(
       apiToken: String,
       pluginVersion: String,
@@ -72,18 +71,13 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : RNFinger
     fpjsClient = factory.createInstance(configuration)
   }
 
-  @ReactMethod
-  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
-    getVisitorIdInternal(tags, linkedId, timeout.toTimeoutOrNull(), promise)
+  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
+    getVisitorIdInternal(tags, linkedId, timeout?.toInt(), promise)
   }
 
-  @ReactMethod
-  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double, promise: Promise) {
-    getVisitorDataInternal(tags, linkedId, timeout.toTimeoutOrNull(), promise)
+  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
+    getVisitorDataInternal(tags, linkedId, timeout?.toInt(), promise)
   }
-
-  // A negative sentinel means "no timeout" (see the JS spec: the legacy bridge can't pass a null number).
-  private fun Double.toTimeoutOrNull(): Int? = if (this >= 0) this.toInt() else null
 
   private fun getVisitorIdInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
     try {

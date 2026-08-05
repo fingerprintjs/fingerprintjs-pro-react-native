@@ -7,13 +7,6 @@ import { isTruthy } from './utils'
 const packageVersion = '__VERSION__'
 
 /**
- * Sentinel passed to the native `timeout` argument when no timeout is set. A negative value means
- * "no timeout". We can't pass `null` because the legacy Android bridge (old architecture) cannot
- * accept a null number argument.
- */
-const NO_TIMEOUT = -1
-
-/**
  *
  * @group API Client approach
  */
@@ -62,7 +55,7 @@ export class FingerprintJsProAgent implements ProAgent {
   public async getVisitorId(tags?: Tags, linkedId?: string, options?: RequestOptions): Promise<VisitorId> {
     try {
       const timeout = options?.timeout ?? this.requestOptions.timeout
-      return await RNFingerprintjsPro.getVisitorId(tags ?? null, linkedId ?? null, timeout ?? NO_TIMEOUT)
+      return await RNFingerprintjsPro.getVisitorId(tags ?? null, linkedId ?? null, timeout ?? null)
     } catch (error) {
       if (error instanceof Error) {
         throw unwrapError(error)
@@ -87,7 +80,7 @@ export class FingerprintJsProAgent implements ProAgent {
       const visitorData: NativeVisitorData = await RNFingerprintjsPro.getVisitorData(
         tags ?? null,
         linkedId ?? null,
-        timeout ?? NO_TIMEOUT
+        timeout ?? null
       )
       const { requestId, confidenceScore, visitorDataJson, sealedResult } = visitorData
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

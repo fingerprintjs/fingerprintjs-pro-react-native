@@ -113,7 +113,7 @@ describe(`FingerprintJsProProvider`, () => {
     const fingerprintClient = new FingerprintJsProAgent(options)
     void fingerprintClient.getVisitorId()
 
-    expect(getVisitorId).toHaveBeenCalledWith(null, null, -1)
+    expect(getVisitorId).toHaveBeenCalledWith(null, null, null)
   })
 
   it('should pass timeout to `getVisitorId` function', () => {
@@ -165,7 +165,7 @@ describe(`FingerprintJsProProvider`, () => {
 
     void fingerprintClient.getVisitorData()
 
-    expect(getVisitorData).toHaveBeenCalledWith(null, null, -1)
+    expect(getVisitorData).toHaveBeenCalledWith(null, null, null)
   })
 
   it('should pass timeout to `getVisitorData` function', () => {

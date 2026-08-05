@@ -20,18 +20,6 @@ export function withAndroidBuildProperties(props: Partial<AndroidBuildProperties
   }
 }
 
-export function setCompileSdkVersion(version: number) {
-  return withAndroidBuildProperties({
-    compileSdkVersion: version,
-  })
-}
-
-export function stripAndroidExtraBuildProperties() {
-  delete androidBuildProperties.compileSdkVersion
-  delete androidBuildProperties.targetSdkVersion
-  delete androidBuildProperties.buildToolsVersion
-}
-
 export function getAndroidBuildProperties() {
   return { ...androidBuildProperties }
 }

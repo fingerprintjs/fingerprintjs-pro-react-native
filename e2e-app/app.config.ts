@@ -5,7 +5,6 @@ import { dependencies } from './package.json'
 import * as semver from 'semver'
 import { handleReactNativeVersion, patchExpoConfig } from './app-config-tools/reactNativeMetadata'
 import { getAndroidBuildProperties } from './app-config-tools/android'
-import { withNewArchFlag } from './app-config-tools/expoConfigPatchers'
 
 let rawReactNativeVersion = dependencies['react-native']
 
@@ -49,10 +48,8 @@ const config: ExpoConfig = {
   ],
 }
 
-// Set newArchEnabled explicitly for every RN version so that E2E_NEW_ARCH can force either
-// architecture at prebuild time (versions without a metadata entry would otherwise inherit
-// Expo's default and never write the flag).
+// The SDK supports the New Architecture only (React Native >= 0.79), so always enable it.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-withNewArchFlag(config as any)
+;(config as any).newArchEnabled = true
 
 export default patchExpoConfig(rnVersionStr, config)

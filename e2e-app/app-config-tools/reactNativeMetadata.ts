@@ -1,7 +1,3 @@
-import { disableNewArch } from './arch'
-import { setCompileSdkVersion, stripAndroidExtraBuildProperties } from './android'
-import { withFingerprintMavenRepo, withSplashscreen } from './expoConfigPatchers'
-
 // config is typed as any, as different expo version have different types for the config object
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ExpoConfigPatcher = (config: any) => void
@@ -19,29 +15,11 @@ type ReactNativeMetadata = {
  * - The key represents the version of React Native.
  * - The value is an object containing:
  *   - `callbacks`: An array of functions to execute in the context of the respective React Native version.
+ *
+ * The SDK supports React Native >= 0.79 (New Architecture only), so no version currently needs
+ * version-specific handling. New entries can be added here if a future version requires it.
  */
-const reactNativeMetadata: Record<string, ReactNativeMetadata | undefined> = {
-  0.73: {
-    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withSplashscreen, withFingerprintMavenRepo],
-  },
-  0.74: {
-    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withSplashscreen],
-  },
-  0.75: {
-    callbacks: [disableNewArch, stripAndroidExtraBuildProperties, setCompileSdkVersion(34)],
-    patchExpoConfig: [withSplashscreen],
-  },
-  0.76: {
-    callbacks: [stripAndroidExtraBuildProperties, setCompileSdkVersion(35)],
-    patchExpoConfig: [withSplashscreen],
-  },
-  0.77: {
-    callbacks: [stripAndroidExtraBuildProperties, setCompileSdkVersion(35)],
-    patchExpoConfig: [withSplashscreen],
-  },
-}
+const reactNativeMetadata: Record<string, ReactNativeMetadata | undefined> = {}
 
 export function handleReactNativeVersion(rnVersion: string) {
   if (reactNativeMetadata[rnVersion]?.callbacks?.length) {

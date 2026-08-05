@@ -8,9 +8,7 @@ import com.facebook.react.module.model.ReactModuleInfoProvider
 
 
 /**
- * New-architecture package. Uses `BaseReactPackage` + `ReactModuleInfoProvider` so the module is
- * registered as a TurboModule. These APIs only exist on newer React Native; the old-architecture
- * counterpart in `src/oldarch` uses the legacy [com.facebook.react.ReactPackage] API instead.
+ * Registers the module as a TurboModule via `BaseReactPackage` + `ReactModuleInfoProvider`.
  */
 class RNFingerprintjsProPackage : BaseReactPackage() {
     override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
