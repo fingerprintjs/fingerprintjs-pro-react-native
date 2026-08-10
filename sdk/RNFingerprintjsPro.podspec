@@ -20,7 +20,9 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
   # See: https://guides.cocoapods.org/using/the-podfile.html#specifying-pod-versions
-  # ~> 2.8.2 means >= 2.8.2 and < 2.9.0 (pessimistic operator)
+  # ~> 2.17.0 means >= 2.17.0 and < 2.18.0 (pessimistic operator)
+  # TODO(v4): bump to `'~> 4.0'` once FingerprintPro v4 is published to CocoaPods. The Swift bridge is
+  # already reshaped to the v4 response contract; the v4 SDK also requires Xcode 16 / Swift 6 / iOS 14.
   s.dependency "FingerprintPro", '~> 2.17.0'
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
