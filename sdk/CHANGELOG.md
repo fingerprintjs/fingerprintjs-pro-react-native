@@ -1,5 +1,11 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
+## 3.17.1
+
+### Patch Changes
+
+- Fix logic in `FingerprintJsProProvider` that prevented the agent from being updated after its parameters changed ([01d5667](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/01d56671b991f86bb13025c8f03dc50fc5d2714b))
+
 ## 3.17.0
 
 ### Minor Changes
