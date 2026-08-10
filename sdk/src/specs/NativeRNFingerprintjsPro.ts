@@ -3,16 +3,17 @@ import { TurboModuleRegistry } from 'react-native'
 import type { Double, UnsafeObject } from 'react-native/Libraries/Types/CodegenTypes'
 
 /**
- * Raw visitor data returned by the native module. The visitor payload is delivered as a JSON
- * string (`visitorDataJson`) that the SDK parses and merges with the top-level fields.
+ * Raw visitor data returned by the native module.
  *
- * Codegen requires the numeric field to be typed as {@link Double} and every field to be
- * non-nullable, so `sealedResult` is an empty string (rather than absent) when unavailable.
+ * Codegen requires every field to be non-nullable and numbers to be typed as {@link Double}, so the
+ * optional API v4 fields use sentinels the JS layer normalizes away:
+ * - `suspectScore` is `-1` when the field is absent (Smart Signals disabled).
+ * - `sealedResult` is an empty string when unavailable.
  */
 export interface NativeVisitorData {
-  requestId: string
-  confidenceScore: Double
-  visitorDataJson: string
+  visitorId: string
+  eventId: string
+  suspectScore: Double
   sealedResult: string
 }
 
@@ -27,7 +28,6 @@ export interface Spec extends TurboModule {
   configure(
     apiToken: string,
     pluginVersion: string,
-    extendedResponseFormat: boolean,
     fallbackEndpointUrls: string[],
     allowUseOfLocationData: boolean,
     locationTimeoutMillis: Double,
@@ -35,9 +35,7 @@ export interface Spec extends TurboModule {
     endpointUrl: string | null
   ): void
 
-  getVisitorId(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<string>
-
-  getVisitorData(tags: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<NativeVisitorData>
+  getVisitorData(tag: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<NativeVisitorData>
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprintjsPro')

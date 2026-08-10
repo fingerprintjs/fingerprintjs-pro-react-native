@@ -1,50 +1,9 @@
-export { FingerprintJsProAgent } from './FingerprintJsProAgent'
-export { FingerprintJsProProvider } from './FingerprintJsProProvider'
-export { useVisitorData } from './useVisitorData'
+export * from './FingerprintClient'
+export * from './FingerprintProvider'
+export * from './FingerprintContext'
+export * from './useVisitorData'
+export * from './useFingerprint'
 
-export type {
-  FingerprintJsProAgentParams,
-  VisitorQueryContext,
-  GetDataOptions,
-  Region,
-  Tags,
-  Tag,
-  VisitorData,
-  ShortVisitorData,
-  ExtendedVisitorData,
-  Confidence,
-  SeenAt,
-  IpLocation,
-  RequestOptions,
-} from './types'
+export * from './errors'
 
-export {
-  InvalidUrlError,
-  InvalidURLParamsError,
-  ApiError,
-  ApiKeyRequiredError,
-  ApiKeyNotFoundError,
-  ApiKeyExpiredError,
-  RequestCannotBeParsedError,
-  FailedError,
-  RequestTimeoutError,
-  TooManyRequestError,
-  OriginNotAvailableError,
-  HeaderRestrictedError,
-  NotAvailableForCrawlBotsError,
-  NotAvailableWithoutUAError,
-  WrongRegionError,
-  SubscriptionNotActiveError,
-  UnsupportedVersionError,
-  InstallationMethodRestrictedError,
-  ResponseCannotBeParsedError,
-  NetworkError,
-  JsonParsingError,
-  InvalidResponseTypeError,
-  ClientTimeoutError,
-  UnknownError,
-  HostnameRestrictedError,
-  InvalidProxyIntegrationHeadersError,
-  InvalidProxyIntegrationSecretError,
-  ProxyIntegrationSecretEnvironmentMismatch,
-} from './errors'
+export * from './types'
