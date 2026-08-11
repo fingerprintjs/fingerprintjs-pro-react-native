@@ -406,10 +406,3 @@ export interface VisitorQueryContext extends VisitorQueryResult {
 }
 
 export type VisitorId = string
-
-export type NativeVisitorData = [
-  requestId: string,
-  confidenceScore: string,
-  visitorDataJsonString: string,
-  sealedResult?: string,
-]

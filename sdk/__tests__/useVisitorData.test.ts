@@ -4,10 +4,7 @@ import { RequestOptions, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const { getVisitorData, getVisitorDataWithTimeout } = NativeModules.RNFingerprintjsPro as unknown as Record<
-  string,
-  jest.Mock
->
+const { getVisitorData } = NativeModules.RNFingerprintjsPro as unknown as Record<string, jest.Mock>
 
 const mockedVisitorId = 'some visitor id'
 const mockedRequestId = 'some request id'
@@ -43,7 +40,11 @@ describe('useVisitorData', () => {
     }
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
     const wrapper = createWrapper()
     const { result } = renderHook(() => useVisitorData(), { wrapper })
@@ -119,7 +120,11 @@ describe('useVisitorData', () => {
     const mockedLinkedId = 'test_id'
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()
@@ -128,7 +133,7 @@ describe('useVisitorData', () => {
       void result.current.getData(mockedTags, mockedLinkedId)
     })
     await waitFor(() => {
-      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, null)
     })
   })
 
@@ -152,7 +157,11 @@ describe('useVisitorData', () => {
     const options: RequestOptions = { timeout: undefined }
 
     getVisitorData.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()
@@ -161,11 +170,11 @@ describe('useVisitorData', () => {
       void result.current.getData(mockedTags, mockedLinkedId, options)
     })
     await waitFor(() => {
-      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, null)
     })
   })
 
-  it('non-empty timeout should call `getVisitorDataWithTimeout` function', async () => {
+  it('non-empty timeout should pass the timeout to `getVisitorData` function', async () => {
     const mockedJsonAnswer = {
       visitorId: mockedVisitorId,
     }
@@ -184,8 +193,12 @@ describe('useVisitorData', () => {
 
     const options: RequestOptions = { timeout: 15_000 }
 
-    getVisitorDataWithTimeout.mockReturnValueOnce(
-      Promise.resolve([mockedRequestId, mockedConfidenceScore, JSON.stringify(mockedJsonAnswer)])
+    getVisitorData.mockReturnValueOnce(
+      Promise.resolve({
+        requestId: mockedRequestId,
+        confidenceScore: mockedConfidenceScore,
+        visitorDataJson: JSON.stringify(mockedJsonAnswer),
+      })
     )
 
     const wrapper = createWrapper()
@@ -194,7 +207,7 @@ describe('useVisitorData', () => {
       void result.current.getData(mockedTags, mockedLinkedId, options)
     })
     await waitFor(() => {
-      expect(getVisitorDataWithTimeout).toHaveBeenCalledWith(mockedTags, mockedLinkedId, options.timeout)
+      expect(getVisitorData).toHaveBeenCalledWith(mockedTags, mockedLinkedId, options.timeout)
     })
   })
 })

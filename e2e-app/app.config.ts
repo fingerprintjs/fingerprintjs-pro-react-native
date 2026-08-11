@@ -48,4 +48,8 @@ const config: ExpoConfig = {
   ],
 }
 
+// The SDK supports the New Architecture only (React Native >= 0.79), so always enable it.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(config as any).newArchEnabled = true
+
 export default patchExpoConfig(rnVersionStr, config)
