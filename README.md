@@ -53,7 +53,8 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   - [Usage](#usage)
     - [Hooks approach](#hooks-approach)
     - [API Client approach](#api-client-approach)
-    - [`extendedResponseFormat`](#extendedresponseformat)
+    - [Response format](#response-format)
+    - [Error handling](#error-handling)
     - [Linking and tagging information](#linking-and-tagging-information)
   - [API Reference](#api-reference)
   - [Additional Resources](#additional-resources)
@@ -106,18 +107,18 @@ To use the SDK on the web, install the peer dependency with your preferred packa
 - [NPM](https://npmjs.org):
 
   ```shell
-  npm install @fingerprintjs/fingerprintjs-pro-spa --save
+  npm install @fingerprint/agent --save
   ```
 
 - [Yarn](https://yarnpkg.com):
 
   ```shell
-  yarn add @fingerprintjs/fingerprintjs-pro-spa
+  yarn add @fingerprint/agent
   ```
 
 - [PNPM](https://pnpm.js.org):
   ```shell
-  pnpm add @fingerprintjs/fingerprintjs-pro-spa
+  pnpm add @fingerprint/agent
   ```
   
 Then, use the SDK as you would with the native version.
@@ -213,20 +214,20 @@ To identify visitors, you need a Fingerprint Pro account (you can [sign up for f
 
 ### Hooks approach
 
-Configure the SDK by wrapping your application in FingerprintJsProProvider.
+Configure the SDK by wrapping your application in `FingerprintProvider`.
 
 ```javascript
 // src/index.js
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { FingerprintProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
 import App from './App';
 import { name as appName } from './app.json';
 
 const WrappedApp = () => (
-  <FingerprintJsProProvider apiKey={'your-fpjs-public-api-key'} region={'eu'}>
+  <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'}>
     <App />
-  </FingerprintJsProProvider>
+  </FingerprintProvider>
 )
 
 AppRegistry.registerComponent(appName, () => WrappedApp);
@@ -241,17 +242,18 @@ import {Button, SafeAreaView, Text, View} from 'react-native'
 import {useVisitorData} from '@fingerprintjs/fingerprintjs-pro-react-native'
 
 export default function App() {
-  const {isLoading, error, data, getData} = useVisitorData()
+  // `getData` rejects on failure; the error is also available in `error`.
+  const {isLoading, isFetched, error, data, getData} = useVisitorData()
 
   return (
     <SafeAreaView>
       <View style={{ margin: 8 }}>
-        <Button title='Reload data' onPress={() => getData()} />
+        <Button title='Reload data' onPress={() => getData().catch(() => {})} />
         {isLoading ? (
           <Text>Loading...</Text>
         ) : (
           <>
-            <Text>VisitorId: {data?.visitorId}</Text>
+            <Text>VisitorId: {data?.visitor_id}</Text>
             <Text>Full visitor data:</Text>
             <Text>{error ? error.message : JSON.stringify(data, null, 2)}</Text>
           </>
@@ -262,21 +264,25 @@ export default function App() {
 }
 ```
 
+> ℹ️ By default the hook does **not** fetch automatically. Pass `useVisitorData({ immediate: true })`
+> to identify on mount and whenever the request options change.
+
 ### API Client approach
+
+Create a client with `start()` and call `get()`:
 
 ```javascript
 import React, { useEffect } from 'react';
-import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { start } from '@fingerprintjs/fingerprintjs-pro-react-native';
 
-// ... 
+// ...
 
 useEffect(() => {
   async function getVisitorInfo() {
     try {
-      const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu' }); // Region may be 'us', 'eu', or 'ap'
-      const visitorId = await FingerprintClient.getVisitorId(); // Use this method if you need only visitorId
-      const visitorData = await FingerprintClient.getVisitorData(); // Use this method if you need additional information about visitor
-      // use visitor data in your code
+      const fp = start({ apiKey: 'PUBLIC_API_KEY', region: 'eu' }); // Region may be 'us', 'eu', or 'ap'
+      const result = await fp.get();
+      console.log(result.visitor_id, result.event_id);
     } catch (e) {
       console.error('Error: ', e);
     }
@@ -285,35 +291,51 @@ useEffect(() => {
 }, []);
 ```
 
-### `extendedResponseFormat`
-
-Two types of responses are supported: "default" and "extended". You don't need to pass any parameters to get the "default" response.
-"Extended" is an extended result format that includes geolocation, incognito mode and other information.
-It can be requested using the `extendedResponseFormat`: true parameter. See more details about the responses in the [documentation](https://dev.fingerprint.com/reference/get-function#extendedresult).
-
-Providing `extendedResponseFormat` using hooks:
+Inside the React tree you can also get the same client from context with the `useFingerprint()` hook:
 
 ```javascript
-return (
-  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} extendedResponseFormat={true}>
-    <App />
-  </FingerprintJsProProvider>
-)
+import { useFingerprint } from '@fingerprintjs/fingerprintjs-pro-react-native';
+
+const fp = useFingerprint();
+const result = await fp.get({ linkedId: 'user_1234' });
 ```
 
-Providing `extendedResponseFormat` using the API Client:
+### Response format
+
+The response is a flat, snake_case object that matches the Fingerprint Server API v4 and the JS agent,
+so it is identical across web, iOS, and Android and can be forwarded to your backend unchanged:
+
+```typescript
+interface FingerprintResponse {
+  visitor_id: string
+  event_id: string
+  suspect_score?: number // present only when Smart Signals are enabled
+  sealed_result: string | null // base64 sealed result, or null when unavailable
+}
+```
+
+### Error handling
+
+Every failure is thrown as a single `FingerprintError` carrying a machine-friendly `code` (e.g.
+`too_many_requests`) and a resolution-oriented `message`:
 
 ```javascript
-const FingerprintClient = new FingerprintJsProAgent({
-  apiKey: 'PUBLIC_API_KEY',
-  region: 'eu',
-  extendedResponseFormat: true,
-})
+import { isFingerprintError } from '@fingerprintjs/fingerprintjs-pro-react-native';
+
+try {
+  await fp.get();
+} catch (error) {
+  if (isFingerprintError(error) && error.code === 'too_many_requests') {
+    // handle rate limiting
+  }
+}
 ```
 
 ### Linking and tagging information
 
 The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://dev.fingerprint.com/docs/tagging-information).
+
+Pass `tag` and `linkedId` in a single options object:
 
 ```javascript
 const tag = {
@@ -324,12 +346,11 @@ const linkedId = 'user_1234';
 
 // Using hooks
 const { getData } = useVisitorData();
-const visitorData = await getData(tag, linkedId);
+const visitorData = await getData({ tag, linkedId });
 
 // Using the client
-const FingerprintClient = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY'});
-const visitorId = await FingerprintClient.getVisitorId(tag, linkedId);
-const visitor = await FingerprintClient.getVisitorData(tag, linkedId); 
+const fp = start({ apiKey: 'PUBLIC_API_KEY' });
+const visitor = await fp.get({ tag, linkedId });
 ```
 
 ### Proximity Detection
@@ -338,24 +359,25 @@ Proximity detection is a complementary, location-based signal available only on 
 You can find more information in [Android SDK documentation](https://dev.fingerprint.com/docs/native-android-integration#proximity-detection-for-android-devices) or in
 [iOS SDK documentation](https://dev.fingerprint.com/docs/ios-sdk#using-location-data-for-proximity-detection).
 
-The Fingerprint SDK will only collect location data if the `allowUseOfLocationData` option is set to `true`.
+Platform-only options are grouped under `android` and `ios`. The Fingerprint SDK will only collect
+location data if `allowUseOfLocationData` is set to `true`.
 
 ```javascript
 return (
-  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} allowUseOfLocationData={true}>
+  <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true }} ios={{ allowUseOfLocationData: true }}>
     <App />
-  </FingerprintJsProProvider>
+  </FingerprintProvider>
 )
 ```
 
-For Android platform it's possible to configure the location retrieval timeout by setting the `locationTimeoutMillisAndroid` option to a desired value. By default, it's set to 5 seconds.
+For the Android platform it's possible to configure the location retrieval timeout by setting the `locationTimeoutMillis` option to a desired value. By default, it's set to 5 seconds.
 The SDK will delay identification up to the specified timeout to collect the device location. If it cannot collect the location information within the specified time, identification continues without location information.
 
 ```javascript
 return (
-  <FingerprintJsProProvider apiKey={PUBLIC_API_KEY} allowUseOfLocationData={true} locationTimeoutMillisAndroid={10000}>
+  <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true, locationTimeoutMillis: 10000 }}>
     <App />
-  </FingerprintJsProProvider>
+  </FingerprintProvider>
 )
 ```
 
