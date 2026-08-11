@@ -31,3 +31,88 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Web**
 
 - The web implementation now uses `@fingerprint/agent` (v4) instead of `@fingerprintjs/fingerprintjs-pro-spa`. Install `@fingerprint/agent` as the web peer dependency.
+
+## Migration
+
+**Provider**
+
+```diff
+- import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
++ import { FingerprintProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
+
+- <FingerprintJsProProvider apiKey="PUBLIC_API_KEY" region="eu">
++ <FingerprintProvider apiKey="PUBLIC_API_KEY" region="eu">
+    <App />
+- </FingerprintJsProProvider>
++ </FingerprintProvider>
+```
+
+**Hook (`useVisitorData`)**
+
+```diff
+- const { isLoading, error, data, getData } = useVisitorData()
++ const { isLoading, isFetched, error, data, getData } = useVisitorData()
+
+  // positional args + opt-in throwing → single options object, always throws
+- await getData({ userAction: 'login' }, 'user_1234', { timeout: 5000, throwOnError: true })
++ await getData({ tag: { userAction: 'login' }, linkedId: 'user_1234', timeout: 5000 })
+
+- data?.visitorId
+- data?.confidence.score
++ data?.visitor_id
++ data?.suspect_score
+```
+
+**Imperative client**
+
+```diff
+- import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-native'
++ import { start } from '@fingerprintjs/fingerprintjs-pro-react-native'
+
+- const client = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu' })
+- const visitorId = await client.getVisitorId()
+- const data = await client.getVisitorData()
++ const fp = start({ apiKey: 'PUBLIC_API_KEY', region: 'eu' })
++ const result = await fp.get()
++ result.visitor_id
+```
+
+**Provider / start options**
+
+```diff
+  {
+    apiKey: 'PUBLIC_API_KEY',
+    region: 'eu',
+-   endpointUrl: 'https://metrics.example.com',
+-   fallbackEndpointUrls: ['https://metrics2.example.com'],
++   endpoints: ['https://metrics.example.com', 'https://metrics2.example.com'],
+-   extendedResponseFormat: true,
+-   allowUseOfLocationData: true,
+-   locationTimeoutMillisAndroid: 5000,
++   android: { allowUseOfLocationData: true, locationTimeoutMillis: 5000 },
++   ios: { allowUseOfLocationData: true },
+  }
+```
+
+**Errors**
+
+```diff
+- import { TooManyRequestError } from '@fingerprintjs/fingerprintjs-pro-react-native'
++ import { isFingerprintError } from '@fingerprintjs/fingerprintjs-pro-react-native'
+
+  try {
+    await fp.get()
+  } catch (error) {
+-   if (error instanceof TooManyRequestError) {
++   if (isFingerprintError(error) && error.code === 'too_many_requests') {
+      // handle rate limiting
+    }
+  }
+```
+
+**Web peer dependency**
+
+```diff
+- npm install @fingerprintjs/fingerprintjs-pro-spa
++ npm install @fingerprint/agent
+```
