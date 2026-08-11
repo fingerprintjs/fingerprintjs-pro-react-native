@@ -52,5 +52,5 @@ export class FingerprintError extends Error {
  * @group Errors
  */
 export function isFingerprintError(error: unknown): error is FingerprintError {
-  return error instanceof FingerprintError || (error instanceof Error && error.name === 'FingerprintError')
+  return error instanceof FingerprintError
 }
