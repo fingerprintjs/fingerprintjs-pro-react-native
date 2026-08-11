@@ -10,7 +10,12 @@ export async function identify() {
 
   const text = await getElementText(element(by.id(testIds.data)))
 
-  return JSON.parse(text) as { visitorId: string; requestId: string; sealedResult?: string }
+  return JSON.parse(text) as {
+    visitor_id: string
+    event_id: string
+    suspect_score?: number
+    sealed_result: string | null
+  }
 }
 
 export async function identifyWithError() {
@@ -19,11 +24,9 @@ export async function identifyWithError() {
     .toExist()
     .withTimeout(10_000)
 
-  const errorName = await getElementText(element(by.id(testIds.errorName)))
-  const errorMessage = await getElementText(element(by.id(testIds.errorMessage)))
+  const name = await getElementText(element(by.id(testIds.errorName)))
+  const code = await getElementText(element(by.id(testIds.errorCode)))
+  const message = await getElementText(element(by.id(testIds.errorMessage)))
 
-  const error = new Error(errorMessage)
-  error.name = errorName
-
-  return error
+  return { name, code, message }
 }

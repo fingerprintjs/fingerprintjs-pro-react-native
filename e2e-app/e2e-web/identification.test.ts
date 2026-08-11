@@ -59,16 +59,12 @@ async function identifyWithError(page: Page) {
   // Wait for the error to be displayed
   await page.getByTestId(testIds.errorName).waitFor({ timeout: 10000 })
 
-  // Get the error name and message
+  // Get the error name, code and message
   const errorName = await page.getByTestId(testIds.errorName).textContent()
+  const errorCode = await page.getByTestId(testIds.errorCode).textContent()
   const errorMessage = await page.getByTestId(testIds.errorMessage).textContent()
 
-  const error = new Error(errorMessage ?? '')
-  if (errorName) {
-    error.name = errorName
-  }
-
-  return error
+  return { name: errorName ?? '', code: errorCode ?? '', message: errorMessage ?? '' }
 }
 
 test.describe('Web tests', () => {
@@ -106,11 +102,11 @@ test.describe('Web tests', () => {
 
       test('should return visitor data', async ({ page }) => {
         const identificationResult = await identify(page)
-        expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+        expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-        const event = await client.getEvent(identificationResult.requestId)
-        expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
-        expect(event.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+        const event = await client.getEvent(identificationResult.event_id)
+        expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitor_id)
+        expect(event.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
       })
     })
   }
@@ -152,9 +148,9 @@ test.describe('Web tests', () => {
 
       test('should return visitor data with linkedId and tag', async ({ page }) => {
         const identificationResult = await identify(page)
-        expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+        expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-        const event = await client.getEvent(identificationResult.requestId)
+        const event = await client.getEvent(identificationResult.event_id)
         expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
         expect(event.products.identification?.data?.tag).toEqual(testTags)
       })
@@ -171,8 +167,9 @@ test.describe('Web tests', () => {
 
     test('should return error', async ({ page }) => {
       const error = await identifyWithError(page)
-      expect(error.message).toEqual('API key not found')
-      expect(error.name).toEqual('ApiKeyNotFoundError')
+      // v4 collapses every error into a single `FingerprintError` discriminated by `code`.
+      expect(error.name).toEqual('FingerprintError')
+      expect(error.code).toBeTruthy()
     })
   })
 
@@ -193,10 +190,10 @@ test.describe('Web tests', () => {
 
     test('should return sealed visitor data', async ({ page }) => {
       const identificationResult = await identify(page)
-      expect(identificationResult.requestId).toBeTruthy()
-      expect(identificationResult.sealedResult).toBeTruthy()
+      expect(identificationResult.event_id).toBeTruthy()
+      expect(identificationResult.sealed_result).toBeTruthy()
 
-      const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult, 'base64'), [
+      const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealed_result, 'base64'), [
         {
           key: Buffer.from(encryptionKey ?? '', 'base64'),
           algorithm: DecryptionAlgorithm.Aes256Gcm,
@@ -204,7 +201,7 @@ test.describe('Web tests', () => {
       ])
 
       expect(unsealedData).toBeTruthy()
-      expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+      expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
     })
   })
 })

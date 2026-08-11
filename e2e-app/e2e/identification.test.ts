@@ -69,11 +69,11 @@ describe.each([
 
   it('should return visitor data', async () => {
     const identificationResult = await identify()
-    expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+    expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-    const event = await client.getEvent(identificationResult.requestId)
-    expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
-    expect(event.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+    const event = await client.getEvent(identificationResult.event_id)
+    expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitor_id)
+    expect(event.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
   })
 })
 
@@ -125,9 +125,9 @@ describe.each([
 
   it('should return visitor data with linkedId and tag', async () => {
     const identificationResult = await identify()
-    expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+    expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-    const event = await client.getEvent(identificationResult.requestId)
+    const event = await client.getEvent(identificationResult.event_id)
     expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
     expect(event.products.identification?.data?.tag).toEqual(testTags)
   })
@@ -145,8 +145,10 @@ describe('React Native Identification invalid API Key', () => {
 
   it('should return error', async () => {
     const error = await identifyWithError()
-    expect(error.message).toEqual('invalid public key')
-    expect(error.name).toEqual('ApiKeyNotFoundError')
+    // v4 collapses every error into a single `FingerprintError` discriminated by `code`.
+    // TODO(v4): tighten the expected code once the native v4 error codes are finalized.
+    expect(error.name).toEqual('FingerprintError')
+    expect(error.code).toBeTruthy()
   })
 })
 
@@ -174,10 +176,10 @@ describe('React Native Identification with sealed results', () => {
 
   it('should return sealed visitor data', async () => {
     const identificationResult = await identify()
-    expect(identificationResult.requestId).toBeTruthy()
-    expect(identificationResult.sealedResult).toBeTruthy()
+    expect(identificationResult.event_id).toBeTruthy()
+    expect(identificationResult.sealed_result).toBeTruthy()
 
-    const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult ?? '', 'base64'), [
+    const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealed_result ?? '', 'base64'), [
       {
         key: Buffer.from(encryptionKey, 'base64'),
         algorithm: DecryptionAlgorithm.Aes256Gcm,
@@ -185,6 +187,6 @@ describe('React Native Identification with sealed results', () => {
     ])
 
     expect(unsealedData).toBeTruthy()
-    expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+    expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
   })
 })
