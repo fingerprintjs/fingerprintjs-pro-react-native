@@ -242,7 +242,6 @@ import {Button, SafeAreaView, Text, View} from 'react-native'
 import {useVisitorData} from '@fingerprintjs/fingerprintjs-pro-react-native'
 
 export default function App() {
-  // `getData` rejects on failure; the error is also available in `error`.
   const {isLoading, isFetched, error, data, getData} = useVisitorData()
 
   return (
@@ -302,8 +301,7 @@ const result = await fp.get({ linkedId: 'user_1234' });
 
 ### Response format
 
-The response is a flat, snake_case object that matches the Fingerprint Server API v4 and the JS agent,
-so it is identical across web, iOS, and Android and can be forwarded to your backend unchanged:
+The response is a flat, snake_case object that matches the Fingerprint Server API v4 and the JS agent.
 
 ```typescript
 interface FingerprintResponse {
@@ -333,7 +331,7 @@ try {
 
 ### Linking and tagging information
 
-The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://dev.fingerprint.com/docs/tagging-information).
+The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
 
 Pass `tag` and `linkedId` in a single options object:
 
