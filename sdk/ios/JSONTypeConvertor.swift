@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FingerprintPro
+import Fingerprint
 
 class JSONTypeConvertor {
     static func convertDictionaryToJSONTypeConvertible(_ dict: [String: Any]) -> [String: JSONTypeConvertible] {
