@@ -28,6 +28,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+        // The Fingerprint Android SDK v4 is compiled with Kotlin 2.3.x metadata, which is newer than
+        // the Kotlin compiler the host RN/Expo project pins (currently 2.1.x, reads up to 2.2.0).
+        // Skipping the metadata version check lets this module read the v4 SDK's classes.
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
     }
 
     buildFeatures {
