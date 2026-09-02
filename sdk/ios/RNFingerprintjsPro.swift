@@ -2,7 +2,8 @@
 //  RNFingerprintjsPro.swift
 //  RNFingerprintjsPro
 //
-import FingerprintPro
+import Fingerprint
+import Foundation
 
 @objc(RNFingerprintjsPro)
 class RNFingerprintjsPro: NSObject {
@@ -15,25 +16,21 @@ class RNFingerprintjsPro: NSObject {
     public func configure(_ apiToken: String, _ pluginVersion: String, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
-        // TODO(v4): the `extendedResponseFormat` flag is removed in FingerprintPro v4 (the response is
-        // always flat). While pinned to v2.17 we request the non-extended format explicitly.
-        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: false, allowUseOfLocationData: allowUseOfLocationData)
-        fpjsClient = FingerprintProFactory.getInstance(configuration)
+        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, allowUseOfLocationData: allowUseOfLocationData)
+        fpjsClient = FingerprintFactory.getInstance(configuration)
     }
 
     @objc(getVisitorData:linkedId:timeout:resolve:reject:)
     public func getVisitorData(tag: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tag)
 
-        let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in
+        let completionHandler: Fingerprint.VisitorIdResponseBlock = { visitorIdResponseResult in
             switch visitorIdResponseResult {
             case let .success(visitorDataResponse):
-                // TODO(v4): map from the flat `FingerprintResponse` — `eventId` replaces `requestId` and
-                // a real `suspectScore` replaces the `-1` sentinel used here (v3 has no suspect score).
                 let visitorData: [String: Any] = [
                     "visitorId": visitorDataResponse.visitorId,
-                    "eventId": visitorDataResponse.requestId,
-                    "suspectScore": -1,
+                    "eventId": visitorDataResponse.eventId,
+                    "suspectScore": visitorDataResponse.suspectScore ?? -1,
                     "sealedResult": visitorDataResponse.sealedResult ?? "",
                 ]
                 resolve(visitorData)

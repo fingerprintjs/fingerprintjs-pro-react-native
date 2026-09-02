@@ -6,17 +6,13 @@
 //
 
 import Foundation
-import FingerprintPro
+import Fingerprint
 
 // The React Native layer collapses every error into a single `FingerprintError` carrying a
 // machine-friendly `code` (see `sdk/src/errors.ts`). Native rejects with a `"<code>: <message>"`
 // string that the JS `unwrapError` splits back apart, so the prefix here must be the API v4
 // snake_case error code.
-//
-// TODO(v4): align these codes with the final FingerprintPro v4 `APIError.Code` enum. While pinned to
-// v2.17 we normalize the client-side cases to snake_case and forward the server-provided code for
-// `apiError` (Server API v4 codes are already snake_case).
-extension FPJSError {
+extension FPError {
     var reactDescription: String {
         let description = self.localizedDescription
         switch self {
@@ -46,10 +42,10 @@ extension FPJSError {
 
 extension APIError {
     func reactCode(_ defaultCode: String) -> String {
-        return self.error?.code?.rawValue ?? defaultCode
+        return self.errorDetails?.code?.rawValue ?? defaultCode
     }
 
     var message: String? {
-        return self.error?.message
+        return self.errorDetails?.message
     }
 }

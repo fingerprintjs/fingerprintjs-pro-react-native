@@ -2,39 +2,42 @@ package com.fingerprintjs.reactnative
 
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
-import com.fingerprintjs.android.fpjs_pro.Configuration
-import com.fingerprintjs.android.fpjs_pro.FingerprintJS
-import com.fingerprintjs.android.fpjs_pro.FingerprintJSProResponse
-import com.fingerprintjs.android.fpjs_pro.FingerprintJSFactory
-import com.fingerprintjs.android.fpjs_pro.Error
-import com.fingerprintjs.android.fpjs_pro.ApiKeyRequired
-import com.fingerprintjs.android.fpjs_pro.ApiKeyNotFound
-import com.fingerprintjs.android.fpjs_pro.ApiKeyExpired
-import com.fingerprintjs.android.fpjs_pro.RequestCannotBeParsed
-import com.fingerprintjs.android.fpjs_pro.Failed
-import com.fingerprintjs.android.fpjs_pro.RequestTimeout
-import com.fingerprintjs.android.fpjs_pro.TooManyRequest
-import com.fingerprintjs.android.fpjs_pro.OriginNotAvailable
-import com.fingerprintjs.android.fpjs_pro.HeaderRestricted
-import com.fingerprintjs.android.fpjs_pro.NotAvailableForCrawlBots
-import com.fingerprintjs.android.fpjs_pro.NotAvailableWithoutUA
-import com.fingerprintjs.android.fpjs_pro.WrongRegion
-import com.fingerprintjs.android.fpjs_pro.SubscriptionNotActive
-import com.fingerprintjs.android.fpjs_pro.UnsupportedVersion
-import com.fingerprintjs.android.fpjs_pro.InstallationMethodRestricted
-import com.fingerprintjs.android.fpjs_pro.ResponseCannotBeParsed
-import com.fingerprintjs.android.fpjs_pro.NetworkError
-import com.fingerprintjs.android.fpjs_pro.ClientTimeout
-import com.fingerprintjs.android.fpjs_pro.UnknownError
-import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationHeaders
-import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationSecret
-import com.fingerprintjs.android.fpjs_pro.ProxyIntegrationSecretEnvironmentMismatch
+import com.fingerprint.android.Configuration
+import com.fingerprint.android.Fingerprint
+import com.fingerprint.android.FingerprintException
+import com.fingerprint.android.FingerprintFactory
+import com.fingerprint.android.Error
+import com.fingerprint.android.ApiKeyRequired
+import com.fingerprint.android.ApiKeyNotFound
+import com.fingerprint.android.ApiKeyExpired
+import com.fingerprint.android.RequestCannotBeParsed
+import com.fingerprint.android.Failed
+import com.fingerprint.android.RequestTimeout
+import com.fingerprint.android.TooManyRequest
+import com.fingerprint.android.OriginNotAvailable
+import com.fingerprint.android.HeaderRestricted
+import com.fingerprint.android.NotAvailableForCrawlBots
+import com.fingerprint.android.NotAvailableWithoutUA
+import com.fingerprint.android.WrongRegion
+import com.fingerprint.android.SubscriptionNotActive
+import com.fingerprint.android.UnsupportedVersion
+import com.fingerprint.android.InstallationMethodRestricted
+import com.fingerprint.android.ResponseCannotBeParsed
+import com.fingerprint.android.NetworkError
+import com.fingerprint.android.ClientTimeout
+import com.fingerprint.android.UnknownError
+import com.fingerprint.android.InvalidProxyIntegrationHeaders
+import com.fingerprint.android.InvalidProxyIntegrationSecret
+import com.fingerprint.android.ProxyIntegrationSecretEnvironmentMismatch
 import java.lang.Exception
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @ReactModule(name = RNFingerprintjsProModule.NAME)
 class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRNFingerprintjsProSpec(reactContext) {
-  private var fpjsClient: FingerprintJS? = null
+  private var fpjsClient: Fingerprint? = null
 
   override fun getName(): String {
     return NAME
@@ -49,7 +52,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       regionKey: String?,
       endpointUrl: String?
   ) {
-    val factory = FingerprintJSFactory(reactApplicationContext)
+    val factory = FingerprintFactory(reactApplicationContext)
     val region = when(regionKey) {
       "eu" -> Configuration.Region.EU
       "us" -> Configuration.Region.US
@@ -58,43 +61,40 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
     }
     val integrationInfo = listOf(Pair("fingerprint-pro-react-native", pluginVersion))
     val configuration = Configuration(
-      apiToken,
-      region,
+      apiKey = apiToken,
+      region = region,
       endpointUrl = endpointUrl ?: region.endpointUrl,
-      // TODO(v4): the `extendedResponseFormat` flag is removed in the Android SDK v4 (the response is
-      // always flat). While pinned to v2.17 we request the non-extended format explicitly.
-      extendedResponseFormat = false,
       fallbackEndpointUrls = fallbackEndpointUrls.toArrayList().filterIsInstance<String>(),
-      integrationInfo,
-      allowUseOfLocationData,
-      locationTimeoutMillis.toLong()
+      integrationInfo = integrationInfo,
+      allowUseOfLocationData = allowUseOfLocationData,
+      locationTimeoutMillis = locationTimeoutMillis.toLong()
     )
     fpjsClient = factory.createInstance(configuration)
   }
 
   override fun getVisitorData(tag: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
-    try {
-      val callback = { result: FingerprintJSProResponse ->
-        // TODO(v4): map from the flat `FingerprintResponse` — `eventId` replaces `requestId` and a
-        // real `suspectScore` replaces the `-1` sentinel used here (v3 has no suspect score).
+    CoroutineScope(Dispatchers.IO).launch {
+      try {
+        val tags = getTags(tag)
+        val timeoutMillis = timeout?.toInt()
+        val result = if (timeoutMillis != null) {
+          fpjsClient?.getVisitorId(timeoutMillis, tags, linkedId ?: "")
+        } else {
+          fpjsClient?.getVisitorId(tags, linkedId ?: "")
+        } ?: throw Exception("not_initialized: Fingerprint client is not initialized")
+
         val visitorData = Arguments.createMap().apply {
           putString("visitorId", result.visitorId)
-          putString("eventId", result.requestId)
-          putDouble("suspectScore", -1.0)
+          putString("eventId", result.eventId)
+          putDouble("suspectScore", (result.suspectScore ?: -1).toDouble())
           putString("sealedResult", result.sealedResult ?: "")
         }
         promise.resolve(visitorData)
+      } catch (e: FingerprintException) {
+        promise.reject("Error: ", getErrorDescription(e.error))
+      } catch (e: Exception) {
+        promise.reject("Error: ", e)
       }
-      val errorCallback = { error: Error -> promise.reject("Error: ", getErrorDescription(error)) }
-      val timeoutMillis = timeout?.toInt()
-
-      if (timeoutMillis != null) {
-        fpjsClient?.getVisitorId(timeoutMillis, getTags(tag), linkedId ?: "", callback, errorCallback)
-      } else {
-        fpjsClient?.getVisitorId(getTags(tag), linkedId ?: "", callback, errorCallback)
-      }
-    } catch (e: Exception) {
-      promise.reject("Error: ", e)
     }
   }
 
@@ -109,8 +109,6 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
   // The React Native layer collapses every error into a single `FingerprintError` carrying a
   // machine-friendly `code` (see `sdk/src/errors.ts`). We reject with a `"<code>:<message>"` string
   // that the JS `unwrapError` splits back apart, so the prefix must be the API v4 snake_case code.
-  //
-  // TODO(v4): align these codes with the final Android SDK v4 error classes.
   private fun getErrorDescription(error: Error): String {
     val code = when(error) {
       is ApiKeyRequired -> "public_api_key_required"
