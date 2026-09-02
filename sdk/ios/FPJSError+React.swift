@@ -21,9 +21,8 @@ extension FPError {
         case .invalidURLParams:
             return "invalid_url_params: \(description)"
         case .apiError(let apiError):
-            let code = apiError.reactCode("failed")
             let message = apiError.message ?? description
-            return "\(code): \(message)"
+            return "\(apiError.reactCode): \(message)"
         case .networkError(let networkError):
             return "network_error: \(networkError.localizedDescription)"
         case .jsonParsingError(let jsonParsingError):
@@ -41,8 +40,43 @@ extension FPError {
 }
 
 extension APIError {
-    func reactCode(_ defaultCode: String) -> String {
-        return self.errorDetails?.code?.rawValue ?? defaultCode
+    // The SDK's `APIError.Code` has no explicit raw values, so `rawValue` is the camelCase case name
+    // (e.g. `tooManyRequests`). Map it to the canonical snake_case codes shared with Android and
+    // `@fingerprint/agent` so `FingerprintError.code` is identical across platforms. Falls back to
+    // the generic `failed` code when the server error carries no recognized code.
+    var reactCode: String {
+        guard let code = self.errorDetails?.code else {
+            return "failed"
+        }
+        switch code {
+        case .requestCannotBeParsed: return "request_cannot_be_parsed"
+        case .requestReadTimeout: return "request_read_timeout"
+        case .secretApiKeyRequired: return "secret_api_key_required"
+        case .secretApiKeyNotFound: return "secret_api_key_not_found"
+        case .publicApiKeyRequired: return "public_api_key_required"
+        case .publicApiKeyNotFound: return "public_api_key_not_found"
+        case .subscriptionNotActive: return "subscription_not_active"
+        case .wrongRegion: return "wrong_region"
+        case .featureNotEnabled: return "feature_not_enabled"
+        case .visitorNotFound: return "visitor_not_found"
+        case .tooManyRequests: return "too_many_requests"
+        case .stateNotReady: return "state_not_ready"
+        case .failed: return "failed"
+        case .eventNotFound: return "event_not_found"
+        case .missingModule: return "missing_module"
+        case .payloadTooLarge: return "payload_too_large"
+        case .serviceUnavailable: return "service_unavailable"
+        case .rulesetNotFound: return "ruleset_not_found"
+        case .invalidProxyIntegrationSecret: return "invalid_proxy_integration_secret"
+        case .proxyIntegrationSecretEnvironmentMismatch: return "proxy_integration_secret_environment_mismatch"
+        case .invalidProxyIntegrationHeaders: return "invalid_proxy_integration_headers"
+        case .subscriptionRestricted: return "subscription_restricted"
+        case .environmentRestricted: return "environment_restricted"
+        case .subscriptionNotFound: return "subscription_not_found"
+        case .installationMethodRestricted: return "installation_method_restricted"
+        // A future SDK may add codes; fall back to the raw value rather than losing the information.
+        @unknown default: return code.rawValue
+        }
     }
 
     var message: String? {
