@@ -1,11 +1,6 @@
 import { device } from 'detox'
 import { expect, it, describe, beforeAll, jest } from '@jest/globals'
-import {
-  DecryptionAlgorithm,
-  FingerprintJsServerApiClient,
-  Region,
-  unsealEventsResponse,
-} from '@fingerprintjs/fingerprintjs-pro-server-api'
+import { DecryptionAlgorithm, FingerprintServerApiClient, Region, unsealEventsResponse } from '@fingerprint/node-sdk'
 import { testTags } from './tags'
 import { DeviceLaunchAppConfig } from 'detox/detox'
 import { identify, identifyWithError } from './identify'
@@ -29,7 +24,7 @@ describe.each([
   ['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MINIMUM_US_DEFAULT_PRIVATE_KEY],
   ['eu', process.env.DEFAULT_EU_DEFAULT_PUBLIC_KEY, process.env.DEFAULT_EU_DEFAULT_PRIVATE_KEY],
 ] as const)('React Native Identification on %s Region', (region, apiKey, privateApiKey) => {
-  let client: FingerprintJsServerApiClient
+  let client: FingerprintServerApiClient
 
   beforeAll(async () => {
     if (!apiKey) {
@@ -53,7 +48,7 @@ describe.each([
         break
     }
 
-    client = new FingerprintJsServerApiClient({
+    client = new FingerprintServerApiClient({
       apiKey: privateApiKey,
       region: serverRegion,
     })
@@ -72,8 +67,8 @@ describe.each([
     expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
     const event = await client.getEvent(identificationResult.event_id)
-    expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitor_id)
-    expect(event.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
+    expect(event.identification?.visitor_id).toEqual(identificationResult.visitor_id)
+    expect(event.event_id).toEqual(identificationResult.event_id)
   })
 })
 
@@ -81,7 +76,7 @@ describe.each([
   ['us', process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY, process.env.MINIMUM_US_DEFAULT_PRIVATE_KEY],
   ['eu', process.env.DEFAULT_EU_DEFAULT_PUBLIC_KEY, process.env.DEFAULT_EU_DEFAULT_PRIVATE_KEY],
 ] as const)('React Native Identification on %s Region with linkedId and tags', (region, apiKey, privateApiKey) => {
-  let client: FingerprintJsServerApiClient
+  let client: FingerprintServerApiClient
 
   const linkedId = `${Date.now()}-rn-test`
 
@@ -107,7 +102,7 @@ describe.each([
         break
     }
 
-    client = new FingerprintJsServerApiClient({
+    client = new FingerprintServerApiClient({
       apiKey: privateApiKey,
       region: serverRegion,
     })
@@ -128,8 +123,8 @@ describe.each([
     expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
     const event = await client.getEvent(identificationResult.event_id)
-    expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
-    expect(event.products.identification?.data?.tag).toEqual(testTags)
+    expect(event.linked_id).toEqual(linkedId)
+    expect(event.tags).toEqual(testTags)
   })
 })
 
@@ -145,10 +140,10 @@ describe('React Native Identification invalid API Key', () => {
 
   it('should return error', async () => {
     const error = await identifyWithError()
-    // v4 collapses every error into a single `FingerprintError` discriminated by `code`.
-    // TODO(v4): tighten the expected code once the native v4 error codes are finalized.
+    // v4 collapses every error into a single `FingerprintError` discriminated by `code`. The native
+    // SDKs forward the server's code for an unknown public key.
     expect(error.name).toEqual('FingerprintError')
-    expect(error.code).toBeTruthy()
+    expect(error.code).toEqual('public_api_key_not_found')
   })
 })
 
@@ -187,6 +182,6 @@ describe('React Native Identification with sealed results', () => {
     ])
 
     expect(unsealedData).toBeTruthy()
-    expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
+    expect(unsealedData.event_id).toEqual(identificationResult.event_id)
   })
 })
