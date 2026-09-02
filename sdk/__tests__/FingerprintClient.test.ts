@@ -44,13 +44,13 @@ describe('start().get()', () => {
 
   it('passes an object tag through unchanged, plus linkedId and timeout', async () => {
     const tag = { userAction: 'login', count: 1, ok: true }
-    await start({ apiKey: 'key' }).get({ tag, linkedId: 'user_1234', timeout: 15_000 })
+    await start({ apiKey: 'key' }).get({ tags: tag, linkedId: 'user_1234', timeout: 15_000 })
 
     expect(getVisitorData).toHaveBeenCalledWith(tag, 'user_1234', 15_000)
   })
 
   it('wraps a primitive tag under a `tag` key for the native contract', async () => {
-    await start({ apiKey: 'key' }).get({ tag: 'login' })
+    await start({ apiKey: 'key' }).get({ tags: 'login' })
 
     expect(getVisitorData).toHaveBeenCalledWith({ tag: 'login' }, null, null)
   })

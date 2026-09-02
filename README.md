@@ -331,12 +331,12 @@ try {
 
 ### Linking and tagging information
 
-The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tag`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
+The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tags`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
 
-Pass `tag` and `linkedId` in a single options object:
+Pass `tags` and `linkedId` in a single options object:
 
 ```javascript
-const tag = {
+const tags = {
   userAction: 'login',
   analyticsId: 'UA-5555-1111-1'
 };
@@ -344,11 +344,11 @@ const linkedId = 'user_1234';
 
 // Using hooks
 const { getData } = useVisitorData();
-const visitorData = await getData({ tag, linkedId });
+const visitorData = await getData({ tags, linkedId });
 
 // Using the client
 const fp = start({ apiKey: 'PUBLIC_API_KEY' });
-const visitor = await fp.get({ tag, linkedId });
+const visitor = await fp.get({ tags, linkedId });
 ```
 
 ### Proximity Detection
