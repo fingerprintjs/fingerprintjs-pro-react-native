@@ -14,7 +14,7 @@ function InnerApp() {
 
   const doGetData = async () => {
     try {
-      await getData({ tag: config.useTags ? testTags : undefined, linkedId: config.linkedId })
+      await getData({ tags: config.useTags ? testTags : undefined, linkedId: config.linkedId })
     } catch {
       // `getData` rejects on failure, but the error is also stored in the hook state and rendered below.
     }

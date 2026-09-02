@@ -73,7 +73,7 @@ describe('useVisitorData', () => {
     const { result } = renderHook(() => useVisitorData(), { wrapper: createWrapper() })
 
     act(() => {
-      void result.current.getData({ tag, linkedId: 'test_id', timeout: 15_000 })
+      void result.current.getData({ tags: tag, linkedId: 'test_id', timeout: 15_000 })
     })
 
     await waitFor(() => {
@@ -115,7 +115,7 @@ describe('useVisitorData', () => {
 
   it('does not re-run when re-rendered with value-equal options but a fresh identity', async () => {
     const { rerender } = renderHook(
-      ({ tag }: { tag: Record<string, unknown> }) => useVisitorData({ immediate: true, tag }),
+      ({ tag }: { tag: Record<string, unknown> }) => useVisitorData({ immediate: true, tags: tag }),
       { wrapper: createWrapper(), initialProps: { tag: { userAction: 'login' } } }
     )
 

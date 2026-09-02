@@ -199,7 +199,7 @@ export interface GetOptions {
   /**
    * A user-provided value or object that will be returned back to you in a webhook message.
    */
-  tag?: TagValue
+  tags?: TagValue
   /**
    * Custom timeout for the request, in milliseconds.
    */

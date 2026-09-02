@@ -68,7 +68,7 @@ class NativeFingerprintClient implements FingerprintClient {
   public async get(options?: GetOptions): Promise<FingerprintResponse> {
     try {
       const data = await RNFingerprintjsPro.getVisitorData(
-        toNativeTag(options?.tag),
+        toNativeTag(options?.tags),
         options?.linkedId ?? null,
         options?.timeout ?? null
       )
