@@ -40,8 +40,13 @@ function InnerApp() {
         {isLoading ? <Text testID={testIds.loading}>Loading...</Text> : null}
         {error ? (
           <View>
+            <Text>Name:</Text>
             <Text testID={testIds.errorName}>{error.name}</Text>
+
+            <Text>Code:</Text>
             <Text testID={testIds.errorCode}>{error.code}</Text>
+
+            <Text>Message:</Text>
             <Text testID={testIds.errorMessage}>{error.message}</Text>
             {error.stack ? <Text testID={testIds.errorStack}>{error.stack}</Text> : null}
             {error.cause ? <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text> : null}
