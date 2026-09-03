@@ -119,3 +119,4 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 - npm install @fingerprintjs/fingerprintjs-pro-spa
 + npm install @fingerprint/agent
 ```
+---
