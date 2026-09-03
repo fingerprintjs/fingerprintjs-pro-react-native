@@ -31,6 +31,12 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Web**
 
 - The web implementation now uses `@fingerprint/agent` (v4) instead of `@fingerprintjs/fingerprintjs-pro-spa`. Install `@fingerprint/agent` as the web peer dependency.
+- ️Caching is available only on **web** and is disabled by default. To enable caching on web, pass the JavaScript agent [cache](https://docs.fingerprint.com/reference/js-agent-start-function#cache) option:
+    ```jsx
+    <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'} web={{ cache: { storage: 'sessionStorage', duration: 'optimize-cost' } }}>
+      <App />
+    </FingerprintProvider>
+    ```
 
 **iOS**:
 - Dropped support for **iOS 13**.

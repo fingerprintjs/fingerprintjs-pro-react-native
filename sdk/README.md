@@ -266,6 +266,14 @@ export default function App() {
 > ℹ️ By default the hook does **not** fetch automatically. Pass `useVisitorData({ immediate: true })`
 > to identify on mount and whenever the request options change.
 
+
+> ⚠️ Caching is available only on **web** and is disabled by default.
+> To enable caching on web, pass the JavaScript agent [cache](https://docs.fingerprint.com/reference/js-agent-start-function#cache) option:
+> ```jsx
+> <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'} web={{ cache: { storage: 'sessionStorage', duration: 'optimize-cost' } }}>
+>   <App />
+> </FingerprintProvider>
+> ```
 ### API Client approach
 
 Create a client with `start()` and call `get()`:

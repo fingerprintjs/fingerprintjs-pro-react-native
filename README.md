@@ -42,9 +42,9 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
   - [Dependencies](#dependencies)
   - [How to install](#how-to-install)
     - [Expo setup](#expo-setup)
-        - [1. Add config plugin](#1-add-config-plugin)
-        - [2. Rebuild the native code](#2-rebuild-the-native-code)
-        - [3. Rebuild the app](#3-rebuild-the-app)
+      - [1. Add config plugin](#1-add-config-plugin)
+      - [2. Rebuild the native code](#2-rebuild-the-native-code)
+      - [3. Rebuild the app](#3-rebuild-the-app)
     - [Bare react-native](#bare-react-native-setup)
       - [1. Configure iOS dependencies (if developing on iOS)](#1-configure-ios-dependencies-if-developing-on-ios)
       - [2. Configure Android dependencies (if developing on Android)](#2-configure-android-dependencies-if-developing-on-android)
@@ -95,7 +95,7 @@ Install the package using your favorite package manager:
   ```shell
   pnpm add @fingerprintjs/fingerprintjs-pro-react-native
   ```
-  
+
 ## Expo setup
 
 > ℹ️ Our SDK cannot be used in [Expo Go](https://expo.dev/go) because it requires custom native code.
@@ -120,7 +120,7 @@ To use the SDK on the web, install the peer dependency with your preferred packa
   ```shell
   pnpm add @fingerprint/agent
   ```
-  
+
 Then, use the SDK as you would with the native version.
 </details>
 
@@ -150,7 +150,7 @@ For iOS:
 ```bash
 npx expo run:ios
 ```
-  
+
 ## Bare react-native setup
 
 ### 1. Configure iOS dependencies (if developing on iOS)
@@ -186,22 +186,22 @@ For Gradle versions before 7.0, you likely have an `allprojects` block in `{root
 
 ```groovy
 allprojects {
-    repositories {
-      mavenCentral()
-      mavenLocal()
-      maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url("$rootDir/../node_modules/react-native/android")
-      }
-      maven {
-        // Android JSC is installed from npm
-        url("$rootDir/../node_modules/jsc-android/dist")
-      }
-      maven {
-        url("https://maven.fpregistry.io/releases") // Add this
-      }
-      google()
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+      url("$rootDir/../node_modules/react-native/android")
     }
+    maven {
+      // Android JSC is installed from npm
+      url("$rootDir/../node_modules/jsc-android/dist")
+    }
+    maven {
+      url("https://maven.fpregistry.io/releases") // Add this
+    }
+    google()
+  }
 }
 ```
 
@@ -225,9 +225,9 @@ import App from './App';
 import { name as appName } from './app.json';
 
 const WrappedApp = () => (
-  <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'}>
-    <App />
-  </FingerprintProvider>
+        <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'}>
+          <App />
+        </FingerprintProvider>
 )
 
 AppRegistry.registerComponent(appName, () => WrappedApp);
@@ -245,20 +245,20 @@ export default function App() {
   const {isLoading, isFetched, error, data, getData} = useVisitorData()
 
   return (
-    <SafeAreaView>
-      <View style={{ margin: 8 }}>
-        <Button title='Reload data' onPress={() => getData().catch(() => {})} />
-        {isLoading ? (
-          <Text>Loading...</Text>
-        ) : (
-          <>
-            <Text>VisitorId: {data?.visitor_id}</Text>
-            <Text>Full visitor data:</Text>
-            <Text>{error ? error.message : JSON.stringify(data, null, 2)}</Text>
-          </>
-        )}
-      </View>
-    </SafeAreaView>
+          <SafeAreaView>
+            <View style={{ margin: 8 }}>
+              <Button title='Reload data' onPress={() => getData().catch(() => {})} />
+              {isLoading ? (
+                      <Text>Loading...</Text>
+              ) : (
+                      <>
+                        <Text>VisitorId: {data?.visitor_id}</Text>
+                        <Text>Full visitor data:</Text>
+                        <Text>{error ? error.message : JSON.stringify(data, null, 2)}</Text>
+                      </>
+              )}
+            </View>
+          </SafeAreaView>
   )
 }
 ```
@@ -266,6 +266,14 @@ export default function App() {
 > ℹ️ By default the hook does **not** fetch automatically. Pass `useVisitorData({ immediate: true })`
 > to identify on mount and whenever the request options change.
 
+
+> ⚠️ Caching is available only on **web** and is disabled by default.
+> To enable caching on web, pass the JavaScript agent [cache](https://docs.fingerprint.com/reference/js-agent-start-function#cache) option:
+> ```jsx
+> <FingerprintProvider apiKey={'your-fpjs-public-api-key'} region={'eu'} web={{ cache: { storage: 'sessionStorage', duration: 'optimize-cost' } }}>
+>   <App />
+> </FingerprintProvider>
+> ```
 ### API Client approach
 
 Create a client with `start()` and call `get()`:
@@ -362,9 +370,9 @@ location data if `allowUseOfLocationData` is set to `true`.
 
 ```javascript
 return (
-  <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true }} ios={{ allowUseOfLocationData: true }}>
-    <App />
-  </FingerprintProvider>
+        <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true }} ios={{ allowUseOfLocationData: true }}>
+          <App />
+        </FingerprintProvider>
 )
 ```
 
@@ -373,9 +381,9 @@ The SDK will delay identification up to the specified timeout to collect the dev
 
 ```javascript
 return (
-  <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true, locationTimeoutMillis: 10000 }}>
-    <App />
-  </FingerprintProvider>
+        <FingerprintProvider apiKey={PUBLIC_API_KEY} android={{ allowUseOfLocationData: true, locationTimeoutMillis: 10000 }}>
+          <App />
+        </FingerprintProvider>
 )
 ```
 
