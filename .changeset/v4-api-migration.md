@@ -13,7 +13,7 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Single options object**
 
 - `getData(tags, linkedId, options)` → `getData({ tags, linkedId, timeout })`.
-- `useVisitorData` now returns a discriminated union (`data`/`isLoading`/`isFetched`/`error`) and `getData` always throws on error — the `throwOnError` option is removed. `immediate` defaults to `false`.
+- `useVisitorData` now returns a discriminated union (`data`/`isLoading`/`isFetched`/`error`), and `getData` always throws on error. The `throwOnError` option is removed. `immediate` defaults to `false`.
 
 **Grouped provider/start options**
 
