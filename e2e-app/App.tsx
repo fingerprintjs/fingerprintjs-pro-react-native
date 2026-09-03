@@ -2,7 +2,7 @@
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
-import { FingerprintProvider, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
@@ -48,6 +48,14 @@ function InnerApp() {
 
             <Text>Message:</Text>
             <Text testID={testIds.errorMessage}>{error.message}</Text>
+
+            {isFingerprintError(error) && (
+              <>
+                <Text>Error event id</Text>
+                <Text testID={testIds.errorEventId}>{error.event_id}</Text>
+              </>
+            )}
+
             {error.stack ? <Text testID={testIds.errorStack}>{error.stack}</Text> : null}
             {error.cause ? <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text> : null}
           </View>

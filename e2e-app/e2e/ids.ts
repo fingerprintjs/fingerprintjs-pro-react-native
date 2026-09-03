@@ -5,6 +5,7 @@ export const testIds = {
   errorMessage: 'error-message',
   errorStack: 'error-stack',
   errorCause: 'error-cause',
+  errorEventId: 'error-event-id',
   data: 'data',
   getData: 'get-data',
   uiManager: 'ui-manager',

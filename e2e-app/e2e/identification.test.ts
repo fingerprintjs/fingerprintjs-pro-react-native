@@ -8,6 +8,7 @@ import { wait } from './wait'
 import { Config } from '@/src/config.types'
 
 const VISITOR_ID_REGEX = /^[a-zA-Z\d]{20}$/
+const EVENT_ID_REGEX = /^\d{13}\.[a-zA-Z0-9]{6}$/
 
 async function launchApp(params?: DeviceLaunchAppConfig) {
   await device.launchApp(params)
@@ -144,6 +145,7 @@ describe('React Native Identification invalid API Key', () => {
     // SDKs forward the server's code for an unknown public key.
     expect(error.name).toEqual('FingerprintError')
     expect(error.code).toEqual('public_api_key_not_found')
+    expect(error.eventId).toMatch(EVENT_ID_REGEX)
   })
 })
 

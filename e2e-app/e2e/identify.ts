@@ -27,6 +27,7 @@ export async function identifyWithError() {
   const name = await getElementText(element(by.id(testIds.errorName)))
   const code = await getElementText(element(by.id(testIds.errorCode)))
   const message = await getElementText(element(by.id(testIds.errorMessage)))
+  const eventId = await getElementText(element(by.id(testIds.errorEventId)))
 
-  return { name, code, message }
+  return { name, code, message, eventId }
 }
