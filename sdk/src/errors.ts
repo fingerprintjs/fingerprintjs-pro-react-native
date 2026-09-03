@@ -70,6 +70,8 @@ export type ErrorCode =
   | 'wrong_worker_option'
   | 'worker_initialization_failed'
 
+// `string & {}` keeps TypeScript from widening the union back to `string`, so known codes stay
+// available for autocomplete while any other string remains assignable.
 type FingerprintErrorCode = ErrorCode | (string & {})
 
 /**
@@ -98,8 +100,6 @@ export class FingerprintError extends Error {
    * A machine-friendly code for the type of this error, e.g. `too_many_requests`. Known values are
    * listed in {@link ErrorCode}; any other string is still possible (see that type's note).
    */
-  // `string & {}` keeps TypeScript from widening the union back to `string`, so known codes stay
-  // available for autocomplete while any other string remains assignable.
   public readonly code: FingerprintErrorCode
 
   /**
