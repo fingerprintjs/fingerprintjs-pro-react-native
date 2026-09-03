@@ -2,39 +2,47 @@ package com.fingerprintjs.reactnative
 
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
-import com.fingerprintjs.android.fpjs_pro.Configuration
-import com.fingerprintjs.android.fpjs_pro.FingerprintJS
-import com.fingerprintjs.android.fpjs_pro.FingerprintJSProResponse
-import com.fingerprintjs.android.fpjs_pro.FingerprintJSFactory
-import com.fingerprintjs.android.fpjs_pro.Error
-import com.fingerprintjs.android.fpjs_pro.ApiKeyRequired
-import com.fingerprintjs.android.fpjs_pro.ApiKeyNotFound
-import com.fingerprintjs.android.fpjs_pro.ApiKeyExpired
-import com.fingerprintjs.android.fpjs_pro.RequestCannotBeParsed
-import com.fingerprintjs.android.fpjs_pro.Failed
-import com.fingerprintjs.android.fpjs_pro.RequestTimeout
-import com.fingerprintjs.android.fpjs_pro.TooManyRequest
-import com.fingerprintjs.android.fpjs_pro.OriginNotAvailable
-import com.fingerprintjs.android.fpjs_pro.HeaderRestricted
-import com.fingerprintjs.android.fpjs_pro.NotAvailableForCrawlBots
-import com.fingerprintjs.android.fpjs_pro.NotAvailableWithoutUA
-import com.fingerprintjs.android.fpjs_pro.WrongRegion
-import com.fingerprintjs.android.fpjs_pro.SubscriptionNotActive
-import com.fingerprintjs.android.fpjs_pro.UnsupportedVersion
-import com.fingerprintjs.android.fpjs_pro.InstallationMethodRestricted
-import com.fingerprintjs.android.fpjs_pro.ResponseCannotBeParsed
-import com.fingerprintjs.android.fpjs_pro.NetworkError
-import com.fingerprintjs.android.fpjs_pro.ClientTimeout
-import com.fingerprintjs.android.fpjs_pro.UnknownError
-import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationHeaders
-import com.fingerprintjs.android.fpjs_pro.InvalidProxyIntegrationSecret
-import com.fingerprintjs.android.fpjs_pro.ProxyIntegrationSecretEnvironmentMismatch
+import com.fingerprint.android.Configuration
+import com.fingerprint.android.Fingerprint
+import com.fingerprint.android.FingerprintFactory
+import com.fingerprint.android.FingerprintResponse
+import com.fingerprint.android.Error
+import com.fingerprint.android.ApiKeyRequired
+import com.fingerprint.android.ApiKeyNotFound
+import com.fingerprint.android.SecretApiKeyRequired
+import com.fingerprint.android.SecretApiKeyNotFound
+import com.fingerprint.android.RequestCannotBeParsed
+import com.fingerprint.android.Failed
+import com.fingerprint.android.RequestTimeout
+import com.fingerprint.android.TooManyRequest
+import com.fingerprint.android.WrongRegion
+import com.fingerprint.android.SubscriptionNotActive
+import com.fingerprint.android.SubscriptionNotFound
+import com.fingerprint.android.SubscriptionRestricted
+import com.fingerprint.android.InstallationMethodRestricted
+import com.fingerprint.android.EnvironmentRestricted
+import com.fingerprint.android.ResponseCannotBeParsed
+import com.fingerprint.android.NetworkError
+import com.fingerprint.android.NetworkUnavailableError
+import com.fingerprint.android.ClientTimeout
+import com.fingerprint.android.UnknownError
+import com.fingerprint.android.VisitorNotFound
+import com.fingerprint.android.RequestNotFound
+import com.fingerprint.android.ServiceUnavailable
+import com.fingerprint.android.FeatureNotEnabled
+import com.fingerprint.android.StateNotReady
+import com.fingerprint.android.MissingModule
+import com.fingerprint.android.PayloadTooLarge
+import com.fingerprint.android.RulesetNotFound
+import com.fingerprint.android.InvalidProxyIntegrationHeaders
+import com.fingerprint.android.InvalidProxyIntegrationSecret
+import com.fingerprint.android.ProxyIntegrationSecretEnvironmentMismatch
 import java.lang.Exception
 
 
 @ReactModule(name = RNFingerprintjsProModule.NAME)
 class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRNFingerprintjsProSpec(reactContext) {
-  private var fpjsClient: FingerprintJS? = null
+  private var fpjsClient: Fingerprint? = null
 
   override fun getName(): String {
     return NAME
@@ -43,14 +51,13 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
   override fun configure(
       apiToken: String,
       pluginVersion: String,
-      extendedResponseFormat: Boolean,
       fallbackEndpointUrls: ReadableArray,
       allowUseOfLocationData: Boolean,
       locationTimeoutMillis: Double,
       regionKey: String?,
       endpointUrl: String?
   ) {
-    val factory = FingerprintJSFactory(reactApplicationContext)
+    val factory = FingerprintFactory(reactApplicationContext)
     val region = when(regionKey) {
       "eu" -> Configuration.Region.EU
       "us" -> Configuration.Region.US
@@ -61,9 +68,8 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
     val configuration = Configuration(
       apiToken,
       region,
-      endpointUrl = endpointUrl ?: region.endpointUrl,
-      extendedResponseFormat,
-      fallbackEndpointUrls = fallbackEndpointUrls.toArrayList().filterIsInstance<String>(),
+      endpointUrl ?: region.endpointUrl,
+      fallbackEndpointUrls.toArrayList().filterIsInstance<String>(),
       integrationInfo,
       allowUseOfLocationData,
       locationTimeoutMillis.toLong()
@@ -71,64 +77,33 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
     fpjsClient = factory.createInstance(configuration)
   }
 
-  override fun getVisitorId(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
-    getVisitorIdInternal(tags, linkedId, timeout?.toInt(), promise)
-  }
-
-  override fun getVisitorData(tags: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
-    getVisitorDataInternal(tags, linkedId, timeout?.toInt(), promise)
-  }
-
-  private fun getVisitorIdInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
+  override fun getVisitorData(tag: ReadableMap?, linkedId: String?, timeout: Double?, promise: Promise) {
     try {
-      if (timeout != null) {
-        fpjsClient?.getVisitorId(
-          timeout,
-          getTags(tags),
-          linkedId ?: "",
-          { result -> promise.resolve(result.visitorId) },
-          { error -> promise.reject("Error: ", getErrorDescription(error)) }
-        )
-      } else {
-        fpjsClient?.getVisitorId(
-          getTags(tags),
-          linkedId ?: "",
-          { result -> promise.resolve(result.visitorId) },
-          { error -> promise.reject("Error: ", getErrorDescription(error)) }
-        )
-      }
-    } catch (e: Exception) {
-      promise.reject("Error: ", e)
-    }
-  }
-
-  private fun getVisitorDataInternal(tags: ReadableMap?, linkedId: String?, timeout: Int?, promise: Promise) {
-    try {
-      val callback = { result: FingerprintJSProResponse ->
+      val callback = { result: FingerprintResponse ->
         val visitorData = Arguments.createMap().apply {
-          putString("requestId", result.requestId)
-          putDouble("confidenceScore", result.confidenceScore.score.toDouble())
-          putString("visitorDataJson", result.asJson)
+          putString("visitorId", result.visitorId)
+          putString("eventId", result.eventId)
+          putDouble("suspectScore", (result.suspectScore ?: -1).toDouble())
           putString("sealedResult", result.sealedResult ?: "")
         }
         promise.resolve(visitorData)
       }
+      val errorCallback = { error: Error ->
+        // Carry the optional event ID through `userInfo` — RN surfaces it as `error.userInfo.eventId`.
+        // `Error.eventId` defaults to the `"Unknown"` sentinel when the failure never reached the
+        // server, in which case it is omitted so `FingerprintError.event_id` stays `null`.
+        val userInfo = Arguments.createMap().apply {
+          val id = error.eventId
+          if (id.isNotEmpty() && id != UNKNOWN_EVENT_ID) putString("eventId", id)
+        }
+        promise.reject(getErrorCode(error), error.description ?: "", userInfo)
+      }
+      val timeoutMillis = timeout?.toInt()
 
-      if (timeout != null) {
-        fpjsClient?.getVisitorId(
-          timeout,
-          getTags(tags),
-          linkedId ?: "",
-          callback,
-          { error -> promise.reject("Error: ", getErrorDescription(error)) }
-        )
+      if (timeoutMillis != null) {
+        fpjsClient?.getVisitorId(timeoutMillis, getTags(tag), linkedId ?: "", callback, errorCallback)
       } else {
-        fpjsClient?.getVisitorId(
-          getTags(tags),
-          linkedId ?: "",
-          callback,
-          { error -> promise.reject("Error: ", getErrorDescription(error)) }
-        )
+        fpjsClient?.getVisitorId(getTags(tag), linkedId ?: "", callback, errorCallback)
       }
     } catch (e: Exception) {
       promise.reject("Error: ", e)
@@ -143,36 +118,56 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       ?: emptyMap()
   }
 
-  private fun getErrorDescription(error: Error): String {
-    val errorType = when(error) {
-      is ApiKeyRequired -> "ApiKeyRequired"
-      is ApiKeyNotFound ->  "ApiKeyNotFound"
-      is ApiKeyExpired -> "ApiKeyExpired"
-      is RequestCannotBeParsed -> "RequestCannotBeParsed"
-      is Failed -> "Failed"
-      is RequestTimeout -> "RequestTimeout"
-      is TooManyRequest -> "TooManyRequest"
-      is OriginNotAvailable -> "OriginNotAvailable"
-      is HeaderRestricted -> "HeaderRestricted"
-      is NotAvailableForCrawlBots -> "NotAvailableForCrawlBots"
-      is NotAvailableWithoutUA -> "NotAvailableWithoutUA"
-      is WrongRegion -> "WrongRegion"
-      is SubscriptionNotActive -> "SubscriptionNotActive"
-      is UnsupportedVersion -> "UnsupportedVersion"
-      is InstallationMethodRestricted -> "InstallationMethodRestricted"
-      is ResponseCannotBeParsed -> "ResponseCannotBeParsed"
-      is NetworkError -> "NetworkError"
-      is ClientTimeout -> "ClientTimeout"
-      is UnknownError -> "UnknownError"
-      is InvalidProxyIntegrationHeaders -> "InvalidProxyIntegrationHeaders"
-      is InvalidProxyIntegrationSecret -> "InvalidProxyIntegrationSecret"
-      is ProxyIntegrationSecretEnvironmentMismatch -> "ProxyIntegrationSecretEnvironmentMismatch"
-      else -> "UnknownError"
+  // The React Native layer collapses every error into a single `FingerprintError` carrying a
+  // machine-friendly `code` (see `sdk/src/errors.ts`). We reject the promise with this code (surfaced
+  // as `error.code` in JS); codes mirror `@fingerprint/agent`'s `ErrorCode` values so identical
+  // failures report the same `code` on web and native.
+  //
+  // The `else` is intentional even though it currently covers every `Error` subclass: the dependency
+  // range is `[4.0.0, 5.0.0)`, so a future 4.x minor may introduce new error types, which the `else`
+  // degrades to `unknown_error` instead of failing the build.
+  @Suppress("REDUNDANT_ELSE_IN_WHEN")
+  private fun getErrorCode(error: Error): String {
+    return when(error) {
+      is ApiKeyRequired -> "public_api_key_required"
+      is ApiKeyNotFound -> "public_api_key_not_found"
+      is SecretApiKeyRequired -> "secret_api_key_required"
+      is SecretApiKeyNotFound -> "secret_api_key_not_found"
+      is RequestCannotBeParsed -> "request_cannot_be_parsed"
+      is Failed -> "failed"
+      is RequestTimeout -> "request_timeout"
+      is TooManyRequest -> "too_many_requests"
+      is WrongRegion -> "wrong_region"
+      is SubscriptionNotActive -> "subscription_not_active"
+      is SubscriptionNotFound -> "subscription_not_found"
+      is SubscriptionRestricted -> "subscription_restricted"
+      is InstallationMethodRestricted -> "installation_method_restricted"
+      is EnvironmentRestricted -> "environment_restricted"
+      is ResponseCannotBeParsed -> "response_cannot_be_parsed"
+      is NetworkError -> "network_error"
+      is NetworkUnavailableError -> "network_unavailable"
+      is ClientTimeout -> "client_timeout"
+      is VisitorNotFound -> "visitor_not_found"
+      is RequestNotFound -> "request_not_found"
+      is ServiceUnavailable -> "service_unavailable"
+      is FeatureNotEnabled -> "feature_not_enabled"
+      is StateNotReady -> "state_not_ready"
+      is MissingModule -> "missing_module"
+      is PayloadTooLarge -> "payload_too_large"
+      is RulesetNotFound -> "ruleset_not_found"
+      is UnknownError -> "unknown_error"
+      is InvalidProxyIntegrationHeaders -> "invalid_proxy_integration_headers"
+      is InvalidProxyIntegrationSecret -> "invalid_proxy_integration_secret"
+      is ProxyIntegrationSecretEnvironmentMismatch -> "proxy_integration_secret_environment_mismatch"
+      else -> "unknown_error"
     }
-    return errorType + ":" + error.description
   }
 
   companion object {
     const val NAME = "RNFingerprintjsPro"
+
+    // The Android SDK's `Error.eventId` sentinel for "no event id available" (see the SDK's
+    // `Error` sealed class default).
+    private const val UNKNOWN_EVENT_ID = "Unknown"
   }
 }

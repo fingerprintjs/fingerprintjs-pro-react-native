@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
-  s.ios.deployment_target = "13.0"
+  s.ios.deployment_target = "14.0"
   s.tvos.deployment_target = "15.0"
 
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
@@ -19,9 +19,7 @@ Pod::Spec.new do |s|
 #   s.requires_arc = true
 
   s.dependency "React-Core"
-  # See: https://guides.cocoapods.org/using/the-podfile.html#specifying-pod-versions
-  # ~> 2.8.2 means >= 2.8.2 and < 2.9.0 (pessimistic operator)
-  s.dependency "FingerprintPro", '~> 2.17.0'
+  s.dependency "Fingerprint-iOS", '~> 4.0'
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
   # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture. On the old

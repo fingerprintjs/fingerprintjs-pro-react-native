@@ -1,69 +1,122 @@
-import { useCallback, useContext, useState } from 'react'
-import { FingerprintJsProContextInterface, FingerprintJsProContext } from './FingerprintJsProContext'
-import { GetDataOptions, QueryResult, VisitorQueryContext, VisitorData, Tags } from './types'
-import { IdentificationError } from './errors'
-import { isTruthy } from './utils'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { FingerprintContext } from './FingerprintContext'
+import { FingerprintError } from './errors'
+import type { FingerprintResponse, GetOptions, QueryResult } from './types'
+import { deepEqual } from './utils'
 
 /**
- * Use the `useVisitorData` hook in your components to perform identification requests with the FingerprintJS API.
- *
- * @example
- * ```jsx
- * const {
- *   // Request state
- *   isLoading,
- *   // Error info
- *   error,
- *   // Visitor info
- *   data,
- *   // A method to be called to initiate request
- *   getData,
- * } = useVisitorData();
- * ```
+ * Options for {@link useVisitorData}: the request options plus hook-specific configuration.
  *
  * @group Hooks approach
  */
-export function useVisitorData(): VisitorQueryContext {
-  const { getVisitorData } = useContext<FingerprintJsProContextInterface>(FingerprintJsProContext)
-  const [state, setState] = useState<QueryResult<VisitorData, IdentificationError>>({})
+export type UseVisitorDataOptions = GetOptions & {
+  /**
+   * Controls automatic visitor data fetching. When `true`, the hook fetches after mounting and
+   * whenever the request options change.
+   *
+   * Defaults to `false` on React Native (unlike `@fingerprint/react`, which defaults to `true`)
+   * because there is no cache on native and eager fetching increases identification costs.
+   *
+   * @default false
+   */
+  immediate?: boolean
+}
 
-  const getData = useCallback<VisitorQueryContext['getData']>(
-    async (tags?: Tags, linkedId?: string, options?: GetDataOptions) => {
-      let result: VisitorData | null = null
-      try {
-        setState((state) => ({ ...state, isLoading: true }))
-        result = await getVisitorData(tags, linkedId, options)
-        setState((state) => ({
-          ...state,
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          data: result as VisitorData,
-          isLoading: false,
-          error: undefined,
-        }))
-      } catch (error) {
-        setState((state) => ({
-          ...state,
-          data: undefined,
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          error: error as IdentificationError,
-        }))
-        if (isTruthy(options?.throwOnError)) {
-          throw error
-        }
-      } finally {
-        setState((state) => (state.isLoading === true ? { ...state, isLoading: false } : state))
+/**
+ * Return value of {@link useVisitorData}: the query state plus an imperative `getData`.
+ *
+ * @group Hooks approach
+ */
+export type UseVisitorDataReturn = QueryResult<FingerprintResponse> & {
+  /**
+   * Performs an identification request and returns the visitor data.
+   * Rejects with a {@link FingerprintError} when identification fails; the error is also stored in
+   * the query state.
+   *
+   * @param options Options for the identification request that will override the default options passed to {@link useVisitorData}.
+   */
+  getData: (options?: GetOptions) => Promise<FingerprintResponse>
+}
+
+const IDLE_STATE: QueryResult<FingerprintResponse> = {
+  data: undefined,
+  isLoading: false,
+  isFetched: false,
+  error: undefined,
+}
+
+/**
+ * Use the `useVisitorData` hook in your components to perform identification requests with the
+ * Fingerprint API.
+ *
+ * @param options Options for the identification request that will be used by default.
+ *
+ * @group Hooks approach
+ *
+ * @example
+ * ```jsx
+ * const { data, isLoading, isFetched, error, getData } = useVisitorData()
+ *
+ * // later, e.g. in an event handler:
+ * await getData({ linkedId: 'user_1234' })
+ * ```
+ */
+export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorDataReturn {
+  const { immediate = false, ...getOptions } = options
+
+  const { getVisitorData } = useContext(FingerprintContext)
+  const [state, setState] = useState<QueryResult<FingerprintResponse>>(IDLE_STATE)
+
+  // Sequence counter to guard against out-of-order responses: when several requests are in flight,
+  // only the most recently initiated one is allowed to commit its result to the query state.
+  const requestIdRef = useRef(0)
+
+  // Keep a stable reference to the request options so the `immediate` effect only re-runs when they
+  // change by value, not on every render.
+  const [stableGetOptions, setStableGetOptions] = useState(getOptions)
+  if (!Object.is(stableGetOptions, getOptions) && !deepEqual(stableGetOptions, getOptions)) {
+    setStableGetOptions(getOptions)
+  }
+
+  const getData = useCallback<UseVisitorDataReturn['getData']>(
+    async (requestOptions?: GetOptions) => {
+      const requestId = ++requestIdRef.current
+      setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
+      const mergedOptions = {
+        ...stableGetOptions,
+        ...requestOptions,
       }
-      return result
+      try {
+        const data = await getVisitorData(mergedOptions)
+        // Ignore results from superseded requests so the latest one always wins.
+        if (requestId === requestIdRef.current) {
+          setState({ data, isLoading: false, isFetched: true, error: undefined })
+        }
+        return data
+      } catch (error) {
+        if (requestId === requestIdRef.current) {
+          setState({
+            data: undefined,
+            isLoading: false,
+            isFetched: false,
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            error: error as FingerprintError,
+          })
+        }
+        throw error
+      }
     },
-    [getVisitorData]
+    [stableGetOptions, getVisitorData]
   )
 
-  const { isLoading, data, error } = state
+  useEffect(() => {
+    if (immediate) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      getData(stableGetOptions).catch(() => {
+        // error is already captured in the query state
+      })
+    }
+  }, [immediate, stableGetOptions, getData])
 
-  return {
-    isLoading,
-    data,
-    error,
-    getData,
-  }
+  return { ...state, getData }
 }

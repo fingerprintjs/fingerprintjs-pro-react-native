@@ -28,6 +28,11 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+        // The Fingerprint Android SDK v4 is compiled with Kotlin 2.3.x metadata, which is newer than
+        // the Kotlin compiler RN/Expo uses (currently 2.0.x - 2.2.x across the range of supported RN versions).
+        // Skipping the metadata version check lets this module read the v4 SDK's classes.
+        // Kotlin metadata is forward/backward compatible within the same major version.
+        freeCompilerArgs += ["-Xskip-metadata-version-check"]
     }
 
     buildFeatures {
@@ -55,6 +60,6 @@ repositories {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation "com.fingerprint.android:pro:$fingerprint_native_sdk_version"
+    implementation "com.fingerprint.android:sdk:$fingerprint_native_sdk_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
