@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
-import { useVisitorData } from '../src'
+import { TagPrimitive, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -68,12 +68,52 @@ describe('useVisitorData', () => {
     expect(result.current.error).toMatchObject({ name: 'FingerprintError', code: 'too_many_requests' })
   })
 
+  it('passes top-level options', async () => {
+    const tag = { stringTag: 'foo', numberTag: 0, objectTag: { foo: true, bar: [1, 2, 3] }, boolTag: false }
+    const { result } = renderHook(
+      () =>
+        useVisitorData({
+          tags: tag,
+          linkedId: 'test_id',
+          timeout: 15_000,
+        }),
+      { wrapper: createWrapper() }
+    )
+
+    act(() => {
+      void result.current.getData()
+    })
+
+    await waitFor(() => {
+      expect(getVisitorData).toHaveBeenCalledWith(tag, 'test_id', 15_000)
+    })
+  })
+
   it('passes tag, linkedId and timeout from a single options object', async () => {
     const tag = { stringTag: 'foo', numberTag: 0, objectTag: { foo: true, bar: [1, 2, 3] }, boolTag: false }
     const { result } = renderHook(() => useVisitorData(), { wrapper: createWrapper() })
 
     act(() => {
       void result.current.getData({ tags: tag, linkedId: 'test_id', timeout: 15_000 })
+    })
+
+    await waitFor(() => {
+      expect(getVisitorData).toHaveBeenCalledWith(tag, 'test_id', 15_000)
+    })
+  })
+
+  it('merges top and passed options', async () => {
+    const tag = { stringTag: 'foo', numberTag: 0, objectTag: { foo: true, bar: [1, 2, 3] }, boolTag: false }
+    const { result } = renderHook(
+      () =>
+        useVisitorData({
+          tags: tag,
+        }),
+      { wrapper: createWrapper() }
+    )
+
+    act(() => {
+      void result.current.getData({ linkedId: 'test_id', timeout: 15_000 })
     })
 
     await waitFor(() => {
@@ -115,7 +155,7 @@ describe('useVisitorData', () => {
 
   it('does not re-run when re-rendered with value-equal options but a fresh identity', async () => {
     const { rerender } = renderHook(
-      ({ tag }: { tag: Record<string, unknown> }) => useVisitorData({ immediate: true, tags: tag }),
+      ({ tag }: { tag: Record<string, TagPrimitive> }) => useVisitorData({ immediate: true, tags: tag }),
       { wrapper: createWrapper(), initialProps: { tag: { userAction: 'login' } } }
     )
 
