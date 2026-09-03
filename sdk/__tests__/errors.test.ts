@@ -3,37 +3,49 @@ import { unwrapError } from '../src/unwrapError'
 import { unwrapError as unwrapWebError } from '../src/unwrapError.web'
 
 describe('unwrapError (native)', () => {
-  it('parses the "<code>:<message>" format into a FingerprintError', () => {
-    const error = unwrapError(new Error('too_many_requests:Rate limit reached'))
+  /**
+   * Mimics the error object React Native builds from a native module promise rejection:
+   * `error.code` from the reject code, `error.message`, and `error.userInfo` from the extra data.
+   */
+  function makeNativeError(code: string, message: string, eventId?: string): Error {
+    const error = new Error(message)
+    Object.assign(error, { code, userInfo: eventId !== undefined ? { eventId } : {} })
+    return error
+  }
+
+  it('maps a native rejection (code + message) into a FingerprintError', () => {
+    const error = unwrapError(makeNativeError('too_many_requests', 'Rate limit reached'))
     expect(error).toBeInstanceOf(FingerprintError)
     expect(error.code).toBe('too_many_requests')
     expect(error.message).toBe('Rate limit reached')
     expect(error.event_id).toBeNull()
   })
 
-  it('parses the "<code>|<eventId>:<message>" format, restoring the event id', () => {
-    const error = unwrapError(new Error('too_many_requests|evt_123:Rate limit reached'))
+  it('restores the event id from userInfo', () => {
+    const error = unwrapError(makeNativeError('too_many_requests', 'Rate limit reached', 'evt_123'))
     expect(error.code).toBe('too_many_requests')
     expect(error.message).toBe('Rate limit reached')
     expect(error.event_id).toBe('evt_123')
   })
 
-  it('falls back to unknown_error and keeps the full message when there is no code', () => {
+  it('falls back to unknown_error for an error without a code', () => {
     const error = unwrapError(new Error('Something broken'))
     expect(error).toBeInstanceOf(FingerprintError)
     expect(error.code).toBe('unknown_error')
     expect(error.message).toBe('Something broken')
-  })
-
-  it('keeps the message intact even with ":" inside it', () => {
-    const error = unwrapError(new Error('bad_response_format:some:strange:message'))
-    expect(error.code).toBe('bad_response_format')
-    expect(error.message).toBe('some:strange:message')
+    expect(error.event_id).toBeNull()
   })
 
   it('returns the same instance when a FingerprintError is passed through', () => {
     const original = new FingerprintError({ code: 'failed', message: 'boom' })
     expect(unwrapError(original)).toBe(original)
+  })
+
+  it('wraps a non-error value as unknown_error', () => {
+    const error = unwrapError('nope')
+    expect(error).toBeInstanceOf(FingerprintError)
+    expect(error.code).toBe('unknown_error')
+    expect(error.message).toBe('nope')
   })
 })
 

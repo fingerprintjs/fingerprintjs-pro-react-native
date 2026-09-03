@@ -53,7 +53,7 @@ describe('useVisitorData', () => {
   })
 
   it('stores the error and rejects when identification fails', async () => {
-    getVisitorData.mockRejectedValueOnce(new Error('too_many_requests:Rate limit reached'))
+    getVisitorData.mockRejectedValueOnce(Object.assign(new Error('Rate limit reached'), { code: 'too_many_requests' }))
     const { result } = renderHook(() => useVisitorData(), { wrapper: createWrapper() })
 
     await act(async () => {
