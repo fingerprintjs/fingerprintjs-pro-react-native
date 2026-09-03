@@ -176,7 +176,7 @@ export interface TagObject {
  *
  * @group Types and interfaces
  */
-export type TagValue = null | TagPrimitive | TagObject
+export type TagValue = TagPrimitive | TagObject
 
 /**
  * Alias of {@link TagValue}.
