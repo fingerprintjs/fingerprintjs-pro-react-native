@@ -193,8 +193,8 @@ describe('useVisitorData', () => {
 
     await waitFor(() => {
       expect(result.current.isFetched).toBe(true)
+      expect(getVisitorData).toHaveBeenCalledTimes(3)
     })
-    expect(getVisitorData).toHaveBeenCalledTimes(3)
     expect(result.current.data).toStrictEqual({
       ...expectedData,
       event_id: 'third',
