@@ -3,6 +3,7 @@ import { start } from './FingerprintClient'
 import { FingerprintContext } from './FingerprintContext'
 import type { GetOptions, StartOptions } from './types'
 import { deepEqual } from './utils'
+import { usePromiseStore } from './usePromiseStore'
 
 /**
  * Provides the {@link FingerprintContext} to its child components.
@@ -21,6 +22,8 @@ import { deepEqual } from './utils'
  * ```
  */
 export function FingerprintProvider({ children, ...options }: PropsWithChildren<StartOptions>) {
+  const { doRequest } = usePromiseStore()
+
   // `options` is a fresh object on every render (rest spread), so we cannot depend on its identity.
   // Keep a stable reference that only changes when the options change by value. This also spares
   // consumers from having to memoize inline object props (e.g. `android`, `web`).
@@ -40,7 +43,12 @@ export function FingerprintProvider({ children, ...options }: PropsWithChildren<
     }
   }, [stableOptions])
 
-  const getVisitorData = useCallback((getOptions?: GetOptions) => client.get(getOptions), [client])
+  const getVisitorData = useCallback(
+    (getOptions?: GetOptions) => {
+      return doRequest(() => client.get(getOptions), getOptions)
+    },
+    [client, doRequest]
+  )
 
   const contextValue = useMemo(() => ({ client, getVisitorData }), [client, getVisitorData])
 

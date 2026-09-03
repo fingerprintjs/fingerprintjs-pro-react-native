@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
 import { TagPrimitive, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
+import { NativeVisitorData } from '../src/specs/NativeRNFingerprintjsPro'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const { getVisitorData } = NativeModules.RNFingerprintjsPro as unknown as Record<string, jest.Mock>
@@ -131,6 +132,73 @@ describe('useVisitorData', () => {
     })
     expect(getVisitorData).toHaveBeenCalledWith(null, 'auto', null)
     expect(result.current.data).toStrictEqual(expectedData)
+  })
+
+  it('does not duplicate in-flight requests', async () => {
+    getVisitorData.mockReset()
+    getVisitorData.mockImplementation(async () => {
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 100)
+      })
+      return nativeResponse
+    })
+
+    const { result } = renderHook(() => useVisitorData({ linkedId: 'auto' }), {
+      wrapper: createWrapper(),
+    })
+
+    act(() => {
+      void result.current.getData()
+      void result.current.getData()
+      // This call should trigger a new request since the linkedId has changed
+      void result.current.getData({ linkedId: 'linked_id' })
+    })
+
+    await waitFor(() => {
+      expect(result.current.isFetched).toBe(true)
+    })
+    expect(getVisitorData).toHaveBeenCalledTimes(2)
+    expect(getVisitorData).toHaveBeenCalledWith(null, 'auto', null)
+    expect(getVisitorData).toHaveBeenCalledWith(null, 'linked_id', null)
+    expect(result.current.data).toStrictEqual(expectedData)
+  })
+
+  it('avoids race-condition with multiple requests', async () => {
+    let calls = 0
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const mockResponses = {
+      1: nativeResponse,
+      2: { ...nativeResponse, eventId: 'second' },
+      3: { ...nativeResponse, eventId: 'third' },
+    } as Record<number, NativeVisitorData | undefined>
+
+    getVisitorData.mockReset()
+    getVisitorData.mockImplementation(async () => {
+      calls++
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, (3 - calls) * 10)
+      })
+      return mockResponses[calls]
+    })
+
+    const { result } = renderHook(() => useVisitorData({ linkedId: 'auto' }), {
+      wrapper: createWrapper(),
+    })
+
+    act(() => {
+      void result.current.getData({ linkedId: '1' })
+      void result.current.getData({ linkedId: '2' })
+      void result.current.getData({ linkedId: '3' })
+    })
+
+    await waitFor(() => {
+      expect(result.current.isFetched).toBe(true)
+    })
+    expect(getVisitorData).toHaveBeenCalledTimes(3)
+    expect(result.current.data).toStrictEqual({
+      ...expectedData,
+      event_id: 'third',
+    })
   })
 
   it('re-runs automatically when the request options change while `immediate` is true', async () => {

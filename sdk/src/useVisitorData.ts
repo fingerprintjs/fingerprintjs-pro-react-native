@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { FingerprintContext } from './FingerprintContext'
 import { FingerprintError } from './errors'
 import type { FingerprintResponse, GetOptions, QueryResult } from './types'
@@ -67,6 +67,10 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const { getVisitorData } = useContext(FingerprintContext)
   const [state, setState] = useState<QueryResult<FingerprintResponse>>(IDLE_STATE)
 
+  // Sequence counter to guard against out-of-order responses: when several requests are in flight,
+  // only the most recently initiated one is allowed to commit its result to the query state.
+  const requestIdRef = useRef(0)
+
   // Keep a stable reference to the request options so the `immediate` effect only re-runs when they
   // change by value, not on every render.
   const [stableGetOptions, setStableGetOptions] = useState(getOptions)
@@ -76,6 +80,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
 
   const getData = useCallback<UseVisitorDataReturn['getData']>(
     async (requestOptions?: GetOptions) => {
+      const requestId = ++requestIdRef.current
       setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
       const mergedOptions = {
         ...stableGetOptions,
@@ -83,16 +88,21 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       }
       try {
         const data = await getVisitorData(mergedOptions)
-        setState({ data, isLoading: false, isFetched: true, error: undefined })
+        // Ignore results from superseded requests so the latest one always wins.
+        if (requestId === requestIdRef.current) {
+          setState({ data, isLoading: false, isFetched: true, error: undefined })
+        }
         return data
       } catch (error) {
-        setState({
-          data: undefined,
-          isLoading: false,
-          isFetched: false,
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          error: error as FingerprintError,
-        })
+        if (requestId === requestIdRef.current) {
+          setState({
+            data: undefined,
+            isLoading: false,
+            isFetched: false,
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            error: error as FingerprintError,
+          })
+        }
         throw error
       }
     },
