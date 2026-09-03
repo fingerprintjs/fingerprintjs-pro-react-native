@@ -32,6 +32,9 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 
 - The web implementation now uses `@fingerprint/agent` (v4) instead of `@fingerprintjs/fingerprintjs-pro-spa`. Install `@fingerprint/agent` as the web peer dependency.
 
+**iOS**:
+- Dropped support for **iOS 13**.
+
 ## Migration
 
 **Provider**
