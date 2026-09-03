@@ -1,10 +1,5 @@
 import { test, expect, Page } from '@playwright/test'
-import {
-  DecryptionAlgorithm,
-  FingerprintJsServerApiClient,
-  Region,
-  unsealEventsResponse,
-} from '@fingerprintjs/fingerprintjs-pro-server-api'
+import { DecryptionAlgorithm, FingerprintServerApiClient, Region, unsealEventsResponse } from '@fingerprint/node-sdk'
 import { testTags } from '../e2e/tags'
 import { testIds } from '../e2e/ids'
 import { Config } from '../src/config.types'
@@ -77,19 +72,19 @@ test.describe('Web tests', () => {
   // Using for...of loop instead of test.describe.each
   for (const [region, apiKey, privateApiKey] of basicIdentificationTestData) {
     test.describe(`Web Identification on ${region} Region`, () => {
-      let client: FingerprintJsServerApiClient
+      let client: FingerprintServerApiClient
 
       test.beforeEach(async ({ page }) => {
         if (!apiKey || !privateApiKey) {
           throw new Error('API keys are required to run this test')
         }
 
-        let serverRegion = Region.Global
+        let serverRegion: Region = Region.Global
         if (region === 'eu') {
           serverRegion = Region.EU
         }
 
-        client = new FingerprintJsServerApiClient({
+        client = new FingerprintServerApiClient({
           apiKey: privateApiKey,
           region: serverRegion,
         })
@@ -105,8 +100,8 @@ test.describe('Web tests', () => {
         expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
         const event = await client.getEvent(identificationResult.event_id)
-        expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitor_id)
-        expect(event.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
+        expect(event.identification?.visitor_id).toEqual(identificationResult.visitor_id)
+        expect(event.event_id).toEqual(identificationResult.event_id)
       })
     })
   }
@@ -120,7 +115,7 @@ test.describe('Web tests', () => {
   // Using for...of loop instead of test.describe.each
   for (const [region, apiKey, privateApiKey] of linkedIdTagsTestData) {
     test.describe(`Web Identification on ${region} Region with linkedId and tags`, () => {
-      let client: FingerprintJsServerApiClient
+      let client: FingerprintServerApiClient
       const linkedId = `${Date.now()}-web-test`
 
       test.beforeEach(async ({ page }) => {
@@ -128,12 +123,12 @@ test.describe('Web tests', () => {
           throw new Error('API keys are required to run this test')
         }
 
-        let serverRegion = Region.Global
+        let serverRegion: Region = Region.Global
         if (region === 'eu') {
           serverRegion = Region.EU
         }
 
-        client = new FingerprintJsServerApiClient({
+        client = new FingerprintServerApiClient({
           apiKey: privateApiKey,
           region: serverRegion,
         })
@@ -151,8 +146,8 @@ test.describe('Web tests', () => {
         expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
         const event = await client.getEvent(identificationResult.event_id)
-        expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
-        expect(event.products.identification?.data?.tag).toEqual(testTags)
+        expect(event.linked_id).toEqual(linkedId)
+        expect(event.tags).toEqual(testTags)
       })
     })
   }
@@ -202,7 +197,7 @@ test.describe('Web tests', () => {
       ])
 
       expect(unsealedData).toBeTruthy()
-      expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.event_id)
+      expect(unsealedData.event_id).toEqual(identificationResult.event_id)
     })
   })
 })
