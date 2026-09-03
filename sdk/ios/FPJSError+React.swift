@@ -11,7 +11,9 @@ import Fingerprint
 // The React Native layer collapses every error into a single `FingerprintError` carrying a
 // machine-friendly `code` (see `sdk/src/errors.ts`). Native rejects with a `"<code>: <message>"`
 // string that the JS `unwrapError` splits back apart, so the prefix here must be the API v4
-// snake_case error code.
+// snake_case error code. Server errors also carry an event ID, which is appended to the prefix as
+// `"<code>|<eventId>: <message>"` — error codes never contain `|`, so `unwrapError` can restore it
+// into `FingerprintError.event_id` unambiguously.
 extension FPError {
     var reactDescription: String {
         let description = self.localizedDescription
@@ -22,7 +24,7 @@ extension FPError {
             return "invalid_url_params: \(description)"
         case .apiError(let apiError):
             let message = apiError.message ?? description
-            return "\(apiError.reactCode): \(message)"
+            return "\(apiError.reactPrefix): \(message)"
         case .networkError(let networkError):
             return "network_error: \(networkError.localizedDescription)"
         case .jsonParsingError(let jsonParsingError):
@@ -40,6 +42,14 @@ extension FPError {
 }
 
 extension APIError {
+    // The rejection prefix: the canonical snake_case error code, plus the event ID the Server API
+    // attached to the failed request, so `FingerprintError.event_id` is populated on iOS just like
+    // it is on web.
+    var reactPrefix: String {
+        let eventId = self.eventId
+        return eventId.isEmpty ? reactCode : "\(reactCode)|\(eventId)"
+    }
+
     // The SDK's `APIError.Code` has no explicit raw values, so `rawValue` is the camelCase case name
     // (e.g. `tooManyRequests`). Map it to the canonical snake_case codes shared with Android and
     // `@fingerprint/agent` so `FingerprintError.code` is identical across platforms. Falls back to

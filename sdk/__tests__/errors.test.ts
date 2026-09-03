@@ -11,6 +11,13 @@ describe('unwrapError (native)', () => {
     expect(error.event_id).toBeNull()
   })
 
+  it('parses the "<code>|<eventId>:<message>" format, restoring the event id', () => {
+    const error = unwrapError(new Error('too_many_requests|evt_123:Rate limit reached'))
+    expect(error.code).toBe('too_many_requests')
+    expect(error.message).toBe('Rate limit reached')
+    expect(error.event_id).toBe('evt_123')
+  })
+
   it('falls back to unknown_error and keeps the full message when there is no code', () => {
     const error = unwrapError(new Error('Something broken'))
     expect(error).toBeInstanceOf(FingerprintError)
