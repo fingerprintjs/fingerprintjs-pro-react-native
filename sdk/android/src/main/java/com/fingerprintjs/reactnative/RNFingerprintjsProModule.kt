@@ -88,7 +88,16 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
         }
         promise.resolve(visitorData)
       }
-      val errorCallback = { error: Error -> promise.reject("Error: ", getErrorDescription(error)) }
+      val errorCallback = { error: Error ->
+        // Carry the optional event ID through `userInfo` — RN surfaces it as `error.userInfo.eventId`.
+        // `Error.eventId` defaults to the `"Unknown"` sentinel when the failure never reached the
+        // server, in which case it is omitted so `FingerprintError.event_id` stays `null`.
+        val userInfo = Arguments.createMap().apply {
+          val id = error.eventId
+          if (id.isNotEmpty() && id != UNKNOWN_EVENT_ID) putString("eventId", id)
+        }
+        promise.reject(getErrorCode(error), error.description ?: "", userInfo)
+      }
       val timeoutMillis = timeout?.toInt()
 
       if (timeoutMillis != null) {
@@ -110,19 +119,16 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
   }
 
   // The React Native layer collapses every error into a single `FingerprintError` carrying a
-  // machine-friendly `code` (see `sdk/src/errors.ts`). We reject with a `"<code>:<message>"` string
-  // that the JS `unwrapError` splits back apart, so the prefix must be the API v4 snake_case code.
-  // Codes mirror `@fingerprint/agent`'s `ErrorCode` values so identical failures report the same
-  // `code` on web and native. Server errors also carry an event ID, which is appended to the prefix
-  // as `"<code>|<eventId>:<message>"`. Error codes never contain `|`, so `unwrapError` can restore
-  // it into `FingerprintError.event_id` unambiguously (matching iOS and web).
+  // machine-friendly `code` (see `sdk/src/errors.ts`). We reject the promise with this code (surfaced
+  // as `error.code` in JS); codes mirror `@fingerprint/agent`'s `ErrorCode` values so identical
+  // failures report the same `code` on web and native.
   //
   // The `else` is intentional even though it currently covers every `Error` subclass: the dependency
   // range is `[4.0.0, 5.0.0)`, so a future 4.x minor may introduce new error types, which the `else`
   // degrades to `unknown_error` instead of failing the build.
   @Suppress("REDUNDANT_ELSE_IN_WHEN")
-  private fun getErrorDescription(error: Error): String {
-    val code = when(error) {
+  private fun getErrorCode(error: Error): String {
+    return when(error) {
       is ApiKeyRequired -> "public_api_key_required"
       is ApiKeyNotFound -> "public_api_key_not_found"
       is SecretApiKeyRequired -> "secret_api_key_required"
@@ -155,13 +161,6 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       is ProxyIntegrationSecretEnvironmentMismatch -> "proxy_integration_secret_environment_mismatch"
       else -> "unknown_error"
     }
-
-    // `Error.eventId` defaults to the `"Unknown"` sentinel when the failure never reached the server;
-    // only real event IDs are appended so `FingerprintError.event_id` stays `null` otherwise.
-    val eventId = error.eventId
-    val prefix = if (eventId.isEmpty() || eventId == UNKNOWN_EVENT_ID) code else "$code|$eventId"
-
-    return "$prefix:" + error.description
   }
 
   companion object {

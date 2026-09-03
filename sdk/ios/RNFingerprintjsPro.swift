@@ -35,8 +35,14 @@ class RNFingerprintjsPro: NSObject {
                 ]
                 resolve(visitorData)
             case .failure(let error):
-                let description = error.reactDescription
-                reject("Error: ", description, error)
+                // Reject with the structured code/message, carrying the optional event ID through the
+                // `NSError`'s `userInfo` — RN surfaces it as `error.code` / `error.userInfo.eventId`.
+                var userInfo: [String: Any] = [:]
+                if let eventId = error.reactEventId {
+                    userInfo["eventId"] = eventId
+                }
+                let nsError = NSError(domain: "FingerprintPro", code: 0, userInfo: userInfo)
+                reject(error.reactCode, error.reactMessage, nsError)
             }
         }
 

@@ -62,7 +62,7 @@ describe('start().get()', () => {
   })
 
   it('rejects with a FingerprintError carrying the parsed code', async () => {
-    getVisitorData.mockRejectedValueOnce(new Error('too_many_requests:Rate limit reached'))
+    getVisitorData.mockRejectedValueOnce(Object.assign(new Error('Rate limit reached'), { code: 'too_many_requests' }))
 
     const error = await start({ apiKey: 'key' })
       .get()

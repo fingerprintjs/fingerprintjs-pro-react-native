@@ -8,46 +8,65 @@
 import Foundation
 import Fingerprint
 
-// The React Native layer collapses every error into a single `FingerprintError` carrying a
-// machine-friendly `code` (see `sdk/src/errors.ts`). Native rejects with a `"<code>: <message>"`
-// string that the JS `unwrapError` splits back apart, so the prefix here must be the API v4
-// snake_case error code. Server errors also carry an event ID, which is appended to the prefix as
-// `"<code>|<eventId>: <message>"` — error codes never contain `|`, so `unwrapError` can restore it
-// into `FingerprintError.event_id` unambiguously.
+// The React Native layer collapses every error into a single `FingerprintError` (see
+// `sdk/src/errors.ts`). We reject the promise with the API v4 snake_case `code`, the human-readable
+// `message`, and — for server errors — the `eventId` carried in the `NSError`'s `userInfo`, which
+// React Native forwards to JS as `error.code` / `error.message` / `error.userInfo.eventId`.
 extension FPError {
-    var reactDescription: String {
-        let description = self.localizedDescription
+    // The canonical snake_case error code, shared with Android and `@fingerprint/agent`.
+    var reactCode: String {
         switch self {
         case .invalidURL:
-            return "invalid_url: \(description)"
+            return "invalid_url"
         case .invalidURLParams:
-            return "invalid_url_params: \(description)"
+            return "invalid_url_params"
         case .apiError(let apiError):
-            let message = apiError.message ?? description
-            return "\(apiError.reactPrefix): \(message)"
-        case .networkError(let networkError):
-            return "network_error: \(networkError.localizedDescription)"
-        case .jsonParsingError(let jsonParsingError):
-            return "json_parsing_error: \(jsonParsingError.localizedDescription)"
+            return apiError.reactCode
+        case .networkError:
+            return "network_error"
+        case .jsonParsingError:
+            return "json_parsing_error"
         case .invalidResponseType:
-            return "invalid_response_type: \(description)"
+            return "invalid_response_type"
         case .clientTimeout:
-            return "client_timeout: \(description)"
+            return "client_timeout"
         case .unknownError:
             fallthrough
         @unknown default:
-            return "unknown_error: \(description)"
+            return "unknown_error"
+        }
+    }
+
+    // A human-readable message. For API errors we prefer the server-provided message.
+    var reactMessage: String {
+        switch self {
+        case .apiError(let apiError):
+            return apiError.message ?? self.localizedDescription
+        case .networkError(let networkError):
+            return networkError.localizedDescription
+        case .jsonParsingError(let jsonParsingError):
+            return jsonParsingError.localizedDescription
+        default:
+            return self.localizedDescription
+        }
+    }
+
+    // The Server API event ID, present only for API errors — populates `FingerprintError.event_id`.
+    var reactEventId: String? {
+        switch self {
+        case .apiError(let apiError):
+            return apiError.reactEventId
+        default:
+            return nil
         }
     }
 }
 
 extension APIError {
-    // The rejection prefix: the canonical snake_case error code, plus the event ID the Server API
-    // attached to the failed request, so `FingerprintError.event_id` is populated on iOS just like
-    // it is on web.
-    var reactPrefix: String {
+    // The event ID the Server API attached to the failed request, or `nil` when absent.
+    var reactEventId: String? {
         let eventId = self.eventId
-        return eventId.isEmpty ? reactCode : "\(reactCode)|\(eventId)"
+        return eventId.isEmpty ? nil : eventId
     }
 
     // The SDK's `APIError.Code` has no explicit raw values, so `rawValue` is the camelCase case name
