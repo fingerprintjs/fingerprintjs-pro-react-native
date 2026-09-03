@@ -32,6 +32,8 @@ export type UseVisitorDataReturn = QueryResult<FingerprintResponse> & {
    * Performs an identification request and returns the visitor data.
    * Rejects with a {@link FingerprintError} when identification fails; the error is also stored in
    * the query state.
+   *
+   * @param options Options for the identification request that will override the default options passed to {@link useVisitorData}.
    */
   getData: (options?: GetOptions) => Promise<FingerprintResponse>
 }
@@ -46,6 +48,8 @@ const IDLE_STATE: QueryResult<FingerprintResponse> = {
 /**
  * Use the `useVisitorData` hook in your components to perform identification requests with the
  * Fingerprint API.
+ *
+ * @param options Options for the identification request that will be used by default.
  *
  * @group Hooks approach
  *
@@ -73,8 +77,12 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const getData = useCallback<UseVisitorDataReturn['getData']>(
     async (requestOptions?: GetOptions) => {
       setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
+      const mergedOptions = {
+        ...stableGetOptions,
+        ...requestOptions,
+      }
       try {
-        const data = await getVisitorData(requestOptions)
+        const data = await getVisitorData(mergedOptions)
         setState({ data, isLoading: false, isFetched: true, error: undefined })
         return data
       } catch (error) {
@@ -88,7 +96,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
         throw error
       }
     },
-    [getVisitorData]
+    [stableGetOptions, getVisitorData]
   )
 
   useEffect(() => {
