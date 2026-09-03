@@ -162,10 +162,8 @@ test.describe('Web tests', () => {
 
     test('should return error', async ({ page }) => {
       const error = await identifyWithError(page)
-      // v4 collapses every error into a single `FingerprintError` discriminated by `code`. On web,
-      // `@fingerprint/agent` classifies an unusable public key as `api_key_invalid`.
       expect(error.name).toEqual('FingerprintError')
-      expect(error.code).toEqual('api_key_invalid')
+      expect(error.code).toEqual('public_api_key_not_found')
     })
   })
 
