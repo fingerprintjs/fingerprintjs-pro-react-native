@@ -113,7 +113,9 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
   // machine-friendly `code` (see `sdk/src/errors.ts`). We reject with a `"<code>:<message>"` string
   // that the JS `unwrapError` splits back apart, so the prefix must be the API v4 snake_case code.
   // Codes mirror `@fingerprint/agent`'s `ErrorCode` values so identical failures report the same
-  // `code` on web and native.
+  // `code` on web and native. Server errors also carry an event ID, which is appended to the prefix
+  // as `"<code>|<eventId>:<message>"`. Error codes never contain `|`, so `unwrapError` can restore
+  // it into `FingerprintError.event_id` unambiguously (matching iOS and web).
   //
   // The `else` is intentional even though it currently covers every `Error` subclass: the dependency
   // range is `[4.0.0, 5.0.0)`, so a future 4.x minor may introduce new error types, which the `else`
@@ -153,10 +155,20 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       is ProxyIntegrationSecretEnvironmentMismatch -> "proxy_integration_secret_environment_mismatch"
       else -> "unknown_error"
     }
-    return code + ":" + error.description
+
+    // `Error.eventId` defaults to the `"Unknown"` sentinel when the failure never reached the server;
+    // only real event IDs are appended so `FingerprintError.event_id` stays `null` otherwise.
+    val eventId = error.eventId
+    val prefix = if (eventId.isEmpty() || eventId == UNKNOWN_EVENT_ID) code else "$code|$eventId"
+
+    return "$prefix:" + error.description
   }
 
   companion object {
     const val NAME = "RNFingerprintjsPro"
+
+    // The Android SDK's `Error.eventId` sentinel for "no event id available" (see the SDK's
+    // `Error` sealed class default).
+    private const val UNKNOWN_EVENT_ID = "Unknown"
   }
 }
