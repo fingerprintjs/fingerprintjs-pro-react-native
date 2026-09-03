@@ -22,7 +22,7 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 
 **snake_case response**
 
-- The response is now the flat, snake_case `FingerprintResponse` (`visitor_id`, `event_id`, `suspect_score?`, `sealed_result`), matching the Server API v4 and JS agent. `requestId` → `event_id`, `confidence` → `suspect_score`, `sealedResult` → `sealed_result`. The nested extended fields (`ipLocation`, `firstSeenAt`, etc.) and the `extendedResponseFormat` option are removed (v4 always returns the flat format).
+- The response is now the flat, snake_case `FingerprintResponse` (`visitor_id`, `event_id`, `suspect_score?`, `sealed_result`), matching the Server API v4 and JS agent. `requestId` is replaced by `event_id`, `confidence` is removed, and `suspect_score` is a new optional Smart Signals value; `sealedResult` is renamed to `sealed_result`. The nested extended fields (`ipLocation`, `firstSeenAt`, etc.) and the `extendedResponseFormat` option are removed (v4 always returns the flat format).
 
 **Single error type**
 
