@@ -155,7 +155,7 @@ test.describe('Web tests', () => {
   test.describe('Web Identification invalid API Key', () => {
     test.beforeEach(async ({ page }) => {
       await setupPage(page, {
-        apiKey: 'invalid',
+        apiKey: '6A0uywtMN49q6yddZNwV',
         region: 'us',
       })
     })
