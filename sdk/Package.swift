@@ -46,10 +46,8 @@ let package = Package(
     dependencies: [
         .package(name: "ReactNative", path: "../../../../xcframeworks"),
         .package(name: "React-GeneratedCode", path: "../../../ios"),
-        // TODO(spm): verify the SwiftPM identity for Fingerprint v4. The pod is
-        // `Fingerprint-iOS` 4.x and the Swift sources `import Fingerprint`.
         .package(
-            url: "https://github.com/fingerprintjs/fingerprintjs-pro-ios.git",
+            url: "https://github.com/fingerprintjs/fingerprint-ios",
             from: "4.0.0"
         ),
     ],
@@ -62,7 +60,6 @@ let package = Package(
                 .product(name: "ReactHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeDependenciesHeaders", package: "ReactNative"),
-                // TODO(spm): product name for Fingerprint v4 (module: `Fingerprint`).
                 .product(name: "Fingerprint", package: "fingerprintjs-pro-ios"),
             ],
             path: "ios",
