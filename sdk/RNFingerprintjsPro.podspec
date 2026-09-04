@@ -15,7 +15,9 @@ Pod::Spec.new do |s|
   # sources. Otherwise CocoaPods exposes the C++ `*Spec.h`/`*SpecJSI.h` as public headers of this
   # pod, and building the Swift pod's ObjC module (`-import-underlying-module`) tries to compile
   # them as Obj-C, failing with "This file must be compiled as Obj-C++".
-  s.exclude_files = "ios/build/**/*"
+  # react-native-spm-prefix.h is a SwiftPM-only shim (force-included via Package.swift);
+  # CocoaPods provides its own prefix header, so keep it out of the pod sources.
+  s.exclude_files = "ios/build/**/*", "ios/**/react-native-spm-prefix.h"
 #   s.requires_arc = true
 
   s.dependency "React-Core"
