@@ -48,7 +48,7 @@ With that being said, it would be possible to test these versions without Expo, 
 
 Below is the list of React Native versions that are **not** tested in CI:
 
-```0.78, 0.80, 0.82, 0.84```
+```0.80, 0.82, 0.84```
 
 ## How to publish
 

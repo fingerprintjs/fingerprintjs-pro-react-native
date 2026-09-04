@@ -4,9 +4,6 @@ import pkg from '../package.json' with { type: 'json' }
 const devPackages = Object.keys(pkg.devDependencies)
 
 const reactNativeMetadata = {
-  0.79: {
-    packages: ['expo@53', 'detox@20.37.0', '@config-plugins/detox@11', 'react@19.0.0', 'react-dom@19.0.0'],
-  },
   0.81: {
     packages: ['expo@54', 'detox@20.51.0', '@config-plugins/detox@11', 'react@19.1.0', 'react-dom@19.1.0'],
   },

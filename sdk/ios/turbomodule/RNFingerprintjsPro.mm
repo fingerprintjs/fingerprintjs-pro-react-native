@@ -26,10 +26,14 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
 #import <RNFingerprintjsProSpec/RNFingerprintjsProSpec.h>
 
 // Import the Swift-generated interface so the category below can extend the Swift class.
+// The header name follows the Swift module: `RNFingerprintjsPro` under CocoaPods,
+// `FingerprintjsProReactNativeSwift` under the SwiftPM two-target split (Package.swift).
 #if __has_include("RNFingerprintjsPro-Swift.h")
 #import "RNFingerprintjsPro-Swift.h"
-#else
+#elif __has_include(<RNFingerprintjsPro/RNFingerprintjsPro-Swift.h>)
 #import <RNFingerprintjsPro/RNFingerprintjsPro-Swift.h>
+#else
+#import <FingerprintjsProReactNativeSwift/FingerprintjsProReactNativeSwift-Swift.h>
 #endif
 
 @interface RNFingerprintjsPro (TurboModule) <NativeRNFingerprintjsProSpec>
