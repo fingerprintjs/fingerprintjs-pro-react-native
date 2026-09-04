@@ -1,5 +1,10 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // React Native's Strict TypeScript API resolves only through its `exports` map,
+    // which classic "Node" resolution ignores. Bundler resolution is scoped to the SDK.
+    "moduleResolution": "Bundler"
+  },
   "exclude": ["node_modules", "__tests__"],
   "include": ["src/**/*.ts", "src/**/*.tsx", "plugin/**/*.ts", "package.json"]
 }
