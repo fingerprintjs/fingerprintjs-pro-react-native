@@ -49,6 +49,16 @@ let package = Package(
         ),
     ],
     dependencies: [
+        // These two are parts of the CONSUMING APP, not registry packages, so
+        // they're referenced by local path. `ReactNative` is RN's prebuilt
+        // xcframeworks + header products; `React-GeneratedCode` is the app's
+        // per-app codegen output (the `ReactAppHeaders` product). The relative
+        // paths resolve from the autolinker's libs/RNFingerprintjsPro symlink
+        // (a fixed depth in <app>/ios/build/generated/autolinking/), NOT from
+        // this repo, so `../../../../xcframeworks` lands on <app>/ios/build/
+        // xcframeworks and `../../../ios` on the generated codegen package.
+        // They look wrong relative to sdk/ but are correct in every app; do not
+        // repoint them. (This mirrors what `react-native spm scaffold` emits.)
         .package(name: "ReactNative", path: "../../../../xcframeworks"),
         .package(name: "React-GeneratedCode", path: "../../../ios"),
         .package(
