@@ -27,6 +27,7 @@
     "ios",
     "RNFingerprintjsPro.podspec",
     "Package.swift",
+    "react-native.config.js",
     "plugin/dist",
     "app.plugin.js",
     "README.md",

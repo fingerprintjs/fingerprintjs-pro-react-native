@@ -25,22 +25,27 @@
 // detox build):
 //   1. The Swift target resolves RCTPromise* via `import React` (RCT_SPM flag).
 //   2. The Fingerprint v4 SwiftPM product/module identity below is correct.
-//   3. The ObjC++ glue picks up FingerprintjsProReactNativeSwift-Swift.h.
+//   3. The ObjC++ glue picks up RNFingerprintjsProSwift-Swift.h.
+//
+// The package/product name is pinned to `RNFingerprintjsPro` (matching the pod /
+// native module) via `spm.name` in react-native.config.js. The autolinker uses
+// that name for its libs/<name> symlink and the product it references, so the
+// product below must match it.
 //
 // The React / React-GeneratedCode packages use RELATIVE paths that assume this
-// manifest is reached through the autolinker's libs/FingerprintjsProReactNative
-// symlink — the same fixed depth `react-native spm scaffold` targets. They are
-// resolved from the CONSUMING APP, not this repo; do not repoint them here.
+// manifest is reached through the autolinker's libs/RNFingerprintjsPro symlink —
+// the same fixed depth `react-native spm scaffold` targets. They are resolved
+// from the CONSUMING APP, not this repo; do not repoint them here.
 
 import PackageDescription
 
 let package = Package(
-    name: "FingerprintjsProReactNative",
+    name: "RNFingerprintjsPro",
     platforms: [.iOS(.v15)],
     products: [
         .library(
-            name: "FingerprintjsProReactNative",
-            targets: ["FingerprintjsProReactNative"]
+            name: "RNFingerprintjsPro",
+            targets: ["RNFingerprintjsPro"]
         ),
     ],
     dependencies: [
@@ -55,7 +60,7 @@ let package = Package(
         // Pure-Swift implementation: all business logic + the Fingerprint SDK
         // calls. Kept single-language so SwiftPM accepts the target.
         .target(
-            name: "FingerprintjsProReactNativeSwift",
+            name: "RNFingerprintjsProSwift",
             dependencies: [
                 .product(name: "ReactHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeHeaders", package: "ReactNative"),
@@ -85,9 +90,9 @@ let package = Package(
         // the codegen'd C++ JSI spec (`NativeRNFingerprintjsProSpecJSI`). This
         // cannot be Swift. Depends on the Swift target for its generated header.
         .target(
-            name: "FingerprintjsProReactNative",
+            name: "RNFingerprintjsPro",
             dependencies: [
-                "FingerprintjsProReactNativeSwift",
+                "RNFingerprintjsProSwift",
                 .product(name: "ReactHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeDependenciesHeaders", package: "ReactNative"),

@@ -37,10 +37,10 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
 #import "RNFingerprintjsPro-Swift.h"
 #elif __has_include(<RNFingerprintjsPro/RNFingerprintjsPro-Swift.h>)
 #import <RNFingerprintjsPro/RNFingerprintjsPro-Swift.h>
-#elif __has_include(<FingerprintjsProReactNativeSwift-Swift.h>)
-#import <FingerprintjsProReactNativeSwift-Swift.h>
-#elif __has_include("FingerprintjsProReactNativeSwift-Swift.h")
-#import "FingerprintjsProReactNativeSwift-Swift.h"
+#elif __has_include(<RNFingerprintjsProSwift-Swift.h>)
+#import <RNFingerprintjsProSwift-Swift.h>
+#elif __has_include("RNFingerprintjsProSwift-Swift.h")
+#import "RNFingerprintjsProSwift-Swift.h"
 #endif
 
 @interface RNFingerprintjsPro (TurboModule) <NativeRNFingerprintjsProSpec>
