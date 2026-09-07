@@ -15,7 +15,7 @@ import React
 #endif
 
 @objc(RNFingerprintjsPro)
-public class RNFingerprintjsPro: NSObject {
+class RNFingerprintjsPro: NSObject {
     private var fpjsClient: FingerprintClientProviding?
 
     @objc
