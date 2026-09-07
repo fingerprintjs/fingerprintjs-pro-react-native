@@ -8,7 +8,7 @@ import {
   useVisitorData,
 } from '@fingerprintjs/fingerprintjs-pro-react-native';
 import { useEffect } from 'react';
-
+import { API_KEY } from '@env';
 function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData();
 
@@ -85,7 +85,7 @@ function InnerApp() {
 
 export default function App() {
   return (
-    <FingerprintProvider apiKey="5A0uywtMN49q6yddZNwV">
+    <FingerprintProvider apiKey={API_KEY}>
       <InnerApp />
     </FingerprintProvider>
   );
