@@ -60,7 +60,7 @@ let package = Package(
                 .product(name: "ReactHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeHeaders", package: "ReactNative"),
                 .product(name: "ReactNativeDependenciesHeaders", package: "ReactNative"),
-                .product(name: "Fingerprint", package: "fingerprintjs-pro-ios"),
+                .product(name: "Fingerprint", package: "fingerprint-ios"),
             ],
             path: "ios",
             exclude: [
@@ -74,7 +74,12 @@ let package = Package(
                 "JSONTypeConvertor.swift",
                 "RNFingerprintjsPro.swift",
             ],
-            swiftSettings: [.define("RCT_SPM")]
+            // swift-tools-version 6.0 defaults targets to Swift 6 language mode,
+            // whose strict concurrency rejects capturing the non-Sendable ObjC
+            // block typedefs RCTPromiseResolveBlock/RCTPromiseRejectBlock inside
+            // the Fingerprint SDK's @Sendable completion closure. CocoaPods builds
+            // this pod in Swift 5 mode; match that so behavior is identical.
+            swiftSettings: [.define("RCT_SPM"), .swiftLanguageMode(.v5)]
         ),
         // Objective-C++ TurboModule glue: registers the native module and returns
         // the codegen'd C++ JSI spec (`NativeRNFingerprintjsProSpecJSI`). This
