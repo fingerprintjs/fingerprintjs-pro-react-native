@@ -20,9 +20,19 @@ jobs:
           cache: pnpm
           node-version: 24.x
 
+      - name: Install macOS deps
+        run: |
+          brew install applesimutils
+
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Start iPhone simulator
+        uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5 # v5
+        with:
+          model: 'iPhone 16'
+          shutdown_after_job: 'false'
 
       - run: pnpm install --frozen-lockfile
 
