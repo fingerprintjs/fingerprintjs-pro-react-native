@@ -3,8 +3,17 @@
   "compilerOptions": {
     // React Native's Strict TypeScript API resolves only through its `exports` map,
     // which classic "Node" resolution ignores. Bundler resolution is scoped to the SDK.
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "types": ["node"]
   },
   "exclude": ["node_modules", "__tests__"],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "plugin/**/*.ts", "package.json"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "plugin/**/*.ts",
+    "package.json",
+    "esbuild/**/*.ts",
+    "tsup.config.ts",
+    "tsup/**/*.ts"
+  ]
 }

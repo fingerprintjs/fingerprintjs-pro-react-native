@@ -44,7 +44,7 @@ const config = [
   {
     // SDK source consumes React Native's Strict TypeScript API, which resolves only under
     // bundler module resolution (see sdk/tsconfig.sdk.json).
-    files: ['sdk/src/**/*.{ts,tsx}'],
+    files: ['sdk/**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         project: 'sdk/tsconfig.sdk.json',
