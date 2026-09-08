@@ -1,6 +1,7 @@
 // SafeAreaView is deprecated in newer RN versions, react-native-safe-area-context is recommended
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+// The bare rn app will be removed before merging
+/* eslint-disable */
 import { Pressable, SafeAreaView, Text, View } from 'react-native';
 import {
   FingerprintProvider,
