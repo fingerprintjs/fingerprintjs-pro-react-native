@@ -15,11 +15,11 @@ import React
 #endif
 
 @objc(RNFingerprintjsPro)
-class RNFingerprintjsPro: NSObject {
+public class RNFingerprintjsPro: NSObject {
     private var fpjsClient: FingerprintClientProviding?
 
     @objc
-    static func requiresMainQueueSetup() -> Bool { false }
+    public static func requiresMainQueueSetup() -> Bool { false }
 
     @objc(configure:pluginVersion:fallbackEndpointUrls:allowUseOfLocationData:locationTimeoutMillis:region:endpointUrl:)
     public func configure(_ apiToken: String, _ pluginVersion: String, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
