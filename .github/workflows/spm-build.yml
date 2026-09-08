@@ -26,6 +26,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Build SDK
+        run: pnpm build
+
       - run: pnpm install --frozen-lockfile
         working-directory: BareRNSPMTest
 
@@ -39,13 +42,56 @@ jobs:
         run: pnpm exec react-native spm update --yes
         working-directory: BareRNSPMTest
 
+      - name: Create .env
+        run: cp .env.dist .env
+        working-directory: BareRNSPMTest
+
       - name: Build app
         run: |
           xcodebuild \
             -workspace ios/BareRNSPMTest.xcworkspace \
             -scheme BareRNSPMTest \
-            -configuration Debug \
+            -configuration Release \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath ios/build/DerivedData \
             build
         working-directory: BareRNSPMTest
+
+      - name: Boot simulator
+        run: |
+          xcrun simctl boot "iPhone 16"
+          xcrun simctl bootstatus "iPhone 16"
+
+      - name: Smoke test - install and launch the app
+        run: |
+          BUNDLE_ID=org.reactjs.native.example.BareRNSPMTest
+          APP=ios/build/DerivedData/Build/Products/Release-iphonesimulator/BareRNSPMTest.app
+
+          xcrun simctl install booted "$APP"
+          xcrun simctl launch booted "$BUNDLE_ID"
+
+          sleep 10
+
+          if ! xcrun simctl spawn booted launchctl list | grep -q "$BUNDLE_ID"; then
+            echo "App is not running after launch - it likely crashed on startup" >&2
+            exit 1
+          fi
+
+          if find ~/Library/Logs/DiagnosticReports -iname "*BareRNSPMTest*" 2>/dev/null | grep -q .; then
+            echo "Found a crash report for the app" >&2
+            exit 1
+          fi
+        working-directory: BareRNSPMTest
+
+      - name: Upload smoke test screenshot
+        if: always()
+        run: xcrun simctl io booted screenshot smoke-test.png
+        working-directory: BareRNSPMTest
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: smoke-test-screenshot
+          path: BareRNSPMTest/smoke-test.png
+          retention-days: 3
