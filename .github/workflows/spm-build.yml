@@ -27,7 +27,7 @@ jobs:
       - name: Start iPhone simulator
         uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5 # v5
         with:
-          model: 'iPhone 16'
+          model: 'iPhone 17'
           shutdown_after_job: 'false'
 
       - run: pnpm install --frozen-lockfile
@@ -66,8 +66,8 @@ jobs:
 
       - name: Boot simulator
         run: |
-          xcrun simctl boot "iPhone 16"
-          xcrun simctl bootstatus "iPhone 16"
+          xcrun simctl boot "iPhone 17"
+          xcrun simctl bootstatus "iPhone 17"
 
       - name: Smoke test - install and launch the app
         run: |
