@@ -20,10 +20,6 @@ jobs:
           cache: pnpm
           node-version: 24.x
 
-      - name: Install macOS deps
-        run: |
-          brew install applesimutils
-
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
