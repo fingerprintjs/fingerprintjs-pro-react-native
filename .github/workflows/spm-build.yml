@@ -1,0 +1,51 @@
+name: SPM Build
+
+env:
+  XCODE_VERSION: 26.3
+
+on:
+  pull_request:
+
+jobs:
+  build-ios:
+    name: Build BareRNSPMTest for iOS (SwiftPM)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          node-version: 24.x
+
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: BareRNSPMTest
+
+      - name: Cache SwiftPM artifacts
+        uses: actions/cache@v6
+        with:
+          path: ~/Library/Caches/ReactNative/spm-artifacts
+          key: spm-artifacts-${{ hashFiles('BareRNSPMTest/package.json') }}
+
+      - name: Regenerate SwiftPM autolinking
+        run: pnpm exec react-native spm update --yes
+        working-directory: BareRNSPMTest
+
+      - name: Build app
+        run: |
+          xcodebuild \
+            -workspace ios/BareRNSPMTest.xcworkspace \
+            -scheme BareRNSPMTest \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            build
+        working-directory: BareRNSPMTest
