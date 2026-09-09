@@ -166,7 +166,7 @@ export type TagPrimitive = string | number | boolean
 /**
  * @group Types and interfaces
  */
-export interface TagObject {
+export interface TagsObject {
   [key: string]: TagValue | TagValue[]
 }
 
@@ -176,7 +176,7 @@ export interface TagObject {
  *
  * @group Types and interfaces
  */
-export type TagValue = TagPrimitive | TagObject
+export type TagValue = TagPrimitive | TagsObject
 
 /**
  * Alias of {@link TagValue}.
