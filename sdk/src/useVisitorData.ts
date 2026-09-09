@@ -113,11 +113,28 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   )
 
   useEffect(() => {
-    if (immediate) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      getData(stableGetOptions).catch(() => {
-        // error is already captured in the query state
-      })
+    if (!immediate) {
+      return
+    }
+
+    getData(stableGetOptions).catch(() => {
+      // error is already captured in the query state
+    })
+    // `getData` assigns the request id synchronously, before its first `await`.
+    const automaticRequestId = requestIdRef.current
+
+    return () => {
+      // A later manual `getData` call owns the query state now and must keep it, so only abandon the
+      // automatic request while it is still the most recent one.
+      if (requestIdRef.current !== automaticRequestId) {
+        return
+      }
+
+      // Invalidate the request so its response can't overwrite the state of the newer configuration,
+      // and stop reporting loading for a response that will now be ignored. When `immediate` is still
+      // enabled, the next effect run re-enters loading in the same batch, so this doesn't flicker.
+      requestIdRef.current++
+      setState((prevState) => (prevState.isLoading ? { ...prevState, isLoading: false } : prevState))
     }
   }, [immediate, stableGetOptions, getData])
 
