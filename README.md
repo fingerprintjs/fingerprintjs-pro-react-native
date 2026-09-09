@@ -48,8 +48,6 @@ application to call the native Fingerprint Pro libraries (Android and iOS) and i
     - [Bare react-native](#bare-react-native-setup)
       - [1. Configure iOS dependencies (if developing on iOS)](#1-configure-ios-dependencies-if-developing-on-ios)
       - [2. Configure Android dependencies (if developing on Android)](#2-configure-android-dependencies-if-developing-on-android)
-        - [Gradle 7 or newer](#gradle-7-or-newer)
-        - [Gradle 6.0 or older](#gradle-60-or-older)
   - [Usage](#usage)
     - [Hooks approach](#hooks-approach)
     - [API Client approach](#api-client-approach)
@@ -163,9 +161,7 @@ cd ios && pod install
 
 Add the repositories to your Gradle configuration file. The location for these additions depends on your project's structure and the Gradle version you're using:
 
-#### Gradle 7 or newer
-
-For Gradle 7.0 and higher (if you've adopted [the new Gradle settings file approach](https://developer.android.com/build#settings-file)), you likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block:
+You likely manage repositories in the `dependencyResolutionManagement` block in `{rootDir}/android/settings.gradle`. Add the Maven repositories in this block:
 
 ```groovy
 dependencyResolutionManagement {
@@ -176,31 +172,6 @@ dependencyResolutionManagement {
     maven {
       url("https://maven.fpregistry.io/releases") // Add this
     }
-  }
-}
-```
-
-#### Gradle 6.0 or older
-
-For Gradle versions before 7.0, you likely have an `allprojects` block in `{rootDir}/android/build.gradle`. Add the Maven repositories within this block:
-
-```groovy
-allprojects {
-  repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-      url("$rootDir/../node_modules/react-native/android")
-    }
-    maven {
-      // Android JSC is installed from npm
-      url("$rootDir/../node_modules/jsc-android/dist")
-    }
-    maven {
-      url("https://maven.fpregistry.io/releases") // Add this
-    }
-    google()
   }
 }
 ```
