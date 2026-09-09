@@ -127,6 +127,8 @@ describe('useVisitorData', () => {
       wrapper: createWrapper(),
     })
 
+    expect(result.current.isLoading).toBe(true)
+
     await waitFor(() => {
       expect(result.current.isFetched).toBe(true)
     })

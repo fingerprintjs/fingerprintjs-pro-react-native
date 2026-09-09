@@ -38,12 +38,12 @@ export type UseVisitorDataReturn = QueryResult<FingerprintResponse> & {
   getData: (options?: GetOptions) => Promise<FingerprintResponse>
 }
 
-const IDLE_STATE: QueryResult<FingerprintResponse> = {
+const IDLE_STATE = {
   data: undefined,
   isLoading: false,
   isFetched: false,
   error: undefined,
-}
+} satisfies QueryResult<FingerprintResponse>
 
 /**
  * Use the `useVisitorData` hook in your components to perform identification requests with the
@@ -65,7 +65,10 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const { immediate = false, ...getOptions } = options
 
   const { getVisitorData } = useContext(FingerprintContext)
-  const [state, setState] = useState<QueryResult<FingerprintResponse>>(IDLE_STATE)
+  const [state, setState] = useState<QueryResult<FingerprintResponse>>({
+    ...IDLE_STATE,
+    isLoading: options.immediate || IDLE_STATE.isLoading,
+  })
 
   // Sequence counter to guard against out-of-order responses: when several requests are in flight,
   // only the most recently initiated one is allowed to commit its result to the query state.
