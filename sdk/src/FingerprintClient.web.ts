@@ -41,6 +41,7 @@ class WebFingerprintClient implements FingerprintClient {
         event_id: result.event_id,
         suspect_score: result.suspect_score,
         sealed_result: result.sealed_result ? result.sealed_result.base64() : null,
+        cache_hit: result.cache_hit,
       }
     } catch (error) {
       throw unwrapError(error)

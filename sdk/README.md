@@ -317,6 +317,7 @@ interface FingerprintResponse {
   event_id: string
   suspect_score?: number // present only when Smart Signals are enabled
   sealed_result: string | null // base64 sealed result, or null when unavailable
+  cache_hit?: boolean // Used only on web, on native always set to `undefined`
 }
 ```
 

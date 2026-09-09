@@ -234,6 +234,13 @@ export interface FingerprintResponse {
    * @see https://dev.fingerprint.com/docs/sealed-client-results
    */
   sealed_result: string | null
+
+  /**
+   * Indicates whether the response was retrieved from the cache, used only on web. Always set to `undefined` on native platforms.
+   *
+   * @platform web
+   * */
+  cache_hit?: boolean
 }
 
 /**
