@@ -15,7 +15,7 @@ export type Region = 'us' | 'eu' | 'ap'
  *
  * @group Types and interfaces
  */
-export type EndpointUrl = string | string[]
+export type Endpoints = string | string[]
 
 /**
  * Options shared across every platform (web, iOS, Android).
@@ -34,7 +34,7 @@ export interface SharedStartOptions {
   /**
    * API endpoint(s). Should only be used with a custom subdomain or proxy integration.
    */
-  endpoints?: EndpointUrl
+  endpoints?: Endpoints
 }
 
 /**
