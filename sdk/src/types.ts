@@ -231,6 +231,8 @@ export interface FingerprintResponse {
    * Sealed result - the encrypted `/events` Server API response for this `event_id`, encoded in
    * base64. `null` if Sealed Results are disabled or unavailable.
    *
+   * Compared to @fingerprint/agent, this is stored as base64 string, not as `BinaryOutput`.
+   *
    * @see https://dev.fingerprint.com/docs/sealed-client-results
    */
   sealed_result: string | null
