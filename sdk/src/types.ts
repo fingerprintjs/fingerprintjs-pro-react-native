@@ -153,13 +153,13 @@ export interface StartOptions extends SharedStartOptions {
  *
  * @group Types and interfaces
  */
-export type TagPrimitive = string | number | boolean
+export type TagsPrimitive = string | number | boolean
 
 /**
  * @group Types and interfaces
  */
 export interface TagsObject {
-  [key: string]: TagValue | TagValue[]
+  [key: string]: TagsValue | TagsValue[]
 }
 
 /**
@@ -168,14 +168,14 @@ export interface TagsObject {
  *
  * @group Types and interfaces
  */
-export type TagValue = TagPrimitive | TagsObject
+export type TagsValue = TagsPrimitive | TagsObject
 
 /**
- * Alias of {@link TagValue}.
+ * Alias of {@link TagsValue}.
  *
  * @group Types and interfaces
  */
-export type Tag = TagValue
+export type Tags = TagsValue
 
 /**
  * Options for a single identification request.
@@ -191,7 +191,7 @@ export interface GetOptions {
   /**
    * A user-provided value or object that will be returned back to you in a webhook message.
    */
-  tags?: TagValue
+  tags?: TagsValue
   /**
    * Custom timeout for the request, in milliseconds.
    */

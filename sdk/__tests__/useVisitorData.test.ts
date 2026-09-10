@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
-import { TagPrimitive, useVisitorData } from '../src'
+import { TagsPrimitive, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 import { NativeVisitorData } from '../src/specs/NativeRNFingerprintjsPro'
 
@@ -365,7 +365,7 @@ describe('useVisitorData', () => {
 
   it('does not re-run when re-rendered with value-equal options but a fresh identity', async () => {
     const { rerender } = renderHook(
-      ({ tag }: { tag: Record<string, TagPrimitive> }) => useVisitorData({ immediate: true, tags: tag }),
+      ({ tag }: { tag: Record<string, TagsPrimitive> }) => useVisitorData({ immediate: true, tags: tag }),
       { wrapper: createWrapper(), initialProps: { tag: { userAction: 'login' } } }
     )
 
