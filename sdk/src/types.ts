@@ -15,7 +15,7 @@ export type Region = 'us' | 'eu' | 'ap'
  *
  * @group Types and interfaces
  */
-export type EndpointUrl = string | string[]
+export type Endpoints = string | string[]
 
 /**
  * Options shared across every platform (web, iOS, Android).
@@ -34,7 +34,7 @@ export interface SharedStartOptions {
   /**
    * API endpoint(s). Should only be used with a custom subdomain or proxy integration.
    */
-  endpoints?: EndpointUrl
+  endpoints?: Endpoints
 }
 
 /**
@@ -120,14 +120,6 @@ export interface WebStartOptions {
    */
   urlHashing?: UrlHashing
   /**
-   * Enables data collection for remote control detection.
-   * Once enabled, please contact our support team to activate the result exposure.
-   *
-   * @default false
-   * @see https://dev.fingerprint.com/docs/smart-signals-overview#remote-control-tools-detection
-   */
-  remoteControlDetection?: boolean
-  /**
    * Enables caching the result of the `get` call.
    */
   cache?: CacheConfig
@@ -161,13 +153,13 @@ export interface StartOptions extends SharedStartOptions {
  *
  * @group Types and interfaces
  */
-export type TagPrimitive = string | number | boolean
+export type TagsPrimitive = string | number | boolean
 
 /**
  * @group Types and interfaces
  */
-export interface TagObject {
-  [key: string]: TagValue | TagValue[]
+export interface TagsObject {
+  [key: string]: TagsValue | TagsValue[]
 }
 
 /**
@@ -176,14 +168,14 @@ export interface TagObject {
  *
  * @group Types and interfaces
  */
-export type TagValue = TagPrimitive | TagObject
+export type TagsValue = TagsPrimitive | TagsObject
 
 /**
- * Alias of {@link TagValue}.
+ * Alias of {@link TagsValue}.
  *
  * @group Types and interfaces
  */
-export type Tag = TagValue
+export type Tags = TagsValue
 
 /**
  * Options for a single identification request.
@@ -199,7 +191,7 @@ export interface GetOptions {
   /**
    * A user-provided value or object that will be returned back to you in a webhook message.
    */
-  tags?: TagValue
+  tags?: TagsValue
   /**
    * Custom timeout for the request, in milliseconds.
    */
@@ -231,9 +223,18 @@ export interface FingerprintResponse {
    * Sealed result - the encrypted `/events` Server API response for this `event_id`, encoded in
    * base64. `null` if Sealed Results are disabled or unavailable.
    *
+   * Compared to @fingerprint/agent, this is stored as base64 string, not as `BinaryOutput`.
+   *
    * @see https://dev.fingerprint.com/docs/sealed-client-results
    */
   sealed_result: string | null
+
+  /**
+   * Indicates whether the response was retrieved from the cache, used only on web. Always set to `undefined` on native platforms.
+   *
+   * @platform web
+   * */
+  cache_hit?: boolean
 }
 
 /**

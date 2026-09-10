@@ -11,10 +11,13 @@
       "path": "./tsconfig.tests.json"
     },
     {
-      "path": "./tsconfig.check.json"   
+      "path": "./tsconfig.check.json"
     },
     {
       "path": "./tsconfig.sdk.json"
+    },
+    {
+      "path": "./tsconfig.type-tests.json"
     }
   ]
 }

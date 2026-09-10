@@ -75,8 +75,8 @@ importers:
   sdk:
     devDependencies:
       '@fingerprint/agent':
-        specifier: ^4.1.3
-        version: 4.1.3
+        specifier: ^4.1.5
+        version: 4.1.5
       '@react-native/babel-preset':
         specifier: ^0.85.3
         version: 0.85.3(@babel/core@7.29.7)
@@ -1300,8 +1300,8 @@ packages:
     resolution: {integrity: sha512-4aQzz9vgxcNXFfo/iyNgDDYfsU5XGKKxWxZopw0cVotHiW+U8IJbIxMaxsINs6bHhtkG3StKNPcOrn3eBuxKPw==}
     hasBin: true
 
-  '@fingerprint/agent@4.1.3':
-    resolution: {integrity: sha512-kD7x3cYpOETFZ6KKOzozwGsCYhApRa/n8sDA+oLjx0jRVarmxisMMUi5UtGJQHdx8jqxU+I/8gcjb+fuSBxhBA==}
+  '@fingerprint/agent@4.1.5':
+    resolution: {integrity: sha512-F1BeUWU60FubV1iLjJj8c0N6rouyEXq4P3KUFKYjM4wRMqcnUtL4l5hmRl/vMmo1t4VFCLku6Li99g5m21fcHg==}
 
   '@fingerprintjs/changesets-changelog-format@0.2.0':
     resolution: {integrity: sha512-1jI+J1r8OKUtjlFfQW4bmQ8u4E1097zPaKw5fUCgAcahLPgwW4Ae+Keoc253CSyyaKgTu2v/wniUGchmPaXAsg==}
@@ -7544,7 +7544,7 @@ snapshots:
       chalk: 4.1.2
       js-yaml: 4.2.0
 
-  '@fingerprint/agent@4.1.3': {}
+  '@fingerprint/agent@4.1.5': {}
 
   '@fingerprintjs/changesets-changelog-format@0.2.0':
     dependencies:

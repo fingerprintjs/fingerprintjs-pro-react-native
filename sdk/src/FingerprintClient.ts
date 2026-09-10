@@ -1,6 +1,6 @@
 import { Platform, type CodegenTypes } from 'react-native'
 import RNFingerprintjsPro, { type NativeVisitorData } from './specs/NativeRNFingerprintjsPro'
-import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions, TagValue } from './types'
+import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions, TagsValue } from './types'
 import { unwrapError } from './unwrapError'
 import { isDefined, isTruthy } from './utils'
 
@@ -25,7 +25,7 @@ function normalizeEndpoints(endpoints: StartOptions['endpoints']): { endpointUrl
  * The native SDKs model tags as a string→value map. Objects pass through unchanged; primitives and
  * arrays are wrapped under a `tag` key so both iOS and Android receive a valid object.
  */
-function toNativeTag(tag: TagValue | undefined): CodegenTypes.UnsafeObject | null {
+function toNativeTag(tag: TagsValue | undefined): CodegenTypes.UnsafeObject | null {
   if (!isDefined(tag)) {
     return null
   }

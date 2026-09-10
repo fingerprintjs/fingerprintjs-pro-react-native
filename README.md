@@ -317,6 +317,7 @@ interface FingerprintResponse {
   event_id: string
   suspect_score?: number // present only when Smart Signals are enabled
   sealed_result: string | null // base64 sealed result, or null when unavailable
+  cache_hit?: boolean // Used only on web, on native always set to `undefined`
 }
 ```
 
@@ -339,7 +340,7 @@ try {
 
 ### Linking and tagging information
 
-The `visitorId` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tags`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
+The `visitor_id` provided by Fingerprint Identification is especially useful when combined with information you already know about your users, for example, account IDs, order IDs, etc. To learn more about various applications of the `linkedId` and `tags`, see [Linking and tagging information](https://docs.fingerprint.com/docs/tagging-information).
 
 Pass `tags` and `linkedId` in a single options object:
 

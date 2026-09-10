@@ -17,7 +17,7 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 
 **Grouped provider/start options**
 
-- Platform-only options are nested: `android` (`allowUseOfLocationData`, `locationTimeoutMillis`), `ios` (`allowUseOfLocationData`), `web` (`storageKeyPrefix`, `urlHashing`, `remoteControlDetection`, `cache`). `locationTimeoutMillisAndroid` moves to `android.locationTimeoutMillis`.
+- Platform-only options are nested: `android` (`allowUseOfLocationData`, `locationTimeoutMillis`), `ios` (`allowUseOfLocationData`), `web` (`storageKeyPrefix`, `urlHashing`, `cache`). `locationTimeoutMillisAndroid` moves to `android.locationTimeoutMillis`.
 - `endpointUrl` + `fallbackEndpointUrls` are replaced by a single `endpoints` (string or string[]).
 
 **snake_case response**

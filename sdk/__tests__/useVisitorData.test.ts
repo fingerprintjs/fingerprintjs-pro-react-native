@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
-import { TagPrimitive, useVisitorData } from '../src'
+import { TagsPrimitive, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
 import { NativeVisitorData } from '../src/specs/NativeRNFingerprintjsPro'
 
@@ -127,6 +127,8 @@ describe('useVisitorData', () => {
       wrapper: createWrapper(),
     })
 
+    expect(result.current.isLoading).toBe(true)
+
     await waitFor(() => {
       expect(result.current.isFetched).toBe(true)
     })
@@ -221,9 +223,150 @@ describe('useVisitorData', () => {
     expect(getVisitorData).toHaveBeenCalledTimes(2)
   })
 
+  it('fetches and enters loading when `immediate` changes from false to true', async () => {
+    const { result, rerender } = renderHook(
+      ({ immediate }: { immediate: boolean }) => useVisitorData({ immediate, linkedId: 'auto' }),
+      { wrapper: createWrapper(), initialProps: { immediate: false } }
+    )
+
+    expect(result.current.isLoading).toBe(false)
+    expect(getVisitorData).not.toHaveBeenCalled()
+
+    rerender({ immediate: true })
+
+    expect(result.current.isLoading).toBe(true)
+    await waitFor(() => {
+      expect(result.current.isFetched).toBe(true)
+    })
+    expect(getVisitorData).toHaveBeenCalledWith(null, 'auto', null)
+    expect(getVisitorData).toHaveBeenCalledTimes(1)
+    expect(result.current.data).toStrictEqual(expectedData)
+  })
+
+  it('leaves loading and ignores the response when `immediate` is disabled during an automatic request', async () => {
+    let resolveRequest!: (value: typeof nativeResponse) => void
+    getVisitorData.mockReset()
+    getVisitorData.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveRequest = resolve
+        })
+    )
+
+    const { result, rerender } = renderHook(({ immediate }: { immediate: boolean }) => useVisitorData({ immediate }), {
+      wrapper: createWrapper(),
+      initialProps: { immediate: true },
+    })
+
+    await waitFor(() => {
+      expect(getVisitorData).toHaveBeenCalledTimes(1)
+    })
+    expect(result.current.isLoading).toBe(true)
+
+    rerender({ immediate: false })
+    expect(result.current.isLoading).toBe(false)
+
+    await act(async () => {
+      resolveRequest(nativeResponse)
+      await Promise.resolve()
+    })
+
+    expect(result.current).toMatchObject({
+      isLoading: false,
+      isFetched: false,
+      data: undefined,
+    })
+  })
+
+  it('keeps a manual request loading when the options change while `immediate` is false', async () => {
+    let resolveRequest!: (value: typeof nativeResponse) => void
+    getVisitorData.mockReset()
+    getVisitorData.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveRequest = resolve
+        })
+    )
+
+    const { result, rerender } = renderHook(({ linkedId }: { linkedId: string }) => useVisitorData({ linkedId }), {
+      wrapper: createWrapper(),
+      initialProps: { linkedId: 'first' },
+    })
+
+    act(() => {
+      void result.current.getData()
+    })
+    expect(result.current.isLoading).toBe(true)
+
+    // A change of options must not disturb a manual request that is still in flight.
+    rerender({ linkedId: 'second' })
+    expect(result.current.isLoading).toBe(true)
+
+    await act(async () => {
+      resolveRequest(nativeResponse)
+      await Promise.resolve()
+    })
+
+    expect(getVisitorData).toHaveBeenCalledTimes(1)
+
+    expect(result.current).toMatchObject({
+      isLoading: false,
+      isFetched: true,
+      data: expectedData,
+    })
+  })
+
+  it('keeps a manual request loading when `immediate` is disabled while it is in flight', async () => {
+    let resolveManual!: (value: typeof nativeResponse) => void
+    getVisitorData.mockReset()
+    getVisitorData
+      .mockImplementationOnce(
+        () =>
+          new Promise(() => {
+            // never settles: the automatic request stays in flight for the whole test
+          })
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            resolveManual = resolve
+          })
+      )
+
+    const { result, rerender } = renderHook(({ immediate }: { immediate: boolean }) => useVisitorData({ immediate }), {
+      wrapper: createWrapper(),
+      initialProps: { immediate: true },
+    })
+
+    await waitFor(() => {
+      expect(getVisitorData).toHaveBeenCalledTimes(1)
+    })
+
+    // The manual call supersedes the automatic one, so it owns the query state from now on.
+    // Its options differ so that the provider doesn't dedupe it into the pending automatic request.
+    act(() => {
+      void result.current.getData({ linkedId: 'manual' })
+    })
+    expect(result.current.isLoading).toBe(true)
+
+    rerender({ immediate: false })
+    expect(result.current.isLoading).toBe(true)
+
+    await act(async () => {
+      resolveManual(nativeResponse)
+      await Promise.resolve()
+    })
+
+    expect(result.current).toMatchObject({
+      isLoading: false,
+      isFetched: true,
+      data: expectedData,
+    })
+  })
+
   it('does not re-run when re-rendered with value-equal options but a fresh identity', async () => {
     const { rerender } = renderHook(
-      ({ tag }: { tag: Record<string, TagPrimitive> }) => useVisitorData({ immediate: true, tags: tag }),
+      ({ tag }: { tag: Record<string, TagsPrimitive> }) => useVisitorData({ immediate: true, tags: tag }),
       { wrapper: createWrapper(), initialProps: { tag: { userAction: 'login' } } }
     )
 
@@ -232,10 +375,11 @@ describe('useVisitorData', () => {
     })
 
     // Same values, brand-new object identity (as would happen with an inline prop).
-    rerender({ tag: { userAction: 'login' } })
+    await act(async () => {
+      rerender({ tag: { userAction: 'login' } })
+      await Promise.resolve()
+    })
 
-    // Give any spurious effect a chance to fire before asserting it did not.
-    await Promise.resolve()
     expect(getVisitorData).toHaveBeenCalledTimes(1)
   })
 })
