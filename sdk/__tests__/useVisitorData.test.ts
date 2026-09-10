@@ -239,6 +239,7 @@ describe('useVisitorData', () => {
       expect(result.current.isFetched).toBe(true)
     })
     expect(getVisitorData).toHaveBeenCalledWith(null, 'auto', null)
+    expect(getVisitorData).toHaveBeenCalledTimes(1)
     expect(result.current.data).toStrictEqual(expectedData)
   })
 

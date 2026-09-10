@@ -85,6 +85,10 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
     return ++requestIdRef.current
   }, [])
 
+  const setLoading = useCallback(() => {
+    setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
+  }, [])
+
   const setSuccess = useCallback((data: FingerprintResponse, requestId: number) => {
     // Ignore results from superseded requests so the latest one always wins.
     if (requestId === requestIdRef.current) {
@@ -111,7 +115,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const getData = useCallback<UseVisitorDataReturn['getData']>(
     async (requestOptions?: GetOptions) => {
       const requestId = getRequestId()
-      setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
+      setLoading()
       const mergedOptions = {
         ...stableGetOptions,
         ...requestOptions,
@@ -126,7 +130,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
         throw error
       }
     },
-    [getRequestId, stableGetOptions, getVisitorData, setSuccess, setError]
+    [getRequestId, setLoading, stableGetOptions, getVisitorData, setSuccess, setError]
   )
 
   useEffect(() => {
@@ -136,6 +140,9 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
 
     const requestId = getRequestId()
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLoading()
+
     getVisitorData(stableGetOptions)
       .then((response) => {
         setSuccess(response, requestId)
@@ -144,17 +151,10 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
         setError(error, requestId)
       })
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    getData(stableGetOptions).catch(() => {
-      // error is already captured in the query state
-    })
-    // `getData` assigns the request id synchronously, before its first `await`.
-    const automaticRequestId = requestIdRef.current
-
     return () => {
       // A later manual `getData` call owns the query state now and must keep it, so only abandon the
       // automatic request while it is still the most recent one.
-      if (requestIdRef.current !== automaticRequestId) {
+      if (requestIdRef.current !== requestId) {
         return
       }
 
@@ -165,7 +165,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       requestIdRef.current++
       setState((prevState) => (prevState.isLoading ? { ...prevState, isLoading: false } : prevState))
     }
-  }, [immediate, stableGetOptions, getData, getRequestId, getVisitorData, setSuccess, setError])
+  }, [immediate, stableGetOptions, getData, getRequestId, getVisitorData, setSuccess, setError, setLoading])
 
   return { ...state, getData }
 }
