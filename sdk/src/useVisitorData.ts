@@ -172,7 +172,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       // enabled, the next effect run re-enters loading in the same batch, so this doesn't flicker.
       // eslint-disable-next-line @eslint-react/exhaustive-deps,react-hooks/exhaustive-deps
       requestIdRef.current++
-      setState((prevState) => (prevState.isLoading ? { ...prevState, isLoading: false } : prevState))
+      setState((prevState) => (prevState.isLoading ? IDLE_STATE : prevState))
     }
   }, [immediate, stableGetOptions, getData, getRequestId, getVisitorData, setSuccess, setError, setLoading])
 
