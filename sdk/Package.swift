@@ -1,7 +1,7 @@
 // swift-tools-version: 6.0
 //
 // Swift Package Manager manifest for
-// @fingerprintjs/fingerprintjs-pro-react-native, consumed by React Native
+// @fingerprint/react-native, consumed by React Native
 // 0.87's experimental SwiftPM autolinking (`npx react-native spm`).
 //
 // ─────────────────────────────────────────────────────────────────────────────

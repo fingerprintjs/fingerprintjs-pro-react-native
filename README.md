@@ -8,14 +8,14 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://fingerprintjs.github.io/fingerprintjs-pro-react-native/coverage/">
-    <img src="https://fingerprintjs.github.io/fingerprintjs-pro-react-native/coverage/badges.svg" alt="coverage">
+  <a href="https://fingerprintjs.github.io/react-native/coverage/">
+    <img src="https://fingerprintjs.github.io/react-native/coverage/badges.svg" alt="coverage">
   </a>
-  <a href="https://www.npmjs.com/package/@fingerprintjs/fingerprintjs-pro-react-native">
-    <img src="https://img.shields.io/npm/v/@fingerprintjs/fingerprintjs-pro-react-native.svg?style=flat" alt="Current NPM version"/>
+  <a href="https://www.npmjs.com/package/@fingerprint/react-native">
+    <img src="https://img.shields.io/npm/v/@fingerprint/react-native.svg?style=flat" alt="Current NPM version"/>
   </a>
-  <a href="https://www.npmjs.com/package/@fingerprintjs/fingerprintjs-pro-react-native">
-    <img src="https://img.shields.io/npm/dm/@fingerprintjs/fingerprintjs-pro-react-native.svg" alt="Monthly downloads from NPM">
+  <a href="https://www.npmjs.com/package/@fingerprint/react-native">
+    <img src="https://img.shields.io/npm/dm/@fingerprint/react-native.svg" alt="Monthly downloads from NPM">
   </a>
    <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/:license-mit-blue.svg?style=flat"/>
@@ -23,7 +23,7 @@
   <a href="https://discord.gg/39EpE2neBg">
     <img src="https://img.shields.io/discord/852099967190433792?style=logo&label=Discord&logo=Discord&logoColor=white" alt="Discord server">
   </a>
-    <a href="https://fingerprintjs.github.io/fingerprintjs-pro-react-native/">
+    <a href="https://fingerprintjs.github.io/react-native/">
       <img src="https://img.shields.io/badge/-Documentation-green" alt="Discord server">
     </a>
 </p>
@@ -80,18 +80,18 @@ Install the package using your favorite package manager:
 - [NPM](https://npmjs.org):
 
   ```shell
-  npm install @fingerprintjs/fingerprintjs-pro-react-native --save
+  npm install @fingerprint/react-native --save
   ```
 
 - [Yarn](https://yarnpkg.com):
 
   ```shell
-  yarn add @fingerprintjs/fingerprintjs-pro-react-native
+  yarn add @fingerprint/react-native
   ```
 
 - [PNPM](https://pnpm.js.org):
   ```shell
-  pnpm add @fingerprintjs/fingerprintjs-pro-react-native
+  pnpm add @fingerprint/react-native
   ```
 
 ## Expo setup
@@ -127,7 +127,7 @@ Then, use the SDK as you would with the native version.
 {
   "expo": {
     "plugins": [
-      "@fingerprintjs/fingerprintjs-pro-react-native"
+      "@fingerprint/react-native"
     ]
   }
 }
@@ -191,7 +191,7 @@ Configure the SDK by wrapping your application in `FingerprintProvider`.
 // src/index.js
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import { FingerprintProvider } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { FingerprintProvider } from '@fingerprint/react-native';
 import App from './App';
 import { name as appName } from './app.json';
 
@@ -210,7 +210,7 @@ Use the `useVisitorData` hook in your components to perform visitor identificati
 // src/App.js
 import React from 'react'
 import {Button, SafeAreaView, Text, View} from 'react-native'
-import {useVisitorData} from '@fingerprintjs/fingerprintjs-pro-react-native'
+import {useVisitorData} from '@fingerprint/react-native'
 
 export default function App() {
   const {isLoading, isFetched, error, data, getData} = useVisitorData()
@@ -251,7 +251,7 @@ Create a client with `start()` and call `get()`:
 
 ```javascript
 import React, { useEffect } from 'react';
-import { start } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { start } from '@fingerprint/react-native';
 
 // ...
 
@@ -272,7 +272,7 @@ useEffect(() => {
 Inside the React tree you can also get the same client from context with the `useFingerprint()` hook:
 
 ```javascript
-import { useFingerprint } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { useFingerprint } from '@fingerprint/react-native';
 
 const fp = useFingerprint();
 const result = await fp.get({ linkedId: 'user_1234' });
@@ -298,7 +298,7 @@ Every failure is thrown as a single `FingerprintError` carrying a machine-friend
 `too_many_requests`) and a resolution-oriented `message`:
 
 ```javascript
-import { isFingerprintError } from '@fingerprintjs/fingerprintjs-pro-react-native';
+import { isFingerprintError } from '@fingerprint/react-native';
 
 try {
   await fp.get();
@@ -361,7 +361,7 @@ return (
 
 ## API Reference
 
-See the full [generated API Reference](https://fingerprintjs.github.io/fingerprintjs-pro-react-native/).
+See the full [generated API Reference](https://fingerprintjs.github.io/react-native/).
 
 ## Additional Resources
 
@@ -371,9 +371,9 @@ See the full [generated API Reference](https://fingerprintjs.github.io/fingerpri
 ## Support and feedback
 
 To report problems, ask questions or provide feedback, please
-use [Issues](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/issues). If you need private support,
+use [Issues](https://github.com/fingerprintjs/react-native/issues). If you need private support,
 please email us at `oss-support@fingerprint.com`.
 
 ## License
 
-This project is licensed under the [MIT license](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/blob/main/LICENSE).
+This project is licensed under the [MIT license](https://github.com/fingerprintjs/react-native/blob/main/LICENSE).

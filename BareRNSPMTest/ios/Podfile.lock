@@ -1788,7 +1788,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
-  - "RNFingerprintjsPro (from `../node_modules/@fingerprintjs/fingerprintjs-pro-react-native`)"
+  - "RNFingerprintjsPro (from `../node_modules/@fingerprint/react-native`)"
   - SocketRocket (from `build/rndeps-facades/SocketRocket`)
   - Yoga (from `build/rncore-facades/Yoga`)
 
@@ -1967,7 +1967,7 @@ EXTERNAL SOURCES:
   ReactNativeDependencies:
     :podspec: "../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
   RNFingerprintjsPro:
-    :path: "../node_modules/@fingerprintjs/fingerprintjs-pro-react-native"
+    :path: "../node_modules/@fingerprint/react-native"
   SocketRocket:
     :path: build/rndeps-facades/SocketRocket
   Yoga:

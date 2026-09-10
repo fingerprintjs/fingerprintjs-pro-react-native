@@ -1,4 +1,4 @@
-import { Region } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { Region } from '@fingerprint/react-native'
 
 export type Config = {
   apiKey: string

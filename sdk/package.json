@@ -1,5 +1,5 @@
 {
-  "name": "@fingerprintjs/fingerprintjs-pro-react-native",
+  "name": "@fingerprint/react-native",
   "version": "3.17.1",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "main": "./dist/index.js",
@@ -57,7 +57,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git"
+    "url": "git+https://github.com/fingerprintjs/react-native.git"
   },
   "author": "FingerprintJS, Inc (https://fingerprint.com)",
   "license": "MIT",

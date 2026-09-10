@@ -8,7 +8,7 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs-pro-react-native": "../sdk",
+    "@fingerprint/react-native": "../sdk",
     "@react-native/new-app-screen": "0.87.1",
     "react": "19.2.3",
     "react-native": "0.87.1"
