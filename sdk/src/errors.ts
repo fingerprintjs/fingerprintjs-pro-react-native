@@ -125,3 +125,7 @@ export class FingerprintError extends Error {
 export function isFingerprintError(error: unknown): error is FingerprintError {
   return error instanceof FingerprintError
 }
+
+export function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error)
+}

@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { FingerprintContext } from './FingerprintContext'
-import { FingerprintError } from './errors'
+import { FingerprintError, getErrorMessage, isFingerprintError } from './errors'
 import type { FingerprintResponse, GetOptions, QueryResult } from './types'
-import { deepEqual } from './utils'
+import { deepEqual, isTruthy } from './utils'
 
 /**
  * Options for {@link useVisitorData}: the request options plus hook-specific configuration.
@@ -65,10 +65,10 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const { immediate = false, ...getOptions } = options
 
   const { getVisitorData } = useContext(FingerprintContext)
-  const [state, setState] = useState<QueryResult<FingerprintResponse>>({
+  const [state, setState] = useState<QueryResult<FingerprintResponse>>(() => ({
     ...IDLE_STATE,
-    isLoading: options.immediate || IDLE_STATE.isLoading,
-  })
+    isLoading: isTruthy(options.immediate) ? options.immediate : IDLE_STATE.isLoading,
+  }))
 
   // Sequence counter to guard against out-of-order responses: when several requests are in flight,
   // only the most recently initiated one is allowed to commit its result to the query state.
@@ -81,9 +81,36 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
     setStableGetOptions(getOptions)
   }
 
+  const getRequestId = useCallback(() => {
+    return ++requestIdRef.current
+  }, [])
+
+  const setSuccess = useCallback((data: FingerprintResponse, requestId: number) => {
+    // Ignore results from superseded requests so the latest one always wins.
+    if (requestId === requestIdRef.current) {
+      setState({ data, isLoading: false, isFetched: true, error: undefined })
+    }
+  }, [])
+
+  const setError = useCallback((error: unknown, requestId: number) => {
+    if (requestId === requestIdRef.current) {
+      setState({
+        data: undefined,
+        isLoading: false,
+        isFetched: false,
+        error: isFingerprintError(error)
+          ? error
+          : new FingerprintError({
+              code: 'unknown_error',
+              message: getErrorMessage(error),
+            }),
+      })
+    }
+  }, [])
+
   const getData = useCallback<UseVisitorDataReturn['getData']>(
     async (requestOptions?: GetOptions) => {
-      const requestId = ++requestIdRef.current
+      const requestId = getRequestId()
       setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
       const mergedOptions = {
         ...stableGetOptions,
@@ -91,25 +118,15 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       }
       try {
         const data = await getVisitorData(mergedOptions)
-        // Ignore results from superseded requests so the latest one always wins.
-        if (requestId === requestIdRef.current) {
-          setState({ data, isLoading: false, isFetched: true, error: undefined })
-        }
+
+        setSuccess(data, requestId)
         return data
       } catch (error) {
-        if (requestId === requestIdRef.current) {
-          setState({
-            data: undefined,
-            isLoading: false,
-            isFetched: false,
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-            error: error as FingerprintError,
-          })
-        }
+        setError(error, requestId)
         throw error
       }
     },
-    [stableGetOptions, getVisitorData]
+    [getRequestId, stableGetOptions, getVisitorData, setSuccess, setError]
   )
 
   useEffect(() => {
@@ -117,6 +134,17 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       return
     }
 
+    const requestId = getRequestId()
+
+    getVisitorData(stableGetOptions)
+      .then((response) => {
+        setSuccess(response, requestId)
+      })
+      .catch((error: unknown) => {
+        setError(error, requestId)
+      })
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getData(stableGetOptions).catch(() => {
       // error is already captured in the query state
     })
@@ -133,10 +161,11 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       // Invalidate the request so its response can't overwrite the state of the newer configuration,
       // and stop reporting loading for a response that will now be ignored. When `immediate` is still
       // enabled, the next effect run re-enters loading in the same batch, so this doesn't flicker.
+      // eslint-disable-next-line @eslint-react/exhaustive-deps
       requestIdRef.current++
       setState((prevState) => (prevState.isLoading ? { ...prevState, isLoading: false } : prevState))
     }
-  }, [immediate, stableGetOptions, getData])
+  }, [immediate, stableGetOptions, getData, getRequestId, getVisitorData, setSuccess, setError])
 
   return { ...state, getData }
 }
