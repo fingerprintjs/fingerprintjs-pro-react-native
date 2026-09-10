@@ -120,14 +120,6 @@ export interface WebStartOptions {
    */
   urlHashing?: UrlHashing
   /**
-   * Enables data collection for remote control detection.
-   * Once enabled, please contact our support team to activate the result exposure.
-   *
-   * @default false
-   * @see https://dev.fingerprint.com/docs/smart-signals-overview#remote-control-tools-detection
-   */
-  remoteControlDetection?: boolean
-  /**
    * Enables caching the result of the `get` call.
    */
   cache?: CacheConfig

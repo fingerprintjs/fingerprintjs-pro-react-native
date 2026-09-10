@@ -20,7 +20,6 @@ class WebFingerprintClient implements FingerprintClient {
       endpoints,
       storageKeyPrefix: web?.storageKeyPrefix,
       urlHashing: web?.urlHashing,
-      remoteControlDetection: web?.remoteControlDetection,
       cache: web?.cache,
       integrationInfo: [`fingerprint-pro-react-native/${packageVersion}/web`],
     })

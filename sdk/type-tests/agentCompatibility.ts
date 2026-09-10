@@ -8,10 +8,7 @@ type Assert<Value extends true> = Value
 type AgentCacheConfig = NonNullable<AgentStartOptions['cache']>
 type AgentUrlHashing = NonNullable<AgentStartOptions['urlHashing']>
 
-type AgentWebStartOptions = Pick<
-  AgentStartOptions,
-  'storageKeyPrefix' | 'urlHashing' | 'remoteControlDetection' | 'cache'
->
+type AgentWebStartOptions = Pick<AgentStartOptions, 'storageKeyPrefix' | 'urlHashing' | 'cache'>
 
 // These lines fail compilation when either contract drifts.
 type CacheConfigMatchesAgent = Assert<Equal<CacheConfig, AgentCacheConfig>>
