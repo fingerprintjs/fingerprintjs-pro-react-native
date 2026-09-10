@@ -4,5 +4,5 @@
     "noEmit": true,
     "isolatedModules": true
   },
-  "include": ["dist", "type-tests", "src"]
+  "include": ["dist"]
 }

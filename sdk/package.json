@@ -17,7 +17,8 @@
     "copy:license": "cp ../LICENSE ./LICENSE",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:dts": "tsc -p tsconfig.check.json",
+    "test:dts": "tsc -p tsconfig.check.json && pnpm test:types:compatibility",
+    "test:types:compatibility": "tsc -p tsconfig.type-tests.json",
     "docs": "typedoc src/index.ts --out ../docs --readme ./README.md --tsconfig ./tsconfig.sdk.json"
   },
   "files": [

@@ -1,11 +1,23 @@
-import * as Fingerprint from '@fingerprint/agent'
-import * as SdkTypes from '../src/types'
+import type { StartOptions as AgentStartOptions } from '@fingerprint/agent'
+import type { CacheConfig, UrlHashing, WebStartOptions } from '../src/types'
 
-const startOptions: SdkTypes.StartOptions = {
-  apiKey: '',
-}
+type Equal<Left, Right> = (<T>() => T extends Left ? 1 : 2) extends <T>() => T extends Right ? 1 : 2 ? true : false
 
-const getOptions: SdkTypes.GetOptions = {}
+type Assert<Value extends true> = Value
 
-// Call agent from @fingerprint/agent to verify type compatibility with SDK
-void Fingerprint.start(startOptions).get(getOptions)
+type AgentCacheConfig = NonNullable<AgentStartOptions['cache']>
+type AgentUrlHashing = NonNullable<AgentStartOptions['urlHashing']>
+
+type AgentWebStartOptions = Pick<
+  AgentStartOptions,
+  'storageKeyPrefix' | 'urlHashing' | 'remoteControlDetection' | 'cache'
+>
+
+// These lines fail compilation when either contract drifts.
+type CacheConfigMatchesAgent = Assert<Equal<CacheConfig, AgentCacheConfig>>
+
+type UrlHashingMatchesAgent = Assert<Equal<UrlHashing, AgentUrlHashing>>
+
+type WebOptionKeysMatchAgent = Assert<Equal<keyof WebStartOptions, keyof AgentWebStartOptions>>
+
+export {}
