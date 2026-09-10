@@ -86,7 +86,15 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   }, [])
 
   const setLoading = useCallback(() => {
-    setState({ data: undefined, isLoading: true, isFetched: false, error: undefined })
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
+    setState((prev) => {
+      // Avoid setting loading state if it's already set.
+      if (prev.isLoading) {
+        return prev
+      }
+
+      return { data: undefined, isLoading: true, isFetched: false, error: undefined }
+    })
   }, [])
 
   const setSuccess = useCallback((data: FingerprintResponse, requestId: number) => {
@@ -140,6 +148,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
 
     const requestId = getRequestId()
 
+    // On mount, the `isLoading` flag is set to true if `immediate` is true, but in cases where `immediate` is flipped from false to true later, we need to set the loading state explicitly.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading()
 
@@ -161,7 +170,7 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
       // Invalidate the request so its response can't overwrite the state of the newer configuration,
       // and stop reporting loading for a response that will now be ignored. When `immediate` is still
       // enabled, the next effect run re-enters loading in the same batch, so this doesn't flicker.
-      // eslint-disable-next-line @eslint-react/exhaustive-deps
+      // eslint-disable-next-line @eslint-react/exhaustive-deps,react-hooks/exhaustive-deps
       requestIdRef.current++
       setState((prevState) => (prevState.isLoading ? { ...prevState, isLoading: false } : prevState))
     }
