@@ -1,6 +1,5 @@
-import type { TurboModule } from 'react-native'
+import type { CodegenTypes, TurboModule } from 'react-native'
 import { TurboModuleRegistry } from 'react-native'
-import type { Double, UnsafeObject } from 'react-native/Libraries/Types/CodegenTypes'
 
 /**
  * Raw visitor data returned by the native module.
@@ -13,7 +12,7 @@ import type { Double, UnsafeObject } from 'react-native/Libraries/Types/CodegenT
 export interface NativeVisitorData {
   visitorId: string
   eventId: string
-  suspectScore: Double
+  suspectScore: CodegenTypes.Double
   sealedResult: string
 }
 
@@ -30,12 +29,16 @@ export interface Spec extends TurboModule {
     pluginVersion: string,
     fallbackEndpointUrls: string[],
     allowUseOfLocationData: boolean,
-    locationTimeoutMillis: Double,
+    locationTimeoutMillis: CodegenTypes.Double,
     region: string | null,
     endpointUrl: string | null
   ): void
 
-  getVisitorData(tag: UnsafeObject | null, linkedId: string | null, timeout: Double | null): Promise<NativeVisitorData>
+  getVisitorData(
+    tag: CodegenTypes.UnsafeObject | null,
+    linkedId: string | null,
+    timeout: CodegenTypes.Double | null
+  ): Promise<NativeVisitorData>
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprintjsPro')
