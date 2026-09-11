@@ -106,7 +106,7 @@ class RNFingerprintModule(reactContext: ReactApplicationContext) : NativeRNFinge
         fpjsClient?.getVisitorId(getTags(tag), linkedId ?: "", callback, errorCallback)
       }
     } catch (e: Exception) {
-      promise.reject("Error: ", e)
+      promise.reject("unknown_error", e)
     }
   }
 
