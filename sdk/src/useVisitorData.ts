@@ -45,6 +45,19 @@ const IDLE_STATE = {
   error: undefined,
 } satisfies QueryResult<FingerprintResponse>
 
+const LOADING_STATE = {
+  data: undefined,
+  isLoading: true,
+  isFetched: false,
+  error: undefined,
+} satisfies QueryResult<FingerprintResponse>
+
+function toFingerprintError(error: unknown) {
+  return isFingerprintError(error)
+    ? error
+    : new FingerprintError({ code: 'unknown_error', message: getErrorMessage(error) })
+}
+
 /**
  * Use the `useVisitorData` hook in your components to perform identification requests with the
  * Fingerprint API.
@@ -65,33 +78,56 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
   const { immediate = false, ...getOptions } = options
 
   const { getVisitorData } = useContext(FingerprintContext)
-  const [state, setState] = useState<QueryResult<FingerprintResponse>>(() => ({
-    ...IDLE_STATE,
-    isLoading: immediate,
-  }))
+  const [state, setState] = useState<QueryResult<FingerprintResponse>>(() => (immediate ? LOADING_STATE : IDLE_STATE))
 
   // Sequence counter to guard against out-of-order responses: when several requests are in flight,
   // only the most recently initiated one is allowed to commit its result to the query state.
   const requestIdRef = useRef(0)
+  // Whether the automatic request, rather than a later manual `getData` call, owns the query state.
+  // Refs can't be read during render, so this has to be state.
+  const [automaticOwnsState, setAutomaticOwnsState] = useState(immediate)
 
-  // Keep a stable reference to the request options so the `immediate` effect only re-runs when they
-  // change by value, not on every render.
-  const [stableGetOptions, setStableGetOptions] = useState(getOptions)
-  if (!deepEqual(stableGetOptions, getOptions)) {
-    setStableGetOptions(getOptions)
+  // Mirror the automatic-fetch inputs in state so the effect below only re-runs when they change by
+  // value, and so the loading transition happens during render rather than inside the effect:
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  const [currentImmediate, setCurrentImmediate] = useState(immediate)
+  const [currentGetOptions, setCurrentGetOptions] = useState(getOptions)
+
+  const didImmediateChange = currentImmediate !== immediate
+  const didGetOptionsChange = !deepEqual(currentGetOptions, getOptions)
+
+  if (didImmediateChange) {
+    setCurrentImmediate(immediate)
+  }
+
+  if (didGetOptionsChange) {
+    setCurrentGetOptions(getOptions)
+  }
+
+  if (immediate && (didImmediateChange || didGetOptionsChange)) {
+    // The effect is about to start a request for the new inputs, so enter loading now instead of
+    // exposing the previous options' data for a render.
+    setState(LOADING_STATE)
+    setAutomaticOwnsState(true)
+  } else if (didImmediateChange && automaticOwnsState) {
+    // Automatic fetching was disabled and the automatic request still owns the state; its response
+    // will now be ignored, so stop reporting loading. A later manual `getData` call keeps its own
+    // loading state.
+    setState((prevState) => (prevState.isLoading ? IDLE_STATE : prevState))
   }
 
   const getData = useCallback<UseVisitorDataReturn['getData']>(
     async (requestOptions?: GetOptions) => {
       const requestId = ++requestIdRef.current
+      setAutomaticOwnsState(false)
 
-      setState((prev) =>
+      setState((prevState) =>
         // Avoid setting loading state if it's already set.
-        prev.isLoading ? prev : { data: undefined, isLoading: true, isFetched: false, error: undefined }
+        prevState.isLoading ? prevState : LOADING_STATE
       )
 
       try {
-        const data = await getVisitorData({ ...stableGetOptions, ...requestOptions })
+        const data = await getVisitorData({ ...currentGetOptions, ...requestOptions })
 
         // Ignore results from superseded requests so the latest one always wins.
         if (requestId === requestIdRef.current) {
@@ -101,54 +137,48 @@ export function useVisitorData(options: UseVisitorDataOptions = {}): UseVisitorD
         return data
       } catch (error) {
         if (requestId === requestIdRef.current) {
-          setState({
-            data: undefined,
-            isLoading: false,
-            isFetched: false,
-            error: isFingerprintError(error)
-              ? error
-              : new FingerprintError({
-                  code: 'unknown_error',
-                  message: getErrorMessage(error),
-                }),
-          })
+          setState({ ...IDLE_STATE, error: toFingerprintError(error) })
         }
 
         throw error
       }
     },
-    [stableGetOptions, getVisitorData]
+    [currentGetOptions, getVisitorData]
   )
 
+  // `getData` isn't reused here because it sets the loading state synchronously, which isn't allowed
+  // inside an effect. The loading state is covered by the initial state and the render-phase reset above.
   useEffect(() => {
-    if (!immediate) {
+    if (!currentImmediate) {
       return
     }
 
-    // On mount, the `isLoading` flag is set to true if `immediate` is true, but in cases where `immediate` is flipped from false to true later, `getData` sets the loading state explicitly.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    getData().catch(() => {
-      // The rejection is already stored in the query state by `getData`.
-    })
+    const requestId = ++requestIdRef.current
 
-    // `getData` bumps the counter synchronously before its first `await`, so this is its request id.
-    const requestId = requestIdRef.current
+    getVisitorData(currentGetOptions).then(
+      (data) => {
+        // Ignore results from superseded requests so the latest one always wins.
+        if (requestId === requestIdRef.current) {
+          setState({ data, isLoading: false, isFetched: true, error: undefined })
+        }
+      },
+      (error: unknown) => {
+        if (requestId === requestIdRef.current) {
+          setState({ ...IDLE_STATE, error: toFingerprintError(error) })
+        }
+      }
+    )
 
     return () => {
       // A later manual `getData` call owns the query state now and must keep it, so only abandon the
-      // automatic request while it is still the most recent one.
-      if (requestIdRef.current !== requestId) {
-        return
+      // automatic request while it is still the most recent one. Invalidating it stops its response
+      // from overwriting the state of the newer configuration.
+      if (requestIdRef.current === requestId) {
+        // eslint-disable-next-line @eslint-react/exhaustive-deps,react-hooks/exhaustive-deps
+        requestIdRef.current++
       }
-
-      // Invalidate the request so its response can't overwrite the state of the newer configuration,
-      // and stop reporting loading for a response that will now be ignored. When `immediate` is still
-      // enabled, the next effect run re-enters loading in the same batch, so this doesn't flicker.
-      // eslint-disable-next-line @eslint-react/exhaustive-deps,react-hooks/exhaustive-deps
-      requestIdRef.current++
-      setState((prevState) => (prevState.isLoading ? IDLE_STATE : prevState))
     }
-  }, [immediate, getData])
+  }, [currentImmediate, currentGetOptions, getVisitorData])
 
   return { ...state, getData }
 }

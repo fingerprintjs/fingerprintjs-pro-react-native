@@ -5,7 +5,7 @@ export class FingerprintContextNotAvailableError extends Error {
 }
 
 /**
- * The known values of {@link FingerprintError.code}, shared across web, iOS, and Android.
+ * The known values of {@link FingerprintError.code}, emmited by one or multiple platforms (web, iOS, and Android).
  *
  * The list is not exhaustive: a newer native SDK or the web agent may emit a code not yet included
  * here, so {@link FingerprintError.code} accepts any string. This union exists to give editor

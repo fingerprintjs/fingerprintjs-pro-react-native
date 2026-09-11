@@ -217,6 +217,9 @@ describe('useVisitorData', () => {
 
     rerender({ linkedId: 'second' })
 
+    // The render with the new options must not expose the previous options' data.
+    expect(result.current).toMatchObject({ isLoading: true, isFetched: false, data: undefined })
+
     await waitFor(() => {
       expect(getVisitorData).toHaveBeenLastCalledWith(null, 'second', null)
     })

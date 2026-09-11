@@ -28,7 +28,7 @@ class WebFingerprintClient implements FingerprintClient {
   public async get(options?: GetOptions): Promise<FingerprintResponse> {
     try {
       const result = await this.agent.get({
-        tag: options?.tags,
+        tags: options?.tags,
         linkedId: options?.linkedId,
         timeout: options?.timeout,
       })
