@@ -1,6 +1,6 @@
 //
-//  RNFingerprintjsPro.swift
-//  RNFingerprintjsPro
+//  RNFingerprint.swift
+//  RNFingerprint
 //
 import Fingerprint
 import Foundation
@@ -14,8 +14,8 @@ import Foundation
 import React
 #endif
 
-@objc(RNFingerprintjsPro)
-public class RNFingerprintjsPro: NSObject {
+@objc(RNFingerprint)
+public class RNFingerprint: NSObject {
     private var fpjsClient: FingerprintClientProviding?
 
     @objc
@@ -23,7 +23,7 @@ public class RNFingerprintjsPro: NSObject {
 
     @objc(configure:pluginVersion:fallbackEndpointUrls:allowUseOfLocationData:locationTimeoutMillis:region:endpointUrl:)
     public func configure(_ apiToken: String, _ pluginVersion: String, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
-        let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
+        let region = RNFingerprint.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
         let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, allowUseOfLocationData: allowUseOfLocationData)
         fpjsClient = FingerprintFactory.getInstance(configuration)
@@ -31,7 +31,7 @@ public class RNFingerprintjsPro: NSObject {
 
     @objc(getVisitorData:linkedId:timeout:resolve:reject:)
     public func getVisitorData(tag: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tag)
+        let metadata = RNFingerprint.prepareMetadata(linkedId, tags: tag)
 
         let completionHandler: Fingerprint.VisitorIdResponseBlock = { visitorIdResponseResult in
             switch visitorIdResponseResult {

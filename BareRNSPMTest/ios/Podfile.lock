@@ -1674,7 +1674,7 @@ PODS:
     - React-utils (= 0.87.1)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.87.1)
-  - RNFingerprintjsPro (1.0.4):
+  - RNFingerprint (1.0.4):
     - Fingerprint-iOS (~> 4.0)
     - hermes-engine
     - RCTRequired
@@ -1788,7 +1788,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
-  - "RNFingerprintjsPro (from `../node_modules/@fingerprint/react-native`)"
+  - "RNFingerprint (from `../node_modules/@fingerprint/react-native`)"
   - SocketRocket (from `build/rndeps-facades/SocketRocket`)
   - Yoga (from `build/rncore-facades/Yoga`)
 
@@ -1966,7 +1966,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeDependencies:
     :podspec: "../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
-  RNFingerprintjsPro:
+  RNFingerprint:
     :path: "../node_modules/@fingerprint/react-native"
   SocketRocket:
     :path: build/rndeps-facades/SocketRocket
@@ -2059,7 +2059,7 @@ SPEC CHECKSUMS:
   ReactCodegen: c5a9b8634e580167b9ca4a175749a30d27dbcf0e
   ReactCommon: 749169e12aa3461a3df3656a00e48dbe0456b2d6
   ReactNativeDependencies: 94c922c39e0e6150ee9ad05e2ca1946e0ef55783
-  RNFingerprintjsPro: fff5c717067a9ff7fea035f253f384e1683b8ec2
+  RNFingerprint: fff5c717067a9ff7fea035f253f384e1683b8ec2
   SocketRocket: 37aec555668fb852ec12e3c0de59a86ca58f0871
   Yoga: d1c536142c5ff8ec8cd856ab2a7c227a1d875c8e
 

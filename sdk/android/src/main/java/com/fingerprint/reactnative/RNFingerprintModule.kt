@@ -1,4 +1,4 @@
-package com.fingerprintjs.reactnative
+package com.fingerprint.reactnative
 
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
@@ -40,8 +40,8 @@ import com.fingerprint.android.ProxyIntegrationSecretEnvironmentMismatch
 import java.lang.Exception
 
 
-@ReactModule(name = RNFingerprintjsProModule.NAME)
-class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRNFingerprintjsProSpec(reactContext) {
+@ReactModule(name = RNFingerprintModule.NAME)
+class RNFingerprintModule(reactContext: ReactApplicationContext) : NativeRNFingerprintSpec(reactContext) {
   private var fpjsClient: Fingerprint? = null
 
   override fun getName(): String {
@@ -164,7 +164,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
   }
 
   companion object {
-    const val NAME = "RNFingerprintjsPro"
+    const val NAME = "RNFingerprint"
 
     // The Android SDK's `Error.eventId` sentinel for "no event id available" (see the SDK's
     // `Error` sealed class default).

@@ -2,10 +2,10 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { NativeModules } from 'react-native'
 import { TagsPrimitive, useVisitorData } from '../src'
 import { createWrapper } from './helpers'
-import { NativeVisitorData } from '../src/specs/NativeRNFingerprintjsPro'
+import { NativeVisitorData } from '../src/specs/NativeRNFingerprint'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const { getVisitorData } = NativeModules.RNFingerprintjsPro as unknown as Record<string, jest.Mock>
+const { getVisitorData } = NativeModules.RNFingerprint as unknown as Record<string, jest.Mock>
 
 const nativeResponse = {
   visitorId: 'some-visitor-id',

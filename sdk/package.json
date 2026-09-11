@@ -26,7 +26,7 @@
     "src/specs",
     "android",
     "ios",
-    "RNFingerprintjsPro.podspec",
+    "RNFingerprint.podspec",
     "Package.swift",
     "react-native.config.js",
     "plugin/dist",
@@ -36,11 +36,11 @@
     "CHANGELOG.md"
   ],
   "codegenConfig": {
-    "name": "RNFingerprintjsProSpec",
+    "name": "RNFingerprintSpec",
     "type": "modules",
     "jsSrcsDir": "src/specs",
     "android": {
-      "javaPackageName": "com.fingerprintjs.reactnative"
+      "javaPackageName": "com.fingerprint.reactnative"
     }
   },
   "keywords": [
