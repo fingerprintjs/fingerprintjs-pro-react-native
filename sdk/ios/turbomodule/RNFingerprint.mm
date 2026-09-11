@@ -1,6 +1,6 @@
 #import <React/RCTBridgeModule.h>
 
-@interface RCT_EXTERN_MODULE(RNFingerprintjsPro, NSObject)
+@interface RCT_EXTERN_MODULE(RNFingerprint, NSObject)
 
 RCT_EXTERN_METHOD(configure:(NSString *)apiToken
   pluginVersion:(NSString *)pluginVersion
@@ -22,18 +22,18 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
 
 // Expose the Swift class as a real TurboModule backed by the Codegen-generated spec. The Swift
 // implementation already exposes the exact selectors the generated
-// `NativeRNFingerprintjsProSpecJSI` invokes.
-#import <RNFingerprintjsProSpec/RNFingerprintjsProSpec.h>
+// `NativeRNFingerprintSpecJSI` invokes.
+#import <RNFingerprintSpec/RNFingerprintSpec.h>
 
-@interface RNFingerprintjsPro (TurboModule) <NativeRNFingerprintjsProSpec>
+@interface RNFingerprint (TurboModule) <NativeRNFingerprintSpec>
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params;
 @end
 
-@implementation RNFingerprintjsPro (TurboModule)
+@implementation RNFingerprint (TurboModule)
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-  return std::make_shared<facebook::react::NativeRNFingerprintjsProSpecJSI>(params);
+  return std::make_shared<facebook::react::NativeRNFingerprintSpecJSI>(params);
 }
 @end

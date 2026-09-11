@@ -1,6 +1,6 @@
 //
-//  FPJSError+React.swift
-//  RNFingerprintjsPro
+//  FPError+React.swift
+//  RNFingerprint
 //
 //  Created by Petr Palata on 14.09.2022.
 //

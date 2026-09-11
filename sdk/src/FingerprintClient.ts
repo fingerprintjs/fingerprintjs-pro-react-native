@@ -1,5 +1,5 @@
 import { Platform, type CodegenTypes } from 'react-native'
-import RNFingerprintjsPro, { type NativeVisitorData } from './specs/NativeRNFingerprintjsPro'
+import RNFingerprint, { type NativeVisitorData } from './specs/NativeRNFingerprint'
 import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions, TagsValue } from './types'
 import { unwrapError } from './unwrapError'
 import { isDefined, isTruthy } from './utils'
@@ -53,7 +53,7 @@ class NativeFingerprintClient implements FingerprintClient {
       (Platform.OS === 'ios' ? ios?.allowUseOfLocationData : android?.allowUseOfLocationData) ?? false
     const locationTimeoutMillis = android?.locationTimeoutMillis ?? DEFAULT_LOCATION_TIMEOUT_MILLIS
 
-    RNFingerprintjsPro.configure(
+    RNFingerprint.configure(
       apiKey,
       packageVersion,
       fallbacks,
@@ -66,7 +66,7 @@ class NativeFingerprintClient implements FingerprintClient {
 
   public async get(options?: GetOptions): Promise<FingerprintResponse> {
     try {
-      const data = await RNFingerprintjsPro.getVisitorData(
+      const data = await RNFingerprint.getVisitorData(
         toNativeTag(options?.tags),
         options?.linkedId ?? null,
         options?.timeout ?? null

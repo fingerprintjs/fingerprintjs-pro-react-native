@@ -17,7 +17,7 @@ export interface NativeVisitorData {
 }
 
 /**
- * Codegen TurboModule spec for the `RNFingerprintjsPro` native module.
+ * Codegen TurboModule spec for the `RNFingerprint` native module.
  *
  * Optional string/object/number arguments are modelled as nullable (`| null`); Codegen relies on
  * positional arguments and native treats `null` as "not provided". Genuinely optional parameters
@@ -41,4 +41,4 @@ export interface Spec extends TurboModule {
   ): Promise<NativeVisitorData>
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprintjsPro')
+export default TurboModuleRegistry.getEnforcing<Spec>('RNFingerprint')

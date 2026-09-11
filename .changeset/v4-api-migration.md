@@ -1,5 +1,5 @@
 ---
-'@fingerprintjs/fingerprintjs-pro-react-native': major
+'@fingerprint/react-native': major
 ---
 
 Migrated the SDK to Fingerprint API v4 and realigned the public API with `@fingerprint/react`. This is a breaking change on every platform (web, iOS, Android).
@@ -46,8 +46,8 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Provider**
 
 ```diff
-- import { FingerprintJsProProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
-+ import { FingerprintProvider } from '@fingerprintjs/fingerprintjs-pro-react-native'
+- import { FingerprintJsProProvider } from '@fingerprint/react-native'
++ import { FingerprintProvider } from '@fingerprint/react-native'
 
 - <FingerprintJsProProvider apiKey="PUBLIC_API_KEY" region="eu">
 + <FingerprintProvider apiKey="PUBLIC_API_KEY" region="eu">
@@ -75,8 +75,8 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Imperative client**
 
 ```diff
-- import { FingerprintJsProAgent } from '@fingerprintjs/fingerprintjs-pro-react-native'
-+ import { start } from '@fingerprintjs/fingerprintjs-pro-react-native'
+- import { FingerprintJsProAgent } from '@fingerprint/react-native'
++ import { start } from '@fingerprint/react-native'
 
 - const client = new FingerprintJsProAgent({ apiKey: 'PUBLIC_API_KEY', region: 'eu' })
 - const visitorId = await client.getVisitorId()
@@ -106,8 +106,8 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Errors**
 
 ```diff
-- import { TooManyRequestError } from '@fingerprintjs/fingerprintjs-pro-react-native'
-+ import { isFingerprintError } from '@fingerprintjs/fingerprintjs-pro-react-native'
+- import { TooManyRequestError } from '@fingerprint/react-native'
++ import { isFingerprintError } from '@fingerprint/react-native'
 
   try {
     await fp.get()
