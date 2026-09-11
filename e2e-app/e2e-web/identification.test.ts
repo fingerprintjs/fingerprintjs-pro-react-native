@@ -1,10 +1,5 @@
 import { test, expect, Page } from '@playwright/test'
-import {
-  DecryptionAlgorithm,
-  FingerprintJsServerApiClient,
-  Region,
-  unsealEventsResponse,
-} from '@fingerprintjs/fingerprintjs-pro-server-api'
+import { DecryptionAlgorithm, FingerprintServerApiClient, Region, unsealEventsResponse } from '@fingerprint/node-sdk'
 import { testTags } from '../e2e/tags'
 import { testIds } from '../e2e/ids'
 import { Config } from '../src/config.types'
@@ -59,16 +54,12 @@ async function identifyWithError(page: Page) {
   // Wait for the error to be displayed
   await page.getByTestId(testIds.errorName).waitFor({ timeout: 10000 })
 
-  // Get the error name and message
+  // Get the error name, code and message
   const errorName = await page.getByTestId(testIds.errorName).textContent()
+  const errorCode = await page.getByTestId(testIds.errorCode).textContent()
   const errorMessage = await page.getByTestId(testIds.errorMessage).textContent()
 
-  const error = new Error(errorMessage ?? '')
-  if (errorName) {
-    error.name = errorName
-  }
-
-  return error
+  return { name: errorName ?? '', code: errorCode ?? '', message: errorMessage ?? '' }
 }
 
 test.describe('Web tests', () => {
@@ -81,19 +72,19 @@ test.describe('Web tests', () => {
   // Using for...of loop instead of test.describe.each
   for (const [region, apiKey, privateApiKey] of basicIdentificationTestData) {
     test.describe(`Web Identification on ${region} Region`, () => {
-      let client: FingerprintJsServerApiClient
+      let client: FingerprintServerApiClient
 
       test.beforeEach(async ({ page }) => {
         if (!apiKey || !privateApiKey) {
           throw new Error('API keys are required to run this test')
         }
 
-        let serverRegion = Region.Global
+        let serverRegion: Region = Region.Global
         if (region === 'eu') {
           serverRegion = Region.EU
         }
 
-        client = new FingerprintJsServerApiClient({
+        client = new FingerprintServerApiClient({
           apiKey: privateApiKey,
           region: serverRegion,
         })
@@ -106,11 +97,11 @@ test.describe('Web tests', () => {
 
       test('should return visitor data', async ({ page }) => {
         const identificationResult = await identify(page)
-        expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+        expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-        const event = await client.getEvent(identificationResult.requestId)
-        expect(event.products.identification?.data?.visitorId).toEqual(identificationResult.visitorId)
-        expect(event.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+        const event = await client.getEvent(identificationResult.event_id)
+        expect(event.identification?.visitor_id).toEqual(identificationResult.visitor_id)
+        expect(event.event_id).toEqual(identificationResult.event_id)
       })
     })
   }
@@ -124,7 +115,7 @@ test.describe('Web tests', () => {
   // Using for...of loop instead of test.describe.each
   for (const [region, apiKey, privateApiKey] of linkedIdTagsTestData) {
     test.describe(`Web Identification on ${region} Region with linkedId and tags`, () => {
-      let client: FingerprintJsServerApiClient
+      let client: FingerprintServerApiClient
       const linkedId = `${Date.now()}-web-test`
 
       test.beforeEach(async ({ page }) => {
@@ -132,12 +123,12 @@ test.describe('Web tests', () => {
           throw new Error('API keys are required to run this test')
         }
 
-        let serverRegion = Region.Global
+        let serverRegion: Region = Region.Global
         if (region === 'eu') {
           serverRegion = Region.EU
         }
 
-        client = new FingerprintJsServerApiClient({
+        client = new FingerprintServerApiClient({
           apiKey: privateApiKey,
           region: serverRegion,
         })
@@ -152,11 +143,11 @@ test.describe('Web tests', () => {
 
       test('should return visitor data with linkedId and tag', async ({ page }) => {
         const identificationResult = await identify(page)
-        expect(identificationResult.visitorId).toMatch(VISITOR_ID_REGEX)
+        expect(identificationResult.visitor_id).toMatch(VISITOR_ID_REGEX)
 
-        const event = await client.getEvent(identificationResult.requestId)
-        expect(event.products.identification?.data?.linkedId).toEqual(linkedId)
-        expect(event.products.identification?.data?.tag).toEqual(testTags)
+        const event = await client.getEvent(identificationResult.event_id)
+        expect(event.linked_id).toEqual(linkedId)
+        expect(event.tags).toEqual(testTags)
       })
     })
   }
@@ -164,15 +155,15 @@ test.describe('Web tests', () => {
   test.describe('Web Identification invalid API Key', () => {
     test.beforeEach(async ({ page }) => {
       await setupPage(page, {
-        apiKey: 'invalid',
+        apiKey: '6A0uywtMN49q6yddZNwV',
         region: 'us',
       })
     })
 
     test('should return error', async ({ page }) => {
       const error = await identifyWithError(page)
-      expect(error.message).toEqual('API key not found')
-      expect(error.name).toEqual('ApiKeyNotFoundError')
+      expect(error.name).toEqual('FingerprintError')
+      expect(error.code).toEqual('public_api_key_not_found')
     })
   })
 
@@ -193,10 +184,10 @@ test.describe('Web tests', () => {
 
     test('should return sealed visitor data', async ({ page }) => {
       const identificationResult = await identify(page)
-      expect(identificationResult.requestId).toBeTruthy()
-      expect(identificationResult.sealedResult).toBeTruthy()
+      expect(identificationResult.event_id).toBeTruthy()
+      expect(identificationResult.sealed_result).toBeTruthy()
 
-      const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealedResult, 'base64'), [
+      const unsealedData = await unsealEventsResponse(Buffer.from(identificationResult.sealed_result, 'base64'), [
         {
           key: Buffer.from(encryptionKey ?? '', 'base64'),
           algorithm: DecryptionAlgorithm.Aes256Gcm,
@@ -204,7 +195,7 @@ test.describe('Web tests', () => {
       ])
 
       expect(unsealedData).toBeTruthy()
-      expect(unsealedData.products.identification?.data?.requestId).toEqual(identificationResult.requestId)
+      expect(unsealedData.event_id).toEqual(identificationResult.event_id)
     })
   })
 })

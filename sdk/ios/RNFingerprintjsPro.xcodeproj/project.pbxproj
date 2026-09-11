@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		10F8301B27A9CBEC00149386 /* RNFingerprintjsPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */; };
+		7791DF533046F87B00BEC6A6 /* Fingerprint in Frameworks */ = {isa = PBXBuildFile; productRef = 7791DF523046F87B00BEC6A6 /* Fingerprint */; };
+		7791DF553046F9D900BEC6A6 /* FPJSError+React.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */; };
 		B3E7B58A1CC2AC0600A0062D /* RNFingerprintjsPro.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,7 @@
 		10F8301927A9CBEC00149386 /* RNFingerprintjsPro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNFingerprintjsPro-Bridging-Header.h"; sourceTree = "<group>"; };
 		10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFingerprintjsPro.swift; sourceTree = "<group>"; };
 		134814201AA4EA6300B7C361 /* libRNFingerprintjsPro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFingerprintjsPro.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FPJSError+React.swift"; sourceTree = "<group>"; };
 		7DC52BF728242E1900F78B99 /* RNFingerprintjsPro.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RNFingerprintjsPro.podspec; path = ../RNFingerprintjsPro.podspec; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNFingerprintjsPro.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -36,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7791DF533046F87B00BEC6A6 /* Fingerprint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +59,7 @@
 			children = (
 				7DC52BF728242E1900F78B99 /* RNFingerprintjsPro.podspec */,
 				B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */,
+				7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */,
 				10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				10F8301927A9CBEC00149386 /* RNFingerprintjsPro-Bridging-Header.h */,
@@ -105,6 +110,9 @@
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
+			packageReferences = (
+				7791DF513046F87B00BEC6A6 /* XCRemoteSwiftPackageReference "fingerprint-ios" */,
+			);
 			productRefGroup = 58B511D21A9E6C8500147676;
 			projectDirPath = "";
 			projectRoot = "";
@@ -119,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7791DF553046F9D900BEC6A6 /* FPJSError+React.swift in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* RNFingerprintjsPro.mm in Sources */,
 				10F8301B27A9CBEC00149386 /* RNFingerprintjsPro.swift in Sources */,
 			);
@@ -218,7 +227,11 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNFingerprintjsPro;
@@ -239,7 +252,11 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNFingerprintjsPro;
@@ -271,6 +288,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7791DF513046F87B00BEC6A6 /* XCRemoteSwiftPackageReference "fingerprint-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fingerprintjs/fingerprint-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7791DF523046F87B00BEC6A6 /* Fingerprint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7791DF513046F87B00BEC6A6 /* XCRemoteSwiftPackageReference "fingerprint-ios" */;
+			productName = Fingerprint;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 58B511D31A9E6C8500147676 /* Project object */;
 }
