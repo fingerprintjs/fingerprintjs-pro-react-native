@@ -68,6 +68,9 @@ jobs:
         run: pnpm exec expo install --fix
         working-directory: e2e-app
 
+      # `expo install --fix` aligns every bundled package to the Expo SDK, including coercing
+      # react-native to the SDK's bundled version. Re-pin it to the version under test so the
+      # matrix actually exercises that RN version rather than the SDK's default.
       - name: Pin react-native to the tested version
         if: matrix.react-native != 'local'
         run: pnpm add react-native@${{ matrix.react-native }}
