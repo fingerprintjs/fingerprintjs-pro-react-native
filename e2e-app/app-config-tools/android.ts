@@ -14,12 +14,6 @@ const androidBuildProperties: AndroidBuildProperties = {
   enableBundleCompression: false,
 }
 
-export function withAndroidBuildProperties(props: Partial<AndroidBuildProperties>) {
-  return () => {
-    Object.assign(androidBuildProperties, props)
-  }
-}
-
 export function getAndroidBuildProperties() {
   return { ...androidBuildProperties }
 }
