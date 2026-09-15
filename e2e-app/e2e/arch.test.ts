@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it, jest } from '@jest/globals'
 import { DeviceLaunchAppConfig } from 'detox/detox'
 import { wait } from './wait'
 import { Config } from '@/src/config.types'
-import { testIds } from '@/e2e/ids'
+import { testIds } from './ids'
 import { getElementText } from './getElementText'
 
 async function launchApp(params?: DeviceLaunchAppConfig) {
