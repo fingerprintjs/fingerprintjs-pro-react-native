@@ -39,7 +39,10 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
     ```
 
 **iOS**:
-- Dropped support for **iOS 13**.
+- The new version floor for iOS is **15.1**.
+
+**Android**:
+- The new version floor for Android is **Android 7.0 (API level 24+)**. 
 
 ## Migration
 
