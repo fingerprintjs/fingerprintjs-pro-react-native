@@ -22,7 +22,7 @@ describe('React Native architecture', () => {
     await launchApp({
       newInstance: true,
       launchArgs: {
-        apiKey: '',
+        apiKey: process.env.MINIMUM_US_DEFAULT_PUBLIC_KEY,
         region: 'us',
       } as Config,
     })
