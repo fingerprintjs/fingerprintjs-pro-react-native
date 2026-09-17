@@ -27,6 +27,7 @@ Migrated the SDK to Fingerprint API v4 and realigned the public API with `@finge
 **Single error type**
 
 - The ~28 error classes are replaced by a single `FingerprintError` (`{ name, code, event_id }`) plus an `isFingerprintError` type guard. Discriminate on `error.code` (e.g. `too_many_requests`).
+- Every network failure reports `code: 'network_error'` on all platforms. The platform-specific `network_unavailable` (Android), `network_connection` and `network_abort` (web) codes are not emitted.
 
 **Web**
 

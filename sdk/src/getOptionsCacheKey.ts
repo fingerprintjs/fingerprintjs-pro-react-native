@@ -58,7 +58,3 @@ export function getOptionsCacheKey(options?: UseVisitorDataOptions): string {
     serializeCacheValue(options.timeout),
   ])
 }
-
-export function areGetOptionsEqual(a: UseVisitorDataOptions, b: UseVisitorDataOptions): boolean {
-  return getOptionsCacheKey(a) === getOptionsCacheKey(b)
-}

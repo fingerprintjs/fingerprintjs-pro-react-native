@@ -38,18 +38,16 @@ export type ErrorCode =
   | 'invalid_proxy_integration_headers'
   | 'proxy_integration_secret_environment_mismatch'
   | 'sandboxed_iframe'
+  // Client-side errors — every platform reports network failures as `network_error`
+  | 'network_error'
   // Client-side errors — native (iOS / Android)
   | 'invalid_url'
   | 'invalid_url_params'
-  | 'network_error'
-  | 'network_unavailable'
   | 'json_parsing_error'
   | 'invalid_response_type'
   | 'client_timeout'
   | 'unknown_error'
   // Client-side errors — web (`@fingerprint/agent`)
-  | 'network_connection'
-  | 'network_abort'
   | 'csp_block'
   | 'invalid_endpoint'
   | 'handle_agent_data'

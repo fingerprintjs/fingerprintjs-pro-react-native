@@ -144,8 +144,9 @@ class RNFingerprintModule(reactContext: ReactApplicationContext) : NativeRNFinge
       is InstallationMethodRestricted -> "installation_method_restricted"
       is EnvironmentRestricted -> "environment_restricted"
       is ResponseCannotBeParsed -> "response_cannot_be_parsed"
+      // Both network failures collapse into one code, matching iOS and the web agent.
       is NetworkError -> "network_error"
-      is NetworkUnavailableError -> "network_unavailable"
+      is NetworkUnavailableError -> "network_error"
       is ClientTimeout -> "client_timeout"
       is VisitorNotFound -> "visitor_not_found"
       is RequestNotFound -> "request_not_found"
