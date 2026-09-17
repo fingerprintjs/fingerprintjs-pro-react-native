@@ -7,6 +7,7 @@ cd "$(dirname "$0")/.."
 version=$(node -p "require('./package.json').version")
 podspec=RNFingerprintjsPro.podspec
 
-sed -i '' -E "s/^([[:space:]]*s\.version[[:space:]]*=[[:space:]]*).*/\1\"$version\"/" "$podspec"
+sed -E "s/^([[:space:]]*s\.version[[:space:]]*=[[:space:]]*).*/\1\"$version\"/" "$podspec" > "$podspec.tmp"
+mv "$podspec.tmp" "$podspec"
 
 grep -E '^\s*s\.version' "$podspec"

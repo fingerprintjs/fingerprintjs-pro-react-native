@@ -69,6 +69,12 @@ describe('unwrapError (web)', () => {
     expect(error.event_id).toBe('evt_123')
   })
 
+  it.each(['network_connection', 'network_abort'])('collapses the agent %s code into network_error', (code) => {
+    const error = unwrapWebError(makeAgentError(code, 'Network failed'))
+    expect(error.code).toBe('network_error')
+    expect(error.message).toBe('Network failed')
+  })
+
   it('preserves a null event_id from the agent error', () => {
     const error = unwrapWebError(makeAgentError('failed', 'boom'))
     expect(error.code).toBe('failed')
