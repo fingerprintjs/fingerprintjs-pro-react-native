@@ -14,7 +14,7 @@ export function unwrapError(error: unknown): FingerprintError {
   }
 
   if (isFingerprintError(error)) {
-    return new FingerprintError({ code: error.code, message: error.message, event_id: error.event_id })
+    return new FingerprintError({ code: normalizeCode(error.code), message: error.message, event_id: error.event_id })
   }
 
   if (error instanceof Error) {
@@ -22,4 +22,13 @@ export function unwrapError(error: unknown): FingerprintError {
   }
 
   return new FingerprintError({ code: 'unknown_error', message: String(error) })
+}
+
+/**
+ * The agent splits network failures into `network_connection` and `network_abort`; the native
+ * clients report a single `network_error`. Collapse both into `network_error` so the code is the
+ * same on every platform.
+ */
+function normalizeCode(code: string) {
+  return code === 'network_connection' || code === 'network_abort' ? 'network_error' : code
 }
