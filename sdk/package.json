@@ -1,5 +1,5 @@
 {
-  "name": "@fingerprintjs/fingerprintjs-pro-react-native",
+  "name": "@fingerprint/react-native",
   "version": "3.17.1",
   "description": "Official React Native client for Fingerprint. Best identification solution for React Native.",
   "main": "./dist/index.js",
@@ -26,7 +26,7 @@
     "src/specs",
     "android",
     "ios",
-    "RNFingerprintjsPro.podspec",
+    "RNFingerprint.podspec",
     "Package.swift",
     "react-native.config.js",
     "plugin/dist",
@@ -36,11 +36,11 @@
     "CHANGELOG.md"
   ],
   "codegenConfig": {
-    "name": "RNFingerprintjsProSpec",
+    "name": "RNFingerprintSpec",
     "type": "modules",
     "jsSrcsDir": "src/specs",
     "android": {
-      "javaPackageName": "com.fingerprintjs.reactnative"
+      "javaPackageName": "com.fingerprint.reactnative"
     }
   },
   "keywords": [
@@ -57,7 +57,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git"
+    "url": "git+https://github.com/fingerprintjs/react-native.git"
   },
   "author": "FingerprintJS, Inc (https://fingerprint.com)",
   "license": "MIT",

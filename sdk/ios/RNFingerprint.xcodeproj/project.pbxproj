@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10F8301B27A9CBEC00149386 /* RNFingerprintjsPro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */; };
+		10F8301B27A9CBEC00149386 /* RNFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F8301A27A9CBEC00149386 /* RNFingerprint.swift */; };
 		7791DF533046F87B00BEC6A6 /* Fingerprint in Frameworks */ = {isa = PBXBuildFile; productRef = 7791DF523046F87B00BEC6A6 /* Fingerprint */; };
-		7791DF553046F9D900BEC6A6 /* FPJSError+React.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */; };
-		B3E7B58A1CC2AC0600A0062D /* RNFingerprintjsPro.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */; };
+		7791DF553046F9D900BEC6A6 /* FPError+React.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7791DF543046F9D900BEC6A6 /* FPError+React.swift */; };
+		B3E7B58A1CC2AC0600A0062D /* RNFingerprint.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNFingerprint.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,12 +26,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10F8301927A9CBEC00149386 /* RNFingerprintjsPro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNFingerprintjsPro-Bridging-Header.h"; sourceTree = "<group>"; };
-		10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFingerprintjsPro.swift; sourceTree = "<group>"; };
-		134814201AA4EA6300B7C361 /* libRNFingerprintjsPro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFingerprintjsPro.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FPJSError+React.swift"; sourceTree = "<group>"; };
-		7DC52BF728242E1900F78B99 /* RNFingerprintjsPro.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RNFingerprintjsPro.podspec; path = ../RNFingerprintjsPro.podspec; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNFingerprintjsPro.mm; sourceTree = "<group>"; };
+		10F8301927A9CBEC00149386 /* RNFingerprint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNFingerprint-Bridging-Header.h"; sourceTree = "<group>"; };
+		10F8301A27A9CBEC00149386 /* RNFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNFingerprint.swift; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libRNFingerprint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNFingerprint.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7791DF543046F9D900BEC6A6 /* FPError+React.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FPError+React.swift"; sourceTree = "<group>"; };
+		7DC52BF728242E1900F78B99 /* RNFingerprint.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RNFingerprint.podspec; path = ../RNFingerprint.podspec; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* RNFingerprint.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNFingerprint.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libRNFingerprintjsPro.a */,
+				134814201AA4EA6300B7C361 /* libRNFingerprint.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,21 +57,21 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				7DC52BF728242E1900F78B99 /* RNFingerprintjsPro.podspec */,
-				B3E7B5891CC2AC0600A0062D /* RNFingerprintjsPro.mm */,
-				7791DF543046F9D900BEC6A6 /* FPJSError+React.swift */,
-				10F8301A27A9CBEC00149386 /* RNFingerprintjsPro.swift */,
+				7DC52BF728242E1900F78B99 /* RNFingerprint.podspec */,
+				B3E7B5891CC2AC0600A0062D /* RNFingerprint.mm */,
+				7791DF543046F9D900BEC6A6 /* FPError+React.swift */,
+				10F8301A27A9CBEC00149386 /* RNFingerprint.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
-				10F8301927A9CBEC00149386 /* RNFingerprintjsPro-Bridging-Header.h */,
+				10F8301927A9CBEC00149386 /* RNFingerprint-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* RNFingerprintjsPro */ = {
+		58B511DA1A9E6C8500147676 /* RNFingerprint */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNFingerprintjsPro" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNFingerprint" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -81,9 +81,9 @@
 			);
 			dependencies = (
 			);
-			name = RNFingerprintjsPro;
+			name = RNFingerprint;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libRNFingerprintjsPro.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libRNFingerprint.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -101,7 +101,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNFingerprintjsPro" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNFingerprint" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* RNFingerprintjsPro */,
+				58B511DA1A9E6C8500147676 /* RNFingerprint */,
 			);
 		};
 /* End PBXProject section */
@@ -127,9 +127,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7791DF553046F9D900BEC6A6 /* FPJSError+React.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* RNFingerprintjsPro.mm in Sources */,
-				10F8301B27A9CBEC00149386 /* RNFingerprintjsPro.swift in Sources */,
+				7791DF553046F9D900BEC6A6 /* FPError+React.swift in Sources */,
+				B3E7B58A1CC2AC0600A0062D /* RNFingerprint.mm in Sources */,
+				10F8301B27A9CBEC00149386 /* RNFingerprint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,9 +234,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RNFingerprintjsPro;
+				PRODUCT_NAME = RNFingerprint;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "RNFingerprintjsPro-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RNFingerprint-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -259,9 +259,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RNFingerprintjsPro;
+				PRODUCT_NAME = RNFingerprint;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "RNFingerprintjsPro-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RNFingerprint-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -269,7 +269,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNFingerprintjsPro" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "RNFingerprint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -278,7 +278,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNFingerprintjsPro" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNFingerprint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

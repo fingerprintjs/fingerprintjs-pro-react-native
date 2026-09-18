@@ -5,7 +5,7 @@ import { FingerprintContext } from '../src'
 import { NativeModules } from 'react-native'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const { configure } = NativeModules.RNFingerprintjsPro as unknown as Record<string, jest.Mock>
+const { configure } = NativeModules.RNFingerprint as unknown as Record<string, jest.Mock>
 
 const pluginVersion = '__VERSION__'
 

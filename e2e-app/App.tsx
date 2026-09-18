@@ -2,7 +2,7 @@
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
-import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprint/react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'

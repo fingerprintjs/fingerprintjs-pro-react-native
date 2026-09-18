@@ -5,7 +5,7 @@
     {
       "repo": "fingerprintjs/fingerprintjs-pro-react-native",
       "androidPath": "sdk/android",
-      "iosPodspecPath": "sdk/RNFingerprintjsPro.podspec",
+      "iosPodspecPath": "sdk/RNFingerprint.podspec",
       "packageName": "fingerprintjs-pro-react-native"
     }
   ],

@@ -2,30 +2,26 @@
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
 // The bare rn app will be removed before merging
 /* eslint-disable */
-import { Pressable, SafeAreaView, Text, View } from 'react-native';
-import {
-  FingerprintProvider,
-  isFingerprintError,
-  useVisitorData,
-} from '@fingerprintjs/fingerprintjs-pro-react-native';
-import { useEffect } from 'react';
-import { API_KEY } from '@env';
+import { Pressable, SafeAreaView, Text, View } from 'react-native'
+import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprint/react-native'
+import { useEffect } from 'react'
+import { API_KEY } from '@env'
 function InnerApp() {
-  const { isLoading, error, data, getData } = useVisitorData();
+  const { isLoading, error, data, getData } = useVisitorData()
 
   const doGetData = async () => {
     try {
-      await getData();
+      await getData()
     } catch {
       // `getData` rejects on failure, but the error is also stored in the hook state and rendered below.
     }
-  };
+  }
 
   useEffect(() => {
     if (error) {
-      console.error(error);
+      console.error(error)
     }
-  }, [error]);
+  }, [error])
 
   return (
     <View style={{ flex: 1 }}>
@@ -74,14 +70,12 @@ function InnerApp() {
               alignItems: 'center',
             }}
           >
-            <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
-              Get data
-            </Text>
+            <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>Get data</Text>
           </Pressable>
         </View>
       </SafeAreaView>
     </View>
-  );
+  )
 }
 
 export default function App() {
@@ -89,5 +83,5 @@ export default function App() {
     <FingerprintProvider apiKey={API_KEY}>
       <InnerApp />
     </FingerprintProvider>
-  );
+  )
 }

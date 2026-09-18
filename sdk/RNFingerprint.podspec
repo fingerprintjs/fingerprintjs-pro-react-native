@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
-  s.name         = "RNFingerprintjsPro"
+  s.name         = "RNFingerprint"
   s.version      = "3.17.1"
   s.summary      = "Fingerprint Pro visitor identification in a React Native app"
   s.description  = "Official React Native client for Fingerprint. Best identification solution for React Native."
   s.homepage     = "https://github.com/fingerprintjs"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
-  s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
+  s.source       = { :git => "https://github.com/fingerprintjs/react-native.git", :tag => "main" }
   s.ios.deployment_target = "14.0"
   s.tvos.deployment_target = "15.0"
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
