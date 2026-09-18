@@ -1,0 +1,103 @@
+name: SPM Build
+
+env:
+  XCODE_VERSION: 26.3
+
+on:
+  pull_request:
+
+jobs:
+  build-ios:
+    name: Build BareRNSPMTest for iOS (SwiftPM)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          node-version: 24.x
+
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 #v1.7.0
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Start iPhone simulator
+        uses: futureware-tech/simulator-action@e89aa8f93d3aec35083ff49d2854d07f7186f7f5 # v5
+        with:
+          model: 'iPhone 17'
+          shutdown_after_job: 'false'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build SDK
+        run: pnpm build
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: BareRNSPMTest
+
+      - name: Cache SwiftPM artifacts
+        uses: actions/cache@v6
+        with:
+          path: ~/Library/Caches/ReactNative/spm-artifacts
+          key: spm-artifacts-${{ hashFiles('BareRNSPMTest/package.json') }}
+
+      - name: Regenerate SwiftPM autolinking
+        run: pnpm exec react-native spm update --yes
+        working-directory: BareRNSPMTest
+
+      - name: Create .env
+        run: cp .env.dist .env
+        working-directory: BareRNSPMTest
+
+      - name: Build app
+        run: |
+          xcodebuild \
+            -workspace ios/BareRNSPMTest.xcworkspace \
+            -scheme BareRNSPMTest \
+            -configuration Release \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath ios/build/DerivedData \
+            build
+        working-directory: BareRNSPMTest
+
+      - name: Boot simulator
+        run: |
+          xcrun simctl boot "iPhone 17"
+          xcrun simctl bootstatus "iPhone 17"
+
+      - name: Smoke test - install and launch the app
+        run: |
+          BUNDLE_ID=org.reactjs.native.example.BareRNSPMTest
+          APP=ios/build/DerivedData/Build/Products/Release-iphonesimulator/BareRNSPMTest.app
+
+          xcrun simctl install booted "$APP"
+          xcrun simctl launch booted "$BUNDLE_ID"
+
+          sleep 10
+
+          if ! xcrun simctl spawn booted launchctl list | grep -q "$BUNDLE_ID"; then
+            echo "App is not running after launch - it likely crashed on startup" >&2
+            exit 1
+          fi
+
+          if find ~/Library/Logs/DiagnosticReports -iname "*BareRNSPMTest*" 2>/dev/null | grep -q .; then
+            echo "Found a crash report for the app" >&2
+            exit 1
+          fi
+        working-directory: BareRNSPMTest
+
+      - name: Upload smoke test screenshot
+        if: always()
+        run: xcrun simctl io booted screenshot smoke-test.png
+        working-directory: BareRNSPMTest
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: smoke-test-screenshot
+          path: BareRNSPMTest/smoke-test.png
+          retention-days: 3
