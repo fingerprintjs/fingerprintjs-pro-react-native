@@ -5,6 +5,15 @@
 import Fingerprint
 import Foundation
 
+// Under the SwiftPM two-target split (Package.swift) this Swift target has no
+// bridging header, so RCTPromiseResolveBlock/RCTPromiseRejectBlock must come from
+// the React module. RCT_SPM is defined only by the SwiftPM Swift target; under
+// CocoaPods these types arrive via the pod's Objective-C interop and this import
+// is skipped.
+#if RCT_SPM
+import React
+#endif
+
 @objc(RNFingerprintjsPro)
 class RNFingerprintjsPro: NSObject {
     private var fpjsClient: FingerprintClientProviding?

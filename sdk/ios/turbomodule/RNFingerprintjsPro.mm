@@ -25,13 +25,6 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
 // `NativeRNFingerprintjsProSpecJSI` invokes.
 #import <RNFingerprintjsProSpec/RNFingerprintjsProSpec.h>
 
-// Import the Swift-generated interface so the category below can extend the Swift class.
-#if __has_include("RNFingerprintjsPro-Swift.h")
-#import "RNFingerprintjsPro-Swift.h"
-#else
-#import <RNFingerprintjsPro/RNFingerprintjsPro-Swift.h>
-#endif
-
 @interface RNFingerprintjsPro (TurboModule) <NativeRNFingerprintjsProSpec>
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params;
