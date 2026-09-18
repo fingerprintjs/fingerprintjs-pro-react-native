@@ -3,6 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// The SDK supports the New Architecture only. Applying the React Gradle plugin runs library Codegen
+// (generates the `NativeRNFingerprintjsProSpec` base class).
+apply plugin: 'com.facebook.react'
+
 apply from: 'fingerprint.gradle'
 
 android {
@@ -32,6 +36,13 @@ android {
 
     lint {
         abortOnError = false
+    }
+
+    sourceSets {
+        main {
+            // Generated Codegen sources (the `NativeRNFingerprintjsProSpec` base class).
+            java.srcDirs += [layout.buildDirectory.dir('generated/source/codegen/java').get().asFile.path]
+        }
     }
 }
 

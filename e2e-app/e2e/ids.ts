@@ -6,4 +6,5 @@ export const testIds = {
   errorCause: 'error-cause',
   data: 'data',
   getData: 'get-data',
+  uiManager: 'ui-manager',
 }
