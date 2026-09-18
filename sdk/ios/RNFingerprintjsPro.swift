@@ -2,7 +2,8 @@
 //  RNFingerprintjsPro.swift
 //  RNFingerprintjsPro
 //
-import FingerprintPro
+import Fingerprint
+import Foundation
 
 @objc(RNFingerprintjsPro)
 class RNFingerprintjsPro: NSObject {
@@ -11,52 +12,37 @@ class RNFingerprintjsPro: NSObject {
     @objc
     static func requiresMainQueueSetup() -> Bool { false }
 
-    @objc(configure:pluginVersion:extendedResponseFormat:fallbackEndpointUrls:allowUseOfLocationData:locationTimeoutMillis:region:endpointUrl:)
-    public func configure(_ apiToken: String, _ pluginVersion: String, _ extendedResponseFormat: Bool, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
+    @objc(configure:pluginVersion:fallbackEndpointUrls:allowUseOfLocationData:locationTimeoutMillis:region:endpointUrl:)
+    public func configure(_ apiToken: String, _ pluginVersion: String, _ fallbackEndpointUrls: [String], _ allowUseOfLocationData: Bool, _ locationTimeoutMillis: Double, _ region: String?, _ endpointUrl: String?) -> Void {
         let region = RNFingerprintjsPro.parseRegion(region, endpoint: endpointUrl, endpointFallbacks: fallbackEndpointUrls)
         let integrationInfo = [("fingerprint-pro-react-native", pluginVersion)]
-        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, extendedResponseFormat: extendedResponseFormat, allowUseOfLocationData: allowUseOfLocationData)
-        fpjsClient = FingerprintProFactory.getInstance(configuration)
-    }
-
-    @objc(getVisitorId:linkedId:timeout:resolve:reject:)
-    public func getVisitorId(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
-
-        let completionHandler: FingerprintPro.VisitorIdBlock = { visitorIdResult in
-            switch visitorIdResult {
-            case .success(let visitorId):
-                resolve(visitorId)
-            case .failure(let error):
-                let description = error.reactDescription
-                reject("Error: ", description, error)
-            }
-        }
-
-        if let timeout = timeout?.doubleValue {
-            fpjsClient?.getVisitorId(metadata, timeout: timeout / 1000, completion: completionHandler)
-        } else {
-            fpjsClient?.getVisitorId(metadata, completion: completionHandler)
-        }
+        let configuration = Configuration(apiKey: apiToken, region: region, integrationInfo: integrationInfo, allowUseOfLocationData: allowUseOfLocationData)
+        fpjsClient = FingerprintFactory.getInstance(configuration)
     }
 
     @objc(getVisitorData:linkedId:timeout:resolve:reject:)
-    public func getVisitorData(tags: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
-        let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tags)
+    public func getVisitorData(tag: [String: Any]?, linkedId: String?, timeout: NSNumber?, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+        let metadata = RNFingerprintjsPro.prepareMetadata(linkedId, tags: tag)
 
-        let completionHandler: FingerprintPro.VisitorIdResponseBlock = { visitorIdResponseResult in
+        let completionHandler: Fingerprint.VisitorIdResponseBlock = { visitorIdResponseResult in
             switch visitorIdResponseResult {
             case let .success(visitorDataResponse):
                 let visitorData: [String: Any] = [
-                    "requestId": visitorDataResponse.requestId,
-                    "confidenceScore": visitorDataResponse.confidence,
-                    "visitorDataJson": visitorDataResponse.asJSON(),
+                    "visitorId": visitorDataResponse.visitorId,
+                    "eventId": visitorDataResponse.eventId,
+                    "suspectScore": visitorDataResponse.suspectScore ?? -1,
                     "sealedResult": visitorDataResponse.sealedResult ?? "",
                 ]
                 resolve(visitorData)
             case .failure(let error):
-                let description = error.reactDescription
-                reject("Error: ", description, error)
+                // Reject with the structured code/message, carrying the optional event ID through the
+                // `NSError`'s `userInfo` — RN surfaces it as `error.code` / `error.userInfo.eventId`.
+                var userInfo: [String: Any] = [:]
+                if let eventId = error.reactEventId {
+                    userInfo["eventId"] = eventId
+                }
+                let nsError = NSError(domain: "FingerprintPro", code: 0, userInfo: userInfo)
+                reject(error.reactCode, error.reactMessage, nsError)
             }
         }
 

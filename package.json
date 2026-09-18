@@ -15,7 +15,7 @@
     "test:coverage": "cd sdk && pnpm test:coverage",
     "test:dts": "cd sdk && pnpm test:dts",
     "docs": "cd sdk && pnpm run docs",
-    "changeset:version": "changeset version",
+    "changeset:version": "changeset version && bash sdk/scripts/sync-podspec-version.sh",
     "changeset:publish": "HUSKY=0 changeset publish"
   },
   "repository": {

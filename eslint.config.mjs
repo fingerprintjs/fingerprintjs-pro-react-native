@@ -51,6 +51,15 @@ const config = [
     },
   },
   {
+    files: ['sdk/type-tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        project: 'sdk/tsconfig.type-tests.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
     files: ['**/*.{js,cjs,mjs}'],
     ...tseslint.configs.disableTypeChecked,
   },

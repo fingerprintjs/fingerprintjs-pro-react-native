@@ -2,7 +2,7 @@
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
-import { FingerprintJsProProvider, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
 import { testIds } from '@/e2e/ids'
 import { useEffect } from 'react'
 import { testTags } from '@/e2e/tags'
@@ -13,9 +13,11 @@ function InnerApp() {
   const { isLoading, error, data, getData } = useVisitorData()
 
   const doGetData = async () => {
-    const tags = config.useTags ? testTags : undefined
-
-    await getData(tags, config.linkedId)
+    try {
+      await getData({ tags: config.useTags ? testTags : undefined, linkedId: config.linkedId })
+    } catch {
+      // `getData` rejects on failure, but the error is also stored in the hook state and rendered below.
+    }
   }
 
   useEffect(() => {
@@ -38,8 +40,22 @@ function InnerApp() {
         {isLoading ? <Text testID={testIds.loading}>Loading...</Text> : null}
         {error ? (
           <View>
+            <Text>Name:</Text>
             <Text testID={testIds.errorName}>{error.name}</Text>
+
+            <Text>Code:</Text>
+            <Text testID={testIds.errorCode}>{error.code}</Text>
+
+            <Text>Message:</Text>
             <Text testID={testIds.errorMessage}>{error.message}</Text>
+
+            {isFingerprintError(error) && (
+              <>
+                <Text>Error event id</Text>
+                <Text testID={testIds.errorEventId}>{error.event_id}</Text>
+              </>
+            )}
+
             {error.stack ? <Text testID={testIds.errorStack}>{error.stack}</Text> : null}
             {error.cause ? <Text testID={testIds.errorCause}>{JSON.stringify(error.cause)}</Text> : null}
           </View>
@@ -69,8 +85,8 @@ function InnerApp() {
 
 export default function App() {
   return (
-    <FingerprintJsProProvider apiKey={config.apiKey} region={config.region}>
+    <FingerprintProvider apiKey={config.apiKey} region={config.region}>
       <InnerApp />
-    </FingerprintJsProProvider>
+    </FingerprintProvider>
   )
 }
