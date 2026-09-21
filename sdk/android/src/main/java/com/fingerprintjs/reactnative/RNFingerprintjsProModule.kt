@@ -135,7 +135,7 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       is SecretApiKeyNotFound -> "secret_api_key_not_found"
       is RequestCannotBeParsed -> "request_cannot_be_parsed"
       is Failed -> "failed"
-      is RequestTimeout -> "request_timeout"
+      is RequestTimeout -> "request_read_timeout"
       is TooManyRequest -> "too_many_requests"
       is WrongRegion -> "wrong_region"
       is SubscriptionNotActive -> "subscription_not_active"
