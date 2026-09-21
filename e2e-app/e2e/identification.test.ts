@@ -21,7 +21,7 @@ async function launchApp(params?: DeviceLaunchAppConfig) {
 }
 
 jest.retryTimes(3, {
-  waitBeforeRetry: 10_000,
+  waitBeforeRetry: 1000,
   logErrorsBeforeRetry: false,
 })
 

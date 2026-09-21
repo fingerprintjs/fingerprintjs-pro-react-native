@@ -4,3 +4,5 @@ allowBuilds:
   detox: true
   dtrace-provider: true
   esbuild: true
+  
+shamefullyHoist: true
