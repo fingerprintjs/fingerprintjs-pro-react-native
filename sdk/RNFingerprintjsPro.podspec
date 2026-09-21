@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
-  s.ios.deployment_target = "14.0"
+  s.ios.deployment_target = "15.1"
   s.tvos.deployment_target = "15.0"
 
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
