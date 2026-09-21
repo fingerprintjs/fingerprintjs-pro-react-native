@@ -41,7 +41,7 @@ import PackageDescription
 
 let package = Package(
     name: "RNFingerprint",
-    platforms: [.iOS(.v15)],
+    platforms: [.iOS("15.1"), .tvOS(.v15)],
     products: [
         .library(
             name: "RNFingerprint",
