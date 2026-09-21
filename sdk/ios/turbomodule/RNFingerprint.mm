@@ -25,6 +25,14 @@ RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
 // `NativeRNFingerprintSpecJSI` invokes.
 #import <RNFingerprintSpec/RNFingerprintSpec.h>
 
+#if __has_include("RNFingerprint-Swift.h")
+#import "RNFingerprint-Swift.h"
+#elif __has_include(<RNFingerprintSwift/RNFingerprintSwift-Swift.h>)
+#import <RNFingerprintSwift/RNFingerprintSwift-Swift.h>
+#else
+#import <RNFingerprint/RNFingerprint-Swift.h>
+#endif
+
 @interface RNFingerprint (TurboModule) <NativeRNFingerprintSpec>
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params;
