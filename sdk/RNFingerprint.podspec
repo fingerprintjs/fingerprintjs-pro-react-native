@@ -24,5 +24,8 @@ Pod::Spec.new do |s|
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
   # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture.
-  install_modules_dependencies(s)
+  # Older RN versions don't define this helper, so guard for it.
+  if respond_to?(:install_modules_dependencies, true)
+    install_modules_dependencies(s)
+  end
 end
