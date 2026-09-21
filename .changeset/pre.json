@@ -4,5 +4,7 @@
   "initialVersions": {
     "@fingerprintjs/fingerprintjs-pro-react-native": "3.17.0"
   },
-  "changesets": []
+  "changesets": [
+    "new-architecture-support"
+  ]
 }
