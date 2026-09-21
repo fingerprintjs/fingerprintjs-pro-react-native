@@ -7,8 +7,8 @@ Pod::Spec.new do |s|
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/react-native.git", :tag => "main" }
-  s.ios.deployment_target = "14.0"
-  s.tvos.deployment_target = "15.0"
+  s.ios.deployment_target = "15.1"
+  s.tvos.deployment_target = "15.1"
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
   # Never sweep build artifacts (e.g. generated Codegen headers under ios/build) into the pod's
   # sources. Otherwise CocoaPods exposes the C++ `*Spec.h`/`*SpecJSI.h` as public headers of this
