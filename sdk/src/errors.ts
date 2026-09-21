@@ -18,7 +18,6 @@ export type ErrorCode =
   | 'failed'
   | 'request_cannot_be_parsed'
   | 'request_read_timeout'
-  | 'request_timeout'
   | 'response_cannot_be_parsed'
   | 'too_many_requests'
   | 'public_api_key_required'

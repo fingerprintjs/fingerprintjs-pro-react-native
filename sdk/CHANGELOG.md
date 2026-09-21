@@ -1,5 +1,13 @@
 # @fingerprintjs/fingerprintjs-pro-react-native
 
+## 4.0.0-rc.0
+
+### Major Changes
+
+- Dropped React Native Old Architecture support. The native module is now a TurboModule (New Architecture only) exposed via a Codegen spec.
+
+  This is a breaking change: the SDK now requires React Native >= 0.79 (Expo SDK >= 53) with the [New Architecture](https://reactnative.dev/architecture/landing-page) enabled. ([e83c165](https://github.com/fingerprintjs/fingerprintjs-pro-react-native/commit/e83c165cc7282d6820f70d06d8ad1ae8e11450a1))
+
 ## 3.17.1
 
 ### Patch Changes
