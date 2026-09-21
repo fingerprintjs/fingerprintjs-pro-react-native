@@ -9,8 +9,6 @@ import com.fingerprint.android.FingerprintResponse
 import com.fingerprint.android.Error
 import com.fingerprint.android.ApiKeyRequired
 import com.fingerprint.android.ApiKeyNotFound
-import com.fingerprint.android.SecretApiKeyRequired
-import com.fingerprint.android.SecretApiKeyNotFound
 import com.fingerprint.android.RequestCannotBeParsed
 import com.fingerprint.android.Failed
 import com.fingerprint.android.RequestTimeout
@@ -27,13 +25,10 @@ import com.fingerprint.android.NetworkUnavailableError
 import com.fingerprint.android.ClientTimeout
 import com.fingerprint.android.UnknownError
 import com.fingerprint.android.VisitorNotFound
-import com.fingerprint.android.RequestNotFound
 import com.fingerprint.android.ServiceUnavailable
 import com.fingerprint.android.FeatureNotEnabled
-import com.fingerprint.android.StateNotReady
 import com.fingerprint.android.MissingModule
 import com.fingerprint.android.PayloadTooLarge
-import com.fingerprint.android.RulesetNotFound
 import com.fingerprint.android.InvalidProxyIntegrationHeaders
 import com.fingerprint.android.InvalidProxyIntegrationSecret
 import com.fingerprint.android.ProxyIntegrationSecretEnvironmentMismatch
@@ -131,8 +126,6 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
     return when(error) {
       is ApiKeyRequired -> "public_api_key_required"
       is ApiKeyNotFound -> "public_api_key_not_found"
-      is SecretApiKeyRequired -> "secret_api_key_required"
-      is SecretApiKeyNotFound -> "secret_api_key_not_found"
       is RequestCannotBeParsed -> "request_cannot_be_parsed"
       is Failed -> "failed"
       is RequestTimeout -> "request_read_timeout"
@@ -149,13 +142,10 @@ class RNFingerprintjsProModule(reactContext: ReactApplicationContext) : NativeRN
       is NetworkUnavailableError -> "network_error"
       is ClientTimeout -> "client_timeout"
       is VisitorNotFound -> "visitor_not_found"
-      is RequestNotFound -> "request_not_found"
       is ServiceUnavailable -> "service_unavailable"
       is FeatureNotEnabled -> "feature_not_enabled"
-      is StateNotReady -> "state_not_ready"
       is MissingModule -> "missing_module"
       is PayloadTooLarge -> "payload_too_large"
-      is RulesetNotFound -> "ruleset_not_found"
       is UnknownError -> "unknown_error"
       is InvalidProxyIntegrationHeaders -> "invalid_proxy_integration_headers"
       is InvalidProxyIntegrationSecret -> "invalid_proxy_integration_secret"
