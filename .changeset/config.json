@@ -3,10 +3,10 @@
   "changelog": [
     "@fingerprintjs/changesets-native-dependency-format",
     {
-      "repo": "fingerprintjs/fingerprintjs-pro-react-native",
+      "repo": "fingerprintjs/react-native",
       "androidPath": "sdk/android",
       "iosPodspecPath": "sdk/RNFingerprint.podspec",
-      "packageName": "fingerprintjs-pro-react-native"
+      "packageName": "@fingerprint/react-native"
     }
   ],
   "commit": false,
