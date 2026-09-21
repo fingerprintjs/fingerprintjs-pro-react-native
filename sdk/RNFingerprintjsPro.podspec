@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
   s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
   s.ios.deployment_target = "15.1"
-  s.tvos.deployment_target = "15.0"
+  s.tvos.deployment_target = "15.1"
 
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
   # Never sweep build artifacts (e.g. generated Codegen headers under ios/build) into the pod's
