@@ -35,7 +35,7 @@ const config: ExpoConfig = {
     package: 'com.fingerprint.e2eapp',
   },
   plugins: [
-    '@fingerprintjs/fingerprintjs-pro-react-native',
+    '@fingerprint/react-native',
     [
       'expo-build-properties',
       {

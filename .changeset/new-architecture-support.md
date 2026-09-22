@@ -1,5 +1,5 @@
 ---
-'@fingerprintjs/fingerprintjs-pro-react-native': major
+'@fingerprint/react-native': major
 ---
 
 Dropped React Native Old Architecture support. The native module is now a TurboModule (New Architecture only) exposed via a Codegen spec. 

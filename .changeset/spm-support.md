@@ -1,5 +1,5 @@
 ---
-'@fingerprintjs/fingerprintjs-pro-react-native': minor
+'@fingerprint/react-native': minor
 ---
 
 Added experimental support for [Swift Package Manager](https://swift.org/package-manager/). The library now ships with its own `Package.swift`.

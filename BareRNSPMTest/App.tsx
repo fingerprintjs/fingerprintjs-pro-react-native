@@ -2,7 +2,7 @@
 // but it doesn't work nicely with older RN versions that we also run tests against, so keep SafeAreaView import from react-native for now
 /* eslint-disable */
 import { Pressable, SafeAreaView, Text, View } from 'react-native'
-import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { FingerprintProvider, isFingerprintError, useVisitorData } from '@fingerprint/react-native'
 import { useEffect } from 'react'
 import { API_KEY } from '@env'
 function InnerApp() {
