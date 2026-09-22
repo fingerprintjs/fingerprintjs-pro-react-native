@@ -38,7 +38,7 @@ function toNativeTag(tag: TagsValue | undefined): CodegenTypes.UnsafeObject | nu
 
 function normalizeResponse(data: NativeVisitorData): FingerprintResponse {
   return {
-    visitor_id: data.visitorId,
+    visitor_id: isTruthy(data.visitorId) ? data.visitorId : undefined,
     event_id: data.eventId,
     suspect_score: data.suspectScore >= 0 ? data.suspectScore : undefined,
     sealed_result: isTruthy(data.sealedResult) ? data.sealedResult : null,

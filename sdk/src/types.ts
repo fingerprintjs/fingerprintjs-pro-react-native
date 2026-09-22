@@ -208,9 +208,9 @@ export interface GetOptions {
  */
 export interface FingerprintResponse {
   /**
-   * The visitor identifier.
+   * The visitor identifier. `undefined` if [zero-trust-mode](https://docs.fingerprint.com/docs/zero-trust-mode) is enabled.
    */
-  visitor_id: string
+  visitor_id?: string
   /**
    * A unique id associated with the successful identification request.
    */
