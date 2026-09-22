@@ -19,7 +19,7 @@
   "dependencies": {
     "@expo/config": "^57.0.3",
     "@expo/metro-runtime": "~57.0.3",
-    "@fingerprintjs/fingerprintjs-pro-react-native": "../sdk",
+    "@fingerprint/react-native": "../sdk",
     "@fingerprint/agent": "^4.1.3",
     "dotenv": "^16.4.7",
     "expo": "57.0.4",

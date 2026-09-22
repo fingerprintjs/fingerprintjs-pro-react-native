@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@fingerprintjs/fingerprintjs-pro-react-native':
+      '@fingerprint/react-native':
         specifier: ../sdk
         version: link:../sdk
       '@react-native/new-app-screen':

@@ -1,5 +1,5 @@
 import { Config } from '@/src/config.types'
-import { Region } from '@fingerprintjs/fingerprintjs-pro-react-native'
+import { Region } from '@fingerprint/react-native'
 
 const search = new URLSearchParams(window.location.search)
 

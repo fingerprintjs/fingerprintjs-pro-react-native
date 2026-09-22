@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
-  s.name         = "RNFingerprintjsPro"
+  s.name         = "RNFingerprint"
   s.version      = "3.17.1"
   s.summary      = "Fingerprint Pro visitor identification in a React Native app"
   s.description  = "Official React Native client for Fingerprint. Best identification solution for React Native."
   s.homepage     = "https://github.com/fingerprintjs"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.author = { "FingerprintJS, Inc" => "support@fingerprint.com" }
-  s.source       = { :git => "https://github.com/fingerprintjs/fingerprintjs-pro-react-native.git", :tag => "main" }
+  s.source       = { :git => "https://github.com/fingerprintjs/react-native.git", :tag => "main" }
   s.ios.deployment_target = "15.1"
   s.tvos.deployment_target = "15.1"
   s.source_files  = "ios/**/*.{h,m,mm,swift}"
@@ -24,5 +24,8 @@ Pod::Spec.new do |s|
 
   # Wires up the TurboModule/Codegen dependencies (ReactCommon, generated specs, ...) and defines
   # `RCT_NEW_ARCH_ENABLED` for the pod when the app is built with the New Architecture.
-  install_modules_dependencies(s)
+  # Older RN versions don't define this helper, so guard for it.
+  if respond_to?(:install_modules_dependencies, true)
+    install_modules_dependencies(s)
+  end
 end
