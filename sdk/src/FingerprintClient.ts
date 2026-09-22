@@ -3,6 +3,7 @@ import RNFingerprint, { type NativeVisitorData } from './specs/NativeRNFingerpri
 import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions, TagsValue } from './types'
 import { unwrapError } from './unwrapError'
 import { isDefined, isTruthy } from './utils'
+import { validateTags } from './tags'
 
 const packageVersion = '__VERSION__'
 
@@ -66,11 +67,9 @@ class NativeFingerprintClient implements FingerprintClient {
 
   public async get(options?: GetOptions): Promise<FingerprintResponse> {
     try {
-      const data = await RNFingerprint.getVisitorData(
-        toNativeTag(options?.tags),
-        options?.linkedId ?? null,
-        options?.timeout ?? null
-      )
+      const nativeTags = toNativeTag(options?.tags)
+      validateTags(nativeTags)
+      const data = await RNFingerprint.getVisitorData(nativeTags, options?.linkedId ?? null, options?.timeout ?? null)
       return normalizeResponse(data)
     } catch (error) {
       throw unwrapError(error)
