@@ -41,7 +41,12 @@ import PackageDescription
 
 let package = Package(
     name: "RNFingerprintjsPro",
-    platforms: [.iOS("15.1"), .tvOS("15.1")],
+    // 15.0, NOT the podspec's 15.1: RN 0.87's SPM autolinker hardcodes its
+    // AutolinkedAggregate target at `.iOS(.v15)` (= 15.0) and gives no knob, so
+    // any library product requiring >15.0 fails resolution with "requires
+    // minimum platform version 15.1 ... but this target supports 15.0". The
+    // effective floor still comes from the app's IPHONEOS_DEPLOYMENT_TARGET.
+    platforms: [.iOS(.v15), .tvOS(.v15)],
     products: [
         .library(
             name: "RNFingerprintjsPro",
