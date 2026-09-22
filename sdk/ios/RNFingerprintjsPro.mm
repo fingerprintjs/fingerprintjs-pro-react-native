@@ -4,7 +4,6 @@
 
 RCT_EXTERN_METHOD(configure:(NSString *)apiToken
   pluginVersion:(NSString *)pluginVersion
-  extendedResponseFormat:(BOOL)extendedResponseFormat
   fallbackEndpointUrls:(NSArray<NSString *> *)fallbackEndpointUrls
   allowUseOfLocationData:(BOOL)allowUseOfLocationData
   locationTimeoutMillis:(double)locationTimeoutMillis
@@ -12,14 +11,7 @@ RCT_EXTERN_METHOD(configure:(NSString *)apiToken
   endpointUrl:(NSString * _Nullable)endpointUrl
 )
 
-RCT_EXTERN_METHOD(getVisitorId:(NSDictionary *)tags
-  linkedId:(NSString *)linkedId
-  timeout:(NSNumber * _Nullable)timeout
-  resolve:(RCTPromiseResolveBlock)resolve
-  reject:(RCTPromiseRejectBlock)reject
-)
-
-RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tags
+RCT_EXTERN_METHOD(getVisitorData:(NSDictionary *)tag
   linkedId:(NSString *)linkedId
   timeout:(NSNumber * _Nullable)timeout
   resolve:(RCTPromiseResolveBlock)resolve
