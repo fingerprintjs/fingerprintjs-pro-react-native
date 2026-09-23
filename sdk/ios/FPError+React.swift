@@ -72,10 +72,10 @@ extension APIError {
     // The SDK's `APIError.Code` has no explicit raw values, so `rawValue` is the camelCase case name
     // (e.g. `tooManyRequests`). Map it to the canonical snake_case codes shared with Android and
     // `@fingerprint/agent` so `FingerprintError.code` is identical across platforms. Falls back to
-    // the generic `failed` code when the server error carries no recognized code.
+    // the generic `unknown_error` code when the server error carries no recognized code.
     var reactCode: String {
         guard let code = self.errorDetails?.code else {
-            return "failed"
+            return "unknown_error"
         }
         switch code {
         case .requestCannotBeParsed: return "request_cannot_be_parsed"
