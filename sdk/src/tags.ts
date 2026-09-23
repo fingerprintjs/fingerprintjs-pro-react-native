@@ -35,7 +35,7 @@ function checkNotEnclosing(collection: unknown, path: string, enclosing: unknown
 }
 
 function validate(value: unknown, path: string, enclosing: unknown[]): void {
-  if (value === null || value === undefined || typeof value === 'string' || typeof value === 'boolean') {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') {
     return
   }
 

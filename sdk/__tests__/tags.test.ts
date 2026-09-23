@@ -135,6 +135,14 @@ describe('validateTags', () => {
     }).not.toThrow()
   })
 
+  it('rejects nested undefined, meaning no tags', () => {
+    expect(() => {
+      validateTags({
+        value: undefined,
+      })
+    }).toThrow(InvalidArgumentError)
+  })
+
   it('rejects a list that contains itself', () => {
     const cyclic: unknown[] = ['a']
     cyclic.push(cyclic)
