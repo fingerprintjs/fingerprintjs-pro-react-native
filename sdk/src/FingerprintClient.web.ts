@@ -36,7 +36,7 @@ class WebFingerprintClient implements FingerprintClient {
       return {
         // `visitor_id` is only omitted by the backend in zeroTrust mode; default to '' to keep the
         // cross-platform shape stable.
-        visitor_id: result.visitor_id ?? '',
+        visitor_id: result.visitor_id ?? undefined,
         event_id: result.event_id,
         suspect_score: result.suspect_score,
         sealed_result: result.sealed_result ? result.sealed_result.base64() : null,

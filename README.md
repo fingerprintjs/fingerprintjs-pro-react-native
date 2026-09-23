@@ -284,7 +284,7 @@ The response is a flat, snake_case object that matches the Fingerprint Server AP
 
 ```typescript
 interface FingerprintResponse {
-  visitor_id: string
+  visitor_id?: string // `undefined` if [zero-trust-mode](https://docs.fingerprint.com/docs/zero-trust-mode) is enabled
   event_id: string
   suspect_score?: number // present only when Smart Signals are enabled
   sealed_result: string | null // base64 sealed result, or null when unavailable
