@@ -187,6 +187,8 @@ To identify visitors, you need a Fingerprint Pro account (you can [sign up for f
 
 Configure the SDK by wrapping your application in `FingerprintProvider`.
 
+> ⚠️ **Important**: Applications should create only one client across the entire app, either through `FingerprintProvider` or through the API client (`start()`). If you create another client, it will overwrite the underlying native client of the first one.
+
 ```javascript
 // src/index.js
 import React from 'react';
@@ -248,6 +250,8 @@ export default function App() {
 ### API Client approach
 
 Create a client with `start()` and call `get()`:
+
+> ⚠️ **Important**: Applications should create only one client across the entire app, either through `FingerprintProvider` or through the API client (`start()`). If you create another client, it will overwrite the underlying native client of the first one.
 
 ```javascript
 import React, { useEffect } from 'react';

@@ -80,6 +80,10 @@ class NativeFingerprintClient implements FingerprintClient {
 /**
  * Creates a Fingerprint client with the given options.
  *
+ * Applications should create only one client: either through the API client (`start()`)
+ * or through a single `FingerprintProvider`. Creating another client will overwrite the underlying native client of the
+ * previous one.
+ *
  * @group API Client approach
  *
  * @example
