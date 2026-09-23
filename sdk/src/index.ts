@@ -4,13 +4,7 @@ export * from './FingerprintContext'
 export * from './useVisitorData'
 export * from './useFingerprint'
 
-export {
-  FingerprintError,
-  isFingerprintError,
-  FingerprintContextNotAvailableError,
-  ErrorCode,
-  InvalidArgumentError,
-} from './errors'
+export { FingerprintError, isFingerprintError, FingerprintContextNotAvailableError, ErrorCode } from './errors'
 
 export { validateTags } from './tags'
 

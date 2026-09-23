@@ -120,24 +120,3 @@ export function isFingerprintError(error: unknown): error is FingerprintError {
 export function getErrorMessage(error: unknown) {
   return error instanceof Error ? error.message : String(error)
 }
-
-/**
- * Validation error thrown when `tags` is invalid.
- *
- * Same string-keyed map on every platform. No size cap here. The server
- * enforces [16 KB](https://docs.fingerprint.com/docs/tagging-information)
- * as `payload_too_large`.
- */
-export class InvalidArgumentError extends TypeError {
-  public override readonly name: string
-  public readonly path?: string
-  public readonly invalidValue?: unknown
-
-  constructor(invalidValue: unknown, name?: string, message?: string) {
-    super(message)
-    this.name = 'ArgumentError'
-    this.path = name
-    this.invalidValue = invalidValue
-    Object.setPrototypeOf(this, InvalidArgumentError.prototype)
-  }
-}
