@@ -8,6 +8,10 @@ import { usePromiseStore } from './usePromiseStore'
 /**
  * Provides the {@link FingerprintContext} to its child components.
  *
+ * Applications should create only one client: either through a single `FingerprintProvider`
+ * at the root of the component tree or through the API client (`start()`). Creating another
+ * client will overwrite the underlying native client of the previous one.
+ *
  * @group Hooks approach
  *
  * @example

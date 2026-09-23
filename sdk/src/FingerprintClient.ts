@@ -3,6 +3,7 @@ import RNFingerprint, { type NativeVisitorData } from './specs/NativeRNFingerpri
 import type { FingerprintClient, FingerprintResponse, GetOptions, StartOptions, TagsValue } from './types'
 import { unwrapError } from './unwrapError'
 import { isDefined, isTruthy } from './utils'
+import { validateTags } from './tags'
 
 const packageVersion = '__VERSION__'
 
@@ -37,7 +38,7 @@ function toNativeTag(tag: TagsValue | undefined): CodegenTypes.UnsafeObject | nu
 
 function normalizeResponse(data: NativeVisitorData): FingerprintResponse {
   return {
-    visitor_id: data.visitorId,
+    visitor_id: isTruthy(data.visitorId) ? data.visitorId : undefined,
     event_id: data.eventId,
     suspect_score: data.suspectScore >= 0 ? data.suspectScore : undefined,
     sealed_result: isTruthy(data.sealedResult) ? data.sealedResult : null,
@@ -65,12 +66,10 @@ class NativeFingerprintClient implements FingerprintClient {
   }
 
   public async get(options?: GetOptions): Promise<FingerprintResponse> {
+    validateTags(options?.tags)
+    const nativeTags = toNativeTag(options?.tags)
     try {
-      const data = await RNFingerprint.getVisitorData(
-        toNativeTag(options?.tags),
-        options?.linkedId ?? null,
-        options?.timeout ?? null
-      )
+      const data = await RNFingerprint.getVisitorData(nativeTags, options?.linkedId ?? null, options?.timeout ?? null)
       return normalizeResponse(data)
     } catch (error) {
       throw unwrapError(error)
@@ -80,6 +79,10 @@ class NativeFingerprintClient implements FingerprintClient {
 
 /**
  * Creates a Fingerprint client with the given options.
+ *
+ * Applications should create only one client: either through the API client (`start()`)
+ * or through a single `FingerprintProvider`. Creating another client will overwrite the underlying native client of the
+ * previous one.
  *
  * @group API Client approach
  *

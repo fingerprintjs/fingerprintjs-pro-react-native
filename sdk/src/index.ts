@@ -6,4 +6,6 @@ export * from './useFingerprint'
 
 export { FingerprintError, isFingerprintError, FingerprintContextNotAvailableError, ErrorCode } from './errors'
 
+export { validateTags } from './tags'
+
 export * from './types'
