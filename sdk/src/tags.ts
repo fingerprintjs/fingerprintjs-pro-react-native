@@ -1,86 +1,52 @@
-import { InvalidArgumentError } from './errors'
-import { isDefined } from './utils'
+/**
+ * Rejects NaN / Infinity in `tags`.
+ *
+ * `TagsPrimitive` is `number`, so `{ score: Number('oops') }` type-checks.
+ * JSON has no literal for those values. Each platform rewrites them
+ * differently (`null` on web, `0` on iOS via `NSNumber.intValue`, usually
+ * `null` on Android) and identification still succeeds. Throw instead of
+ * storing the wrong tag.
+ *
+ * `Date`, `Map`, and class instances are already a type error on `TagsValue`.
+ * This walk does not reject them. The RN bridge and JS agent do not agree on
+ * those values (a `Date` is an ISO string on web and `{}` on native), but we
+ * choose to ignore that.
+ *
+ * Size is a server `payload_too_large`.
+ * https://docs.fingerprint.com/docs/tagging-information
+ */
 
-function getTypeName(value: unknown): string {
-  if (value === null) {
-    return 'null'
+export function validateTags(tags?: unknown): void {
+  if (tags === null || tags === undefined) {
+    return
   }
-  if (value === undefined) {
-    return 'undefined'
-  }
-  if (typeof value === 'object') {
-    if ('constructor' in value && typeof value.constructor === 'function') {
-      const name = value.constructor.name
-      if (typeof name === 'string' && name.length > 0 && name !== 'Object') {
-        return name
-      }
-    }
-    return 'Object'
-  }
-  return typeof value
+  walk(tags, 'tags')
 }
 
-function isPlainObject(value: unknown): value is Record<string | symbol, unknown> {
-  if (typeof value !== 'object' || value === null) {
-    return false
-  }
-  const proto: unknown = Object.getPrototypeOf(value)
-  return proto === null || proto === Object.prototype
-}
-
-function checkNotEnclosing(collection: unknown, path: string, enclosing: unknown[]): void {
-  if (enclosing.includes(collection)) {
-    throw new InvalidArgumentError(collection, path, 'Tags cannot contain themselves')
-  }
-}
-
-function validate(value: unknown, path: string, enclosing: unknown[]): void {
-  if (value === null || typeof value === 'string' || typeof value === 'boolean') {
+function walk(value: unknown, path: string): void {
+  if (value === null || value === undefined) {
     return
   }
 
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) {
-      throw new InvalidArgumentError(value, path, 'Tags cannot hold a non-finite number')
+      throw new TypeError(`${path} must be a finite number`)
     }
+    return
+  }
+
+  if (typeof value !== 'object') {
     return
   }
 
   if (Array.isArray(value)) {
-    checkNotEnclosing(value, path, enclosing)
-    enclosing.push(value)
-    for (let index = 0; index < value.length; index++) {
-      validate(value[index], `${path}[${index.toString()}]`, enclosing)
+    for (const [index, entry] of value.entries()) {
+      walk(entry, `${path}[${String(index)}]`)
     }
-    enclosing.pop()
     return
   }
 
-  if (isPlainObject(value)) {
-    checkNotEnclosing(value, path, enclosing)
-    enclosing.push(value)
-    const symbols = Object.getOwnPropertySymbols(value)
-    if (symbols.length > 0) {
-      throw new InvalidArgumentError(symbols[0], path, `Tag map keys must be strings, got ${getTypeName(symbols[0])}`)
-    }
-    for (const [key, entryValue] of Object.entries(value)) {
-      validate(entryValue, `${path}['${key}']`, enclosing)
-    }
-    enclosing.pop()
-    return
-  }
-
-  throw new InvalidArgumentError(value, path, `Tags must be JSON-compatible, got ${getTypeName(value)}`)
-}
-
-/**
- * Throws an {@link InvalidArgumentError} unless `tags` is recursively JSON-compatible.
- *
- * Root is a string-keyed map or primitive. Values may be string, number, boolean, null,
- * array, or nested maps. Rejects non-JSON objects, non-string keys, non-finite numbers, and cycles.
- */
-export function validateTags(tags?: unknown): void {
-  if (isDefined(tags)) {
-    validate(tags, 'tags', [])
+  for (const [key, entry] of Object.entries(value)) {
+    walk(entry, `${path}['${key}']`)
   }
 }
