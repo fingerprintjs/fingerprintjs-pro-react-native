@@ -43,9 +43,9 @@ extension FPError {
         case .apiError(let apiError):
             return apiError.message ?? self.description
         case .networkError(let networkError):
-            return networkError.description
+            return networkError.localizedDescription
         case .jsonParsingError(let jsonParsingError):
-            return jsonParsingError.description
+            return jsonParsingError.localizedDescription
         default:
             return self.description
         }
