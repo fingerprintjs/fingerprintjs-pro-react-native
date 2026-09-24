@@ -41,13 +41,13 @@ extension FPError {
     var reactMessage: String {
         switch self {
         case .apiError(let apiError):
-            return apiError.message ?? self.localizedDescription
+            return apiError.message ?? self.description
         case .networkError(let networkError):
-            return networkError.localizedDescription
+            return networkError.description
         case .jsonParsingError(let jsonParsingError):
-            return jsonParsingError.localizedDescription
+            return jsonParsingError.description
         default:
-            return self.localizedDescription
+            return self.description
         }
     }
 
