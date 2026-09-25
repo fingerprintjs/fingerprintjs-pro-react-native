@@ -369,6 +369,20 @@ To avoid ad blockers, proxy identification through a [proxy integration](https:/
 
 We recommend including the default API URL for your [region](https://docs.fingerprint.com/docs/regions) as a fallback: `https://api.fpjs.io` (US), `https://eu.api.fpjs.io` (EU), `https://ap.api.fpjs.io` (Asia). There are no fallbacks by default.
 
+
+```javascript
+return (
+        <FingerprintProvider 
+                apiKey={PUBLIC_API_KEY} 
+                endpoints={[
+                  'https://metrics.yourwebsite.com',
+                  'https://api.fpjs.io'
+        ]}>
+          <App />
+        </FingerprintProvider>
+)
+```
+
 ## API Reference
 
 See the full [generated API Reference](https://fingerprintjs.github.io/react-native/).
